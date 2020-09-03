@@ -6,9 +6,6 @@
       <thead class="thead-dark">
         <tr>
           <th>
-            BRANCH CODE
-          </th>
-          <th>
             BRANCH NAME
           </th>
           <th>
@@ -32,34 +29,35 @@
         </tr>
       </thead>
       <tbody>
-        @for($i = 1; $i<=20; $i++)
-        <tr>
-          <td>
-            ----
-          </td>
-          <td>
-            ----
-          </td>
-          <td>
-            ----
-          </td>
-          <td>
-            ----
-          </td>
-          <td>
-            ----
-          </td>
-          <td>
-            ----
-          </td>
-          <td>
-            ----
-          </td>
-          <td>
-            ----
-          </td>
-        </tr>
-        @endfor
+        @foreach( $branch as $branch )
+          <tr>
+            <td>
+              {{ $branch->name }}
+            </td>
+            <td>
+              {{ $branch->address }}
+            </td>
+            <td>
+              -----
+            </td>
+            <td>
+              {{ $branch->head }}
+            </td>
+            <td>
+              {{ $branch->phone }}
+            </td>
+            <td>
+              {{ $branch->email }}
+            </td>
+            <td>
+              @if ( $branch->status == 1)
+                active    
+              @else
+                inactive
+              @endif
+            </td>
+          </tr>
+        @endforeach
       </tbody>
     </table>
   </div>

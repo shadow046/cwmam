@@ -64,7 +64,7 @@
                                 <select name="role" id="role" class="form-control @error('role') is-invalid @enderror">
                                     <option selected disabled>select roles</option>
                                     @foreach ($roles as $role)
-                                        <option value="{{ $role->id }}">{{ $role->name}}</option>
+                                        <option value="{{ $role->name }}">{{ $role->name}}</option>
                                     @endforeach
                                 </select>
 

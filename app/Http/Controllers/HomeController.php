@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Permission\Models\Role;
+use App\User;
+use App\Branch;
 
 class HomeController extends Controller
 {
@@ -30,7 +32,9 @@ class HomeController extends Controller
     }
     public function service_center()
     {
-        return view('pages.service-center');
+        $branch = Branch::all();
+        //dd($branches);
+        return view('pages.service-center', compact('branch'));
     }
     public function customer()
     {
@@ -42,6 +46,7 @@ class HomeController extends Controller
     }
     public function users()
     {
-        return view('pages.users');
+        $users = User::all();
+        return view('pages.users', compact('users'));
     }
 }

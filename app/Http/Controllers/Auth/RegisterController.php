@@ -54,7 +54,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'min:3', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'role' => ['required', 'string'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:1', 'confirmed'],
             'branch' => ['required', 'string'],
         ]);
     }
@@ -72,9 +72,9 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'branch' => $data['branch'],
+            'branch_id' => $data['branch'],
+            'status' => '1',
         ]);
-        $role = Role::whereIn('id', array($data['role']))->first();
-        $user->assignRole("$role->name");
+        return $user->assignRole($data['role'],);
     }
 }

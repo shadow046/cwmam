@@ -7,4 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Branch extends Model
 {
     protected $guarded = [];
+
+    public function users()
+    {
+        return $this->hasmany(User::class);
+    }
 }
+ 

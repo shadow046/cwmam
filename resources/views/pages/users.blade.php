@@ -6,10 +6,10 @@
       <thead class="thead-dark">
         <tr>
           <th>
-            USER NAME
+            FULL NAME
           </th>
           <th>
-            FULL NAME
+            EMAIL
           </th>
           <th>
             BRANCH
@@ -23,25 +23,29 @@
         </tr>
       </thead>
       <tbody>
-        @for($i = 1; $i<=20; $i++)
+        @foreach ($users as $user)
         <tr>
           <td>
-            ----
+            {{ $user->name }}
           </td>
           <td>
-            ----
+            {{ $user->email }}
           </td>
           <td>
-            ----
+            {{ $user->branch->name }}
           </td>
           <td>
-            ----
+            {{ $user->roles->first()->name }}
           </td>
           <td>
-            ----
+            @if ( $user->status == 1 )
+              active
+            @else 
+              inactive
+            @endif
           </td>
         </tr>
-        @endfor
+        @endforeach
       </tbody>
     </table>
   </div>
