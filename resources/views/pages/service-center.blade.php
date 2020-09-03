@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="table-responsive" style="height: 400px;">
+  <div class="table-responsive table-hover" style="height: 400px;">
     <table class="table">
       <thead class="thead-dark">
         <tr>
@@ -26,6 +26,14 @@
           <th>
             STATUS 
           </th>
+          <th>
+            ACTION
+          </th>
+        </tr>
+        <tr>
+          @for($i = 1; $i <= 8; $i++)
+            <th><input type="text" size="16" /></th>           
+          @endfor
         </tr>
       </thead>
       <tbody>
@@ -37,9 +45,9 @@
             <td>
               {{ $branch->address }}
             </td>
-            <td>
-              -----
-            </td>
+              <td>
+                {{ $branch->area->name }}
+              </td>
             <td>
               {{ $branch->head }}
             </td>
@@ -56,7 +64,11 @@
                 inactive
               @endif
             </td>
+            <td>
+              <button class="btn btn-warning btn-sm" data-toggle="modal" data-id="{{ $branch->id }}" data-target="#editModal{{$branch->id}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <strong>Edit</strong> </button>
+            </td>
           </tr>
+          
         @endforeach
       </tbody>
     </table>

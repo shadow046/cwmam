@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Spatie\Permission\Models\Role;
 use App\Branch;
+use App\Area;
+use App\User;
 class LoginController extends Controller
 {
     /*
@@ -35,10 +37,18 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        Role::create(['name'=>'super-admin']);
+        /*Role::create(['name'=>'super-admin']);
         Role::create(['name'=>'admin']);
         Role::create(['name'=>'head']);
-        Branch::create(['email'=>'vher@test.com', 'name'=>'San Juan', 'address'=>'441 Lt. Artiaga St., Brgy. Corazon De Jesus San Juan City', 'head'=>'Vergilio Cabacungan', 'phone'=>'0998-5883595', 'status'=>'1']);
+        Area::create(['name'=>'Metro Manila']);
+        Area::create(['name'=>'North Luzon']);
+        Area::create(['name'=>'South Luzon']);
+        Area::create(['name'=>'Visaya']);
+        Area::create(['name'=>'Mindanao']);
+        //Branch::create(['area_id'=>'1','email'=>'vher@test.com', 'name'=>'San Juan', 'address'=>'441 Lt. Artiaga St., Brgy. Corazon De Jesus San Juan City', 'head'=>'Vergilio Cabacungan', 'phone'=>'0998-5883595', 'status'=>'1']);
+        $user = User::create(['area_id'=>'1', 'name'=>'Jerome Lopez', 'email'=>'emorej046@gmail.com', 'password'=>bcrypt('1'), 'branch_id'=>'1', 'status'=>'1']);
+        $user->assignRole('admin');
+        */
         $this->middleware('guest')->except('logout');
     }
 }

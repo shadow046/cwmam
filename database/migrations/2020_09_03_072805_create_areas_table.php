@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBranchesTable extends Migration
+class CreateAreasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,9 @@ class CreateBranchesTable extends Migration
      */
     public function up()
     {
-        Schema::create('branches', function (Blueprint $table) {
+        Schema::create('areas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('area_id')->nullable();
             $table->string('name');
-            $table->string('address');
-            $table->string('head');
-            $table->string('phone');
-            $table->string('email')->nullable();
-            $table->string('status');
             $table->timestamps();
         });
     }
@@ -33,6 +27,6 @@ class CreateBranchesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('branches');
+        Schema::dropIfExists('areas');
     }
 }

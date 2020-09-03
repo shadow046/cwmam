@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Permission\Models\Role;
 use App\User;
-use App\Branch;
 
 class HomeController extends Controller
 {
@@ -30,12 +29,7 @@ class HomeController extends Controller
         //return Activity::all();
         return view('pages.home');
     }
-    public function service_center()
-    {
-        $branch = Branch::all();
-        //dd($branches);
-        return view('pages.service-center', compact('branch'));
-    }
+    
     public function customer()
     {
         return view('pages.customer');

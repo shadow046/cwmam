@@ -14,7 +14,7 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index');
-Route::get('service_center', 'HomeController@service_center');
+Route::get('service_center', 'BranchController@service_center');
 Route::get('customer', 'HomeController@customer');
 Route::get('stock_request', 'HomeController@stock_request');
 Route::get('service_units', 'HomeController@service_units');

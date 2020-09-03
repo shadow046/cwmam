@@ -43,4 +43,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Branch::class);
     }
+
+    public function area()
+    {
+        return $this->belongsTo(Area::class);
+    }
 }

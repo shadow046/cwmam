@@ -75,6 +75,6 @@ class RegisterController extends Controller
             'branch_id' => $data['branch'],
             'status' => '1',
         ]);
-        return $user->assignRole($data['role'],);
+        return $user->assignRole($data['role']);
     }
 }

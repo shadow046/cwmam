@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="table-responsive" style="height: 400px;">
+  <div class="table-responsive table-hover card" style="height: 400px;">
     <table class="table">
       <thead class="thead-dark">
         <tr>
@@ -10,6 +10,9 @@
           </th>
           <th>
             EMAIL
+          </th>
+          <th>
+            AREA
           </th>
           <th>
             BRANCH
@@ -30,6 +33,9 @@
           </td>
           <td>
             {{ $user->email }}
+          </td>
+          <td>
+            {{ $user->area->name }}
           </td>
           <td>
             {{ $user->branch->name }}
