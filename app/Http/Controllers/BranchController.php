@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Branch;
-use App\Area;
 class BranchController extends Controller
 {
     /**
@@ -22,6 +21,13 @@ class BranchController extends Controller
         $branch = Branch::all()->sortBy('name');
         //dd($branches);
         return view('pages.service-center', compact('branch'));
+    }
+
+    public function getBranchName(Request $request)
+    {
+        $data = Branch::select('name', 'id')->where('area_id', $request->id)->get();
+        
+        return response()->json($data);
     }
     /**
      * Show the form for creating a new resource.

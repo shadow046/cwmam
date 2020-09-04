@@ -56,11 +56,12 @@
         </head>
         <body>
             <div class="container"><table><tr><td><img class="container__image" src="idsi.png" alt="idsi.png" style="width: auto; height: 100px;"></td><td><h1 style="color: #0d1a80; font-family: arial; font-weight: bold;">SERVICE CENTER STOCK INVENTORY MONITORING</h1></td></tr></table></div>
-                @include('inc.navbar')
-                <div class="py-2">
-                @yield('content')
-                </div>            
-            
+            @include('inc.navbar')
+            <div class="py-2">
+            @yield('content')
+            </div>
+            @include('modal.branch')
+            @include('scripts.scripts')        
         </body>
     </html>
 @else

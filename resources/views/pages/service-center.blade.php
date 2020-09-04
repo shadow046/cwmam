@@ -2,7 +2,7 @@
 
 @section('content')
   <div class="table-responsive table-hover" style="height: 400px;">
-    <table class="table">
+    <table class="table display" id="example">
       <thead class="thead-dark">
         <tr>
           <th>
@@ -26,9 +26,6 @@
           <th>
             STATUS 
           </th>
-          <th>
-            ACTION
-          </th>
         </tr>
         <tr>
           @for($i = 1; $i <= 8; $i++)
@@ -38,7 +35,7 @@
       </thead>
       <tbody>
         @foreach( $branch as $branch )
-          <tr>
+          <tr class="edittr" id="datarow" data-toggle="modal" data-id="{{ $branch->id }}" data-target="#branchModal">
             <td>
               {{ $branch->name }}
             </td>
@@ -63,9 +60,6 @@
               @else
                 inactive
               @endif
-            </td>
-            <td>
-              <button class="btn btn-warning btn-sm" data-toggle="modal" data-id="{{ $branch->id }}" data-target="#editModal{{$branch->id}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <strong>Edit</strong> </button>
             </td>
           </tr>
           

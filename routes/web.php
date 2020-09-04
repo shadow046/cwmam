@@ -22,3 +22,7 @@ Route::get('spare_parts', 'HomeController@spare_parts');
 Route::get('return', 'HomeController@return');
 Route::get('users', 'HomeController@users');
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+//Route::get('/getBranchName', 'BranchController@getBranchName');
+//Route::get('/getBranchName', 'BranchController@getBranchName');
+Route::get('/getBranchName', '\App\Http\Controllers\Auth\RegisterController@getBranchName');
+Route::get('/getBranchNam', '\App\Http\Controllers\Auth\BranchController@getBranchName');

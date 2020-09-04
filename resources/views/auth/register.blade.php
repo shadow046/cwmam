@@ -38,16 +38,32 @@
                                 @enderror
                             </div>
                         </div>
+                        
+                        <div class="form-group row">
+                            <label for="area" class="col-md-4 col-form-label text-md-right">{{ __('Area') }}</label>
+
+                            <div class="col-md-6">
+                                <select name="area" id="area" class="form-control area @error('area') is-invalid @enderror">
+                                    <option selected disabled>select area</option>
+                                    @foreach ($areas as $area)
+                                        <option value="{{ $area->id }}">{{ $area->name}}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('area')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label for="branch" class="col-md-4 col-form-label text-md-right">{{ __('Branch') }}</label>
 
                             <div class="col-md-6">
-                                <select name="branch" id="branch" class="form-control @error('branch') is-invalid @enderror">
+                                <select name="branch" id="branch" class="form-control branch @error('branch') is-invalid @enderror">
                                     <option selected disabled>select branch</option>
-                                    @foreach ($branches as $branch)
-                                        <option value="{{ $branch->id }}">{{ $branch->name}}</option>
-                                    @endforeach
                                 </select>
 
                                 @error('branch')
