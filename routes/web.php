@@ -22,6 +22,7 @@ Route::get('spare_parts', 'HomeController@spare_parts');
 Route::get('return', 'HomeController@return');
 Route::get('users', 'HomeController@users');
 
+
 Route::get('service_center', 'BranchController@index');
 Route::post('service_center_add', 'BranchController@store');
 Route::put('service_center_update/{id}', 'BranchController@update');

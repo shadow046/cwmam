@@ -70,4 +70,5 @@
     </table>
   </div><br>
   <input type="button" id="addBtn" class="button" value="Add Branch">
+  @include('modal.branch')  
 @endsection

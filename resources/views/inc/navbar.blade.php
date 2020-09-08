@@ -1,5 +1,5 @@
 <ul class="nav nav-tabs">
-    @auth
+    
         <li class="nav-item">
             <a class="nav-link {{ Request::is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a>
         </li>
@@ -30,10 +30,10 @@
         <li class="nav-item">
             <a href="{{route('logout')}}" class="nav-link">logout</a>
         </li>
-    @else
+    
         <li class="nav-item">
             <a href="{{route('login')}}" class="nav-link">Login</a>
         </li>
-    @endauth
+    
     </ul>
 </ul>
