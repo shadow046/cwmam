@@ -28,14 +28,16 @@
           </th>
         </tr>
         <tr>
-          @for($i = 1; $i <= 8; $i++)
+            <th><input type="text" size="14" /></th>           
+            <th><input type="text" size="45" /></th>           
+          @for($i = 1; $i <= 5; $i++)
             <th><input type="text" size="16" /></th>           
           @endfor
         </tr>
       </thead>
       <tbody>
         @foreach( $branch as $branch )
-          <tr class="edittr" id="datarow" data-toggle="modal" data-id="{{ $branch->id }}" data-target="#branchModal">
+          <tr class="edittr" id="datarow" data-toggle="modal" data-status="{{ $branch->status }}" data-id="{{ $branch->id }}" data-area="{{ $branch->area->id }}" data-target="#edit_branchModal">
             <td>
               {{ $branch->name }}
             </td>
@@ -66,9 +68,6 @@
         @endforeach
       </tbody>
     </table>
-  </div>
-  <input type="button" value="Add">
-  <input type="button" value="Edit">
-  <input type="button" value="Save">
-  <input type="button" value="Cancel">
+  </div><br>
+  <input type="button" id="addBtn" class="button" value="Add Branch">
 @endsection

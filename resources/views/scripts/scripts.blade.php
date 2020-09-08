@@ -1,3 +1,4 @@
+
 <script type="text/javascript">
     $(document).ready(function()
     {
@@ -7,8 +8,7 @@
             var sel=$(this).parent();
             var op=" ";
             //console.log(id);
-            $.ajax(
-            {
+            $.ajax({
                 type:'get',
                 url:'{!!URL::to('getBranchName')!!}',
                 data:{'id':id},
@@ -26,30 +26,80 @@
                 
             });
         });
-    });
-</script>
-<script type="text/javascript">
-    $(document).ready(function(){
+
+        $('#addBtn').on('click', function(e){
+            e.preventDefault();
+            $('#subBtn').val('Save');
+            $('#branchModal').modal('show');
+            $('#branch_name').val('');
+            $('#address').val('');
+            $('#area').val('');
+            $('#contact_person').val('');
+            $('#mobile').val('');
+            $('#email').val('');
+            $('#status').val('');
+ 
+        });
+
 
         $('.edittr').on('click', function(){
+            $('#subBtn').val('Update');
             $('#branchModal').modal('show');
             
             $tr = $(this).closest('tr');
-
+            var id = $(this).attr('data-id');
+            var area = $(this).attr('data-area');
+            var status = $(this).attr('data-status');
             var data = $tr.children("td").map(function(){
                 return $(this).text();
             }).get();
 
-            console.log(data);
-
-            $('#bname').val($.trim(data[0]));
+            $('#branch_name').val($.trim(data[0]));
             $('#address').val($.trim(data[1]));
-            $('#area').val($.trim(data[2]));
-            $('#cname').val($.trim(data[3]));
+            $('#area').val(area);
+            $('#contact_person').val($.trim(data[3]));
             $('#mobile').val($.trim(data[4]));
             $('#email').val($.trim(data[5]));
-            $('#status').val($.trim(data[6]));
+            $('#status').val(status);
+            $('#myid').val(id);  
+        });
+
+        $('#editForm').on('submit', function(e){
+            e.preventDefault();
+            subBtn = $('#subBtn').val();
+            if(subBtn == 'Update'){
+                var myid = $('#myid').val();
+                $.ajax({
+                    type: "PUT",
+                    url: "/service_center_update/"+myid,
+                    data: $('#editForm').serialize(),
+                    success: function(data){
+                        if($.isEmptyObject(data.error)){
+                            $('#branchModal').modal('hide');
+                            alert("Data Updated");
+                            window.location.reload();
+                        }else{
+                            alert(data.error);
+                        }
+                    } 
+                });
+            }
+            if(subBtn == 'Save'){
+                $.ajax({
+                    type: "POST",
+                    url: "/service_center_add/",
+                    data: $('#editForm').serialize(),
+                    success: function(data){
+                        if($.isEmptyObject(data.error)){
+                            $('#branchModal').modal('hide');
+                            alert("Data Saved");
+                            window.location.reload();
+                        }else{
+                            alert(data.error);
+                        }
+                    }
+                });
+            }
         });
     });
-        
 </script>

@@ -6,9 +6,6 @@
             <meta name="viewport" content="width=device-width, initial-scale=1">
 
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
             <link rel="stylesheet" type="text/css" href="{{ url('/css/style.css') }}" />
             <title>SERVICE CENTER STOCK INVENTORY MONITORING</title>
             <style>
@@ -42,16 +39,31 @@
                     top: 0;
                     z-index: 10;
                 }
-                input[type=button], input[type=submit], input[type=reset] {
+
+                button[type=button], button[type=submit], button[type=reset], input[type=button], input[type=submit], input[type=reset] {
                     height: 40px;
                     background-color: #0d1a80;
                     color: white;
                     cursor: pointer;
-                    width: 100px;
+                    width: 120px;
                 }
                 .bg-card {
                     background-color: #0d1a80;
                 }
+
+                .modal-header {
+                    padding:9px 15px;
+                    border-bottom:1px solid #eee;
+                    background-color: #0d1a80;
+                    color: white;
+                    -webkit-border-top-left-radius: 5px;
+                    -webkit-border-top-right-radius: 5px;
+                    -moz-border-radius-topleft: 5px;
+                    -moz-border-radius-topright: 5px;
+                    border-top-left-radius: 5px;
+                    border-top-right-radius: 5px;
+                }
+                
             </style>
         </head>
         <body>
@@ -60,8 +72,11 @@
             <div class="py-2">
             @yield('content')
             </div>
-            @include('modal.branch')
-            @include('scripts.scripts')        
+            @include('modal.branch')      
+            <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+            @include('scripts.scripts')
         </body>
     </html>
 @else
