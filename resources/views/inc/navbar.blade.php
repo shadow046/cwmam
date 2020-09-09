@@ -20,7 +20,7 @@
             <a class="nav-link {{ Request::is('return') ? 'active' : '' }}" href="{{ url('return') }}">Return</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ Request::is('users') ? 'active' : '' }}" href="{{ url('users') }}">Users</a>
+            <a class="nav-link {{ Request::is('user') ? 'active' : '' }}" href="{{ url('user') }}">Users</a>
         </li>
         @role('super-admin'|'admin')
             <li class="nav-item">

@@ -24,10 +24,15 @@
             STATUS
           </th>
         </tr>
+        <tr>
+          @for($i = 1; $i <= 6; $i++)
+            <th><input type="text" /></th>           
+          @endfor
+      </tr>
       </thead>
       <tbody>
         @foreach ($users as $user)
-        <tr>
+        <tr class="edittr" id="datarow" data-toggle="modal" data-status="{{ $user->status }}" data-role="{{ $user->roles->first()->id }}" data-id="{{ $user->id }}" data-area="{{ $user->area->id }}" data-branch="{{ $user->branch->id }}" data-target="#userModal">
           <td>
             {{ $user->name }}
           </td>
@@ -45,9 +50,9 @@
           </td>
           <td>
             @if ( $user->status == 1 )
-              active
+              Active
             @else 
-              inactive
+              Inactive
             @endif
           </td>
         </tr>
@@ -55,8 +60,6 @@
       </tbody>
     </table>
   </div>
-  <input type="button" value="Add">
-  <input type="button" value="Edit">
-  <input type="button" value="Save">
-  <input type="button" value="Cancel">
+  <input type="button" id="addBtn" class="button" value="New User">
+  @include('modal.user') 
 @endsection

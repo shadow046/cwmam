@@ -37,7 +37,7 @@
       </thead>
       <tbody>
         @foreach( $branch as $branch )
-          <tr class="edittr" id="datarow" data-toggle="modal" data-status="{{ $branch->status }}" data-id="{{ $branch->id }}" data-area="{{ $branch->area->id }}" data-target="#edit_branchModal">
+          <tr class="edittr" id="datarow" data-toggle="modal" data-status="{{ $branch->status }}" data-id="{{ $branch->id }}" data-area="{{ $branch->area->id }}" data-target="#branchModal">
             <td>
               {{ $branch->name }}
             </td>
