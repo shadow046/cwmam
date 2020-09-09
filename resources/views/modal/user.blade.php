@@ -15,14 +15,14 @@
                     <div class="form-group row">
                         <label for="full_name" class="col-md-4 col-form-label text-md-right">{{ __('Full Name') }}</label>
                         <div class="col-md-6">
-                            <input id="full_name" type="text" class="form-control" name="full_name" autofocus>
+                            <input id="full_name" type="text" class="form-control" name="full_name" disabled>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
                         <div class="col-md-6">
-                            <input id="email" type="email" class="form-control" name="email">
+                            <input id="email" type="email" class="form-control" name="email" disabled>
                         </div>
                     </div>
                     
@@ -30,7 +30,7 @@
                         <label for="area" class="col-md-4 col-form-label text-md-right">{{ __('Area') }}</label>
 
                         <div class="col-md-6">
-                            <select name="area" id="area" class="form-control area">
+                            <select name="area" id="area" class="form-control area" disabled>
                                 <option selected disabled>select area</option>
                                 @foreach ($areas as $area)
                                     <option value="{{ $area->id }}">{{ $area->name}}</option>
@@ -43,7 +43,7 @@
                         <label for="branch" class="col-md-4 col-form-label text-md-right">{{ __('Branch') }}</label>
 
                         <div class="col-md-6">
-                            <select name="branch" id="branch" class="form-control branch">
+                            <select name="branch" id="branch" class="form-control branch" disabled>
                             </select>
                         </div>
                     </div>
@@ -51,11 +51,19 @@
                     <div class="form-group row">
                         <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('Level') }}</label>
                         <div class="col-md-6">
-                            <select name="role" id="role" class="form-control">
+                            <select name="role" id="role" class="form-control" disabled>
                                 <option selected disabled>select roles</option>
-                                @foreach ($roles as $role)
-                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
-                                @endforeach
+                                @role('Super-admin|Admin')
+                                    @foreach ($roles as $role)
+                                            @if( $role->id > Auth::user()->roles->first()->id)
+                                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                            @endif
+                                    @endforeach
+                                @else
+                                    @foreach ($roles as $role)
+                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                    @endforeach
+                                @endrole
                             </select>
                         </div>
                     </div>
@@ -64,7 +72,7 @@
                         <label for="status" class="col-md-4 col-form-label text-md-right">{{ __('Status') }}</label>
 
                         <div class="col-md-6">
-                            <select name="status" id="status" class="form-control status">
+                            <select name="status" id="status" class="form-control status" disabled>
                                 <option selected disabled>select status</option>
                                 <option value="1">Active</option>
                                 <option value="0">Inactive</option>
@@ -90,7 +98,9 @@
 
                     <div class="modal-footer">
                         <input type="button" class="btn btn-primary" data-dismiss="modal" value="Close">
+                        @role('Super-admin|Admin')
                         <input type="submit" id="subBtn" class="btn btn-primary" value="Update">
+                        @endrole
                     </div>
                 </form>
             </div>  

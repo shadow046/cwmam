@@ -2,30 +2,23 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
-        $(document).on('change','.area',function()
-        {
-            var id=$(this).val();
-            var sel=$(this).parent();
-            var op=" ";
-            //console.log(id);
-            $.ajax({
-                type:'get',
-                url:'{!!URL::to('getBranchName')!!}',
-                data:{'id':id},
-                success:function(data)
-                {
-                    //console.log('success');
-                    //console.log(data);
-                    //console.log(data.length);
-                    op+='<option selected disabled>select branch</option>';
-                    for(var i=0;i<data.length;i++){
-                        op+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
-                    }
-                    $('#branch').find('option').remove().end().append(op);
-                },
-                
-            });
+        /*
+        var currentInnerHtml;
+        var element = new Image();
+        var elementWithHiddenContent = document.querySelector("#element-to-hide");
+        var innerHtml = elementWithHiddenContent.innerHTML;
+
+        element.__defineGetter__("id", function() {
+            currentInnerHtml = "";
         });
+
+        setInterval(function() {
+            currentInnerHtml = innerHtml;
+            console.log(element);
+            console.clear();
+            elementWithHiddenContent.innerHTML = currentInnerHtml;
+        }, 1000);
+        */
 
         $('#addBtn').on('click', function(e){
             e.preventDefault();
@@ -40,6 +33,13 @@
                 $('#mobile').val('');
                 $('#email').val('');
                 $('#status').val('select status');
+                $('#branch_name').prop('disabled', false);
+                $('#address').prop('disabled', false);
+                $('#area').prop('disabled', false);
+                $('#contact_person').prop('disabled', false);
+                $('#mobile').prop('disabled', false);
+                $('#email').prop('disabled', false);
+                $('#status').prop('disabled', false);
             }
             if(addBtn == 'New User'){
                 $("#divpass1").show();
@@ -49,10 +49,18 @@
                 $('#email').val('');
                 $('#password').val('');
                 $('#password_confirmation').val('');
-                $('role').val('select role')
+                $('role').val('select role');
                 $('#area').val('select area');
                 $('#branch').val('select branch');
                 $('#status').val('select status');
+                $('#full_name').prop('disabled', false);
+                $('#email').prop('disabled', false);
+                $('#password').prop('disabled', false);
+                $('#password_confirmation').prop('disabled', false);
+                $('#role').prop('disabled', false);
+                $('#area').prop('disabled', false);
+                $('#branch').prop('disabled', false);
+                $('#status').prop('disabled', false);
             }
         });
 
@@ -60,6 +68,15 @@
             $('#subBtn').val('Update');
             addBtn = $('#addBtn').val();
             if(addBtn == 'Add Branch'){
+                $('#branch_name').prop('disabled', false);
+                $('#address').prop('disabled', false);
+                $('#area').prop('disabled', false);
+                $('#contact_person').prop('disabled', false);
+                $('#mobile').prop('disabled', false);
+                $('#email').prop('disabled', false);
+                $('#status').prop('disabled', false);
+                $('#myid').val(id);
+
                 $tr = $(this).closest('tr');
                 var id = $(this).attr('data-id');
                 var area = $(this).attr('data-area');
@@ -78,6 +95,16 @@
                 $('#myid').val(id);  
             }
             if(addBtn == 'New User'){
+
+                $('#full_name').prop('disabled', false);
+                $('#email').prop('disabled', false);
+                $('#password').prop('disabled', false);
+                $('#password_confirmation').prop('disabled', false);
+                $('#role').prop('disabled', false);
+                $('#area').prop('disabled', false);
+                $('#branch').prop('disabled', false);
+                $('#status').prop('disabled', false);
+
                 $tr = $(this).closest('tr');
                 var id = $(this).attr('data-id');
                 var area = $(this).attr('data-area');
@@ -90,7 +117,7 @@
                 }).get();
                 $("#divpass1").hide();
                 $("#divpass2").hide();
-                selectBranch(branch, function() {
+                selectBranch(branch, function() {  
                     $('#full_name').val($.trim(info[0]));
                     $('#email').val($.trim(info[1]));
                     $('#area').val(area);

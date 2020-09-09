@@ -13,7 +13,7 @@ class User extends Authenticatable
     use Notifiable, LogsActivity, HasRoles;
 
     protected static $ignoreChangedAttributes = ['password'];
-    protected static $logAttributes = ['name', 'email'];
+    protected static $logAttributes = [];
     /**
      * The attributes that are mass assignable.
      *

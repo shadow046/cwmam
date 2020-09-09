@@ -16,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
     }
 
     /**
@@ -42,5 +42,11 @@ class HomeController extends Controller
     {
         $users = User::all();
         return view('pages.users', compact('users'));
+    }
+
+    public function service_units()
+    {
+        $users = User::all();
+        return view('pages.service-units', compact('users'));
     }
 }

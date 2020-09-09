@@ -34,5 +34,5 @@ Route::get('service_center', 'BranchController@index');
 Route::post('service_center_add', 'BranchController@store');
 Route::put('service_center_update/{id}', 'BranchController@update');
 
-Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 

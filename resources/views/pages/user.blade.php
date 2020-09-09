@@ -32,34 +32,40 @@
       </thead>
       <tbody>
         @foreach ($users as $user)
-        <tr class="edittr" id="datarow" data-toggle="modal" data-status="{{ $user->status }}" data-role="{{ $user->roles->first()->id }}" data-id="{{ $user->id }}" data-area="{{ $user->area->id }}" data-branch="{{ $user->branch->id }}" data-target="#userModal">
-          <td>
-            {{ $user->name }}
-          </td>
-          <td>
-            {{ $user->email }}
-          </td>
-          <td>
-            {{ $user->area->name }}
-          </td>
-          <td>
-            {{ $user->branch->name }}
-          </td>
-          <td>
-            {{ $user->roles->first()->name }}
-          </td>
-          <td>
-            @if ( $user->status == 1 )
-              Active
-            @else 
-              Inactive
+          @if (Auth::user()->id !== $user->id)
+            @if (Auth::user()->roles->first()->id < $user->roles->first()->id )
+              <tr class="edittr" id="datarow" data-toggle="modal" data-status="{{ $user->status }}" data-role="{{ $user->roles->first()->id }}" data-id="{{ $user->id }}" data-area="{{ $user->area->id }}" data-branch="{{ $user->branch->id }}" data-target="#userModal">
+                <td>
+                  {{ $user->name }}
+                </td>
+                <td>
+                  {{ $user->email }}
+                </td>
+                <td>
+                  {{ $user->area->name }}
+                </td>
+                <td>
+                  {{ $user->branch->name }}
+                </td>
+                <td>
+                  {{ $user->roles->first()->name }}
+                </td>
+                <td>
+                  @if ( $user->status == 1 )
+                    Active
+                  @else 
+                    Inactive
+                  @endif
+                </td>
+              </tr>
             @endif
-          </td>
-        </tr>
+          @endif
         @endforeach
       </tbody>
     </table>
   </div>
-  <input type="button" id="addBtn" class="button" value="New User">
-  @include('modal.user') 
+  @role('Super-admin|Admin')
+    <input type="button" id="addBtn" class="button" value="New User"> 
+  @endrole
+    @include('modal.user')
 @endsection

@@ -69,6 +69,8 @@
       </tbody>
     </table>
   </div><br>
-  <input type="button" id="addBtn" class="button" value="Add Branch">
-  @include('modal.branch')  
+  @role('Super-admin|Admin')
+    <input type="button" id="addBtn" class="button" value="Add Branch">
+  @endrole 
+  @include('modal.branch') 
 @endsection
