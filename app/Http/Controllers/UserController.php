@@ -36,11 +36,7 @@ class UserController extends Controller
         return DataTables::of(User::get()->all())
         ->setRowData([
             'data-id' => '{{$id}}',
-            'data-toggle' => 'modal',
             'data-status' => '{{ $status }}',
-            'data-area' => '{{ $area_id }}',
-            'data-branch' => '{{ $branch_id }}',
-            'data-target' => '#userModal'
         ])
         
         ->addColumn('area', function ($user){

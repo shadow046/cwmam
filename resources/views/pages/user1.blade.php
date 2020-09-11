@@ -2,7 +2,12 @@
 
 @section('content')
   <div class="container">
-    <table class="table" id="myTable">
+    <div style="display: flex; justify-content: flex-end">
+      Toggle column: <a class="toggle-vis" data-column="0">Name</a> - <a class="toggle-vis" data-column="1">Position</a> - <a class="toggle-vis" data-column=
+      "2">Office</a> - <a class="toggle-vis" data-column="3">Age</a> - <a class="toggle-vis" data-column="4">Start date</a> - <a class="toggle-vis" data-column=
+      "5">Salary</a>
+    </div>
+    <table class="table" id="userTable">
       <thead class="thead-dark">
         <tr>
           <td>

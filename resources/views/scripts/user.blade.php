@@ -1,7 +1,7 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
-        $('#myTable').DataTable();
+        $('#userTable').DataTable();
         
         $('.edittr').on('click', function(){
             if(window.location.href.includes('service_center')) {

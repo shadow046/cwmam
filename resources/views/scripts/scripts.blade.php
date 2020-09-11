@@ -3,7 +3,7 @@
     $(document).ready(function()
     {
         var selected = [];
-        var table = $('#myTable').DataTable({
+        var table = $('#userTable').DataTable({
             "dom": 'lrtip',
             processing: true,
             serverSide: true,
@@ -18,6 +18,17 @@
             ]
 
         });
+        
+        $('.toggle-vis').on( 'click', function (e) {
+            e.preventDefault();
+    
+            // Get the column API object
+            var column = table.column( $(this).attr('data-column') );
+    
+            // Toggle the visibility
+            column.visible( ! column.visible() );
+        });
+
 
         $('.filter-input').keyup(function() {
             table.column( $(this).data('column'))
@@ -25,7 +36,9 @@
                 .draw();
         });
 
-        $('#myTable tbody').on('click', 'tr', function () {
+        $('#userTable tbody').on('click', 'tr', function () {
+            var dtdata = $('#userTable tbody tr:eq(0)').data();
+            //console.log( $('#example tbody tr:eq(0)').data() );
             var mydata = table.row(this).data();
             var op=" ";
                 $('#full_name').prop('disabled', false);
@@ -44,15 +57,10 @@
                 });
                 
                 $('#role').val(mydata.role);
-                if(mydata.status == 'Active'){
-                         status = "1";
-                    } else{
-                        status = "0";
-                    }
-                $('#status').val(status);
+                $('#status').val(dtdata.dataStatus);
                 $('#subBtn').val('Update');
-                    console.log(mydata);
-
+                    //console.log(mydata.DT_RowData[data-status]);
+                    console.log(dtdata);
                 function selectBranch(branch, callback) {
                 $.ajax({
                     type:'get',
