@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Yajra\DataTables\Facades\DataTables;
 use App\User;
 use App\Area;
 use App\Branch;
@@ -26,7 +27,46 @@ class UserController extends Controller
         $areas = Area::all();
         $roles = Role::all();
         
-        return view('pages.user', compact('users', 'areas','roles'));
+        return view('pages.user1', compact('users', 'areas','roles'));
+    }
+
+    public function getUsers()
+    {
+        
+        return DataTables::of(User::get()->all())
+        ->setRowData([
+            'data-id' => '{{$id}}',
+            'data-toggle' => 'modal',
+            'data-status' => '{{ $status }}',
+            'data-area' => '{{ $area_id }}',
+            'data-branch' => '{{ $branch_id }}',
+            'data-target' => '#userModal'
+        ])
+        
+        ->addColumn('area', function ($user){
+            return $user->area->name;
+        })
+
+        ->addColumn('branch', function ($user){
+            return $user->branch->name;
+        })
+
+        ->addColumn('role', function ($user){
+            return $user->roles->first()->name;
+        })
+
+        ->addColumn('status', function ($user){
+
+            if ($user->status == 1) {
+                return 'Active';
+            } else {
+                return 'Inactive';
+            }
+        })
+
+        ->setRowClass('{{ $id % 2 == 0 ? "edittr" : "edittr"}}') 
+
+        ->make(true);
     }
 
     public function getBranchName(Request $request)

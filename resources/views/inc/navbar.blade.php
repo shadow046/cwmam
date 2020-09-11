@@ -22,14 +22,7 @@
                     <a class="nav-link {{ Request::is('return') ? 'active' : '' }}" href="{{ url('return') }}">Return</a>
                 </li>
                 
-                @role('Admin')
-                    <li class="nav-item">
-                        <a href="{{route('register')}}" class="nav-link">Add user</a>
-                    </li>
-                @endrole
-                <li class="nav-item mr-1">
-                    <a class="nav-link {{ Request::is('user') ? 'active' : '' }}" href="{{ url('user') }}">Users</a>
-                </li>
+                
             @else
                 <br><br>
             @endauth

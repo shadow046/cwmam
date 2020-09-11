@@ -2,24 +2,79 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
-        /*
-        var currentInnerHtml;
-        var element = new Image();
-        var elementWithHiddenContent = document.querySelector("#element-to-hide");
-        var innerHtml = elementWithHiddenContent.innerHTML;
+        var selected = [];
+        var table = $('#myTable').DataTable({
+            "dom": 'lrtip',
+            processing: true,
+            serverSide: true,
+            ajax: '{!! route('get.users')!!}',
+            columns: [
+                { data: 'name', name:'name' },
+                { data: 'email', name:'email' },
+                { data: 'area', name:'area' },
+                { data: 'branch', name:'branch' },
+                { data: 'role', name:'role' },
+                { data: 'status', name:'status' }
+            ]
 
-        element.__defineGetter__("id", function() {
-            currentInnerHtml = "";
         });
 
-        setInterval(function() {
-            currentInnerHtml = innerHtml;
-            console.log(element);
-            console.clear();
-            elementWithHiddenContent.innerHTML = currentInnerHtml;
-        }, 1000);
-        */
+        $('.filter-input').keyup(function() {
+            table.column( $(this).data('column'))
+                .search( $(this).val())
+                .draw();
+        });
 
+        $('#myTable tbody').on('click', 'tr', function () {
+            var mydata = table.row(this).data();
+            var op=" ";
+                $('#full_name').prop('disabled', false);
+                $('#email').prop('disabled', false);
+                $('#password').prop('disabled', false);
+                $('#password_confirmation').prop('disabled', false);
+                $('#role').prop('disabled', false);
+                $('#area').prop('disabled', false);
+                $('#branch').prop('disabled', false);
+                $('#status').prop('disabled', false);
+                $('#userModal').modal('show');
+                selectBranch(branch, function() {
+                    $('#full_name').val(mydata.name);
+                    $('#email').val(mydata.email);
+                    $('#area').val(mydata.area_id);   
+                });
+                
+                $('#role').val(mydata.role);
+                if(mydata.status == 'Active'){
+                         status = "1";
+                    } else{
+                        status = "0";
+                    }
+                $('#status').val(status);
+                $('#subBtn').val('Update');
+                    console.log(mydata);
+
+                function selectBranch(branch, callback) {
+                $.ajax({
+                    type:'get',
+                    url:'{!!URL::to('getBranchName')!!}',
+                    data:{'id':mydata.area_id},
+                    success:function(data)
+                    {
+                        //console.log('success');
+                        //console.log(data);
+                        //console.log(data.length);
+                        op+='<option selected disabled>select branch</option>';
+                        for(var i=0;i<data.length;i++){
+                            op+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
+                        }
+                        $('#branch').find('option').remove().end().append(op);
+                        $('#branch').val(mydata.branch_id);
+                        callback();
+                    },
+                });
+            }
+        });
+        
         $('#addBtn').on('click', function(e){
             e.preventDefault();
             $('#subBtn').val('Save');

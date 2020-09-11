@@ -23,7 +23,7 @@ Route::get('return', 'HomeController@return');
 
 
 
-
+Route::get('users', 'UserController@getUsers')->name('get.users');
 Route::get('user', 'UserController@index');
 Route::get('getBranchName', 'UserController@getBranchName');
 Route::post('user_add', 'UserController@store');

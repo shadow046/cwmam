@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Permission\Models\Role;
 use App\User;
+use App\Branch;
 
 class HomeController extends Controller
 {
@@ -26,9 +27,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //return Activity::all();
+
         return view('pages.home');
     }
+
+    
     
     public function customer()
     {

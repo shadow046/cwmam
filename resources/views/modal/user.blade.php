@@ -56,7 +56,7 @@
                                 @role('Super-admin|Admin')
                                     @foreach ($roles as $role)
                                             @if( $role->id > Auth::user()->roles->first()->id)
-                                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                                <option value="{{ $role->name }}">{{ $role->name }}</option>
                                             @endif
                                     @endforeach
                                 @else
