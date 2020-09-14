@@ -87,6 +87,7 @@
             @else
                 @include('scripts.user')
             @endrole
+           
         </body>
     </html>
 @else

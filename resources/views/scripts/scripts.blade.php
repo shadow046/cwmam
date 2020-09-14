@@ -1,6 +1,7 @@
 
 <script type="text/javascript">
-    $(document).on('click', function (e)
+
+    $(document).on('click', function (e) //hide popover on click outside
     {
         $('[data-toggle="popover"]').each(function () {
             //the 'is' for buttons that trigger popups
@@ -15,8 +16,9 @@
 
     $(document).ready(function()
     {
-        var selected = [];
-        var table = $('#userTable').DataTable({
+        //var selected = [];
+        var table = 
+        $('#userTable').DataTable({ //user datatables
             "dom": 'lrtip',
             processing: true,
             serverSide: true,
@@ -31,74 +33,16 @@
             ]
 
         });
-        $('.tbsearch').delay().fadeOut('slow');
 
-        $('#filter').popover({
-            html: true,
-            sanitize: false,
-        });
-
-        $('#filter').on("click", function (event) {
-            for ( var i=1 ; i<=5 ; i++ ) {
-                if (table.column( i ).visible()){
-                    $('#filter-'+i).prop('checked', true);
-                }
-                else {
-                    $('#filter-'+i).prop('checked', false);
-                }
-            }
-        });
-
-        $('#search-ic').on("click", function (event) {
-            for ( var i=0 ; i<=5 ; i++ ) {
-                
-                $('.fl-'+i).val('').change();
-                
-            }
-            $('.tbsearch').toggle();
-            table
-                .search( '' )
-                .columns().search( '' )
-                .draw();
-        });
-
-
-        
-
-        $('body').on('click', '.userColumn', function(){
-            // Get the column API object
-            var column = table.column( $(this).attr('data-column') );
-            var colnum = $(this).attr('data-column');
-            // Toggle the visibility
-            column.visible( ! column.visible() );
-            
-                
-                $('.fl-'+colnum).val('');
-                table
-                .search( '' )
-                .columns().search( '' )
-                .draw();
-            
-        });
-
-        
-
-        $('.filter-input').keyup(function() {
-            
-            table.column( $(this).data('column'))
-                .search( $(this).val())
-                .draw();
-        });
-
-        $('#userTable tbody').on('click', 'tr', function () {
+        $('#userTable tbody').on('click', 'tr', function () { //show user details in modal
             var dtdata = $('#userTable tbody tr:eq(0)').data();
             //console.log( $('#example tbody tr:eq(0)').data() );
             var mydata = table.row(this).data();
             var op=" ";
                 $('#full_name').prop('disabled', false);
                 $('#email').prop('disabled', false);
-                $('#password').prop('disabled', false);
-                $('#password_confirmation').prop('disabled', false);
+                $('#password').prop('disabled', true);
+                $('#password_confirmation').prop('disabled', true);
                 $('#role').prop('disabled', false);
                 $('#area').prop('disabled', false);
                 $('#branch').prop('disabled', false);
@@ -137,7 +81,7 @@
             }
         });
         
-        $('#addBtn').on('click', function(e){
+        $('#addBtn').on('click', function(e){ //show user/branch modal
             e.preventDefault();
             $('#subBtn').val('Save');
             addBtn = $('#addBtn').val();
@@ -181,7 +125,7 @@
             }
         });
 
-        $('.edittr').on('click', function(){
+        /*$('.edittr').on('click', function(){
             $('#subBtn').val('Update');
             addBtn = $('#addBtn').val();
             if(addBtn == 'Add Branch'){
@@ -215,8 +159,8 @@
 
                 $('#full_name').prop('disabled', false);
                 $('#email').prop('disabled', false);
-                $('#password').prop('disabled', false);
-                $('#password_confirmation').prop('disabled', false);
+                $('#password').prop('disabled', true);
+                $('#password_confirmation').prop('disabled', true);
                 $('#role').prop('disabled', false);
                 $('#area').prop('disabled', false);
                 $('#branch').prop('disabled', false);
@@ -265,9 +209,9 @@
                 });
             }
             
-        });
+        });*/
 
-        $('#branchForm').on('submit', function(e){
+        $('#branchForm').on('submit', function(e){ //branch modal update/save button
             e.preventDefault();
             subBtn = $('#subBtn').val();
             if(subBtn == 'Update'){
@@ -305,7 +249,7 @@
             }
         });
 
-        $('#userForm').on('submit', function(e){
+        $('#userForm').on('submit', function(e){ //user modal update/save button
             e.preventDefault();
             subBtn = $('#subBtn').val();
             if(subBtn == 'Update'){
@@ -341,6 +285,55 @@
                     }
                 });
             }
+        });
+
+        $('.tbsearch').delay().fadeOut('slow'); //hide search
+            
+        $('#filter').popover({ //filter columns popover
+            html: true,
+            sanitize: false,
+            title: 'Filter Columns &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+        });
+
+        $('#filter').on("click", function (event) { //check for visible columns
+            for ( var i=1 ; i<=5 ; i++ ) {
+                if (table.column( i ).visible()){
+                    $('#filter-'+i).prop('checked', true);
+                }
+                else {
+                    $('#filter-'+i).prop('checked', false);
+                }
+            }
+        });
+
+        $('body').on('click', '.userColumnCb', function(){ //show/hide columns
+            // Get the column API object
+            var column = table.column( $(this).attr('data-column') );
+            var colnum = $(this).attr('data-column');
+            // Toggle the visibility
+            column.visible( ! column.visible() );
+            $('.fl-'+colnum).val('');//clear columns on hide
+            table
+                .columns(colnum).search( '' )
+                .draw();
+        });
+
+        $('#search-ic').on("click", function (event) { //clear search box on hide
+            for ( var i=0 ; i<=5 ; i++ ) {
+                
+                $('.fl-'+i).val('').change();
+                table
+                .columns(i).search( '' )
+                .draw();
+            }
+            $('.tbsearch').toggle();
+            
+        });
+
+        $('.filter-input').keyup(function() { //search columns
+            table.column( $(this).data('column'))
+                .search( $(this).val())
+                .draw();
         });
     });
 </script>
