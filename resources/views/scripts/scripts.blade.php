@@ -46,7 +46,6 @@
                 else {
                     $('#filter-'+i).prop('checked', false);
                 }
-                console.log('filter'+i);
             }
         });
 
