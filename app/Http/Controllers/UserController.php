@@ -38,7 +38,7 @@ class UserController extends Controller
             'data-id' => '{{$id}}',
             'data-status' => '{{ $status }}',
         ])
-        
+
         ->addColumn('area', function ($user){
             return $user->area->name;
         })

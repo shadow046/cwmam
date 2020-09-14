@@ -1,5 +1,18 @@
 
 <script type="text/javascript">
+    $(document).on('click', function (e)
+    {
+        $('[data-toggle="popover"]').each(function () {
+            //the 'is' for buttons that trigger popups
+            //the 'has' for icons within a button that triggers a popup
+            if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                if ($(this).data('bs.popover')) {
+                    (($(this).popover('hide').data('bs.popover') || {}).inState || {}).click = false  // fix for BS 3.3.6
+                }
+            }
+        });
+    });
+
     $(document).ready(function()
     {
         var selected = [];
@@ -18,17 +31,42 @@
             ]
 
         });
-        
-        $('.toggle-vis').on( 'click', function (e) {
-            e.preventDefault();
-    
-            // Get the column API object
-            var column = table.column( $(this).attr('data-column') );
-    
-            // Toggle the visibility
-            column.visible( ! column.visible() );
+        $('.tbsearch').delay().fadeOut('slow');
+
+        $('#filter').popover({
+            html: true,
+            sanitize: false,
         });
 
+        $('#filter').on("click", function (event) {
+            for ( var i=1 ; i<=5 ; i++ ) {
+                if (table.column( i ).visible()){
+                    $('#filter-'+i).prop('checked', true);
+                }
+                else {
+                    $('#filter-'+i).prop('checked', false);
+                }
+                console.log('filter'+i);
+            }
+        });
+
+        $('#search-ic').on("click", function (event) {
+            $('.tbsearch').toggle();
+        });
+
+
+        
+
+        $('body').on('click', '.userColumn', function(){
+            // Get the column API object
+            var column = table.column( $(this).attr('data-column') );
+            console.log(column);
+            // Toggle the visibility
+            column.visible( ! column.visible() );
+            
+        });
+
+        
 
         $('.filter-input').keyup(function() {
             table.column( $(this).data('column'))

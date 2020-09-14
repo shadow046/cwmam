@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="container">
-    <div style="display: flex; justify-content: flex-end">
-      Toggle column: <a class="toggle-vis" data-column="0">Name</a> - <a class="toggle-vis" data-column="1">Position</a> - <a class="toggle-vis" data-column=
-      "2">Office</a> - <a class="toggle-vis" data-column="3">Age</a> - <a class="toggle-vis" data-column="4">Start date</a> - <a class="toggle-vis" data-column=
-      "5">Salary</a>
+  <div>
+    
+    <div style="display: flex; justify-content: flex-end" class="pt-3">
+      <a href="#" id="search-ic"><i class="fa fa-lg fa-search" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="#" id="filter" data-placement="bottom" data-toggle="popover" data-title="Filter" data-content='@include("inc.cfilter")'><i class="fa fa-lg fa-filter" aria-hidden="true"></i></a> 
     </div>
     <table class="table" id="userTable">
       <thead class="thead-dark">
-        <tr>
+        <tr class="tbsearch">
           <td>
               <input type="text" class="form-control filter-input" placeholder="Search for name...." data-column="0" />
           </td>
