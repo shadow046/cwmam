@@ -50,7 +50,16 @@
         });
 
         $('#search-ic').on("click", function (event) {
+            for ( var i=0 ; i<=5 ; i++ ) {
+                
+                $('.fl-'+i).val('').change();
+                
+            }
             $('.tbsearch').toggle();
+            table
+                .search( '' )
+                .columns().search( '' )
+                .draw();
         });
 
 
@@ -59,15 +68,23 @@
         $('body').on('click', '.userColumn', function(){
             // Get the column API object
             var column = table.column( $(this).attr('data-column') );
-            console.log(column);
+            var colnum = $(this).attr('data-column');
             // Toggle the visibility
             column.visible( ! column.visible() );
+            
+                
+                $('.fl-'+colnum).val('');
+                table
+                .search( '' )
+                .columns().search( '' )
+                .draw();
             
         });
 
         
 
         $('.filter-input').keyup(function() {
+            
             table.column( $(this).data('column'))
                 .search( $(this).val())
                 .draw();

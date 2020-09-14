@@ -11,22 +11,22 @@
       <thead class="thead-dark">
         <tr class="tbsearch">
           <td>
-              <input type="text" class="form-control filter-input" placeholder="Search for name...." data-column="0" />
+              <input type="text" class="form-control filter-input fl-0" placeholder="Search for name...." data-column="0" />
           </td>
           <td>
-            <input type="text" class="form-control filter-input" placeholder="Search for email...." data-column="1" />
+            <input type="text" class="form-control filter-input fl-1" placeholder="Search for email...." data-column="1" />
           </td>
           <td>
-            <input type="text" class="form-control filter-input" placeholder="Search for area...." data-column="2" />
+            <input type="text" class="form-control filter-input fl-2" placeholder="Search for area...." data-column="2" />
           </td>
           <td>
-            <input type="text" class="form-control filter-input" placeholder="Search for branch...." data-column="3" />
+            <input type="text" class="form-control filter-input fl-3" placeholder="Search for branch...." data-column="3" />
           </td>
           <td>
-            <input type="text" class="form-control filter-input" placeholder="Search for level...." data-column="4" />
+            <input type="text" class="form-control filter-input fl-4" placeholder="Search for level...." data-column="4" />
           </td>
           <td>
-            <input type="text" class="form-control filter-input" placeholder="Search for status...." data-column="5" />
+            <input type="text" class="form-control filter-input fl-5" placeholder="Search for status...." data-column="5" />
           </td>
         </tr>
         <tr>
