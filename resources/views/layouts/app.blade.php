@@ -1,4 +1,4 @@
-@if((new \Jenssegers\Agent\Agent())->isDesktop())
+@if((new \Jenssegers\Agent\Agent())->isDesktop()) 
     <!doctype html>
     <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
         <head>
@@ -67,6 +67,16 @@
                     border-top-left-radius: 5px;
                     border-top-right-radius: 5px;
                 }
+
+                .row.no-margin {
+                    margin-left: -2.5px;
+                    margin-right: -2.5px;
+                }
+
+                .row.no-margin > .col-md-2, .row.no-margin > .col-md-3, .row.no-margin > .col-md-4, .row.no-margin > .col-md-6{
+                    padding-left: 2.5px;
+                    padding-right: 2.5px;
+                }
                 
             </style>
         </head>
@@ -81,13 +91,17 @@
             <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
             <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-
+            
             @if(Request::is('user'))
                 @include('scripts.user')
             @endif
 
             @if(Request::is('branch'))
                 @include('scripts.branch')
+            @endif
+
+            @if(Request::is('request'))
+                @include('scripts.stock')
             @endif
            
         </body>

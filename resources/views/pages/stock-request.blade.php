@@ -69,4 +69,5 @@
       </tbody>
     </table>
   </div>
+  @include('modal.stock')
 @endsection

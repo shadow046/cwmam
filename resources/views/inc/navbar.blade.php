@@ -13,7 +13,7 @@
                 </li>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('stock_request') ? 'active' : '' }}" href="{{ url('stock_request') }}">Stock Request</a>
+                    <a class="nav-link {{ Request::is('request') ? 'active' : '' }}" href="{{ route('stock.index') }}">Stock Request</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('service_units') ? 'active' : '' }}" href="{{ url('service_units') }}">Service Units</a>

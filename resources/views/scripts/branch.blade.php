@@ -38,14 +38,14 @@
 
             var dtdata = $('#branchTable tbody tr:eq(0)').data();
             var trdata = table.row(this).data();
-
-            $('#branch_name').prop('disabled', false);
-            $('#address').prop('disabled', false);
-            $('#area').prop('disabled', false);
-            $('#contact_person').prop('disabled', false);
-            $('#mobile').prop('disabled', false);
-            $('#email').prop('disabled', false);
-            $('#status').prop('disabled', false);
+            $('#branch_name').prop('disabled', true);
+            $('#address').prop('disabled', true);
+            $('#area').prop('disabled', true);
+            $('#contact_person').prop('disabled', true);
+            $('#mobile').prop('disabled', true);
+            $('#email').prop('disabled', true);
+            $('#status').prop('disabled', true);
+            $('#subBtn').val('Edit');
             $('#myid').val(trdata.id);
             $('#branch_name').val(trdata.name);
             $('#address').val(trdata.address);
@@ -113,6 +113,16 @@
                         }
                     }
                 });
+            }
+            if(subBtn == 'Edit'){
+                $('#branch_name').prop('disabled', false);
+                $('#address').prop('disabled', false);
+                $('#area').prop('disabled', false);
+                $('#contact_person').prop('disabled', false);
+                $('#mobile').prop('disabled', false);
+                $('#email').prop('disabled', false);
+                $('#status').prop('disabled', false);
+                $('#subBtn').val('Update');
             }
         });
 

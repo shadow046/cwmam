@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title w-100 text-center">Service center inventory</h4>
+                <h4 class="modal-title">Branch details</h4>
                 <button class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -47,30 +47,14 @@
                             </select>
                         </div>
                     </div>
-            </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-primary" data-dismiss="modal" value="Close">
                         @role('Super-admin|Admin')
-                        <input type="submit" id="subBtn" class="btn btn-primary" value="Edit">
+                        <input type="submit" id="subBtn" class="btn btn-primary" value="Update">
                         @endrole
                     </div>
                 </form>
-  
-                <table class="table" style="height: 300px;">
-                    <thead class="thead-dark">
-                        <th>Item Code</th>
-                        <th>Description</th>
-                        <th>Qty</th>
-                        <th>Purpose</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>test</td>
-                            <td>test</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div> 
+            </div>  
         </div>
     </div>
 </div>

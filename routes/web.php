@@ -16,12 +16,13 @@ Auth::routes();
 Route::get('/', 'HomeController@index');
 //Route::get('service_center', 'BranchController@index');
 Route::get('customer', 'HomeController@customer');
-Route::get('stock_request', 'HomeController@stock_request');
 Route::get('service_units', 'HomeController@service_units');
 Route::get('spare_parts', 'HomeController@spare_parts');
 Route::get('return', 'HomeController@return');
 
 
+
+Route::get('request', 'StockRequestController@index')->name('stock.index');
 
 Route::get('users', 'UserController@getUsers')->name('get.users');
 Route::get('user', 'UserController@index')->name('user.index');
