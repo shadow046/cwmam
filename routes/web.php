@@ -24,15 +24,15 @@ Route::get('return', 'HomeController@return');
 
 
 Route::get('users', 'UserController@getUsers')->name('get.users');
-Route::get('user', 'UserController@index');
-Route::get('getBranchName', 'UserController@getBranchName');
-Route::post('user_add', 'UserController@store');
-Route::put('user_up/{id}', 'UserController@update');
+Route::get('user', 'UserController@index')->name('user.index');
+Route::get('getBranchName', 'UserController@getBranchName')->name('user.getBranch');
+Route::post('user_add', 'UserController@store')->name('user.add');
+Route::put('user_update/{id}', 'UserController@update')->name('user.update');
 
-
-Route::get('service_center', 'BranchController@index');
-Route::post('service_center_add', 'BranchController@store');
-Route::put('service_center_update/{id}', 'BranchController@update');
+Route::get('branches', 'BranchController@getBranches')->name('get.branches');
+Route::get('branch', 'BranchController@index')->name('branch.index');
+Route::post('branch_add', 'BranchController@store')->name('branch.add');
+Route::put('branch_update/{id}', 'BranchController@update')->name('branch.update');
 
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 

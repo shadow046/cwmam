@@ -27,7 +27,7 @@ class UserController extends Controller
         $areas = Area::all();
         $roles = Role::all();
         
-        return view('pages.user1', compact('users', 'areas','roles'));
+        return view('pages.user', compact('users', 'areas','roles'));
     }
 
     public function getUsers()
@@ -39,19 +39,19 @@ class UserController extends Controller
             'data-status' => '{{ $status }}',
         ])
 
-        ->addColumn('area', function ($user){
+        ->addColumn('area', function (User $user){
             return $user->area->name;
         })
 
-        ->addColumn('branch', function ($user){
+        ->addColumn('branch', function (User $user){
             return $user->branch->name;
         })
 
-        ->addColumn('role', function ($user){
+        ->addColumn('role', function (User $user){
             return $user->roles->first()->name;
         })
 
-        ->addColumn('status', function ($user){
+        ->addColumn('status', function (User $user){
 
             if ($user->status == 1) {
                 return 'Active';

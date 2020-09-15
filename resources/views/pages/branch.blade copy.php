@@ -5,34 +5,13 @@
     <table class="table display" id="example">
       <thead class="thead-dark">
         <tr>
-          <th>
-            BRANCH NAME
-          </th>
-          <th>
-            BRANCH ADDRESS
-          </th>
-          <th>
-            AREA
-          </th>
-          <th>
-            CONTACT PERSON
-          </th>
-          <th>
-            PHONE 
-          </th>
-          <th>
-            EMAIL 
-          </th>
-          <th>
-            STATUS 
-          </th>
-        </tr>
-        <tr>
-            <th><input type="text" size="14" /></th>           
-            <th><input type="text" size="45" /></th>           
-          @for($i = 1; $i <= 5; $i++)
-            <th><input type="text" size="16" /></th>           
-          @endfor
+          <th>BRANCH NAME</th>
+          <th>BRANCH ADDRESS</th>
+          <th>AREA</th>
+          <th>CONTACT PERSON</th>
+          <th>PHONE</th>
+          <th>EMAIL</th>
+          <th>STATUS</th>
         </tr>
       </thead>
       <tbody>

@@ -83,7 +83,11 @@
             <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 
             @if(Request::is('user'))
-                @include('scripts.scripts')
+                @include('scripts.user')
+            @endif
+
+            @if(Request::is('branch'))
+                @include('scripts.branch')
             @endif
            
         </body>

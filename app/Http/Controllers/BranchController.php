@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 use App\Branch;
 use App\Area;
 use Validator;
@@ -24,7 +25,7 @@ class BranchController extends Controller
         $branch = Branch::all()->sortBy('name');
         $areas = Area::all();
         //dd($branches);
-        return view('pages.service-center', compact('branch', 'areas'));
+        return view('pages.branch', compact('branch', 'areas'));
     }
 
     public function showModal()
@@ -35,7 +36,48 @@ class BranchController extends Controller
         return view('modal.add-branch', compact('branch', 'areas'));
     }
 
-    
+    public function getBranches()
+    {
+        
+        return DataTables::of(Branch::get()->all())
+        ->setRowData([
+            'data-id' => '{{$id}}',
+            'data-status' => '{{ $status }}',
+        ])
+        ->addColumn('area', function (Branch $branch){
+            return $branch->area->name;
+        })
+        ->addColumn('status', function (Branch $branch){
+
+            if ($branch->status == 1) {
+                return 'Active';
+            } else {
+                return 'Inactive';
+            }
+        })
+        ->make(true);
+
+        /*->addColumn('branch', function (User $user){
+            return $user->branch->name;
+        })
+
+        ->addColumn('role', function (User $user){
+            return $user->roles->first()->name;
+        })
+
+        ->addColumn('status', function (User $user){
+
+            if ($user->status == 1) {
+                return 'Active';
+            } else {
+                return 'Inactive';
+            }
+        })
+
+        ->setRowClass('{{ $id % 2 == 0 ? "edittr" : "edittr"}}') 
+        */
+    }
+
 
     /*public function getBranchName(Request $request)
     {
