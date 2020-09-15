@@ -38,32 +38,34 @@
             var dtdata = $('#userTable tbody tr:eq(0)').data();
             //console.log( $('#example tbody tr:eq(0)').data() );
             var mydata = table.row(this).data();
+            var area = mydata.area_id;
             var op=" ";
-                $('#full_name').prop('disabled', false);
-                $('#email').prop('disabled', false);
-                $('#password').prop('disabled', true);
-                $('#password_confirmation').prop('disabled', true);
-                $('#role').prop('disabled', false);
-                $('#area').prop('disabled', false);
-                $('#branch').prop('disabled', false);
-                $('#status').prop('disabled', false);
-                $('#userModal').modal('show');
-                selectBranch(branch, function() {
-                    $('#full_name').val(mydata.name);
-                    $('#email').val(mydata.email);
-                    $('#area').val(mydata.area_id);   
-                });
-                
-                $('#role').val(mydata.role);
-                $('#status').val(dtdata.dataStatus);
-                $('#subBtn').val('Update');
-                    //console.log(mydata.DT_RowData[data-status]);
-                    console.log(dtdata);
-                function selectBranch(branch, callback) {
+            $('#full_name').prop('disabled', false);
+            $('#email').prop('disabled', false);
+            $('#password').prop('disabled', true);
+            $('#password_confirmation').prop('disabled', true);
+            $("#divpass1").hide();
+            $("#divpass2").hide();
+            $('#role').prop('disabled', false);
+            $('#area').prop('disabled', false);
+            $('#branch').prop('disabled', false);
+            $('#status').prop('disabled', false);
+            $('#userModal').modal('show');
+            selectBranch(branch, function() {
+                $('#full_name').val(mydata.name);
+                $('#email').val(mydata.email);
+                $('#area').val(mydata.area_id);
+                $('#branch').val(mydata.branch_id);
+            });
+            $('#role').val(mydata.role);
+            $('#status').val(dtdata.dataStatus);
+            $('#subBtn').val('Update');
+
+            function selectBranch(branch, callback) {
                 $.ajax({
                     type:'get',
                     url:'{!!URL::to('getBranchName')!!}',
-                    data:{'id':mydata.area_id},
+                    data:{'id':area},
                     success:function(data)
                     {
                         //console.log('success');
@@ -74,7 +76,6 @@
                             op+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
                         }
                         $('#branch').find('option').remove().end().append(op);
-                        $('#branch').val(mydata.branch_id);
                         callback();
                     },
                 });
@@ -84,7 +85,7 @@
         $('#addBtn').on('click', function(e){ //show user/branch modal
             e.preventDefault();
             $('#subBtn').val('Save');
-            addBtn = $('#addBtn').val();
+            /*addBtn = $('#addBtn').val();
             if(addBtn == 'Add Branch'){
                 $('#branchModal').modal('show');
                 $('#branch_name').val('');
@@ -101,8 +102,8 @@
                 $('#mobile').prop('disabled', false);
                 $('#email').prop('disabled', false);
                 $('#status').prop('disabled', false);
-            }
-            if(addBtn == 'New User'){
+            }*/
+            //if(addBtn == 'New User'){
                 $("#divpass1").show();
                 $("#divpass2").show();
                 $('#userModal').modal('show');
@@ -122,6 +123,34 @@
                 $('#area').prop('disabled', false);
                 $('#branch').prop('disabled', false);
                 $('#status').prop('disabled', false);
+            //}
+        });
+
+        $('.area').change(function(){ //get branches of this area
+            var area = $(this).val();
+            var op=" ";
+            selectBranch(branch, function() {
+                $('#branch').val('select branch');
+            });
+
+            function selectBranch(branch, callback) {
+                $.ajax({
+                    type:'get',
+                    url:'{!!URL::to('getBranchName')!!}',
+                    data:{'id':area},
+                    success:function(data)
+                    {
+                        //console.log('success');
+                        //console.log(data);
+                        //console.log(data.length);
+                        op+='<option selected disabled>select branch</option>';
+                        for(var i=0;i<data.length;i++){
+                            op+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
+                        }
+                        $('#branch').find('option').remove().end().append(op);
+                        callback();
+                    },
+                });
             }
         });
 
@@ -211,7 +240,7 @@
             
         });*/
 
-        $('#branchForm').on('submit', function(e){ //branch modal update/save button
+        /*$('#branchForm').on('submit', function(e){ //branch modal update/save button
             e.preventDefault();
             subBtn = $('#subBtn').val();
             if(subBtn == 'Update'){
@@ -247,7 +276,7 @@
                     }
                 });
             }
-        });
+        });*/
 
         $('#userForm').on('submit', function(e){ //user modal update/save button
             e.preventDefault();
@@ -261,7 +290,7 @@
                     success: function(data){
                         if($.isEmptyObject(data.error)){
                             $('#userModal').modal('hide');
-                            alert("Data Updated");
+                            alert("User data updated");
                             window.location.reload();
                         }else{
                             alert(data.error);
@@ -277,7 +306,7 @@
                     success: function(data){
                         if($.isEmptyObject(data.error)){
                             $('#userModal').modal('hide');
-                            alert("Data Saved");
+                            alert("User data saved");
                             window.location.reload();
                         }else{
                             alert(data.error);
@@ -335,5 +364,25 @@
                 .search( $(this).val())
                 .draw();
         });
+
+        function selectBranch(branch, callback) {
+            $.ajax({
+                type:'get',
+                url:'{!!URL::to('getBranchName')!!}',
+                data:{'id':area},
+                success:function(data)
+                {
+                    //console.log('success');
+                    //console.log(data);
+                    //console.log(data.length);
+                    op+='<option selected disabled>select branch</option>';
+                    for(var i=0;i<data.length;i++){
+                        op+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
+                    }
+                    $('#branch').find('option').remove().end().append(op);
+                    callback();
+                },
+            });
+        }
     });
 </script>

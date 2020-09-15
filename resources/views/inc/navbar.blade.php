@@ -22,7 +22,6 @@
                     <a class="nav-link {{ Request::is('return') ? 'active' : '' }}" href="{{ url('return') }}">Return</a>
                 </li>
                 
-                
             @else
                 <br><br>
             @endauth
