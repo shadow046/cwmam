@@ -25,12 +25,12 @@
             ajax: '{{route('get.branches')}}',
             columns: [
                 { data: 'name', name:'name', "width": "14%" },
-                { data: 'area', name:'area'},
+                { data: 'area', name:'area', "width": "14%"},
                 { data: 'head', name:'head', "width": "14%"},
-                { data: 'phone', name:'phone'},
-                { data: 'email', name:'email'},
+                { data: 'phone', name:'phone',"width": "14%"},
+                { data: 'email', name:'email',"width": "14%"},
                 { data: 'status', name:'status', "width": "14%"},
-                { data: 'address', name:'address' }
+                { data: 'address', name:'address', "width": "14%"}
             ]
         });
 
