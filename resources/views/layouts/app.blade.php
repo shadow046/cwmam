@@ -44,12 +44,16 @@
                     z-index: 10;
                 }
 
-                button[type=button], button[type=submit], button[type=reset], input[type=button], input[type=submit], input[type=reset] {
-                    height: 40px;
+                button[type=button].col-md-2{
+                    height: 35px;
                     background-color: #0d1a80;
                     color: white;
                     cursor: pointer;
-                    width: 120px;
+                    width: 60px;
+                }
+
+                button[type=button], button[type=submit], button[type=reset], input[type=button], input[type=submit], input[type=reset] {
+                    background-color: #0d1a80;
                 }
                 .bg-card {
                     background-color: #0d1a80;
@@ -68,16 +72,25 @@
                     border-top-right-radius: 5px;
                 }
 
-                .row.no-margin {
-                    margin-left: -2.5px;
-                    margin-right: -2.5px;
+                .modal-body {
+                    max-height:250px; 
+                    overflow-y: auto;
                 }
 
-                .row.no-margin > .col-md-2, .row.no-margin > .col-md-3, .row.no-margin > .col-md-4, .row.no-margin > .col-md-6{
-                    padding-left: 2.5px;
-                    padding-right: 2.5px;
+                .row.no-margin {
+                    margin-left: -1.5px;
+                    margin-right: -1.5px;
+                }
+
+                .row.no-margin > .col-md-2, .row.no-margin > .col-lg-3, .row.no-margin > .col-md-3, .row.no-margin > .col-md-4, , .row.no-margin > .col-md-5 .row.no-margin > .col-md-6, .row.no-margin > .col-md-7, .row.no-margin > .col-md-8{
+                    padding-left: 1.5px;
+                    padding-right: 1.5px;
                 }
                 
+                .modal-content{
+                    background-color: #f2f2f2;
+                }
+
             </style>
         </head>
         <body>

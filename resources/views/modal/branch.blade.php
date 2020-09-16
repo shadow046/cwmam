@@ -53,7 +53,7 @@
                         @role('Super-admin|Admin')
                         <input type="submit" id="subBtn" class="btn btn-primary" value="Edit">
                         @endrole
-                    </div>
+                    </div>  
                 </form>
   
                 <table class="table" style="height: 300px;">

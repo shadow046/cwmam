@@ -23,6 +23,7 @@ Route::get('return', 'HomeController@return');
 
 
 Route::get('request', 'StockRequestController@index')->name('stock.index');
+Route::get('view', 'StockRequestController@view')->name('stock.view');
 
 Route::get('users', 'UserController@getUsers')->name('get.users');
 Route::get('user', 'UserController@index')->name('user.index');

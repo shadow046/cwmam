@@ -69,5 +69,6 @@
       </tbody>
     </table>
   </div>
-  @include('modal.stock')
+  @include('modal.request')
+  @include('modal.send')
 @endsection
