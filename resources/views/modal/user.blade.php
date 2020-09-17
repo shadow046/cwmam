@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body mod">
                 
                 <form id="userForm">
                     {{ csrf_field() }}
@@ -53,7 +53,7 @@
                         <div class="col-md-6">
                             <select name="role" id="role" class="form-control" disabled>
                                 <option selected disabled>select roles</option>
-                                @role('Super-admin|Admin')
+                                @role('Administrator')
                                     @foreach ($roles as $role)
                                             @if( $role->id > Auth::user()->roles->first()->id)
                                                 <option value="{{ $role->name }}">{{ $role->name }}</option>
@@ -98,7 +98,7 @@
 
                     <div class="modal-footer">
                         <input type="button" class="btn btn-primary" data-dismiss="modal" value="Close">
-                        @role('Super-admin|Admin')
+                        @role('Administrator')
                         <input type="submit" id="subBtn" class="btn btn-primary" value="Update">
                         @endrole
                     </div>

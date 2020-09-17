@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
-use App\Branch;
-use App\User;
 class StockRequestController extends Controller
 {
     /**
@@ -15,9 +12,7 @@ class StockRequestController extends Controller
      */
     public function index()
     {
-        $id = Auth::user()->id;
-        $user = User::find($id);
-        return view('pages.stock-request', compact('user'));
+        return view('pages.stock-request');
     }
 
     /**

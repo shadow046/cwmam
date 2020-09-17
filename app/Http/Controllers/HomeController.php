@@ -7,6 +7,7 @@ use Spatie\Activitylog\Models\Activity;
 use Spatie\Permission\Models\Role;
 use App\User;
 use App\Branch;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -27,6 +28,16 @@ class HomeController extends Controller
      */
     public function index()
     {
+        /*$users = User::whereHas('roles', function ($query) {
+            $query->where('name', '=', 'Viewer');
+        })->get();
+        foreach ($users as $user) {
+            $user->syncRoles('Head');
+        }
+        $users = User::whereHas('roles', function ($query) {
+            $query->where('name', '=', 'Head');
+        })->get();
+        return dd($user);*/
 
         return view('pages.home');
     }

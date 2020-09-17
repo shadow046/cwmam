@@ -10,7 +10,6 @@
             <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
             <title>SERVICE CENTER STOCK INVENTORY MONITORING</title>
             <style>
                 body {
@@ -28,6 +27,7 @@
                 }
                 p {
                     color: white;
+                    margin: 0;
                 }
                 .mybg{background:#0d1a80;}
                 .table th, td {
@@ -72,11 +72,6 @@
                     border-top-right-radius: 5px;
                 }
 
-                .modal-body {
-                    max-height:250px; 
-                    overflow-y: auto;
-                }
-
                 .row.no-margin {
                     margin-left: -1.5px;
                     margin-right: -1.5px;
@@ -94,12 +89,27 @@
             </style>
         </head>
         <body>
-            <div class="container"><table><tr><td><img class="container__image" src="idsi.png" alt="idsi.png" style="width: auto; height: 100px;"></td><td><h1 style="color: #0d1a80; font-family: arial; font-weight: bold;">SERVICE CENTER STOCK INVENTORY MONITORING</h1></td></tr></table></div>
+            <div class="d-flex">
+                <img class="p-2 align-self-end" src="idsi.png" alt="idsi.png" style="width: auto; height: 120px;">
+                <h2 class="p-2 align-self-end" style="color: #0d1a80; font-family: arial; font-weight: bold;">SERVICE CENTER STOCK INVENTORY MONITORING</h2>
+                @auth
+                <div class="p-2 ml-auto align-self-end d-flex">
+                    <div class="p-2 ml-auto" style="text-align: right;">
+                            <p style="color: #0d1a80">{{ Auth::user()->name}}</p>
+                            <p style="color: #0d1a80">{{ Auth::user()->branch->name}}</p>
+                            <p style="color: #0d1a80">{{Carbon\Carbon::now()->toDayDateTimeString()}}</p>
+                    </div>
+                    <i class="fa fa-user-circle fa-5x p-2"></i>
+                </div>
+                @endauth
+            </div>
             @include('inc.navbar')
             <div class="py-2">
             @yield('content')
-            </div>    
-            
+            </div>
+            @if(Request::is('branch'))
+                @include('modal.branch')
+            @endif
             <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>

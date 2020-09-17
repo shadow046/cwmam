@@ -17,7 +17,8 @@
     $(document).ready(function()
     {
         //var selected = [];
-        var table = 
+        $('#saveBtn').hide();
+        var table =
         $('#branchTable').DataTable({ //user datatables
             "dom": 'lrtip',
             processing: true,
@@ -45,7 +46,6 @@
             $('#mobile').prop('disabled', true);
             $('#email').prop('disabled', true);
             $('#status').prop('disabled', true);
-            $('#subBtn').val('Edit');
             $('#myid').val(trdata.id);
             $('#branch_name').val(trdata.name);
             $('#address').val(trdata.address);
@@ -55,12 +55,14 @@
             $('#email').val(trdata.email);
             $('#status').val(dtdata.dataStatus);
             $('#myid').val(trdata.id);
+            $('#editBtn').val('Edit');
+            $('#editBtn').show();
+            $('#saveBtn').hide();
             $('#branchModal').modal('show');
         });
 
         $('#addBtn').on('click', function(e){ //show user/branch modal
             e.preventDefault();
-            $('#subBtn').val('Save');
             $('#branchModal').modal('show');
             $('#branch_name').val('');
             $('#address').val('');
@@ -76,12 +78,27 @@
             $('#mobile').prop('disabled', false);
             $('#email').prop('disabled', false);
             $('#status').prop('disabled', false);
+            $('#editBtn').val('Save');
+            $('#editBtn').hide();
+            $('#saveBtn').show();
+        });
+
+        $('#editBtn').on('click', function(){
+            $('#branch_name').prop('disabled', false);
+            $('#address').prop('disabled', false);
+            $('#area').prop('disabled', false);
+            $('#contact_person').prop('disabled', false);
+            $('#mobile').prop('disabled', false);
+            $('#email').prop('disabled', false);
+            $('#status').prop('disabled', false);
+            $('#editBtn').hide();
+            $('#saveBtn').show();
         });
 
         $('#branchForm').on('submit', function(e){ //branch modal update/save button
             e.preventDefault();
-            subBtn = $('#subBtn').val();
-            if(subBtn == 'Update'){
+            editBtn = $('#editBtn').val();;
+            if(editBtn == 'Edit'){
                 var myid = $('#myid').val();
                 $.ajax({
                     type: "PUT",
@@ -98,7 +115,7 @@
                     } 
                 });
             }
-            if(subBtn == 'Save'){
+            if(editBtn == 'Save'){
                 $.ajax({
                     type: "POST",
                     url: "{{route("branch.add")}}",
@@ -113,16 +130,6 @@
                         }
                     }
                 });
-            }
-            if(subBtn == 'Edit'){
-                $('#branch_name').prop('disabled', false);
-                $('#address').prop('disabled', false);
-                $('#area').prop('disabled', false);
-                $('#contact_person').prop('disabled', false);
-                $('#mobile').prop('disabled', false);
-                $('#email').prop('disabled', false);
-                $('#status').prop('disabled', false);
-                $('#subBtn').val('Update');
             }
         });
 

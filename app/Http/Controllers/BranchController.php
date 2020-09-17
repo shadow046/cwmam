@@ -24,7 +24,6 @@ class BranchController extends Controller
     {
         $branch = Branch::all()->sortBy('name');
         $areas = Area::all();
-        //dd($branches);
         return view('pages.branch', compact('branch', 'areas'));
     }
 

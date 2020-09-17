@@ -8,7 +8,6 @@
                 </button>
             </div>
             <div class="modal-body">
-                
                 <form id="branchForm">
                     {{ csrf_field() }}
                     
@@ -17,7 +16,7 @@
                         <div class="col-md-3 form-group">
                             <input type="text" class="form-control form-control-sm " name="branch_name" id="branch_name" placeholder="Enter Branch Name" disabled>
                         </div>
-                        <div class="col-md-2 form-group">
+                        <div class="col-md-3 form-group">
                             <select name="area" id="area" class="form-control form-control-sm area @error('area') is-invalid @enderror" disabled>
                                 <option selected disabled>select area</option>
                                 @foreach ($areas as $area)
@@ -25,7 +24,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-7 form-group">
+                        <div class="col-md-6 form-group">
                             <input type="text" class="form-control form-control-sm" name="address" id="address" placeholder="Enter address" disabled>
                         </div>
                     </div>
@@ -47,30 +46,28 @@
                             </select>
                         </div>
                     </div>
-            </div>
+                    <table class="table" style="height: 300px;">
+                        <thead class="thead-dark">
+                            <th>ITEM CODE</th>
+                            <th>DESCRIPTION</th>
+                            <th>QTY</th>
+                            <th>IN</th>
+                            <th>OUT</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>test</td>
+                                <td>test</td>
+                            </tr>
+                        </tbody>
+                    </table>
                     <div class="modal-footer">
-                        <input type="button" class="btn btn-primary" data-dismiss="modal" value="Close">
-                        @role('Super-admin|Admin')
-                        <input type="submit" id="subBtn" class="btn btn-primary" value="Edit">
-                        @endrole
-                    </div>  
+                        <input type="button" id="editBtn" class="btn btn-primary" value="Edit">
+                        <input type="submit" id="saveBtn" class="btn btn-primary" value="Save">
+                        <input type="button" class="btn btn-primary mr-auto" data-dismiss="modal" value="Cancel">                        
+                    </div>
                 </form>
-  
-                <table class="table" style="height: 300px;">
-                    <thead class="thead-dark">
-                        <th>Item Code</th>
-                        <th>Description</th>
-                        <th>Qty</th>
-                        <th>Purpose</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>test</td>
-                            <td>test</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div> 
+            </div>
         </div>
     </div>
 </div>

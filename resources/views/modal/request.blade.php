@@ -26,13 +26,13 @@
                     <div class="col-md-6 form-group row">
                         <label class="col-md-5 col-form-label text-md-right">Branch name:</label>
                         <div class="col-md-7">
-                            <input type="text" class="form-control form-control-sm " id="branch" value="{{$user->branch->name}}" disabled>
+                            <input type="text" class="form-control form-control-sm " id="branch" value="{{ Auth::user()->branch->name }}" disabled>
                         </div>
                     </div>
                     <div class="col-md-6 form-group row">
                         <label class="col-md-4 col-form-label text-md-right">Requested by:</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control form-control-sm " id="name" value="{{Auth::user()->name}}" disabled>
+                            <input type="text" class="form-control form-control-sm " id="name" value="{{ Auth::user()->name }}" disabled>
                         </div>
                     </div>
                     
@@ -41,14 +41,14 @@
                     <div class="col-md-6 form-group row">
                         <label class="col-md-5 col-form-label text-md-right">Contact number:</label>
                         <div class="col-md-7">
-                            <input type="text" class="form-control form-control-sm " id="phone"  value="{{$user->branch->phone}}" disabled>
+                            <input type="text" class="form-control form-control-sm " id="phone"  value="{{ Auth::user()->branch->phone }}" disabled>
                         </div>
                     </div>
                     
                     <div class="col-md-6 form-group row">
                         <label class="col-md-4 col-form-label text-md-right">Area:</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control form-control-sm " id="area" value="{{$user->area->name}}" disabled>
+                            <input type="text" class="form-control form-control-sm " id="area" value="{{ Auth::user()->area->name }}" disabled>
                         </div>
                     </div>
                 </div>
@@ -56,11 +56,11 @@
                     <div class="col-lg-7 form-group row">
                         <label for="address" class="col-md-4 col-form-label text-md-right">Address:</label>
                         <div class="col-md-8">
-                            <textarea class="form-control form-control-sm " rows="3" name="address" id="address" disabled>{{$user->branch->address}}</textarea>
+                            <textarea class="form-control form-control-sm " rows="3" name="address" id="address" disabled>{{ Auth::user()->branch->address}}</textarea>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div><br>
             <div>
                 <h5 class="modal-title w-100 text-center">REQUEST DETAILS</h5>
             </div>
