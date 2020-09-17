@@ -8,7 +8,7 @@
         <a href="#" id="filter" data-placement="bottom" data-toggle="popover" data-content='@include("inc.branchfilter")'><i class="fa fa-lg fa-filter" aria-hidden="true"></i></a>
       </div>
     </div>
-    <table class="table" id="branchTable">
+    <table class="table branchTable" id="branchTable">
       <thead class="thead-dark">
         <tr class="tbsearch">
           <td>

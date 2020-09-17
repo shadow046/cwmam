@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Branch;
 use App\Area;
+use App\Item;
+use App\Stock;
 use Validator;
 class BranchController extends Controller
 {
@@ -35,6 +37,22 @@ class BranchController extends Controller
         return view('modal.add-branch', compact('branch', 'areas'));
     }
 
+    public function getStocks(Request $id)
+    {
+        $item = Stock::where('branch_id', '8')->get();
+        return dd($item->items->first()->name);
+
+        return DataTables::of(Stock::where('branch_id', $id)->get())
+        
+        ->addColumn('item_code', function (Stock $stock){
+
+           return $stock->items->name;
+
+        })
+        
+        ->make(true);;
+    }
+
     public function getBranches()
     {
         
@@ -55,26 +73,6 @@ class BranchController extends Controller
             }
         })
         ->make(true);
-
-        /*->addColumn('branch', function (User $user){
-            return $user->branch->name;
-        })
-
-        ->addColumn('role', function (User $user){
-            return $user->roles->first()->name;
-        })
-
-        ->addColumn('status', function (User $user){
-
-            if ($user->status == 1) {
-                return 'Active';
-            } else {
-                return 'Inactive';
-            }
-        })
-
-        ->setRowClass('{{ $id % 2 == 0 ? "edittr" : "edittr"}}') 
-        */
     }
 
 

@@ -31,6 +31,7 @@ Route::get('getBranchName', 'UserController@getBranchName')->name('user.getBranc
 Route::post('user_add', 'UserController@store')->name('user.add');
 Route::put('user_update/{id}', 'UserController@update')->name('user.update');
 
+Route::get('stocks', 'BranchController@getStocks')->name('get.stocks');
 Route::get('branches', 'BranchController@getBranches')->name('get.branches');
 Route::get('branch', 'BranchController@index')->name('branch.index');
 Route::post('branch_add', 'BranchController@store')->name('branch.add');

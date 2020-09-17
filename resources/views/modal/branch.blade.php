@@ -46,21 +46,19 @@
                             </select>
                         </div>
                     </div>
-                    <table class="table" style="height: 300px;">
-                        <thead class="thead-dark">
-                            <th>ITEM CODE</th>
-                            <th>DESCRIPTION</th>
-                            <th>QTY</th>
-                            <th>IN</th>
-                            <th>OUT</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>test</td>
-                                <td>test</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div id="table">
+                        <table class="table branchDetails" id="branchDetails">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>ITEM CODE</th>
+                                    <th>DESCRIPTION</th>
+                                    <th>STOCK</th>
+                                    <th>AVAILABLE</th>
+                                    <th>OUT</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                     <div class="modal-footer">
                         <input type="button" id="editBtn" class="btn btn-primary" value="Edit">
                         <input type="submit" id="saveBtn" class="btn btn-primary" value="Save">

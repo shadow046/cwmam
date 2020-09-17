@@ -37,6 +37,7 @@
                     height:350px;  
                     overflow:scroll;
                 }
+                
                 thead tr:nth-child(2) th{
                     background: white;
                     position: sticky;

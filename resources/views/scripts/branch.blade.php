@@ -18,8 +18,9 @@
     {
         //var selected = [];
         $('#saveBtn').hide();
+
         var table =
-        $('#branchTable').DataTable({ //user datatables
+        $('table.branchTable').DataTable({ //user datatables
             "dom": 'lrtip',
             processing: true,
             serverSide: true,
@@ -36,9 +37,19 @@
         });
 
         $('#branchTable tbody').on('click', 'tr', function () { //show branch details in modal
-
             var dtdata = $('#branchTable tbody tr:eq(0)').data();
             var trdata = table.row(this).data();
+            var stockTable =
+            $('table.branchDetails').DataTable({ //user datatables
+                "dom": 'lrtip',
+                processing: true,
+                serverSide: true,
+                ajax: "/stocks/8",
+                columns: [
+                    { data: 'serial', name:'serial', "width": "14%"},
+                ]
+            });
+            $('#table').show();
             $('#branch_name').prop('disabled', true);
             $('#address').prop('disabled', true);
             $('#area').prop('disabled', true);
@@ -81,6 +92,8 @@
             $('#editBtn').val('Save');
             $('#editBtn').hide();
             $('#saveBtn').show();
+            $('#table').hide();
+            
         });
 
         $('#editBtn').on('click', function(){

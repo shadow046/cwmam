@@ -8,13 +8,9 @@ class Item extends Model
 {
     protected $guarded = [];
 
-    public function category()
+    public function stock()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Stock::class);
     }
 
-    public function branch()
-    {
-        return $this->belongsTo(Branch::class);
-    }
 }
