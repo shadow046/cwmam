@@ -47,7 +47,7 @@
                         </div>
                     </div>
                     <div id="table">
-                        <table class="table branchDetails" id="branchDetails">
+                        <table class="table branchDetails" id="branchDetails" style="width: 100%">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>ITEM CODE</th>

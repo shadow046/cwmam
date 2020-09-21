@@ -39,17 +39,28 @@
         $('#branchTable tbody').on('click', 'tr', function () { //show branch details in modal
             var dtdata = $('#branchTable tbody tr:eq(0)').data();
             var trdata = table.row(this).data();
+            var id = trdata.id;
+            console.log(trdata.id);
+            $('table.branchDetails').dataTable().fnDestroy();
+            $('#table').show();
             var stockTable =
             $('table.branchDetails').DataTable({ //user datatables
                 "dom": 'lrtip',
                 processing: true,
                 serverSide: true,
-                ajax: "/stocks/8",
+                ajax: "/stocks/"+id,
+                columnDefs: [
+                    {"className": "dt-center", "targets": "_all"}
+                ],
                 columns: [
-                    { data: 'serial', name:'serial', "width": "14%"},
+                    { data: 'item_id', name:'item_id', "width": "20%",},
+                    { data: 'name', name:'name', "width": "17%"},
+                    { data: 'stock', name:'stock', "width": "14%"},
+                    { data: 'available', name:'available', "width": "14%"},
+                    { data: 'stock_out', name:'stock_out', "width": "14%"}
+
                 ]
             });
-            $('#table').show();
             $('#branch_name').prop('disabled', true);
             $('#address').prop('disabled', true);
             $('#area').prop('disabled', true);

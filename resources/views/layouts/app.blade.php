@@ -86,7 +86,6 @@
                 .modal-content{
                     background-color: #f2f2f2;
                 }
-
             </style>
         </head>
         <body>

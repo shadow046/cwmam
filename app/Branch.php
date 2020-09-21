@@ -19,15 +19,5 @@ class Branch extends Model
     {
         return $this->belongsTo(Area::class);
     }
-
-    public function items()
-    {
-        return $this->hasmany(Item::class);
-    }
-
-    public function stocks()
-    {
-        return $this->hasmany(Stock::class);
-    }
 }
  

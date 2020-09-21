@@ -8,9 +8,9 @@ class Item extends Model
 {
     protected $guarded = [];
 
-    public function stock()
+    public function stocks()
     {
-        return $this->belongsTo(Stock::class);
+        return $this->hasMany(Stock::class);
     }
 
 }

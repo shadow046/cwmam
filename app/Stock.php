@@ -8,8 +8,8 @@ class Stock extends Model
 {
     protected $guarded = [];
 
-    public function items()
+    public function item()
     {
-        return $this->hasmany(item::class);
+        return $this->belongsTo(Item::class);
     }
 }
