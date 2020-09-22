@@ -19,4 +19,9 @@ class Area extends Model
     {
         return $this->hasmany(User::class);
     }
+
+    public function StockRequests()
+    {
+        return $this->hasmany(StockRequest::class);
+    }
 }

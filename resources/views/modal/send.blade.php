@@ -40,9 +40,9 @@
                     
                 </div>
                 <div class="row no-margin">
-                    <div class="col-lg-7 form-group row">
-                        <label class="col-md-4 col-form-label text-md-right">Date schedule:</label>
-                        <div class="col-md-6">
+                    <div class="col-md-6 form-group row">
+                        <label class="col-md-5 col-form-label text-md-right">Date schedule:</label>
+                        <div class="col-md-7">
                             <input type="date" class="form-control form-control-sm" name="sched" id="sched">
                         </div>
                     </div>
@@ -52,26 +52,21 @@
                 <h5 class="modal-title w-100 text-center">REQUEST DETAILS</h5>
             </div>
             <div class="modal-body" style="max-height:200px;overflow-y: auto;">
-                <table class="table" style="height: 150px;">
+                <table class="table sendDetails" style="height: 150px;">
                     <thead class="thead-dark">
                         <th>Item Code</th>
                         <th>Description</th>
                         <th>Qty</th>
                         <th>Purpose</th>
+                        <th></th>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>test</td>
-                            <td>test</td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
             <div class="modal-header">
                 <h6 class="modal-title w-100 text-center">ENTER ITEM HERE</h6>
             </div>
             <div class="modal-body" style="max-height:200px;overflow-y: auto;">
-                <table class="table">
+                <table class="table sendDetailsItem" id="sendTable">
                     <thead class="thead-dark">
                         <th>Item Code</th>
                         <th>Description</th>

@@ -13,4 +13,14 @@ class Item extends Model
         return $this->hasMany(Stock::class);
     }
 
+    public function RequestedItems()
+    {
+        return $this->hasMany(RequestedItem::class);
+    }
+
+    public function PreparedItems()
+    {
+        return $this->hasMany(PreparedItem::class);
+    }
+
 }

@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Area::class);
     }
+
+    public function StockRequests()
+    {
+        return $this->hasmany(StockRequest::class);
+    }
 }

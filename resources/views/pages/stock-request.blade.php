@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+
   <div class="table-responsive" style="height: 450px;">
-    <table class="table">
+    <table class="table requestTable" id="requestTable">
       <thead class="thead-dark">
         <tr>
           <th>
@@ -25,30 +26,6 @@
           </th>
         </tr>
       </thead>
-      <tbody>
-        @for($i = 1; $i<=20; $i++)
-        <tr>
-          <td>
-            ----
-          </td>
-          <td>
-            ----
-          </td>
-          <td>
-            ----
-          </td>
-          <td>
-            ----
-          </td>
-          <td>
-            ----
-          </td>
-          <td>
-            ----
-          </td>
-        </tr>
-        @endfor
-      </tbody>
     </table>
   </div>
 @endsection

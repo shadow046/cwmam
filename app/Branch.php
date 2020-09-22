@@ -15,6 +15,11 @@ class Branch extends Model
         return $this->hasmany(User::class);
     }
 
+    public function StockRequests()
+    {
+        return $this->hasmany(StockRequest::class);
+    }
+
     public function area()
     {
         return $this->belongsTo(Area::class);

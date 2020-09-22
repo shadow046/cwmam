@@ -20,8 +20,10 @@ Route::get('service_units', 'HomeController@service_units');
 Route::get('spare_parts', 'HomeController@spare_parts');
 Route::get('return', 'HomeController@return');
 
-
-
+Route::delete('delete/{id}', 'StockRequestController@mydel')->name('stock.delete');
+Route::get('send/{id}', 'StockRequestController@send')->name('stock.send');
+Route::get('requests/{id}', 'StockRequestController@getRequestDetails')->name('get.reqdetails');
+Route::get('requests', 'StockRequestController@getRequests')->name('get.requests');
 Route::get('request', 'StockRequestController@index')->name('stock.index');
 Route::get('view', 'StockRequestController@view')->name('stock.view');
 

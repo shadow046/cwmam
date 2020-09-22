@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRequestsTable extends Migration
+class CreatePreparedItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateRequestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('requests', function (Blueprint $table) {
+        Schema::create('prepared_items', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('request_no')->nullable();
-            $table->unsignedInteger('user_id')->nullable();
-            $table->string('branch_id')->nullable();
-            $table->string('area_id')->nullable();
-            $table->unsignedInteger('status')->nullable();
+            $table->unsignedInteger('items_id')->nullable();
+            $table->unsignedInteger('quantity')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('requests');
+        Schema::dropIfExists('prepared_items');
     }
 }

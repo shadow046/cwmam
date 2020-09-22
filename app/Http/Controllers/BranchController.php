@@ -75,7 +75,6 @@ class BranchController extends Controller
                             'SUM(CASE WHEN stocks.status = \'in\' THEN 1 ELSE 0 END) - SUM(CASE WHEN stocks.status = \'out\' THEN 1 ELSE 0 END) as available'
                         )
                     )
-                    
             ->join('stocks', 'stocks.item_id', '=', 'items.id')
             ->where('branch_id', $id)
             ->groupBy('item_id')
@@ -89,7 +88,7 @@ class BranchController extends Controller
     public function getBranches()
     {
         
-        return DataTables::of(Branch::get()->all())
+        return DataTables::of(Branch::all())
         ->setRowData([
             'data-id' => '{{$id}}',
             'data-status' => '{{ $status }}',
