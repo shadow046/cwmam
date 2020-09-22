@@ -71,33 +71,17 @@
                 <h6 class="modal-title w-100 text-center">ENTER ITEM HERE</h6>
             </div>
             <div class="modal-body" style="max-height:200px;overflow-y: auto;">
-                <div class="items">
-                    <div class="row no-margin ">
-                        <div class="col-lg-12 form-group row">
-                            <div class="col-lg-3">
-                                <input type="text" list="itemcat" class="form-control form-control-sm" name="itemcat[]" id="itemcat[]" placeholder="item category">
-                                <datalist id="itemlist">
-                                   
-                                </datalist>
-                            </div>
-                            <div class="col-lg-2">
-                                <input type="text" list="itemlist" class="form-control form-control-sm" name="itemcode[]" id="itemcode[]" placeholder="item code">
-                                <datalist id="itemlist">
-                                   
-                                </datalist>
-                            </div>
-                            <div class="col-lg-4">
-                                <input type="text" class="form-control form-control-sm" name="itemdesc[]" id="itemdesc[]" placeholder="Description">
-                            </div>
-                            <div class="col-lg-1">
-                                <input type="number" class="form-control form-control-sm" name="itemqty[]" id="itemqty[]" placeholder="Qty.">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <th>Item Code</th>
+                        <th>Description</th>
+                        <th>Qty</th>
+                        <th></th>
+                    </thead>
+                </table>
             </div><hr>
             <div class="modal-footer">
-            <input type="button" class="add_field_button btn btn-primary mr-auto" value="Add More Item">
+            <input type="button" class="add_item btn btn-primary mr-auto" value="Add Item">
             <input type="button" class="btn btn-primary" data-dismiss="modal" value="Cancel">
             <input type="submit" class="btn btn-primary" id="ssubBtn" class="button" value="Submit">
             </form>

@@ -44,5 +44,4 @@
   @role('Administrator')
     <input type="button" id="addBtn" class="btn btn-primary" value="New User"> 
   @endrole
-    @include('modal.user')
 @endsection

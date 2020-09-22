@@ -15,19 +15,10 @@
             REQUESTED BY
           </th>
           <th>
-            BRANCH CODE
-          </th>
-          <th>
             BRANCH NAME
           </th>
           <th>
-            ADDRESS
-          </th>
-          <th>
             AREA
-          </th>
-          <th>
-            CONTACT NO.
           </th>
           <th>
             STATUS
@@ -55,20 +46,9 @@
           <td>
             ----
           </td>
-          <td>
-            ----
-          </td>
-          <td>
-            ----
-          </td>
-          <td>
-            ----
-          </td>
         </tr>
         @endfor
       </tbody>
     </table>
   </div>
-  @include('modal.request')
-  @include('modal.send')
 @endsection
