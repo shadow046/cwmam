@@ -12,4 +12,9 @@ class PreparedItem extends Model
     {
         return $this->belongsTo(Item::class);
     }
+
+    public function Warehouse()
+    {
+        return $this->belongsTo(Warehouse::class);
+    }
 }

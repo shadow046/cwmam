@@ -7,6 +7,9 @@ use Yajra\DataTables\Facades\DataTables;
 use App\StockRequest;
 use App\RequestedItem;
 use App\PreparedItem;
+use App\Warehouse;
+use App\Category;
+use App\Item;
 class StockRequestController extends Controller
 {
     /**
@@ -16,36 +19,39 @@ class StockRequestController extends Controller
      */
     public function index()
     {
-        return view('pages.stock-request');
+        $stocks = Warehouse::select('items_id', 'serial', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
+                    ->where('status', 'in')
+                    ->groupBy('items_id')->get();
+        $categories = Category::all();
+        //dd($stocks);
+        return view('pages.stock-request', compact('stocks', 'categories'));
     }
 
-    public function mydel($id){
-        PreparedItem::find($id)->delete();
-        return redirect()->route('stock.index');
+    public function getItemCode(Request $request){
+        $data = Item::select('id', 'name')->where('category_id', $request->id)->get();
+        
+        return response()->json($data);
+        
+    }
+
+    public function getStock(Request $request){
+        //$data = Stock::select('id', 'name')->where('category_id', $request->id)->get();
+        $data = Warehouse::select(\DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
+                    ->where('status', 'in')
+                    ->where('items_id', $request->id)
+                    ->groupBy('items_id')->get();
+        return response()->json($data);
+        
     }
 
     public function Send(Request $request, $id)
     {
 
-        PreparedItem::truncate();
-        $items = RequestedItem::where('request_no', $id)->get();
-        foreach ($items as $item) {
-            PreparedItem::create(['items_id' => $item->items_id, 'quantity' => $item->quantity]);
-        }
-
-        return DataTables::of(PreparedItem::all())
-
-        ->addColumn('item_name', function (PreparedItem $PreparedItem){
-
-            return $PreparedItem->items->name;
-        })
-
-        ->addColumn('action', function (PreparedItem $PreparedItem) {
-            $delBtn = $PreparedItem->id;
-            return '<input type="button" delete_btn="'. $delBtn .'" class="removeBtn btn btn-xs btn-primary" value="Remove">';
-        })
-
-        ->make(true);
+        $reqItems = RequestedItem::where('request_no', $id)->get();
+        $stocks = Warehouse::select('items_id', 'serial', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
+                    ->where('status', 'in')
+                    ->groupBy('items_id')->get();
+        return json_encode($return_array);
     }
 
     public function getRequestDetails(Request $request, $id)
@@ -69,17 +75,13 @@ class StockRequestController extends Controller
             }
 
         })
-
-        ->addColumn('action', function ($RequestedItem) {
-            return '<a href="#" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
-        })
         ->make(true);
     }   
 
     public function getRequests()
     {
         
-        return DataTables::of(StockRequest::all())
+        return DataTables::of(StockRequest::where('status', '!=', '2')->get())
         ->setRowData([
             'data-id' => '{{ $request_no }}',
             'data-status' => '{{ $status }}',
@@ -90,7 +92,7 @@ class StockRequestController extends Controller
 
             if ($request->status == 0) {
                 return 'PENDING';
-            } else {
+            }else{
                 return 'SCHEDULED';
             }
         })
@@ -162,7 +164,17 @@ class StockRequestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $qty = $request->qty;
+
+        for ($i=0; $i < $qty; $i++) { 
+            $item = Warehouse::where('status', 'in')
+                ->where('items_id', $request->item)
+                ->first();
+            $item->status = 'sent';
+            $item->save();
+        }
+        $data = 'save';
+        return response()->json($data);
     }
 
     /**
@@ -173,6 +185,7 @@ class StockRequestController extends Controller
      */
     public function destroy($id)
     {
-        
+        PreparedItem::find($id)->delete($id);
+        //return redirect()->route('stock.index');
     }
 }

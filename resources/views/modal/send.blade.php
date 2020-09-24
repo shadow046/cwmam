@@ -58,7 +58,6 @@
                         <th>Description</th>
                         <th>Qty</th>
                         <th>Purpose</th>
-                        <th></th>
                     </thead>
                 </table>
             </div>
@@ -66,19 +65,299 @@
                 <h6 class="modal-title w-100 text-center">ENTER ITEM HERE</h6>
             </div>
             <div class="modal-body" style="max-height:200px;overflow-y: auto;">
-                <table class="table sendDetailsItem" id="sendTable">
-                    <thead class="thead-dark">
-                        <th>Item Code</th>
-                        <th>Description</th>
-                        <th>Qty</th>
-                        <th></th>
-                    </thead>
-                </table>
+                <div class="row no-margin" id="row1">
+                    <div class="col-md-3 form-group">
+                        <select id="category1" class="form-control category" row_count="1">
+                            <option selected disabled>Select Category</option>
+                            @foreach ($categories as $category )
+                            <option value="{{ $category->id }}">{{ $category->id }}</option>
+                            <option value="2">2</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <select id="item1" class="form-control item" row_count="1">
+                            <option selected disabled>select item code</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <select id="desc1" class="form-control desc" row_count="1">
+                            <option selected disabled>select description</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 form-group">
+                        <input type="number" min="0" max="10" class="form-control" name="qty1" id="qty1" placeholder="Qty">
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <input type="number" class="form-control" name="stock1" id="stock1" placeholder="Stock" style="width: 6em" disabled>
+                    </div>
+                </div>
+                <div class="row no-margin" id="row2">
+                    <div class="col-md-3 form-group">
+                        <select id="category2" class="form-control category" row_count="2">
+                            <option selected disabled>Select Category</option>
+                            @foreach ($categories as $category )
+                            <option value="{{ $category->id }}">{{ $category->id }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <select id="item2" class="form-control item" row_count="2">
+                            <option selected disabled>select item code</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <select id="desc2" class="form-control desc" row_count="2">
+                            <option selected disabled>select description</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 form-group">
+                        <input type="number" min="0" max="10" class="form-control" name="qty2" id="qty2" placeholder="Qty">
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <input type="number" class="form-control" name="stock2" id="stock2" placeholder="Stock" style="width: 6em" disabled>
+                    </div>
+                    <div class="col-md-1 form-group">
+                        <input type="button" class="btn btn-xs remove_btn btn-primary" btn_id="2" value="Remove">
+                    </div>
+                </div>
+                <div class="row no-margin" id="row3">
+                    <div class="col-md-3 form-group">
+                        <select id="category3" class="form-control category" row_count="3">
+                            <option selected disabled>Select Category</option>
+                            @foreach ($categories as $category )
+                            <option value="{{ $category->id }}">{{ $category->id }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <select id="item3" class="form-control item" row_count="3">
+                            <option selected disabled>select item code</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <select id="desc3" class="form-control desc" row_count="3">
+                            <option selected disabled>select description</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 form-group">
+                        <input type="number" min="0" max="10" class="form-control" name="qty3" id="qty3" placeholder="Qty">
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <input type="number" class="form-control" name="stock3" id="stock3" placeholder="Stock" style="width: 6em" disabled>
+                    </div>
+                    <div class="col-md-1 form-group">
+                        <input type="button" class="btn btn-xs remove_btn btn-primary" btn_id="3" value="Remove">
+                    </div>
+                </div>
+                <div class="row no-margin" id="row4">
+                    <div class="col-md-3 form-group">
+                        <select id="category4" class="form-control category" row_count="4">
+                            <option selected disabled>Select Category</option>
+                            @foreach ($categories as $category )
+                            <option value="{{ $category->id }}">{{ $category->id }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <select id="item4" class="form-control item" row_count="4">
+                            <option selected disabled>select item code</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <select id="desc4" class="form-control desc" row_count="4">
+                            <option selected disabled>select description</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 form-group">
+                        <input type="number" min="0" max="10" class="form-control" name="qty4" id="qty4" placeholder="Qty">
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <input type="number" class="form-control" name="stock4" id="stock4" placeholder="Stock" style="width: 6em" disabled>
+                    </div>
+                    <div class="col-md-1 form-group">
+                        <input type="button" class="btn btn-xs remove_btn btn-primary" btn_id="4" value="Remove">
+                    </div>
+                </div>
+                <div class="row no-margin" id="row5">
+                    <div class="col-md-3 form-group">
+                        <select id="category5" class="form-control category" row_count="5">
+                            <option selected disabled>Select Category</option>
+                            @foreach ($categories as $category )
+                            <option value="{{ $category->id }}">{{ $category->id }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <select id="item5" class="form-control item" row_count="5">
+                            <option selected disabled>select item code</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <select id="desc5" class="form-control desc" row_count="5">
+                            <option selected disabled>select description</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 form-group">
+                        <input type="number" min="0" max="10" class="form-control" name="qty5" id="qty5" placeholder="Qty">
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <input type="number" class="form-control" name="stock5" id="stock5" placeholder="Stock" style="width: 6em" disabled>
+                    </div>
+                    <div class="col-md-1 form-group">
+                        <input type="button" class="btn btn-xs remove_btn btn-primary" btn_id="5" value="Remove">
+                    </div>
+                </div>
+                <div class="row no-margin" id="row6">
+                    <div class="col-md-3 form-group">
+                        <select id="category6" class="form-control category" row_count="6">
+                            <option selected disabled>Select Category</option>
+                            @foreach ($categories as $category )
+                            <option value="{{ $category->id }}">{{ $category->id }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <select id="item6" class="form-control item" row_count="6">
+                            <option selected disabled>select item code</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <select id="desc6" class="form-control desc" row_count="6">
+                            <option selected disabled>select description</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 form-group">
+                        <input type="number" min="0" max="10" class="form-control" name="qty6" id="qty6" placeholder="Qty">
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <input type="number" class="form-control" name="stock6" id="stock6" placeholder="Stock" style="width: 6em" disabled>
+                    </div>
+                    <div class="col-md-1 form-group">
+                        <input type="button" class="btn btn-xs remove_btn btn-primary" btn_id="6" value="Remove">
+                    </div>
+                </div>
+                <div class="row no-margin" id="row7">
+                    <div class="col-md-3 form-group">
+                        <select id="category7" class="form-control category" row_count="7">
+                            <option selected disabled>Select Category</option>
+                            @foreach ($categories as $category )
+                            <option value="{{ $category->id }}">{{ $category->id }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <select id="item7" class="form-control item" row_count="7">
+                            <option selected disabled>select item code</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <select id="desc7" class="form-control desc" row_count="7">
+                            <option selected disabled>select description</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 form-group">
+                        <input type="number" min="0" max="10" class="form-control" name="qty7" id="qty7" placeholder="Qty">
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <input type="number" class="form-control" name="stock7" id="stock7" placeholder="Stock" style="width: 6em" disabled>
+                    </div>
+                    <div class="col-md-1 form-group">
+                        <input type="button" class="btn btn-xs remove_btn btn-primary" btn_id="7" value="Remove">
+                    </div>
+                </div>
+                <div class="row no-margin" id="row8">
+                    <div class="col-md-3 form-group">
+                        <select id="category8" class="form-control category" row_count="8">
+                            <option selected disabled>Select Category</option>
+                            @foreach ($categories as $category )
+                            <option value="{{ $category->id }}">{{ $category->id }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <select id="item8" class="form-control item" row_count="8">
+                            <option selected disabled>select item code</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <select id="desc8" class="form-control desc" row_count="8">
+                            <option selected disabled>select description</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 form-group">
+                        <input type="number" min="0" max="10" class="form-control" name="qty8" id="qty8" placeholder="Qty">
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <input type="number" class="form-control" name="stock8" id="stock8" placeholder="Stock" style="width: 6em" disabled>
+                    </div>
+                    <div class="col-md-1 form-group">
+                        <input type="button" class="btn btn-xs remove_btn btn-primary" btn_id="8" value="Remove">
+                    </div>
+                </div>
+                <div class="row no-margin" id="row9">
+                    <div class="col-md-3 form-group">
+                        <select id="category9" class="form-control category" row_count="9">
+                            <option selected disabled>Select Category</option>
+                            @foreach ($categories as $category )
+                            <option value="{{ $category->id }}">{{ $category->id }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <select id="item9" class="form-control item" row_count="9">
+                            <option selected disabled>select item code</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <select id="desc9" class="form-control desc" row_count="9">
+                            <option selected disabled>select description</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 form-group">
+                        <input type="number" min="0" max="10" class="form-control" name="qty9" id="qty9" placeholder="Qty">
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <input type="number" class="form-control" name="stock9" id="stock9" placeholder="Stock" style="width: 6em" disabled>
+                    </div>
+                    <div class="col-md-1 form-group">
+                        <input type="button" class="btn btn-xs remove_btn btn-primary" btn_id="9" value="Remove">
+                    </div>
+                </div>
+                <div class="row no-margin" id="row10">
+                    <div class="col-md-3 form-group">
+                        <select id="category10" class="form-control category" row_count="10">
+                            <option selected disabled>Select Category</option>
+                            @foreach ($categories as $category )
+                            <option value="{{ $category->id }}">{{ $category->id }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <select id="item10" class="form-control item" row_count="10">
+                            <option selected disabled>select item code</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <select id="desc10" class="form-control desc" row_count="10">
+                            <option selected disabled>select description</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 form-group">
+                        <input type="number" min="0" max="10" class="form-control" name="qty10" id="qty10" placeholder="Qty">
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <input type="number" class="form-control" name="stock10" id="stock10" placeholder="Stock" style="width: 6em" disabled>
+                    </div>
+                    <div class="col-md-1 form-group">
+                        <input type="button" class="btn btn-xs remove_btn btn-primary" btn_id="10" value="Remove">
+                    </div>
+                </div>
             </div><hr>
             <div class="modal-footer">
             <input type="button" class="add_item btn btn-primary mr-auto" value="Add Item">
             <input type="button" class="btn btn-primary" data-dismiss="modal" value="Cancel">
-            <input type="submit" class="btn btn-primary" id="ssubBtn" class="button" value="Submit">
+            <input type="button" class="btn btn-primary sub_Btn" id="sub_Btn" class="button" value="Submit">
             </form>
                 
             </div>

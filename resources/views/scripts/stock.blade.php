@@ -10,14 +10,6 @@
         //$('#requestModal').modal('show');
         $('#date').val(months[d.getMonth()]+' '+d.getDate()+', ' +d.getFullYear()+' '+hour+':'+String(d.getMinutes()).padStart(2, '0')+ampm);
         $('#sdate').val(months[d.getMonth()]+' '+d.getDate()+', ' +d.getFullYear()+' '+hour+':'+String(d.getMinutes()).padStart(2, '0')+ampm);
-        /*var op = " "
-        var max_fields      = 10; //maximum input boxes allowed
-        var x = 1; //initlal text box count
-        op+='<input text="text">';
-        for(var i=0;i<4;i++){
-            op+='<input text="text">';
-        }
-        //$('.item').append(op);*/
 
         var table =
         $('table.requestTable').DataTable({ //user datatables
@@ -68,28 +60,86 @@
             $('#requestModal').modal('show');
         });
 
-        $('#sendTable').on('click', '.removeBtn[delete_btn]', function(e){
+        $('.add_item').on('click', function(e){ //show user/branch modal
             e.preventDefault();
-            var id = $(this).attr('delete_btn');
-            console.log(id);
-            $.ajax(
-                {
-                    url: "/delete/"+id,
-                    type: 'DELETE', // replaced from put
-                    cache: false,
-                    data: {
-                        _token:'{{ csrf_token() }}'// method and token not needed in data
-                    },
-                    success: function (response)
-                    {
-                        console.log(response); // see the reponse sent
-                    },
-                    error: function(xhr) {
-                    console.log(xhr.responseText); // this line will save you tons of hours while debugging
-                    // do something here because of error
+            var x = 0;
+            var a = 0;
+            for(var y=2;y<=10;y++){
+                if (x == 0) {
+                    if ($('#row'+y).is(":hidden")) {
+                        x++;
+                        $('#row'+y).show();
                     }
                 }
-            );
+            }
+            for(var q=2;q<=10;q++){
+                if ($('#row'+q).is(":visible")) {
+                    a++;
+                }
+                if(a == 9){
+                    $('.add_item').hide();
+                }
+            }
+        });
+
+        $('.sub_Btn').on('click', function(e){ //show user/branch modal
+            e.preventDefault();
+            var s = 1;
+            var cat = "";
+            var item = "";
+            var desc = "";
+            var qty = "";
+            var branch = $('#sreqno').val();
+            var check = 'ok';            
+            for(var q=1;q<=10;q++){
+                if ($('#row'+q).is(":visible")) {
+                    if(!$('#category'+q).val() || !$('#item'+q).val() || !$('#desc'+q).val() || !$('#qty'+q).val()) {
+                        alert("Incomplete details!!!\nFailed!!!!");
+                        check = 'failed';
+                        return false;
+                    }
+                    if ($('#qty'+q).val() > $('#stock'+q).val()) {
+                        
+                    }
+                }
+            }
+            
+            if (check == 'ok') {
+                for(var q=1;q<=10;q++){
+                    if ($('#row'+q).is(":visible")) {
+                        if($('#category'+q).val() && $('#item'+q).val() && $('#desc'+q).val() && $('#qty'+q).val()) {
+                            cat = $('#category'+q).val();
+                            item = $('#item'+q).val();
+                            desc = $('#desc'+q).val();
+                            qty = $('#qty'+q).val();
+                            console.log('ok');
+                            $.ajax({
+                                url: '/update/'+branch,
+                                type: 'PUT',
+                                data: { 
+                                    cat: cat,
+                                    item: item,
+                                    desc: desc,
+                                    qty: qty
+                                },
+                                dataType: 'json',
+                                headers: {
+                                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
+                        }
+                    }
+                }
+                alert("Branch data updated!!!!");
+                window.location.href = '{{route('stock.index')}}';
+            }
+        });
+
+        $('.remove_btn').on('click', function(e){ //show user/branch modal
+            e.preventDefault();
+            var btnCount = $(this).attr('btn_id');
+            $('#row'+btnCount).hide();
+            $('.add_item').show();
         });
 
         $('#prcBtn').on('click', function(e){ //show user/branch modal
@@ -101,6 +151,17 @@
             $('#sbranch').val($('#branch').val());
             $('#sname').val($('#name').val());
             $('#sendModal').modal('show');
+            var x = 1;
+            for(var i=1;i<=10;i++){
+                if (i != 1) {
+                    $('#row'+i).hide();
+                }
+                $('#category'+i).val('Select Category');
+                $('#item'+i).val('select item code');
+                $('#desc'+i).val('select description');
+                $('#qty'+i).val('Qty');
+                $('#stock'+i).val('');
+            }
             $('table.sendDetails').dataTable().fnDestroy();
             $('table.sendDetails').DataTable({ //user datatables
                 "dom": 'lrtip',
@@ -114,28 +175,85 @@
                     { data: 'items_id', name:'items_id'},
                     { data: 'item_name', name:'item_name'},
                     { data: 'quantity', name:'quantity'},
-                    { data: 'purpose', name:'purpose'},
-                    { data: 'action', name:'action'}
+                    { data: 'purpose', name:'purpose'}
                 ]
             });
+        });
 
-            $('table.sendDetailsItem').dataTable().fnDestroy();
-            $('table.sendDetailsItem').DataTable({ //user datatables
-                "dom": 'lrtip',
-                processing: true,
-                serverSide: true,
-                ajax: "/send/"+$('#sreqno').val(),
-                columnDefs: [
-                    {"className": "dt-body-center", "targets": "_all"}
-                ],
-                columns: [
-                    { data: 'items_id', name:'items_id'},
-                    { data: 'item_name', name:'item_name'},
-                    { data: 'quantity', name:'quantity'},
-                    { data: 'action', name:'action'}
-                ]
-            });
-            
+        $('.category').change(function() { //search columns
+            var codeOp = " ";
+            var descOp = " ";
+            var count = $(this).attr('row_count');
+            var id = $(this).val();
+            $('#stock' + count).val('stock');
+            selectItem(item1);
+            $('#item' + count).val('select itemcode');
+            $('#desc' + count).val('select description');
+            function selectItem(item1) {
+                $.ajax({
+                    type:'get',
+                    url:'{{route("stock.get.itemcode")}}',
+                    data:{'id':id},
+                    success:function(data)
+                    {
+                        //console.log('success');
+                        console.log(data);
+                        console.log(data.length);
+                        codeOp+='<option selected value="select" disabled>select item code</option>';
+                        descOp+='<option selected value="select" disabled>select description</option>';
+                        for(var i=0;i<data.length;i++){
+                            codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
+                            descOp+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
+                        }
+                        $("#item" + count).find('option').remove().end().append(codeOp);
+                        $("#desc" + count).find('option').remove().end().append(descOp);
+                    },
+                });
+            }
+        });
+
+        $('.item').change(function(){
+            var count = $(this).attr('row_count');
+            var id = $(this).val();
+            $('#desc' + count).val(id);
+            selectItem(stock1);
+            function selectItem(stock1) {
+                $.ajax({
+                    type:'get',
+                    url:'{{route("stock.get")}}',
+                    data:{'id':id},
+                    success:function(data)
+                    {
+                        if (data != "") {
+                            $('#stock' + count).val(data[0].stock);
+                        }else{
+                            $('#stock' + count).val('0');
+                        }
+                    },
+                });
+            }
+        });
+
+        $('.desc').change(function(){
+            var count = $(this).attr('row_count');
+            var id = $(this).val();
+            $('#item' + count).val(id);
+            selectItem(stock1);
+            function selectItem(stock1) {
+                $.ajax({
+                    type:'get',
+                    url:'{{route("stock.get")}}',
+                    data:{'id':id},
+                    success:function(data)
+                    {
+                        if (data != "") {
+                            $('#stock' + count).val(data[0].stock);
+                        }else{
+                            $('#stock' + count).val('0');
+                        }
+                    },
+                });
+            }
         });
 
         $('#sendForm').on('submit', function(){ //user modal update/save button
@@ -143,30 +261,5 @@
             var sched = new Date(d);
             alert(months[sched.getMonth()]+' '+sched.getDate()+', ' +sched.getFullYear());
         });
-    
-        $('.add_item').click(function(e){ //on add input button click
-            e.preventDefault();
-            $("#sendModal .close").click();
-            $('#addModal').modal('show');
-            /*if(x < max_fields){ //max input box allowed
-                x++; //text box increment
-                $('.items').append('<div class="row no-margin "><div class="col-lg-12 form-group row"><div class="col-lg-3"><input type="text" list="itemcat" class="form-control form-control-sm" name="itemcat[]" id="itemcat[]" placeholder="item category"><datalist id="itemlist"></datalist></div><div class="col-lg-2"><input type="text" list="itemlist" class="form-control form-control-sm" name="itemcode[]" id="itemcode[]" placeholder="item code"><datalist id="itemlist"></datalist></div><div class="col-lg-4"><input type="text" class="form-control form-control-sm" name="itemdesc[]" id="itemdesc[]" placeholder="Description"></div><div class="col-lg-1"><input type="number" class="form-control form-control-sm" name="itemqty[]" id="itemqty[]" placeholder="Qty."></div><div class="col-lg-2"><button type="button" class="remove_field btn btn-primary">remove</button></div></div></div>'); //add input box
-            }*/
-        });
-
-        /*$('.items').on("click",".add_field", function(e){ //user click on remove text
-            e.preventDefault();
-            if($(this).val() == 'add'){
-                $(this).val('remove');
-            }else{
-                $(this).val('add');
-            }
-           $(this).parent().parent('input').remove(); x--;
-        });
-
-        $('.items').on("click",".remove_field", function(e){ //user click on remove text
-            e.preventDefault(); $(this).parent().parent('div').remove(); x--;
-        });*/
-
     });
 </script>
