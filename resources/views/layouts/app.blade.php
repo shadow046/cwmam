@@ -49,6 +49,10 @@
             @if(Request::is('request'))
                 @include('scripts.stock')
             @endif
+
+            @if(Request::is('stocks'))
+                @include('scripts.warehouse')
+            @endif
            
         </body>
     </html>

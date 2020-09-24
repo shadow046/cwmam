@@ -28,4 +28,9 @@ class Item extends Model
         return $this->hasMany(PreparedItem::class);
     }
 
+    public function Warehouse()
+    {
+        return $this->belongsTo(Warehouse::class);
+    }
+
 }

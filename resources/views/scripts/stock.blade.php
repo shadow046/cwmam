@@ -98,7 +98,8 @@
             var desc = "";
             var qty = "";
             var reqno = $('#sreqno').val();
-            var check = 'ok';            
+            var check = 'ok';
+            var visrow = [0];           
             for(var q=1;q<=10;q++){
                 if ($('#row'+q).is(":visible")) {
                     if(!$('#datesched').val() || !$('#category'+q).val() || !$('#item'+q).val() || !$('#desc'+q).val() || !$('#qty'+q).val()) {
@@ -111,6 +112,7 @@
                         check = 'failed';
                         return false;
                     }
+                    visrow.push(q);
                 }
             }
             

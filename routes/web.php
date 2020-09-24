@@ -21,6 +21,11 @@ Route::get('spare_parts', 'HomeController@spare_parts');
 Route::get('return', 'HomeController@return');
 
 
+
+
+Route::get('show', 'StockController@show')->name('stocks.show');
+Route::get('stocks', 'StockController@index')->name('stocks.index');
+
 Route::put('update/{id}', 'StockRequestController@update')->name('stock.update');
 Route::get('getstock', 'StockRequestController@getStock')->name('stock.get');
 Route::get('itemcode', 'StockRequestController@getItemCode')->name('stock.get.itemcode');

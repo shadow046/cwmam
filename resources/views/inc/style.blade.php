@@ -73,4 +73,13 @@
     .modal-content{
         background-color: #f2f2f2;
     }
+
+    .modal-full {
+    min-width: 100vw;
+    margin-left: 80;
+}
+
+    .modal-full .modal-content {
+        min-height: 100vh;
+    }
 </style>

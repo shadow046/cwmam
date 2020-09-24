@@ -8,8 +8,13 @@ class Warehouse extends Model
 {
     protected $guarded = [];
 
-    public function PrepareItems()
+    public function PreparedItems()
     {
-        return $this->hasmany(PrepareItem::class);
+        return $this->hasmany(PreparedItem::class);
+    }
+
+    public function Items()
+    {
+        return $this->hasmany(Item::class);
     }
 }

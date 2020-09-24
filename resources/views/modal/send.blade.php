@@ -1,5 +1,5 @@
 <div id="sendModal" class="modal fade" >
-    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-full modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title w-100 text-center">STOCK REQUEST FORM</h6>
@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body mod">
+            <div class="modal-body mod" style="max-height:250px;overflow-y: auto;">
                 <form id="sendForm">
                     {{ csrf_field() }}
                 <div class="row no-margin">
@@ -47,11 +47,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div>
-                <h5 class="modal-title w-100 text-center">REQUEST DETAILS</h5>
-            </div>
-            <div class="modal-body" style="max-height:200px;overflow-y: auto;">
+                <div>
+                    <h5 class="modal-title w-100 text-center">REQUEST DETAILS</h5>
+                </div>
                 <table class="table sendDetails" style="height: 150px;">
                     <thead class="thead-dark">
                         <th>Item Code</th>
@@ -61,17 +59,17 @@
                     </thead>
                 </table>
             </div>
+           
             <div class="modal-header">
                 <h6 class="modal-title w-100 text-center">ENTER ITEM HERE</h6>
             </div>
-            <div class="modal-body" style="max-height:200px;overflow-y: auto;">
+            <div class="modal-body" >
                 <div class="row no-margin" id="row1">
-                    <div class="col-md-3 form-group">
+                    <div class="col-md-2 form-group">
                         <select id="category1" class="form-control category" row_count="1">
                             <option selected disabled>select category</option>
-                            @foreach ($categories as $category )
-                            <option value="{{ $category->id }}">{{ $category->id }}</option>
-                            <option value="2">2</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -85,19 +83,19 @@
                             <option selected disabled>select description</option>
                         </select>
                     </div>
-                    <div class="col-md-1 form-group">
-                        <input type="number" min="0" max="10" class="form-control" name="qty1" id="qty1" placeholder="Qty">
+                    <div class="col-md-2 form-group">
+                        <input type="text" class="form-control" name="serial1" id="serial1" placeholder="serial">
                     </div>
                     <div class="col-md-2 form-group">
                         <input type="number" class="form-control" name="stock1" id="stock1" placeholder="Stock" style="width: 6em" disabled>
                     </div>
                 </div>
                 <div class="row no-margin" id="row2">
-                    <div class="col-md-3 form-group">
+                    <div class="col-md-2 form-group">
                         <select id="category2" class="form-control category" row_count="2">
                             <option selected disabled>select category</option>
                             @foreach ($categories as $category )
-                            <option value="{{ $category->id }}">{{ $category->id }}</option>
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -111,8 +109,8 @@
                             <option selected disabled>select description</option>
                         </select>
                     </div>
-                    <div class="col-md-1 form-group">
-                        <input type="number" min="0" max="10" class="form-control" name="qty2" id="qty2" placeholder="Qty">
+                    <div class="col-md-2 form-group">
+                        <input type="text" class="form-control" name="serial2" id="serial2" placeholder="serial">
                     </div>
                     <div class="col-md-2 form-group">
                         <input type="number" class="form-control" name="stock2" id="stock2" placeholder="Stock" style="width: 6em" disabled>
@@ -122,11 +120,11 @@
                     </div>
                 </div>
                 <div class="row no-margin" id="row3">
-                    <div class="col-md-3 form-group">
+                    <div class="col-md-2 form-group">
                         <select id="category3" class="form-control category" row_count="3">
                             <option selected disabled>select category</option>
                             @foreach ($categories as $category )
-                            <option value="{{ $category->id }}">{{ $category->id }}</option>
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -140,8 +138,8 @@
                             <option selected disabled>select description</option>
                         </select>
                     </div>
-                    <div class="col-md-1 form-group">
-                        <input type="number" min="0" max="10" class="form-control" name="qty3" id="qty3" placeholder="Qty">
+                    <div class="col-md-2 form-group">
+                        <input type="text" class="form-control" name="serial3" id="serial3" placeholder="serial">
                     </div>
                     <div class="col-md-2 form-group">
                         <input type="number" class="form-control" name="stock3" id="stock3" placeholder="Stock" style="width: 6em" disabled>
@@ -151,11 +149,11 @@
                     </div>
                 </div>
                 <div class="row no-margin" id="row4">
-                    <div class="col-md-3 form-group">
+                    <div class="col-md-2 form-group">
                         <select id="category4" class="form-control category" row_count="4">
                             <option selected disabled>select category</option>
                             @foreach ($categories as $category )
-                            <option value="{{ $category->id }}">{{ $category->id }}</option>
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -169,8 +167,8 @@
                             <option selected disabled>select description</option>
                         </select>
                     </div>
-                    <div class="col-md-1 form-group">
-                        <input type="number" min="0" max="10" class="form-control" name="qty4" id="qty4" placeholder="Qty">
+                    <div class="col-md-2 form-group">
+                        <input type="text" class="form-control" name="serial4" id="serial4" placeholder="serial">
                     </div>
                     <div class="col-md-2 form-group">
                         <input type="number" class="form-control" name="stock4" id="stock4" placeholder="Stock" style="width: 6em" disabled>
@@ -180,11 +178,11 @@
                     </div>
                 </div>
                 <div class="row no-margin" id="row5">
-                    <div class="col-md-3 form-group">
+                    <div class="col-md-2 form-group">
                         <select id="category5" class="form-control category" row_count="5">
                             <option selected disabled>select category</option>
                             @foreach ($categories as $category )
-                            <option value="{{ $category->id }}">{{ $category->id }}</option>
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -198,8 +196,8 @@
                             <option selected disabled>select description</option>
                         </select>
                     </div>
-                    <div class="col-md-1 form-group">
-                        <input type="number" min="0" max="10" class="form-control" name="qty5" id="qty5" placeholder="Qty">
+                    <div class="col-md-2 form-group">
+                        <input type="text" class="form-control" name="serial5" id="serial5" placeholder="serial">
                     </div>
                     <div class="col-md-2 form-group">
                         <input type="number" class="form-control" name="stock5" id="stock5" placeholder="Stock" style="width: 6em" disabled>
@@ -209,11 +207,11 @@
                     </div>
                 </div>
                 <div class="row no-margin" id="row6">
-                    <div class="col-md-3 form-group">
+                    <div class="col-md-2 form-group">
                         <select id="category6" class="form-control category" row_count="6">
                             <option selected disabled>select category</option>
                             @foreach ($categories as $category )
-                            <option value="{{ $category->id }}">{{ $category->id }}</option>
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -227,8 +225,8 @@
                             <option selected disabled>select description</option>
                         </select>
                     </div>
-                    <div class="col-md-1 form-group">
-                        <input type="number" min="0" max="10" class="form-control" name="qty6" id="qty6" placeholder="Qty">
+                    <div class="col-md-2 form-group">
+                        <input type="text" class="form-control" name="serial6" id="serial6" placeholder="serial">
                     </div>
                     <div class="col-md-2 form-group">
                         <input type="number" class="form-control" name="stock6" id="stock6" placeholder="Stock" style="width: 6em" disabled>
@@ -238,11 +236,11 @@
                     </div>
                 </div>
                 <div class="row no-margin" id="row7">
-                    <div class="col-md-3 form-group">
+                    <div class="col-md-2 form-group">
                         <select id="category7" class="form-control category" row_count="7">
                             <option selected disabled>select category</option>
                             @foreach ($categories as $category )
-                            <option value="{{ $category->id }}">{{ $category->id }}</option>
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -256,8 +254,8 @@
                             <option selected disabled>select description</option>
                         </select>
                     </div>
-                    <div class="col-md-1 form-group">
-                        <input type="number" min="0" max="10" class="form-control" name="qty7" id="qty7" placeholder="Qty">
+                    <div class="col-md-2 form-group">
+                        <input type="text" class="form-control" name="serial7" id="serial7" placeholder="serial">
                     </div>
                     <div class="col-md-2 form-group">
                         <input type="number" class="form-control" name="stock7" id="stock7" placeholder="Stock" style="width: 6em" disabled>
@@ -267,11 +265,11 @@
                     </div>
                 </div>
                 <div class="row no-margin" id="row8">
-                    <div class="col-md-3 form-group">
+                    <div class="col-md-2 form-group">
                         <select id="category8" class="form-control category" row_count="8">
                             <option selected disabled>select category</option>
                             @foreach ($categories as $category )
-                            <option value="{{ $category->id }}">{{ $category->id }}</option>
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -285,8 +283,8 @@
                             <option selected disabled>select description</option>
                         </select>
                     </div>
-                    <div class="col-md-1 form-group">
-                        <input type="number" min="0" max="10" class="form-control" name="qty8" id="qty8" placeholder="Qty">
+                    <div class="col-md-2 form-group">
+                        <input type="text" class="form-control" name="serial8" id="serial8" placeholder="serial">
                     </div>
                     <div class="col-md-2 form-group">
                         <input type="number" class="form-control" name="stock8" id="stock8" placeholder="Stock" style="width: 6em" disabled>
@@ -296,11 +294,11 @@
                     </div>
                 </div>
                 <div class="row no-margin" id="row9">
-                    <div class="col-md-3 form-group">
+                    <div class="col-md-2 form-group">
                         <select id="category9" class="form-control category" row_count="9">
                             <option selected disabled>select category</option>
                             @foreach ($categories as $category )
-                            <option value="{{ $category->id }}">{{ $category->id }}</option>
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -314,8 +312,8 @@
                             <option selected disabled>select description</option>
                         </select>
                     </div>
-                    <div class="col-md-1 form-group">
-                        <input type="number" min="0" max="10" class="form-control" name="qty9" id="qty9" placeholder="Qty">
+                    <div class="col-md-2 form-group">
+                        <input type="text" class="form-control" name="serial9" id="serial9" placeholder="serial">
                     </div>
                     <div class="col-md-2 form-group">
                         <input type="number" class="form-control" name="stock9" id="stock9" placeholder="Stock" style="width: 6em" disabled>
@@ -325,11 +323,11 @@
                     </div>
                 </div>
                 <div class="row no-margin" id="row10">
-                    <div class="col-md-3 form-group">
+                    <div class="col-md-2 form-group">
                         <select id="category10" class="form-control category" row_count="10">
                             <option selected disabled>select category</option>
                             @foreach ($categories as $category )
-                            <option value="{{ $category->id }}">{{ $category->id }}</option>
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -343,8 +341,8 @@
                             <option selected disabled>select description</option>
                         </select>
                     </div>
-                    <div class="col-md-1 form-group">
-                        <input type="number" min="0" max="10" class="form-control" name="qty10" id="qty10" placeholder="Qty">
+                    <div class="col-md-2 form-group">
+                        <input type="text" class="form-control" name="serial10" id="serial10" placeholder="serial">
                     </div>
                     <div class="col-md-2 form-group">
                         <input type="number" class="form-control" name="stock10" id="stock10" placeholder="Stock" style="width: 6em" disabled>
