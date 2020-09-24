@@ -43,7 +43,7 @@
                     <div class="col-md-6 form-group row">
                         <label class="col-md-5 col-form-label text-md-right">Date schedule:</label>
                         <div class="col-md-7">
-                            <input type="date" class="form-control form-control-sm" name="sched" id="sched">
+                            <input type="date" class="form-control form-control-sm" name="datesched" id="datesched">
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                 <div class="row no-margin" id="row1">
                     <div class="col-md-3 form-group">
                         <select id="category1" class="form-control category" row_count="1">
-                            <option selected disabled>Select Category</option>
+                            <option selected disabled>select category</option>
                             @foreach ($categories as $category )
                             <option value="{{ $category->id }}">{{ $category->id }}</option>
                             <option value="2">2</option>
@@ -95,7 +95,7 @@
                 <div class="row no-margin" id="row2">
                     <div class="col-md-3 form-group">
                         <select id="category2" class="form-control category" row_count="2">
-                            <option selected disabled>Select Category</option>
+                            <option selected disabled>select category</option>
                             @foreach ($categories as $category )
                             <option value="{{ $category->id }}">{{ $category->id }}</option>
                             @endforeach
@@ -124,7 +124,7 @@
                 <div class="row no-margin" id="row3">
                     <div class="col-md-3 form-group">
                         <select id="category3" class="form-control category" row_count="3">
-                            <option selected disabled>Select Category</option>
+                            <option selected disabled>select category</option>
                             @foreach ($categories as $category )
                             <option value="{{ $category->id }}">{{ $category->id }}</option>
                             @endforeach
@@ -153,7 +153,7 @@
                 <div class="row no-margin" id="row4">
                     <div class="col-md-3 form-group">
                         <select id="category4" class="form-control category" row_count="4">
-                            <option selected disabled>Select Category</option>
+                            <option selected disabled>select category</option>
                             @foreach ($categories as $category )
                             <option value="{{ $category->id }}">{{ $category->id }}</option>
                             @endforeach
@@ -182,7 +182,7 @@
                 <div class="row no-margin" id="row5">
                     <div class="col-md-3 form-group">
                         <select id="category5" class="form-control category" row_count="5">
-                            <option selected disabled>Select Category</option>
+                            <option selected disabled>select category</option>
                             @foreach ($categories as $category )
                             <option value="{{ $category->id }}">{{ $category->id }}</option>
                             @endforeach
@@ -211,7 +211,7 @@
                 <div class="row no-margin" id="row6">
                     <div class="col-md-3 form-group">
                         <select id="category6" class="form-control category" row_count="6">
-                            <option selected disabled>Select Category</option>
+                            <option selected disabled>select category</option>
                             @foreach ($categories as $category )
                             <option value="{{ $category->id }}">{{ $category->id }}</option>
                             @endforeach
@@ -240,7 +240,7 @@
                 <div class="row no-margin" id="row7">
                     <div class="col-md-3 form-group">
                         <select id="category7" class="form-control category" row_count="7">
-                            <option selected disabled>Select Category</option>
+                            <option selected disabled>select category</option>
                             @foreach ($categories as $category )
                             <option value="{{ $category->id }}">{{ $category->id }}</option>
                             @endforeach
@@ -269,7 +269,7 @@
                 <div class="row no-margin" id="row8">
                     <div class="col-md-3 form-group">
                         <select id="category8" class="form-control category" row_count="8">
-                            <option selected disabled>Select Category</option>
+                            <option selected disabled>select category</option>
                             @foreach ($categories as $category )
                             <option value="{{ $category->id }}">{{ $category->id }}</option>
                             @endforeach
@@ -298,7 +298,7 @@
                 <div class="row no-margin" id="row9">
                     <div class="col-md-3 form-group">
                         <select id="category9" class="form-control category" row_count="9">
-                            <option selected disabled>Select Category</option>
+                            <option selected disabled>select category</option>
                             @foreach ($categories as $category )
                             <option value="{{ $category->id }}">{{ $category->id }}</option>
                             @endforeach
@@ -327,7 +327,7 @@
                 <div class="row no-margin" id="row10">
                     <div class="col-md-3 form-group">
                         <select id="category10" class="form-control category" row_count="10">
-                            <option selected disabled>Select Category</option>
+                            <option selected disabled>select category</option>
                             @foreach ($categories as $category )
                             <option value="{{ $category->id }}">{{ $category->id }}</option>
                             @endforeach

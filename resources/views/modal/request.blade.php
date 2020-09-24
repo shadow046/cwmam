@@ -43,6 +43,12 @@
                             <input type="text" class="form-control form-control-sm " id="area" value="{{ Auth::user()->area->name }}" disabled>
                         </div>
                     </div>
+                    <div class="col-md-6 form-group row">
+                        <label class="col-md-4 col-form-label text-md-right">Schedule on:</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control form-control-sm " id="sched" value="" disabled>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div>

@@ -97,6 +97,10 @@ class StockRequestController extends Controller
             }
         })
 
+        ->addColumn('sched', function (StockRequest $request){
+            return $request->schedule;
+        })
+
         ->addColumn('reqBy', function (StockRequest $request){
             return $request->user->name;
         })
@@ -164,16 +168,22 @@ class StockRequestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $qty = $request->qty;
-
-        for ($i=0; $i < $qty; $i++) { 
-            $item = Warehouse::where('status', 'in')
-                ->where('items_id', $request->item)
-                ->first();
-            $item->status = 'sent';
-            $item->save();
+        if ($request->stat == 'ok') {
+            $reqno = StockRequest::where('request_no', $request->reqno)->first();
+            $reqno->status = '1';
+            $reqno->schedule = $request->datesched;
+            $data = $reqno->save();
+        }else{
+            $qty = $request->qty;
+            for ($i=0; $i < $qty; $i++) { 
+                $item = Warehouse::where('status', 'in')
+                    ->where('items_id', $request->item)
+                    ->first();
+                $item->status = 'sent';
+                $item->save();
+            }
+            $data = 'save';
         }
-        $data = 'save';
         return response()->json($data);
     }
 

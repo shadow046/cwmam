@@ -33,9 +33,17 @@
             var hour = String(d.getHours()).padStart(2, '0') % 12 || 12
             var ampm = (String(d.getHours()).padStart(2, '0') < 12 || String(d.getHours()).padStart(2, '0') === 24) ? "AM" : "PM";
             var trdate = months[d.getMonth()]+' '+d.getDate()+', ' +d.getFullYear()+' '+hour+':'+String(d.getMinutes()).padStart(2, '0')+ampm
-            //$('#requestModal').modal('show');
-            console.log(trdata);
             var dtdata = $('#requestTable tbody tr:eq(0)').data();
+            //$('#requestModal').modal('show');
+            if (trdata.status == 'SCHEDULED') {
+                $('#prcBtn').hide();
+                $('#sched').show();
+                $('#sched').val(trdata.sched);
+            }else if(trdata.status == 'PENDING'){
+                $('#prcBtn').show();
+                $('#sched').hide();
+                $('#sched').val('');
+            }
             $('#date').val(trdate);
             $('#reqno').val(trdata.request_no);
             $('#branch').val(trdata.branch);
@@ -89,22 +97,25 @@
             var item = "";
             var desc = "";
             var qty = "";
-            var branch = $('#sreqno').val();
+            var reqno = $('#sreqno').val();
             var check = 'ok';            
             for(var q=1;q<=10;q++){
                 if ($('#row'+q).is(":visible")) {
-                    if(!$('#category'+q).val() || !$('#item'+q).val() || !$('#desc'+q).val() || !$('#qty'+q).val()) {
+                    if(!$('#datesched').val() || !$('#category'+q).val() || !$('#item'+q).val() || !$('#desc'+q).val() || !$('#qty'+q).val()) {
                         alert("Incomplete details!!!\nFailed!!!!");
                         check = 'failed';
                         return false;
                     }
                     if ($('#qty'+q).val() > $('#stock'+q).val()) {
-                        
+                        $('#qty'+q).css('border', '5px solid red');
+                        check = 'failed';
+                        return false;
                     }
                 }
             }
             
             if (check == 'ok') {
+                var stat = 'ok';
                 for(var q=1;q<=10;q++){
                     if ($('#row'+q).is(":visible")) {
                         if($('#category'+q).val() && $('#item'+q).val() && $('#desc'+q).val() && $('#qty'+q).val()) {
@@ -112,14 +123,15 @@
                             item = $('#item'+q).val();
                             desc = $('#desc'+q).val();
                             qty = $('#qty'+q).val();
-                            console.log('ok');
+                            datesched = $('#datesched').val();
                             $.ajax({
-                                url: '/update/'+branch,
+                                url: '/update/'+reqno,
                                 type: 'PUT',
                                 data: { 
                                     cat: cat,
                                     item: item,
                                     desc: desc,
+                                    datesched: datesched,
                                     qty: qty
                                 },
                                 dataType: 'json',
@@ -129,9 +141,25 @@
                             });
                         }
                     }
+                    if (q == 10) {
+                    $.ajax({
+                        url: '/update/'+reqno,
+                        type: 'PUT',
+                        data: { 
+                            reqno: reqno,
+                            datesched: datesched,
+                            stat: stat
+                            
+                        },
+                        dataType: 'json',
+                        headers: {
+                            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    alert("Branch data updated!!!!");
+                    window.location.href = '{{route('stock.index')}}';
                 }
-                alert("Branch data updated!!!!");
-                window.location.href = '{{route('stock.index')}}';
+                }
             }
         });
 
@@ -156,7 +184,9 @@
                 if (i != 1) {
                     $('#row'+i).hide();
                 }
-                $('#category'+i).val('Select Category');
+                $('#stock'+i).css("border", "");
+                $('#qty'+i).css('border', '');
+                $('#category'+i).val('select category');
                 $('#item'+i).val('select item code');
                 $('#desc'+i).val('select description');
                 $('#qty'+i).val('Qty');
@@ -189,6 +219,8 @@
             selectItem(item1);
             $('#item' + count).val('select itemcode');
             $('#desc' + count).val('select description');
+            $('#stock' + count).css("border", "");
+            $('#item' + count).css("border", "");
             function selectItem(item1) {
                 $.ajax({
                     type:'get',
@@ -226,8 +258,12 @@
                     {
                         if (data != "") {
                             $('#stock' + count).val(data[0].stock);
+                            $('#stock' + count).css('color', 'black');
+                            $('#stock' + count).css("border", "");
                         }else{
                             $('#stock' + count).val('0');
+                            $('#stock' + count).css('color', 'red');
+                            $('#stock' + count).css("border", "5px solid red");
                         }
                     },
                 });
@@ -248,8 +284,12 @@
                     {
                         if (data != "") {
                             $('#stock' + count).val(data[0].stock);
+                            $('#stock' + count).css('color', 'black');
+                            $('#stock' + count).css("border", "");
                         }else{
                             $('#stock' + count).val('0');
+                            $('#stock' + count).css('color', 'red');
+                            $('#stock' + count).css("border", "5px solid red");
                         }
                     },
                 });
