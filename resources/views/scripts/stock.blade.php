@@ -68,26 +68,125 @@
             $('#requestModal').modal('show');
         });
 
-        $('.add_item').on('click', function(e){ //show user/branch modal
-            e.preventDefault();
-            var x = 0;
-            var a = 0;
-            for(var y=2;y<=10;y++){
-                if (x == 0) {
-                    if ($('#row'+y).is(":hidden")) {
-                        x++;
-                        $('#row'+y).show();
+        $('.add_item').on('click', function(){ //show user/branch modal
+            console.log('ok');
+            var rowcount = $(this).attr('btn_id');
+            if ($(this).val() == 'Add Item') {
+                var x = 0;
+                console.log('10');
+                console.log(rowcount);
+                if($('#category'+ rowcount).val() && $('#item'+ rowcount).val() && $('#desc'+ rowcount).val() && $('#serial'+ rowcount).val()) {
+                    var id = $('#item'+ rowcount).val();
+                    var stockCount = 0;
+                    console.log('9');
+                    selectBranch(stock1);
+                    function selectBranch(stock1) {
+                        $.ajax({
+                            type:'get',
+                            url:'{{route("stock.get")}}',
+                            async: false,
+                            data:{'id':id},
+                            success:function(data)
+                            {
+                                console.log('8');
+                                if (data != "") {
+                                    var curstock = data[0].stock;
+                                    console.log('7');
+                                    for(var i=1;i<=10;i++){
+                                        if (i != rowcount) {
+                                            if ($('#item'+i).val() == $('#item'+ rowcount).val()) {
+                                                if ($('#serial'+i).val() == $('#serial'+ rowcount).val()) {
+                                                    $('#serial' + rowcount).css('color', 'red');
+                                                    $('#serial' + rowcount).css("border", "5px solid red");
+                                                    x++;
+                                                    console.log(x+'t');
+                                                }else{
+                                                    $('#serial' + rowcount).css('color', 'black');
+                                                    $('#serial' + rowcount).css("border", "");
+                                                }
+                                                if ($('#item'+i).prop('disabled')) {
+                                                    $('#stock'+i).val(curstock);
+                                                    curstock--;
+                                                }
+                                                
+                                            }
+                                        }
+                                    }
+                                    console.log('6');
+                                    if (i == 10) {
+                                        console.log('5');
+                                        $('#stock'+rowcount).val(curstock);
+                                        if (curstock <= 0) {
+                                            $('#stock' + rowcount).css('color', 'red');
+                                            $('#stock' + rowcount).css("border", "5px solid red");
+                                            x++;
+                                        }
+                                        $('#stock' + rowcount).css('color', 'black');
+                                        $('#stock' + rowcount).css("border", "");
+                                    }
+                                }
+                            },
+                        });
                     }
+                }else{
+                    x++;
+                    return false; 
+                }
+                if (x == 0) {
+                    $(this).val('Remove');
+                    console.log('asdasd');
+                    $('#category'+ rowcount).prop('disabled', true);
+                    $('#item'+ rowcount).prop('disabled', true);
+                    $('#desc'+ rowcount).prop('disabled', true);
+                    $('#serial'+ rowcount).prop('disabled', true);
+                    for(var i=1;i<=10;i++){
+                        if ($('#row'+i).is(":hidden")) {
+                            $('#row'+i).show();
+                            console.log('kskkskssk')
+                            return false;
+                        }
+                    }
+                }else{
+                    return false;
+                }
+            }else{
+                var id = $('#item'+rowcount).val();
+                var istock = 0;
+                $('#category'+rowcount).val('select category');
+                $('#item'+rowcount).val('select item code');
+                $('#desc'+rowcount).val('select description');
+                $('#serial'+rowcount).val('select serial');
+                $('#category'+rowcount).prop('disabled', false);
+                $('#item'+rowcount).prop('disabled', false);
+                $('#desc'+rowcount).prop('disabled', false);
+                $('#serial'+rowcount).prop('disabled', false);
+                $('#row'+rowcount).hide();
+                $(this).val('Add Item');
+                selectItem(stock1);
+                function selectItem(stock1) {
+                    $.ajax({
+                        type:'get',
+                        url:'{{route("stock.get")}}',
+                        data:{'id':id},
+                        async: false,
+                        success:function(data)
+                        {
+                            if (data != "") {
+                                for(var i=1;i<=10;i++){
+                                    if (i != rowcount) {
+                                        if ($('#item'+i).val() == id) {
+                                            $('#stock'+i).val(data[0].stock - istock);
+                                            istock++;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                        },
+                    });
                 }
             }
-            for(var q=2;q<=10;q++){
-                if ($('#row'+q).is(":visible")) {
-                    a++;
-                }
-                if(a == 9){
-                    $('.add_item').hide();
-                }
-            }
+            
         });
 
         $('.sub_Btn').on('click', function(e){ //show user/branch modal
@@ -102,12 +201,12 @@
             var visrow = [0];           
             for(var q=1;q<=10;q++){
                 if ($('#row'+q).is(":visible")) {
-                    if(!$('#datesched').val() || !$('#category'+q).val() || !$('#item'+q).val() || !$('#desc'+q).val() || !$('#qty'+q).val()) {
+                    if(!$('#datesched').val() || !$('#category'+q).val() || !$('#item'+q).val() || !$('#desc'+q).val() || !$('#serial'+q).val()) {
                         alert("Incomplete details!!!\nFailed!!!!");
                         check = 'failed';
                         return false;
                     }
-                    if ($('#qty'+q).val() > $('#stock'+q).val()) {
+                    if ($('#stock'+q).val() <= 0) {
                         $('#qty'+q).css('border', '5px solid red');
                         check = 'failed';
                         return false;
@@ -120,11 +219,11 @@
                 var stat = 'ok';
                 for(var q=1;q<=10;q++){
                     if ($('#row'+q).is(":visible")) {
-                        if($('#category'+q).val() && $('#item'+q).val() && $('#desc'+q).val() && $('#qty'+q).val()) {
+                        if($('#category'+q).val() && $('#item'+q).val() && $('#desc'+q).val() && $('#serial'+q).val()) {
                             cat = $('#category'+q).val();
                             item = $('#item'+q).val();
                             desc = $('#desc'+q).val();
-                            qty = $('#qty'+q).val();
+                            serial = $('#serial'+q).val();
                             datesched = $('#datesched').val();
                             $.ajax({
                                 url: '/update/'+reqno,
@@ -169,6 +268,11 @@
             e.preventDefault();
             var btnCount = $(this).attr('btn_id');
             $('#row'+btnCount).hide();
+            $('#category'+btnCount).val('select category');
+            $('#item'+btnCount).val('select item code');
+            $('#desc'+btnCount).val('select description');
+            $('#serial'+btnCount).val('serial');
+            $('#stock'+btnCount).val('Stock');
             $('.add_item').show();
         });
 
@@ -217,7 +321,7 @@
             var descOp = " ";
             var count = $(this).attr('row_count');
             var id = $(this).val();
-            $('#stock' + count).val('stock');
+            $('#stock' + count).val('Stock');
             selectItem(item1);
             $('#item' + count).val('select itemcode');
             $('#desc' + count).val('select description');
@@ -231,8 +335,8 @@
                     success:function(data)
                     {
                         //console.log('success');
-                        console.log(data);
-                        console.log(data.length);
+                        //console.log(data);
+                        //console.log(data.length);
                         codeOp+='<option selected value="select" disabled>select item code</option>';
                         descOp+='<option selected value="select" disabled>select description</option>';
                         for(var i=0;i<data.length;i++){
@@ -249,24 +353,66 @@
         $('.item').change(function(){
             var count = $(this).attr('row_count');
             var id = $(this).val();
+            var stockCount = 0;
+            var serialOp = " ";
+            var rmserial = "";
+            var istock = 0;
             $('#desc' + count).val(id);
+            for(var i=1;i<=10;i++){
+                if (i != count ) {
+                    if ($('#item'+i).val() == $(this).val()) {
+                        stockCount++;
+                    }
+                }
+            }
             selectItem(stock1);
+            for(var i=1;i<=10;i++){
+                if ($('#item'+i).val() == $(this).val()) {
+                    rmserial = $('#serial'+i).val();
+                    $("#serial"+count+" option[value=\'"+rmserial+"\']").remove();
+                }
+            }
+
             function selectItem(stock1) {
                 $.ajax({
                     type:'get',
                     url:'{{route("stock.get")}}',
                     data:{'id':id},
+                    async: false,
                     success:function(data)
                     {
                         if (data != "") {
-                            $('#stock' + count).val(data[0].stock);
+                            $('#stock' + count).val(data[0].stock - stockCount);
                             $('#stock' + count).css('color', 'black');
                             $('#stock' + count).css("border", "");
+                            if (($('#stock' + count).val() < 0) || ($('#stock' + count).val() == 0)) {
+                                $('#stock' + count).css('color', 'red');
+                                $('#stock' + count).css("border", "5px solid red");
+                            }
                         }else{
                             $('#stock' + count).val('0');
                             $('#stock' + count).css('color', 'red');
                             $('#stock' + count).css("border", "5px solid red");
                         }
+                        
+                    },
+                });
+
+                $.ajax({
+                    type:'get',
+                    url:'{{route("stock.serials")}}',
+                    data:{'id':id},
+                    async: false,
+                    success:function(data)
+                    {
+                        //console.log('success');
+                        //console.log(data);
+                        //console.log(data.length);
+                        serialOp+='<option selected value="select" disabled>select serial</option>';
+                        for(var i=0;i<data.length;i++){
+                            serialOp+='<option value="'+data[i].serial+'">'+data[i].serial+'</option>';
+                        }
+                        $("#serial" + count).find('option').remove().end().append(serialOp);
                     },
                 });
             }
@@ -275,8 +421,23 @@
         $('.desc').change(function(){
             var count = $(this).attr('row_count');
             var id = $(this).val();
+            var stockCount = 0;
             $('#item' + count).val(id);
+            for(var i=1;i<=10;i++){
+                if (i != count ) {
+                    if ($('#desc'+i).val() == $(this).val()) {
+                        stockCount++;
+                    }
+                }
+            }
             selectItem(stock1);
+            for(var i=1;i<=10;i++){
+                if ($('#desc'+i).val() == $(this).val()) {
+                    rmserial = $('#serial'+i).val();
+                    $("#serial"+count+" option[value=\'"+rmserial+"\']").remove();
+                }
+            }
+
             function selectItem(stock1) {
                 $.ajax({
                     type:'get',
@@ -285,14 +446,35 @@
                     success:function(data)
                     {
                         if (data != "") {
-                            $('#stock' + count).val(data[0].stock);
+                            $('#stock' + count).val(data[0].stock - stockCount);
                             $('#stock' + count).css('color', 'black');
                             $('#stock' + count).css("border", "");
+                            if ($('#stock' + count).val() <= 0) {
+                                $('#stock' + count).css('color', 'red');
+                                $('#stock' + count).css("border", "5px solid red");
+                            }
                         }else{
                             $('#stock' + count).val('0');
                             $('#stock' + count).css('color', 'red');
                             $('#stock' + count).css("border", "5px solid red");
                         }
+                    },
+                });
+
+                $.ajax({
+                    type:'get',
+                    url:'{{route("stock.serials")}}',
+                    data:{'id':id},
+                    success:function(data)
+                    {
+                        //console.log('success');
+                        //console.log(data);
+                        //console.log(data.length);
+                        serialOp+='<option selected value="select" disabled>select serial</option>';
+                        for(var i=0;i<data.length;i++){
+                            serialOp+='<option value="'+data[i].serial+'">'+data[i].serial+'</option>';
+                        }
+                        $("#serial" + count).find('option').remove().end().append(serialOp);
                     },
                 });
             }

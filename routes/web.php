@@ -28,6 +28,7 @@ Route::get('stocks', 'StockController@index')->name('stocks.index');
 
 Route::put('update/{id}', 'StockRequestController@update')->name('stock.update');
 Route::get('getstock', 'StockRequestController@getStock')->name('stock.get');
+Route::get('getserials', 'StockRequestController@getSerials')->name('stock.serials');
 Route::get('itemcode', 'StockRequestController@getItemCode')->name('stock.get.itemcode');
 Route::get('read/{id}', 'StockRequestController@read')->name('stock.read');
 Route::delete('delete/{id}', 'StockRequestController@destroy')->name('stock.delete');

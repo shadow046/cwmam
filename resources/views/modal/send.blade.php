@@ -84,10 +84,15 @@
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
-                        <input type="text" class="form-control" name="serial1" id="serial1" placeholder="serial">
+                        <select id="serial1" class="form-control serial" row_count="">
+                            <option selected disabled>select serial</option>
+                        </select>
                     </div>
                     <div class="col-md-2 form-group">
                         <input type="number" class="form-control" name="stock1" id="stock1" placeholder="Stock" style="width: 6em" disabled>
+                    </div>
+                    <div class="col-md-1 form-group">
+                        <input type="button" class="add_item btn btn-xs btn-primary" btn_id="1" value="Add Item">
                     </div>
                 </div>
                 <div class="row no-margin" id="row2">
@@ -110,13 +115,15 @@
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
-                        <input type="text" class="form-control" name="serial2" id="serial2" placeholder="serial">
+                        <select id="serial2" class="form-control serial" row_count="">
+                            <option selected disabled>select serial</option>
+                        </select>
                     </div>
                     <div class="col-md-2 form-group">
                         <input type="number" class="form-control" name="stock2" id="stock2" placeholder="Stock" style="width: 6em" disabled>
                     </div>
                     <div class="col-md-1 form-group">
-                        <input type="button" class="btn btn-xs remove_btn btn-primary" btn_id="2" value="Remove">
+                        <input type="button" class="add_item btn btn-xs btn-primary" btn_id="2" value="Add Item">
                     </div>
                 </div>
                 <div class="row no-margin" id="row3">
@@ -139,13 +146,15 @@
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
-                        <input type="text" class="form-control" name="serial3" id="serial3" placeholder="serial">
+                        <select id="serial3" class="form-control serial" row_count="">
+                            <option selected disabled>select serial</option>
+                        </select>
                     </div>
                     <div class="col-md-2 form-group">
                         <input type="number" class="form-control" name="stock3" id="stock3" placeholder="Stock" style="width: 6em" disabled>
                     </div>
                     <div class="col-md-1 form-group">
-                        <input type="button" class="btn btn-xs remove_btn btn-primary" btn_id="3" value="Remove">
+                        <input type="button" class="add_item btn btn-xs btn-primary" btn_id="3" value="Add Item">
                     </div>
                 </div>
                 <div class="row no-margin" id="row4">
@@ -168,13 +177,15 @@
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
-                        <input type="text" class="form-control" name="serial4" id="serial4" placeholder="serial">
+                        <select id="serial4" class="form-control serial" row_count="">
+                            <option selected disabled>select serial</option>
+                        </select>
                     </div>
                     <div class="col-md-2 form-group">
                         <input type="number" class="form-control" name="stock4" id="stock4" placeholder="Stock" style="width: 6em" disabled>
                     </div>
                     <div class="col-md-1 form-group">
-                        <input type="button" class="btn btn-xs remove_btn btn-primary" btn_id="4" value="Remove">
+                        <input type="button" class="add_item btn btn-xs btn-primary" btn_id="4" value="Add Item">
                     </div>
                 </div>
                 <div class="row no-margin" id="row5">
@@ -197,13 +208,15 @@
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
-                        <input type="text" class="form-control" name="serial5" id="serial5" placeholder="serial">
+                        <select id="serial5" class="form-control serial" row_count="">
+                            <option selected disabled>select serial</option>
+                        </select>
                     </div>
                     <div class="col-md-2 form-group">
                         <input type="number" class="form-control" name="stock5" id="stock5" placeholder="Stock" style="width: 6em" disabled>
                     </div>
                     <div class="col-md-1 form-group">
-                        <input type="button" class="btn btn-xs remove_btn btn-primary" btn_id="5" value="Remove">
+                        <input type="button" class="add_item btn btn-xs btn-primary" btn_id="5" value="Add Item">
                     </div>
                 </div>
                 <div class="row no-margin" id="row6">
@@ -226,13 +239,15 @@
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
-                        <input type="text" class="form-control" name="serial6" id="serial6" placeholder="serial">
+                        <select id="serial6" class="form-control serial" row_count="">
+                            <option selected disabled>select serial</option>
+                        </select>
                     </div>
                     <div class="col-md-2 form-group">
                         <input type="number" class="form-control" name="stock6" id="stock6" placeholder="Stock" style="width: 6em" disabled>
                     </div>
                     <div class="col-md-1 form-group">
-                        <input type="button" class="btn btn-xs remove_btn btn-primary" btn_id="6" value="Remove">
+                        <input type="button" class="add_item btn btn-xs btn-primary" btn_id="6" value="Add Item">
                     </div>
                 </div>
                 <div class="row no-margin" id="row7">
@@ -255,13 +270,15 @@
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
-                        <input type="text" class="form-control" name="serial7" id="serial7" placeholder="serial">
+                        <select id="serial7" class="form-control serial" row_count="">
+                            <option selected disabled>select serial</option>
+                        </select>
                     </div>
                     <div class="col-md-2 form-group">
                         <input type="number" class="form-control" name="stock7" id="stock7" placeholder="Stock" style="width: 6em" disabled>
                     </div>
                     <div class="col-md-1 form-group">
-                        <input type="button" class="btn btn-xs remove_btn btn-primary" btn_id="7" value="Remove">
+                        <input type="button" class="add_item btn btn-xs btn-primary" btn_id="7" value="Add Item">
                     </div>
                 </div>
                 <div class="row no-margin" id="row8">
@@ -284,13 +301,15 @@
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
-                        <input type="text" class="form-control" name="serial8" id="serial8" placeholder="serial">
+                        <select id="serial8" class="form-control serial" row_count="">
+                            <option selected disabled>select serial</option>
+                        </select>
                     </div>
                     <div class="col-md-2 form-group">
                         <input type="number" class="form-control" name="stock8" id="stock8" placeholder="Stock" style="width: 6em" disabled>
                     </div>
                     <div class="col-md-1 form-group">
-                        <input type="button" class="btn btn-xs remove_btn btn-primary" btn_id="8" value="Remove">
+                        <input type="button" class="add_item btn btn-xs btn-primary" btn_id="8" value="Add Item">
                     </div>
                 </div>
                 <div class="row no-margin" id="row9">
@@ -313,13 +332,15 @@
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
-                        <input type="text" class="form-control" name="serial9" id="serial9" placeholder="serial">
+                        <select id="serial9" class="form-control serial" row_count="">
+                            <option selected disabled>select serial</option>
+                        </select>
                     </div>
                     <div class="col-md-2 form-group">
                         <input type="number" class="form-control" name="stock9" id="stock9" placeholder="Stock" style="width: 6em" disabled>
                     </div>
                     <div class="col-md-1 form-group">
-                        <input type="button" class="btn btn-xs remove_btn btn-primary" btn_id="9" value="Remove">
+                        <input type="button" class="add_item btn btn-xs btn-primary" btn_id="9" value="Add Item">
                     </div>
                 </div>
                 <div class="row no-margin" id="row10">
@@ -342,13 +363,15 @@
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
-                        <input type="text" class="form-control" name="serial10" id="serial10" placeholder="serial">
+                        <select id="serial10" class="form-control serial" row_count="">
+                            <option selected disabled>select serial</option>
+                        </select>
                     </div>
                     <div class="col-md-2 form-group">
                         <input type="number" class="form-control" name="stock10" id="stock10" placeholder="Stock" style="width: 6em" disabled>
                     </div>
                     <div class="col-md-1 form-group">
-                        <input type="button" class="btn btn-xs remove_btn btn-primary" btn_id="10" value="Remove">
+                        <input type="button" class="add_item btn btn-xs btn-primary" btn_id="10" value="Add Item">
                     </div>
                 </div>
             </div><hr>

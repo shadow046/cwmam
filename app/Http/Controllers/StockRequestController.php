@@ -39,14 +39,26 @@ class StockRequestController extends Controller
         $data = Warehouse::select(\DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
                     ->where('status', 'in')
                     ->where('items_id', $request->id)
-                    ->groupBy('items_id')->get();
+                    ->groupBy('items_id')
+                    ->get();
+                    
+        return response()->json($data);
+        
+    }
+
+    public function getSerials(Request $request){
+        //$data = Stock::select('id', 'name')->where('category_id', $request->id)->get();
+        $data = Warehouse::select('items_id', 'serial')
+                    ->where('status', 'in')
+                    ->where('items_id', $request->id)
+                    ->get();
+                    
         return response()->json($data);
         
     }
 
     public function Send(Request $request, $id)
     {
-
         $reqItems = RequestedItem::where('request_no', $id)->get();
         $stocks = Warehouse::select('items_id', 'serial', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
                     ->where('status', 'in')
