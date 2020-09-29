@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body mod" style="max-height:250px;overflow-y: auto;">
+            <div class="modal-body mod" style="max-height:300px;overflow-y: auto;">
                 <form id="sendForm">
                     {{ csrf_field() }}
                 <div class="row no-margin">
@@ -63,7 +63,7 @@
             <div class="modal-header">
                 <h6 class="modal-title w-100 text-center">ENTER ITEM HERE</h6>
             </div>
-            <div class="modal-body" >
+            <div class="modal-body" id="reqfield">
                 <div class="row no-margin" id="row1">
                     <div class="col-md-2 form-group">
                         <select id="category1" class="form-control category" row_count="1">

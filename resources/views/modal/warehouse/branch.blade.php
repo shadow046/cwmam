@@ -59,11 +59,13 @@
                             </thead>
                         </table>
                     </div>
+                    @role('Administrator')
                     <div class="modal-footer">
                         <input type="button" id="editBtn" class="btn btn-primary" value="Edit">
                         <input type="submit" id="saveBtn" class="btn btn-primary" value="Save">
                         <input type="button" class="btn btn-primary mr-auto" data-dismiss="modal" value="Cancel">                        
                     </div>
+                    @endrole
                 </form>
             </div>
         </div>

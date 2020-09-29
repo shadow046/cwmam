@@ -8,15 +8,17 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('branch') ? 'active' : '' }}" href="{{ route('branch.index') }}">Service Center</a>
                 </li>
+                @role('Administrator')
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('customer') ? 'active' : '' }}" href="{{ url('customer') }}">Customer</a>
                 </li>
+                @endrole
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('request') ? 'active' : '' }}" href="{{ route('stock.index') }}">Stock Request</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('service_units') ? 'active' : '' }}" href="{{ route('stocks.index') }}">Service Units</a>
+                    <a class="nav-link {{ Request::is('stocks') ? 'active' : '' }}" href="{{ route('stocks.index') }}">Service Units</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('return') ? 'active' : '' }}" href="{{ url('return') }}">Return</a>

@@ -2,7 +2,7 @@
 
 @section('content')
 
-  <div class="table-responsive" style="height: 450px;">
+  <div class="table">
     <table class="table requestTable" id="requestTable">
       <thead class="thead-dark">
         <tr>
@@ -28,4 +28,8 @@
       </thead>
     </table>
   </div>
+  @role('Head')
+  <input type="button" id="addBtn" class="btn btn-primary" value="REQUEST STOCKS">
+  <input type="button" id="addBtn" class="btn btn-primary" value="DELETE PENDING REQUEST"> 
+  @endrole
 @endsection

@@ -186,14 +186,14 @@ class StockRequestController extends Controller
             $reqno->schedule = $request->datesched;
             $data = $reqno->save();
         }else{
-            $qty = $request->qty;
-            for ($i=0; $i < $qty; $i++) { 
-                $item = Warehouse::where('status', 'in')
-                    ->where('items_id', $request->item)
-                    ->first();
-                $item->status = 'sent';
-                $item->save();
-            }
+            $reqbranch= StockRequest::where('request_no', $request->reqno)->first();
+            $item = Warehouse::where('status', 'in')
+                ->where('items_id', $request->item)
+                ->where('serial', $request->serial)
+                ->first();
+            $item->status = 'sent';
+            $item->branch_id = $reqbranch->branch_id;
+            $item->save();
             $data = 'save';
         }
         return response()->json($data);

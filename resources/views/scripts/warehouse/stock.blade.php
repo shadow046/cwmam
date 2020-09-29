@@ -180,76 +180,47 @@
 
         $('.sub_Btn').on('click', function(e){ //show user/branch modal
             e.preventDefault();
-            var s = 1;
             var cat = "";
             var item = "";
             var desc = "";
             var qty = "";
+            var stat = "ok";
             var reqno = $('#sreqno').val();
-            var check = 'ok';
-            var visrow = [0];           
             for(var q=1;q<=10;q++){
                 if ($('#row'+q).is(":visible")) {
-                    if(!$('#datesched').val() || !$('#category'+q).val() || !$('#item'+q).val() || !$('#desc'+q).val() || !$('#serial'+q).val()) {
-                        alert("Incomplete details!!!\nFailed!!!!");
-                        check = 'failed';
-                        return false;
+                    if ($('.add_item[btn_id=\''+q+'\']').val() == 'Remove' && $('#datesched').val()) {
+                        cat = $('#category'+q).val();
+                        item = $('#item'+q).val();
+                        desc = $('#desc'+q).val();
+                        serial = $('#serial'+q).val();
+                        datesched = $('#datesched').val();
+                        $.ajax({
+                            url: '/update/'+reqno,
+                            dataType: 'json',
+                            type: 'PUT',
+                            data: {
+                                item: item,
+                                serial: serial,
+                                reqno : reqno
+                            },
+                        });
                     }
-                    if ($('#stock'+q).val() <= 0) {
-                        $('#qty'+q).css('border', '5px solid red');
-                        check = 'failed';
-                        return false;
-                    }
-                    visrow.push(q);
                 }
             }
-            
-            if (check == 'ok') {
-                var stat = 'ok';
-                for(var q=1;q<=10;q++){
-                    if ($('#row'+q).is(":visible")) {
-                        if($('#category'+q).val() && $('#item'+q).val() && $('#desc'+q).val() && $('#serial'+q).val()) {
-                            cat = $('#category'+q).val();
-                            item = $('#item'+q).val();
-                            desc = $('#desc'+q).val();
-                            serial = $('#serial'+q).val();
-                            datesched = $('#datesched').val();
-                            $.ajax({
-                                url: '/update/'+reqno,
-                                type: 'PUT',
-                                data: { 
-                                    cat: cat,
-                                    item: item,
-                                    desc: desc,
-                                    datesched: datesched,
-                                    qty: qty
-                                },
-                                dataType: 'json',
-                                headers: {
-                                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                                }
-                            });
-                        }
-                    }
-                    if (q == 10) {
-                    $.ajax({
-                        url: '/update/'+reqno,
-                        type: 'PUT',
-                        data: { 
-                            reqno: reqno,
-                            datesched: datesched,
-                            stat: stat
-                            
-                        },
-                        dataType: 'json',
-                        headers: {
-                            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    alert("Branch data updated!!!!");
-                    window.location.href = '{{route('stock.index')}}';
-                }
-                }
+            if (q == 10) {
+                $.ajax({
+                    url: '/update/'+reqno,
+                    type: 'PUT',
+                    data: { 
+                        reqno: reqno,
+                        datesched: datesched,
+                        stat: stat
+                        
+                    },
+                    dataType: 'json',
+                });
+                alert("Branch data updated!!!!");
+                window.location.href = '{{route('stock.index')}}';
             }
         });
 

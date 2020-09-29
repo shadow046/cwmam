@@ -20,17 +20,22 @@
             </div>
 
             @if(Request::is('branch'))
-                @include('modal.branch')
+                @include('modal.warehouse.branch')
             @endif
 
             @if(Request::is('request'))
-                @include('modal.request')
-                @include('modal.send')
-                @include('modal.add')
+                @role('Administrator')
+                    @include('modal.warehouse.request')
+                    @include('modal.warehouse.send')
+                    @include('modal.warehouse.add')
+                @endrole
+                @role('Head')
+
+                @endrole
             @endif
 
             @if(Request::is('user'))
-                @include('modal.user')
+                @include('modal.warehouse.user')
             @endif
 
             <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -39,19 +44,19 @@
             <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
             
             @if(Request::is('user'))
-                @include('scripts.user')
+                @include('scripts.warehouse.user')
             @endif
 
             @if(Request::is('branch'))
-                @include('scripts.branch')
+                @include('scripts.warehouse.branch')
             @endif
 
             @if(Request::is('request'))
-                @include('scripts.stock')
+                @include('scripts.warehouse.stock')
             @endif
 
             @if(Request::is('stocks'))
-                @include('scripts.warehouse')
+                @include('scripts.warehouse.warehouse')
             @endif
            
         </body>
