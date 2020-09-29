@@ -376,7 +376,6 @@
                 </div>
             </div><hr>
             <div class="modal-footer">
-            <input type="button" class="add_item btn btn-primary mr-auto" value="Add Item">
             <input type="button" class="btn btn-primary" data-dismiss="modal" value="Cancel">
             <input type="button" class="btn btn-primary sub_Btn" id="sub_Btn" class="button" value="Submit">
             </form>

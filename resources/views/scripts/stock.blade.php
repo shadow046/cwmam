@@ -69,17 +69,13 @@
         });
 
         $('.add_item').on('click', function(){ //show user/branch modal
-            console.log('ok');
             var rowcount = $(this).attr('btn_id');
             if ($(this).val() == 'Add Item') {
                 var x = 0;
-                console.log('10');
-                console.log(rowcount);
-                if($('#category'+ rowcount).val() && $('#item'+ rowcount).val() && $('#desc'+ rowcount).val() && $('#serial'+ rowcount).val()) {
+               if($('#category'+ rowcount).val() && $('#item'+ rowcount).val() && $('#desc'+ rowcount).val() && $('#serial'+ rowcount).val()) {
                     var id = $('#item'+ rowcount).val();
                     var stockCount = 0;
-                    console.log('9');
-                    selectBranch(stock1);
+                   selectBranch(stock1);
                     function selectBranch(stock1) {
                         $.ajax({
                             type:'get',
@@ -88,10 +84,8 @@
                             data:{'id':id},
                             success:function(data)
                             {
-                                console.log('8');
                                 if (data != "") {
                                     var curstock = data[0].stock;
-                                    console.log('7');
                                     for(var i=1;i<=10;i++){
                                         if (i != rowcount) {
                                             if ($('#item'+i).val() == $('#item'+ rowcount).val()) {
@@ -99,7 +93,6 @@
                                                     $('#serial' + rowcount).css('color', 'red');
                                                     $('#serial' + rowcount).css("border", "5px solid red");
                                                     x++;
-                                                    console.log(x+'t');
                                                 }else{
                                                     $('#serial' + rowcount).css('color', 'black');
                                                     $('#serial' + rowcount).css("border", "");
@@ -112,9 +105,7 @@
                                             }
                                         }
                                     }
-                                    console.log('6');
                                     if (i == 10) {
-                                        console.log('5');
                                         $('#stock'+rowcount).val(curstock);
                                         if (curstock <= 0) {
                                             $('#stock' + rowcount).css('color', 'red');
@@ -134,7 +125,6 @@
                 }
                 if (x == 0) {
                     $(this).val('Remove');
-                    console.log('asdasd');
                     $('#category'+ rowcount).prop('disabled', true);
                     $('#item'+ rowcount).prop('disabled', true);
                     $('#desc'+ rowcount).prop('disabled', true);
@@ -142,7 +132,6 @@
                     for(var i=1;i<=10;i++){
                         if ($('#row'+i).is(":hidden")) {
                             $('#row'+i).show();
-                            console.log('kskkskssk')
                             return false;
                         }
                     }
