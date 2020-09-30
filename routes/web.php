@@ -32,7 +32,7 @@ Route::get('getserials', 'StockRequestController@getSerials')->name('stock.seria
 Route::get('itemcode', 'StockRequestController@getItemCode')->name('stock.get.itemcode');
 Route::get('read/{id}', 'StockRequestController@read')->name('stock.read');
 Route::delete('delete/{id}', 'StockRequestController@destroy')->name('stock.delete');
-Route::get('send/{id}', 'StockRequestController@send')->name('stock.send');
+Route::get('send/{id}', 'StockRequestController@getsendDetails')->name('stock.send');
 Route::get('requests/{id}', 'StockRequestController@getRequestDetails')->name('get.reqdetails');
 Route::get('requests', 'StockRequestController@getRequests')->name('get.requests');
 Route::get('request', 'StockRequestController@index')->name('stock.index');

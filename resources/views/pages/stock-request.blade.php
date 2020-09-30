@@ -29,7 +29,7 @@
     </table>
   </div>
   @role('Head')
-  <input type="button" id="addBtn" class="btn btn-primary" value="REQUEST STOCKS">
-  <input type="button" id="addBtn" class="btn btn-primary" value="DELETE PENDING REQUEST"> 
+  <input type="button" id="reqBtn" class="btn btn-primary" value="REQUEST STOCKS">
+  <input type="button" id="remBtn" class="btn btn-primary" value="DELETE PENDING REQUEST"> 
   @endrole
 @endsection

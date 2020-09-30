@@ -24,13 +24,10 @@
             @endif
 
             @if(Request::is('request'))
-                @role('Administrator')
+                @role('Head|Administrator')
                     @include('modal.warehouse.request')
                     @include('modal.warehouse.send')
                     @include('modal.warehouse.add')
-                @endrole
-                @role('Head')
-
                 @endrole
             @endif
 

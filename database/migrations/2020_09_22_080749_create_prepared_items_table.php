@@ -15,8 +15,10 @@ class CreatePreparedItemsTable extends Migration
     {
         Schema::create('prepared_items', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedInteger('branch_id')->nullable();
             $table->unsignedInteger('items_id')->nullable();
-            $table->unsignedInteger('quantity')->nullable();
+            $table->unsignedInteger('request_no')->nullable();
+            $table->string('serial')->nullable();
             $table->timestamps();
         });
     }

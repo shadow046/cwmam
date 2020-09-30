@@ -43,7 +43,7 @@
                             <input type="text" class="form-control form-control-sm " id="area" value="{{ Auth::user()->area->name }}" disabled>
                         </div>
                     </div>
-                    <div class="col-md-6 form-group row">
+                    <div class="col-md-6 form-group row sched">
                         <label class="col-md-4 col-form-label text-md-right">Schedule on:</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control form-control-sm " id="sched" value="" disabled>
@@ -55,7 +55,7 @@
                 <h5 class="modal-title w-100 text-center">REQUEST DETAILS</h5>
             </div>
             <div class="modal-body">
-                <table class="table requestDetails" style="height: 300px;">
+                <table class="table requestDetails">
                     <thead class="thead-dark">
                         <th>Item Code</th>
                         <th>Description</th>
@@ -63,11 +63,20 @@
                         <th>Purpose</th>
                     </thead>
                 </table>
+                <table class="table schedDetails">
+                    <thead class="thead-dark">
+                        <th>Item Code</th>
+                        <th>Description</th>
+                        <th>Serial</th>
+                    </thead>
+                </table>
             </div>
+            @role('Administrator')
             <div class="modal-footer">
                 <input type="button" class="btn btn-primary mr-auto" id="prcBtn" class="button" value="Proceed"> 
-                <input type="button" class="btn btn-primary" data-dismiss="modal" value="Cancel">
+                <input type="button" class="btn btn-primary" data-dismiss="modal" value="Close">
             </div>
+            @endrole
         </div>
     </div>
 </div>

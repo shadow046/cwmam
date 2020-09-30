@@ -19,6 +19,7 @@ class CreateWarehousesTable extends Migration
             $table->string('serial')->nullable();
             $table->string('status')->nullable();
             $table->string('branch_id')->nullable();
+            $table->date('schedule')->nullable();
             $table->timestamps();
         });
     }

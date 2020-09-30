@@ -10,6 +10,7 @@ use App\PreparedItem;
 use App\Warehouse;
 use App\Category;
 use App\Item;
+use Auth;
 class StockRequestController extends Controller
 {
     /**
@@ -66,6 +67,19 @@ class StockRequestController extends Controller
         return json_encode($return_array);
     }
 
+    public function getsendDetails(Request $request, $id){
+
+        return DataTables::of(PreparedItem::where('request_no', $id)->get())
+
+        ->addColumn('item_name', function (PreparedItem $PreparedItem){
+
+            return $PreparedItem->items->name;
+        })
+
+        ->make(true);
+
+    }
+
     public function getRequestDetails(Request $request, $id)
     {
         
@@ -92,8 +106,18 @@ class StockRequestController extends Controller
 
     public function getRequests()
     {
+        $user = Auth::user()->branch->id;
+        //dd($user);
+        if ($user != '999') {
+            $stock = StockRequest::where('status', '!=', '2')
+                ->where('branch_id', $user)
+                ->get();
+        }else{
+            $stock = StockRequest::where('status', '!=', '2')
+                ->get();
+        }
         
-        return DataTables::of(StockRequest::where('status', '!=', '2')->get())
+        return DataTables::of($stock)
         ->setRowData([
             'data-id' => '{{ $request_no }}',
             'data-status' => '{{ $status }}',
@@ -193,7 +217,16 @@ class StockRequestController extends Controller
                 ->first();
             $item->status = 'sent';
             $item->branch_id = $reqbranch->branch_id;
+            $item->schedule = $request->datesched;;
             $item->save();
+            $prep = new PreparedItem;
+            $prep->items_id = $request->item;
+            $prep->request_no = $request->reqno;
+            $prep->serial = $request->serial;
+            $prep->branch_id = $reqbranch->branch_id;
+            $prep->save();
+
+            $data = $user->save();
             $data = 'save';
         }
         return response()->json($data);

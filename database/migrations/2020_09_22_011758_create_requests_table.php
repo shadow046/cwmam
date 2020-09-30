@@ -19,6 +19,7 @@ class CreateRequestsTable extends Migration
             $table->unsignedInteger('user_id')->nullable();
             $table->string('branch_id')->nullable();
             $table->string('area_id')->nullable();
+            $table->date('schedule')->nullable();
             $table->unsignedInteger('status')->nullable();
             $table->timestamps();
         });
