@@ -80,6 +80,25 @@ class StockRequestController extends Controller
 
     }
 
+    public function generateBarcodeNumber() {
+        $number = mt_rand(1, 99999); // better than rand()
+    
+        // call the same function if the barcode exists already
+        if ($this->barcodeNumberExists($number)) {
+            return generateBarcodeNumber();
+        }
+    
+        // otherwise, it's valid and can be used
+        //return $number;
+        return response()->json($number);
+    }
+    
+    public function barcodeNumberExists($number) {
+        // query the database and return a boolean
+        // for instance, it might look like this in Laravel
+        return StockRequest::where('request_no', $number)->exists();
+    }
+
     public function getRequestDetails(Request $request, $id)
     {
         

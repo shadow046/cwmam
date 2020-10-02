@@ -1,12 +1,13 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
+        var branchid = $('#branchid').attr('branchid');
         var table =
         $('table.stockTable').DataTable({ //user datatables
             "dom": 'lrtip',
             processing: true,
             serverSide: true,
-            ajax: '{{route('stocks.show')}}',
+            ajax: "/view/"+branchid,
             columnDefs: [
                     {"className": "dt-center", "targets": "_all"}
                 ],

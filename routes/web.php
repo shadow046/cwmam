@@ -22,10 +22,11 @@ Route::get('return', 'HomeController@return');
 
 
 
-
+Route::get('view/{id}', 'StockController@viewStocks')->name('stock.view');
 Route::get('show', 'StockController@show')->name('stocks.show');
 Route::get('stocks', 'StockController@index')->name('stocks.index');
 
+Route::get('gen', 'StockRequestController@generateBarcodeNumber')->name('stock.gen');
 Route::put('update/{id}', 'StockRequestController@update')->name('stock.update');
 Route::get('getstock', 'StockRequestController@getStock')->name('stock.get');
 Route::get('getserials', 'StockRequestController@getSerials')->name('stock.serials');

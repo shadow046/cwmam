@@ -7,6 +7,8 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Warehouse;
 use App\Item;
 use App\Category;
+use App\Stock;
+use DB;
 class StockController extends Controller
 {
     /**
@@ -18,6 +20,49 @@ class StockController extends Controller
     {
         return view('pages.stocks');
     }
+
+    public function viewStocks(Request $request, $id)
+    {
+        /*$reqItems = RequestedItem::where('request_no', $id)->get();
+        $stocks = Warehouse::select('items_id', 'serial', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
+                    ->where('status', 'in')
+                    ->groupBy('items_id')->get();
+        return json_encode($return_array);*/
+
+        $stock = Stock::select('category_id','items_id', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
+                    ->where('status', 'in')
+                    ->where('branch_id', $id)
+                    ->groupBy('items_id')->get();
+
+
+        return DataTables::of($stock)
+        /*->setRowData([
+            'data-id' => '{{ $request_no }}',
+            'data-status' => '{{ $status }}',
+            'data-user' => '{{ $user_id }}',
+        ])*/
+
+        ->addColumn('items_id', function (Stock $request){
+            return $request->items_id;
+        })
+
+        ->addColumn('category', function (Stock $request){
+            return $request->category_id;
+        })
+
+        ->addColumn('description', function (Stock $request){
+            $item = Item::where('id', $request->items_id)->first();
+
+            return $item->name;
+        })
+
+        ->addColumn('quantity', function (Stock $request){
+            return $request->stock;
+        })
+
+        ->make(true);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -48,7 +93,7 @@ class StockController extends Controller
      */
     public function show()
     {
-        $stock = Warehouse::select('items_id', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
+        $stock = Warehouse::select('category_id','items_id', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
                     ->where('status', 'in')
                     ->groupBy('items_id')->get();
 
@@ -65,10 +110,7 @@ class StockController extends Controller
         })
 
         ->addColumn('category', function (Warehouse $request){
-
-            $item = Item::where('id', $request->items_id)->first();
-            
-            return $item->category->name;
+            return $request->category_id;
         })
 
         ->addColumn('description', function (Warehouse $request){
