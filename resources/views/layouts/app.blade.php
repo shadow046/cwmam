@@ -33,7 +33,14 @@
                     @include('modal.warehouse.request')
                     @include('modal.branch.send')
                 @endrole
+            @endif
 
+            @if(Request::is('stocks'))
+                @role('Administrator')
+                    @include('modal.warehouse.add')
+                    @include('modal.warehouse.category')
+                    @include('modal.warehouse.item')
+                @endrole
             @endif
 
             @if(Request::is('user'))

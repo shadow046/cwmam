@@ -25,6 +25,10 @@
         overflow:scroll;
     }
     
+    .table td{
+        color:#000000;
+    }
+
     thead tr:nth-child(2) th{
         background: white;
         position: sticky;

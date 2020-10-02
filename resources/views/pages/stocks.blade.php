@@ -2,7 +2,7 @@
 
 @section('content')
 
-  <div class="table-responsive" style="height: 450px;">
+  <div class="table-responsive">
     <div class="container">
       <div style="display: flex; justify-content: flex-end" class="pt-3">
         <a href="#" id="search-ic"><i class="fa fa-lg fa-search" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -41,4 +41,5 @@
       </thead>
     </table>
   </div>
+  <input type="button" id="addStockBtn" class="btn btn-xs btn-primary" value="ADD STOCK">
 @endsection

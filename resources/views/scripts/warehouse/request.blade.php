@@ -3,6 +3,8 @@
 
     $(document).ready(function()
     {
+        var r = 1;
+        var y = 1;
         var d = new Date();
         var hour = String(d.getHours()).padStart(2, '0') % 12 || 12
         var ampm = (String(d.getHours()).padStart(2, '0') < 12 || String(d.getHours()).padStart(2, '0') === 24) ? "AM" : "PM";
@@ -116,7 +118,7 @@
         $('#sname').val($('#name').val());
         $('#sendModal').modal('show');
         var x = 1;
-        for(var i=1;i<=10;i++){
+        for(var i=1;i<=y;i++){
             if (i != 1) {
                 $('#row'+i).hide();
             }
@@ -145,160 +147,166 @@
             ]
         });
     });
-
+    
     $(document).on('click', '.add_item', function(){
-
-        //$('.add_item').on('click', function(){ //show user/branch modal
-            var rowcount = $(this).attr('btn_id');
-            if ($(this).val() == 'Add Item') {
-                var x = 0;
-               if($('#category'+ rowcount).val() && $('#item'+ rowcount).val() && $('#desc'+ rowcount).val() && $('#serial'+ rowcount).val()) {
-                    var id = $('#item'+ rowcount).val();
-                    var stockCount = 0;
-                   selectBranch(stock1);
-                    function selectBranch(stock1) {
-                        $.ajax({
-                            type:'get',
-                            url:'{{route("stock.get")}}',
-                            async: false,
-                            data:{'id':id},
-                            success:function(data)
-                            {
-                                if (data != "") {
-                                    var curstock = data[0].stock;
-                                    for(var i=1;i<=y;i++){
-                                        if (i != rowcount) {
-                                            if ($('#item'+i).val() == $('#item'+ rowcount).val()) {
-                                                if ($('#serial'+i).val() == $('#serial'+ rowcount).val()) {
-                                                    $('#serial' + rowcount).css('color', 'red');
-                                                    $('#serial' + rowcount).css("border", "5px solid red");
-                                                    x++;
-                                                }else{
-                                                    $('#serial' + rowcount).css('color', 'black');
-                                                    $('#serial' + rowcount).css("border", "");
-                                                }
-                                                if ($('#item'+i).prop('disabled')) {
-                                                    $('#stock'+i).val(curstock);
-                                                    curstock--;
-                                                }
-                                                
-                                            }
-                                        }
-                                    }
-                                    if (i == y) {
-                                        $('#stock'+rowcount).val(curstock);
-                                        if (curstock <= 0) {
-                                            $('#stock' + rowcount).css('color', 'red');
-                                            $('#stock' + rowcount).css("border", "5px solid red");
-                                            x++;
-                                        }
-                                        $('#stock' + rowcount).css('color', 'black');
-                                        $('#stock' + rowcount).css("border", "");
-                                    }
-                                }
-                            },
-                        });
-                    }
-                }else{
-                    x++;
-                    return false; 
-                }
-                if (x == 0) {
-                    var y = parseInt(rowcount) + 1;
-                    var additem = '<div class="row no-margin" id="row'+y+'"><div class="col-md-2 form-group"><select id="category'+y+'" class="form-control category" row_count="'+y+'"></select></div><div class="col-md-2 form-group"><select id="item'+y+'" class="form-control item" row_count="'+y+'"><option selected disabled>select item code</option></select></div><div class="col-md-3 form-group"><select id="desc'+y+'" class="form-control desc" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><select id="serial'+y+'" class="form-control serial" row_count="'+y+'"><option selected disabled>select serial</option></select></div><div class="col-md-2 form-group"><input type="number" class="form-control" name="stock'+y+'" id="stock'+y+'" placeholder="0" style="width: 6em" disabled></div><div class="col-md-1 form-group"><input type="button" class="add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
-                    $(this).val('Remove');
-                    $('#category'+ rowcount).prop('disabled', true);
-                    $('#item'+ rowcount).prop('disabled', true);
-                    $('#desc'+ rowcount).prop('disabled', true);
-                    $('#serial'+ rowcount).prop('disabled', true);
-                    $('#reqfield').append(additem);
-                    $('#category'+ rowcount).find('option').clone().appendTo('#category'+y);
-                }else{
-                    return false;
-                }
-            }else{
-                var id = $('#item'+rowcount).val();
-                var istock = 0;
-                $('#category'+rowcount).val('select category');
-                $('#item'+rowcount).val('select item code');
-                $('#desc'+rowcount).val('select description');
-                $('#serial'+rowcount).val('select serial');
-                $('#category'+rowcount).prop('disabled', false);
-                $('#item'+rowcount).prop('disabled', false);
-                $('#desc'+rowcount).prop('disabled', false);
-                $('#serial'+rowcount).prop('disabled', false);
-                $('#row'+rowcount).hide();
-                $(this).val('Add Item');
-                selectItem(stock1);
-                function selectItem(stock1) {
+        var rowcount = $(this).attr('btn_id');
+        if ($(this).val() == 'Add Item') {
+            var x = 0;
+            if($('#category'+ rowcount).val() && $('#item'+ rowcount).val() && $('#desc'+ rowcount).val() && $('#serial'+ rowcount).val()) {
+                var id = $('#item'+ rowcount).val();
+                var stockCount = 0;
+                selectBranch(stock1);
+                function selectBranch(stock1) {
                     $.ajax({
                         type:'get',
                         url:'{{route("stock.get")}}',
-                        data:{'id':id},
                         async: false,
+                        data:{'id':id},
                         success:function(data)
                         {
                             if (data != "") {
-                                for(var i=1;i<=10;i++){
+                                var curstock = data[0].stock;
+                                for(var i=1;i<=y;i++){
                                     if (i != rowcount) {
-                                        if ($('#item'+i).val() == id) {
-                                            $('#stock'+i).val(data[0].stock - istock);
-                                            istock++;
+                                        if ($('#item'+i).val() == $('#item'+ rowcount).val()) {
+                                            if ($('#serial'+i).val() == $('#serial'+ rowcount).val()) {
+                                                $('#serial' + rowcount).css('color', 'red');
+                                                $('#serial' + rowcount).css("border", "5px solid red");
+                                                x++;
+                                            }else{
+                                                $('#serial' + rowcount).css('color', 'black');
+                                                $('#serial' + rowcount).css("border", "");
+                                            }
+                                            if ($('#item'+i).prop('disabled')) {
+                                                $('#stock'+i).val(curstock);
+                                                curstock--;
+                                            }
+                                            
                                         }
                                     }
                                 }
+                                if (i == y) {
+                                    $('#stock'+rowcount).val(curstock);
+                                    if (curstock <= 0) {
+                                        $('#stock' + rowcount).css('color', 'red');
+                                        $('#stock' + rowcount).css("border", "5px solid red");
+                                        x++;
+                                    }
+                                    $('#stock' + rowcount).css('color', 'black');
+                                    $('#stock' + rowcount).css("border", "");
+                                }
                             }
-                            
                         },
                     });
                 }
+            }else{
+                x++;
+                return false; 
             }
-            
-        //});
-
+            if (x == 0) {
+                y++;
+                var additem = '<div class="row no-margin" id="row'+y+'"><div class="col-md-2 form-group"><select id="category'+y+'" class="form-control category" row_count="'+y+'"></select></div><div class="col-md-2 form-group"><select id="item'+y+'" class="form-control item" row_count="'+y+'"><option selected disabled>select item code</option></select></div><div class="col-md-3 form-group"><select id="desc'+y+'" class="form-control desc" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><select id="serial'+y+'" class="form-control serial" row_count="'+y+'"><option selected disabled>select serial</option></select></div><div class="col-md-2 form-group"><input type="number" class="form-control" name="stock'+y+'" id="stock'+y+'" placeholder="0" style="width: 6em" disabled></div><div class="col-md-1 form-group"><input type="button" class="add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
+                $(this).val('Remove');
+                $('#category'+ rowcount).prop('disabled', true);
+                $('#item'+ rowcount).prop('disabled', true);
+                $('#desc'+ rowcount).prop('disabled', true);
+                $('#serial'+ rowcount).prop('disabled', true);
+                if (r < 20 ) {
+                    $('#reqfield').append(additem);
+                    $('#category'+ rowcount).find('option').clone().appendTo('#category'+y);
+                    r++;
+                }
+            }else{
+                return false;
+            }
+        }else{
+            if (r == 20) {
+                y++;
+                var additem = '<div class="row no-margin" id="row'+y+'"><div class="col-md-2 form-group"><select id="category'+y+'" class="form-control category" row_count="'+y+'"></select></div><div class="col-md-2 form-group"><select id="item'+y+'" class="form-control item" row_count="'+y+'"><option selected disabled>select item code</option></select></div><div class="col-md-3 form-group"><select id="desc'+y+'" class="form-control desc" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><select id="serial'+y+'" class="form-control serial" row_count="'+y+'"><option selected disabled>select serial</option></select></div><div class="col-md-2 form-group"><input type="number" class="form-control" name="stock'+y+'" id="stock'+y+'" placeholder="0" style="width: 6em" disabled></div><div class="col-md-1 form-group"><input type="button" class="add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
+                $('#reqfield').append(additem);
+                $('#category'+ rowcount).find('option').clone().appendTo('#category'+y);
+                r++;
+            }
+            var id = $('#item'+rowcount).val();
+            var istock = 0;
+            $('#category'+rowcount).val('select category');
+            $('#item'+rowcount).val('select item code');
+            $('#desc'+rowcount).val('select description');
+            $('#serial'+rowcount).val('select serial');
+            $('#category'+rowcount).prop('disabled', false);
+            $('#item'+rowcount).prop('disabled', false);
+            $('#desc'+rowcount).prop('disabled', false);
+            $('#serial'+rowcount).prop('disabled', false);
+            $('#row'+rowcount).hide();
+            $(this).val('Add Item');
+            selectItem(stock1);
+            r--;
+            function selectItem(stock1) {
+                $.ajax({
+                    type:'get',
+                    url:'{{route("stock.get")}}',
+                    data:{'id':id},
+                    async: false,
+                    success:function(data)
+                    {
+                        if (data != "") {
+                            for(var i=1;i<=y;i++){
+                                if (i != rowcount) {
+                                    if ($('#item'+i).val() == id) {
+                                        $('#stock'+i).val(data[0].stock - istock);
+                                        istock++;
+                                    }
+                                }
+                            }
+                        }
+                        
+                    },
+                });
+            }
+        }
     });
 
     $(document).on('click', '.sub_Btn', function(e){
-
-        //$('.sub_Btn').on('click', function(e){ //show user/branch modal
-            e.preventDefault();
-            var cat = "";
-            var item = "";
-            var desc = "";
-            var qty = "";
-            var stat = "notok";
-            var reqno = $('#sreqno').val();
-            if ($('#datesched').val()) {
-                for(var q=1;q<=10;q++){
-                    if ($('#row'+q).is(":visible")) {
-                        if ($('.add_item[btn_id=\''+q+'\']').val() == 'Remove') {
-                            cat = $('#category'+q).val();
-                            item = $('#item'+q).val();
-                            desc = $('#desc'+q).val();
-                            serial = $('#serial'+q).val();
-                            datesched = $('#datesched').val();
-                            $.ajax({
-                                url: '/update/'+reqno,
-                                dataType: 'json',
-                                type: 'PUT',
-                                data: {
-                                    item: item,
-                                    serial: serial,
-                                    reqno : reqno
-                                },
-                            });
-                        }
+        e.preventDefault();
+        var cat = "";
+        var item = "";
+        var desc = "";
+        var qty = "";
+        var stat = "notok";
+        var reqno = $('#sreqno').val();
+        var check = 1;
+        if ($('#datesched').val()) {
+            for(var q=1;q<=y;q++){
+                if ($('#row'+q).is(":visible")) {
+                    if ($('.add_item[btn_id=\''+q+'\']').val() == 'Remove') {
+                        check++;
+                        cat = $('#category'+q).val();
+                        item = $('#item'+q).val();
+                        desc = $('#desc'+q).val();
+                        serial = $('#serial'+q).val();
+                        datesched = $('#datesched').val();
+                        $.ajax({
+                            url: '{{route("stock.update")}}',
+                            dataType: 'json',
+                            type: 'PUT',
+                            data: {
+                                item: item,
+                                serial: serial,
+                                reqno : reqno
+                            },
+                        });
                     }
-                    if (q == 10) {
+                }
+                if (q == y) {
+                    if (check > 1) {
                         var stat = "ok";
                         $.ajax({
-                            url: '/update/'+reqno,
+                            url: '{{route("stock.update")}}',
                             type: 'PUT',
                             data: { 
                                 reqno: reqno,
                                 datesched: datesched,
                                 stat: stat
-                                
                             },
                             dataType: 'json',
                         });
@@ -306,200 +314,167 @@
                         window.location.href = '{{route('stock.index')}}';
                     }
                 }
-            }else{
-                alert("Please select schedule date!!!");
             }
-        //});
-
-    });
-
-    $(document).on('click', '.remove_btn', function(){
-
-        //$('.remove_btn').on('click', function(e){ //show user/branch modal
-            e.preventDefault();
-            var btnCount = $(this).attr('btn_id');
-            $('#row'+btnCount).hide();
-            $('#category'+btnCount).val('select category');
-            $('#item'+btnCount).val('select item code');
-            $('#desc'+btnCount).val('select description');
-            $('#serial'+btnCount).val('serial');
-            $('#stock'+btnCount).val('Stock');
-            $('.add_item').show();
-        //});
+        }else{
+            alert("Please select schedule date!!!");
+        }
     });
 
     $(document).on('change', '.desc', function(){
-
-        //$('.desc').change(function(){
-            var count = $(this).attr('row_count');
-            var id = $(this).val();
-            var stockCount = 0;
-            var serialOp = " ";
-            $('#item' + count).val(id);
-            for(var i=1;i<=10;i++){
-                if (i != count ) {
-                    if ($('#desc'+i).val() == $(this).val()) {
-                        stockCount++;
-                    }
-                }
-            }
-            selectItem(stock1);
-            for(var i=1;i<=10;i++){
+        var count = $(this).attr('row_count');
+        var id = $(this).val();
+        var stockCount = 0;
+        var serialOp = " ";
+        $('#item' + count).val(id);
+        for(var i=1;i<=y;i++){
+            if (i != count ) {
                 if ($('#desc'+i).val() == $(this).val()) {
-                    rmserial = $('#serial'+i).val();
-                    $("#serial"+count+" option[value=\'"+rmserial+"\']").remove();
+                    stockCount++;
                 }
             }
+        }
+        selectItem(stock1);
+        for(var i=1;i<=y;i++){
+            if ($('#desc'+i).val() == $(this).val()) {
+                rmserial = $('#serial'+i).val();
+                $("#serial"+count+" option[value=\'"+rmserial+"\']").remove();
+            }
+        }
 
-            function selectItem(stock1) {
-                $.ajax({
-                    type:'get',
-                    url:'{{route("stock.get")}}',
-                    data:{'id':id},
-                    async: false,
-                    success:function(data)
-                    {
-                        if (data != "") {
-                            $('#stock' + count).val(data[0].stock - stockCount);
-                            $('#stock' + count).css('color', 'black');
-                            $('#stock' + count).css("border", "");
-                            if ($('#stock' + count).val() <= 0) {
-                                $('#stock' + count).css('color', 'red');
-                                $('#stock' + count).css("border", "5px solid red");
-                            }
-                        }else{
-                            $('#stock' + count).val('0');
+        function selectItem(stock1) {
+            $.ajax({
+                type:'get',
+                url:'{{route("stock.get")}}',
+                data:{'id':id},
+                async: false,
+                success:function(data)
+                {
+                    if (data != "") {
+                        $('#stock' + count).val(data[0].stock - stockCount);
+                        $('#stock' + count).css('color', 'black');
+                        $('#stock' + count).css("border", "");
+                        if ($('#stock' + count).val() <= 0) {
                             $('#stock' + count).css('color', 'red');
                             $('#stock' + count).css("border", "5px solid red");
                         }
-                    },
-                });
+                    }else{
+                        $('#stock' + count).val('0');
+                        $('#stock' + count).css('color', 'red');
+                        $('#stock' + count).css("border", "5px solid red");
+                    }
+                },
+            });
 
-                $.ajax({
-                    type:'get',
-                    url:'{{route("stock.serials")}}',
-                    data:{'id':id},
-                    async: false,
-                    success:function(data)
-                    {
-                        //console.log('success');
-                        //console.log(data);
-                        //console.log(data.length);
-                        serialOp+='<option selected value="select" disabled>select serial</option>';
-                        for(var i=0;i<data.length;i++){
-                            serialOp+='<option value="'+data[i].serial+'">'+data[i].serial+'</option>';
-                        }
-                        $("#serial" + count).find('option').remove().end().append(serialOp);
-                    },
-                });
-            }
-        //});
+            $.ajax({
+                type:'get',
+                url:'{{route("stock.serials")}}',
+                data:{'id':id},
+                async: false,
+                success:function(data)
+                {
+                    serialOp+='<option selected value="select" disabled>select serial</option>';
+                    for(var i=0;i<data.length;i++){
+                        serialOp+='<option value="'+data[i].serial+'">'+data[i].serial+'</option>';
+                    }
+                    $("#serial" + count).find('option').remove().end().append(serialOp);
+                },
+            });
+        }
     });
 
     $(document).on('change', '.item', function(){
-
-        //$('.item').change(function(){
-            var count = $(this).attr('row_count');
-            var id = $(this).val();
-            var stockCount = 0;
-            var serialOp = " ";
-            var rmserial = "";
-            var istock = 0;
-            $('#desc' + count).val(id);
-            for(var i=1;i<=10;i++){
-                if (i != count ) {
-                    if ($('#item'+i).val() == $(this).val()) {
-                        stockCount++;
-                    }
-                }
-            }
-            selectItem(stock1);
-            for(var i=1;i<=10;i++){
+        var count = $(this).attr('row_count');
+        var id = $(this).val();
+        var stockCount = 0;
+        var serialOp = " ";
+        var rmserial = "";
+        var istock = 0;
+        $('#desc' + count).val(id);
+        for(var i=1;i<=y;i++){
+            if (i != count ) {
                 if ($('#item'+i).val() == $(this).val()) {
-                    rmserial = $('#serial'+i).val();
-                    $("#serial"+count+" option[value=\'"+rmserial+"\']").remove();
+                    stockCount++;
                 }
             }
+        }
+        selectItem(stock1);
+        for(var i=1;i<=y;i++){
+            if ($('#item'+i).val() == $(this).val()) {
+                rmserial = $('#serial'+i).val();
+                $("#serial"+count+" option[value=\'"+rmserial+"\']").remove();
+            }
+        }
 
-            function selectItem(stock1) {
-                $.ajax({
-                    type:'get',
-                    url:'{{route("stock.get")}}',
-                    data:{'id':id},
-                    async: false,
-                    success:function(data)
-                    {
-                        if (data != "") {
-                            $('#stock' + count).val(data[0].stock - stockCount);
-                            $('#stock' + count).css('color', 'black');
-                            $('#stock' + count).css("border", "");
-                            if (($('#stock' + count).val() < 0) || ($('#stock' + count).val() == 0)) {
-                                $('#stock' + count).css('color', 'red');
-                                $('#stock' + count).css("border", "5px solid red");
-                            }
-                        }else{
-                            $('#stock' + count).val('0');
+        function selectItem(stock1) {
+            $.ajax({
+                type:'get',
+                url:'{{route("stock.get")}}',
+                data:{'id':id},
+                async: false,
+                success:function(data)
+                {
+                    if (data != "") {
+                        $('#stock' + count).val(data[0].stock - stockCount);
+                        $('#stock' + count).css('color', 'black');
+                        $('#stock' + count).css("border", "");
+                        if (($('#stock' + count).val() < 0) || ($('#stock' + count).val() == 0)) {
                             $('#stock' + count).css('color', 'red');
                             $('#stock' + count).css("border", "5px solid red");
                         }
-                        
-                    },
-                });
+                    }else{
+                        $('#stock' + count).val('0');
+                        $('#stock' + count).css('color', 'red');
+                        $('#stock' + count).css("border", "5px solid red");
+                    }
+                    
+                },
+            });
 
-                $.ajax({
-                    type:'get',
-                    url:'{{route("stock.serials")}}',
-                    data:{'id':id},
-                    async: false,
-                    success:function(data)
-                    {
-                        //console.log('success');
-                        //console.log(data);
-                        //console.log(data.length);
-                        serialOp+='<option selected value="select" disabled>select serial</option>';
-                        for(var i=0;i<data.length;i++){
-                            serialOp+='<option value="'+data[i].serial+'">'+data[i].serial+'</option>';
-                        }
-                        $("#serial" + count).find('option').remove().end().append(serialOp);
-                    },
-                });
-            }
-        //});
+            $.ajax({
+                type:'get',
+                url:'{{route("stock.serials")}}',
+                data:{'id':id},
+                async: false,
+                success:function(data)
+                {
+                    serialOp+='<option selected value="select" disabled>select serial</option>';
+                    for(var i=0;i<data.length;i++){
+                        serialOp+='<option value="'+data[i].serial+'">'+data[i].serial+'</option>';
+                    }
+                    $("#serial" + count).find('option').remove().end().append(serialOp);
+                },
+            });
+        }
     });
 
     $(document).on('change', '.category', function(){
-        //$('.category').change(function() { //search columns
-            var codeOp = " ";
-            var descOp = " ";
-            var count = $(this).attr('row_count');
-            var id = $(this).val();
-            $('#stock' + count).val('Stock');
-            selectItem(item1);
-            $('#item' + count).val('select itemcode');
-            $('#desc' + count).val('select description');
-            $('#stock' + count).css("border", "");
-            $('#item' + count).css("border", "");
-            function selectItem(item1) {
-                $.ajax({
-                    type:'get',
-                    url:'{{route("stock.get.itemcode")}}',
-                    data:{'id':id},
-                    success:function(data)
-                    {
-                        //console.log('success');
-                        //console.log(data);
-                        //console.log(data.length);
-                        codeOp+='<option selected value="select" disabled>select item code</option>';
-                        descOp+='<option selected value="select" disabled>select description</option>';
-                        for(var i=0;i<data.length;i++){
-                            codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
-                            descOp+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
-                        }
-                        $("#item" + count).find('option').remove().end().append(codeOp);
-                        $("#desc" + count).find('option').remove().end().append(descOp);
-                    },
-                });
-            }
-        //});
+        var codeOp = " ";
+        var descOp = " ";
+        var count = $(this).attr('row_count');
+        var id = $(this).val();
+        $('#stock' + count).val('0');
+        selectItem(item1);
+        $('#item' + count).val('select itemcode');
+        $('#desc' + count).val('select description');
+        $('#stock' + count).css("border", "");
+        $('#item' + count).css("border", "");
+        function selectItem(item1) {
+            $.ajax({
+                type:'get',
+                url:'{{route("stock.get.itemcode")}}',
+                data:{'id':id},
+                success:function(data)
+                {
+                    codeOp+='<option selected value="select" disabled>select item code</option>';
+                    descOp+='<option selected value="select" disabled>select description</option>';
+                    for(var i=0;i<data.length;i++){
+                        codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
+                        descOp+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
+                    }
+                    $("#item" + count).find('option').remove().end().append(codeOp);
+                    $("#desc" + count).find('option').remove().end().append(descOp);
+                },
+            });
+        }
     });
 </script>

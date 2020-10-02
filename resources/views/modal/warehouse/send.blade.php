@@ -84,7 +84,7 @@
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
-                        <select id="serial1" class="form-control serial" row_count="">
+                        <select id="serial1" class="form-control serial" row_count="1">
                             <option selected disabled>select serial</option>
                         </select>
                     </div>

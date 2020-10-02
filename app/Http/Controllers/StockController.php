@@ -18,7 +18,8 @@ class StockController extends Controller
      */
     public function index()
     {
-        return view('pages.stocks');
+        $categories = Category::all();
+        return view('pages.stocks', compact('categories'));
     }
 
     public function viewStocks(Request $request, $id)
@@ -37,7 +38,8 @@ class StockController extends Controller
         })
 
         ->addColumn('category', function (Stock $request){
-            return $request->category_id;
+            $cat = Category::find($request->category_id);
+            return $cat->name;
         })
 
         ->addColumn('description', function (Stock $request){
@@ -70,9 +72,36 @@ class StockController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
+    public function addItem(Request $request){
+
+        $add = new Item;
+        $add->category_id = $request->cat;
+        $add->name = $request->item;
+        $data = $add->save();
+
+        return response()->json($data);
+    }
+
+    public function addCategory(Request $request){
+
+        $add = new Category;
+        $add->name = $request->cat;
+        $data = $add->save();
+
+        return response()->json($data);
+    }
+
     public function store(Request $request)
     {
-        //
+        $add = new Warehouse;
+        $add->category_id = $request->cat;
+        $add->items_id = $request->item;
+        $add->serial = $request->serial;
+        $add->status = 'in';
+        $data = $add->save();
+
+        return response()->json($data);
     }
 
     /**
@@ -89,18 +118,14 @@ class StockController extends Controller
 
 
         return DataTables::of($stock)
-        /*->setRowData([
-            'data-id' => '{{ $request_no }}',
-            'data-status' => '{{ $status }}',
-            'data-user' => '{{ $user_id }}',
-        ])*/
-
+        
         ->addColumn('items_id', function (Warehouse $request){
             return $request->items_id;
         })
 
         ->addColumn('category', function (Warehouse $request){
-            return $request->category_id;
+            $cat = Category::find($request->category_id);
+            return $cat->name;
         })
 
         ->addColumn('description', function (Warehouse $request){
