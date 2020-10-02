@@ -16,7 +16,7 @@ class CreateStocksTable extends Migration
         Schema::create('stocks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('branch_id')->nullable();
-            $table->unsignedInteger('item_id')->nullable();
+            $table->unsignedInteger('items_id')->nullable();
             $table->string('serial')->nullable();
             $table->string('status')->nullable();
             $table->unsignedInteger('customer_branches_id')->nullable();

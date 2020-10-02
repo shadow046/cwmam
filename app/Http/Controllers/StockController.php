@@ -23,11 +23,6 @@ class StockController extends Controller
 
     public function viewStocks(Request $request, $id)
     {
-        /*$reqItems = RequestedItem::where('request_no', $id)->get();
-        $stocks = Warehouse::select('items_id', 'serial', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
-                    ->where('status', 'in')
-                    ->groupBy('items_id')->get();
-        return json_encode($return_array);*/
 
         $stock = Stock::select('category_id','items_id', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
                     ->where('status', 'in')
@@ -36,12 +31,7 @@ class StockController extends Controller
 
 
         return DataTables::of($stock)
-        /*->setRowData([
-            'data-id' => '{{ $request_no }}',
-            'data-status' => '{{ $status }}',
-            'data-user' => '{{ $user_id }}',
-        ])*/
-
+       
         ->addColumn('items_id', function (Stock $request){
             return $request->items_id;
         })

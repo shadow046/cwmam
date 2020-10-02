@@ -15,6 +15,7 @@ class CreateWarehousesTable extends Migration
     {
         Schema::create('warehouses', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedInteger('category_id')->nullable();
             $table->unsignedInteger('items_id')->nullable();
             $table->string('serial')->nullable();
             $table->string('status')->nullable();
