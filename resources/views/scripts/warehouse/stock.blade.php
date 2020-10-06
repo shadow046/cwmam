@@ -181,6 +181,7 @@
                 $(this).val('Remove');
                 $('#cat'+ rowcount).prop('disabled', true);
                 console.log('3');
+                console.log('test'+y);
             }
             if (c < 10 ) {
                 $('#catfield').append(additem);
@@ -212,7 +213,7 @@
             console.log('2');
             if($('#item-desc'+ rowcount).val()){
                 y++;
-                var additem = '<div class="row no-margin" id="itemrow1"><div class="col-md-4 form-group"><select id="itemcat'+y+'" class="form-control item-category" row_count="'+y+'"></select></div><div class="col-md-4"><input type="text" id="item-desc'+y+'" class="form-control" row_count="'+y+'" placeholder="Item Description"></div><div class="col-md-1 form-group"><input type="button" class="add_item-desc btn btn-xs btn-primary" btn_id="'+y+'" value="Add"></div></div>'
+                var additem = '<div class="row no-margin" id="itemrow'+y+'"><div class="col-md-4 form-group"><select id="itemcat'+y+'" class="form-control item-category" row_count="'+y+'"></select></div><div class="col-md-4"><input type="text" id="item-desc'+y+'" class="form-control" row_count="'+y+'" placeholder="Item Description"></div><div class="col-md-1 form-group"><input type="button" class="add_item-desc btn btn-xs btn-primary" btn_id="'+y+'" value="Add"></div></div>'
                 $(this).val('Remove');
                 $('#item-desc'+ rowcount).prop('disabled', true);
                 $('#itemcat'+ rowcount).prop('disabled', true);
@@ -228,7 +229,7 @@
             console.log('5');
             if (b == 10) {
                 y++;
-                var additem = '<div class="row no-margin" id="itemrow1"><div class="col-md-4 form-group"><select id="itemcat'+y+'" class="form-control item-category" row_count="'+y+'"></select></div><div class="col-md-4"><input type="text" id="item-desc'+y+'" class="form-control" row_count="'+y+'" placeholder="Item Description"></div><div class="col-md-1 form-group"><input type="button" class="add_item-desc btn btn-xs btn-primary" btn_id="'+y+'" value="Add"></div></div>'
+                var additem = '<div class="row no-margin" id="itemrow'+y+'"><div class="col-md-4 form-group"><select id="itemcat'+y+'" class="form-control item-category" row_count="'+y+'"></select></div><div class="col-md-4"><input type="text" id="item-desc'+y+'" class="form-control" row_count="'+y+'" placeholder="Item Description"></div><div class="col-md-1 form-group"><input type="button" class="add_item-desc btn btn-xs btn-primary" btn_id="'+y+'" value="Add"></div></div>'
                 $('#itemfield').append(additem);
                 $('#itemcat'+ rowcount).find('option').clone().appendTo('#itemcat'+y);
                 console.log('6');
@@ -292,8 +293,8 @@
             }
         }
         if (check > 1) {
-            //alert("Item added!!!");
-            //window.location.href = '{{route('stocks.index')}}';
+            alert("Item added!!!");
+            window.location.href = '{{route('stocks.index')}}';
         }
     });
 
