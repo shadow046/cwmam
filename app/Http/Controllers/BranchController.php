@@ -40,27 +40,9 @@ class BranchController extends Controller
 
     public function getStocks(Request $request, $id)
     {
-        //$item = Stock::where('branch_id', $id)->get()->first();
-        //return dd($item->status);
-        /*$items = Item::all();
-        //dd($items->stocks->first()->status); //correct
-        //foreach ($items as $item) {
-           // dd($item->stocks->first()->item_id);
-        //}
-        $stocks = Stock::where('branch_id', $id)->where('status', 'in')->get();
-        //dd($stocks->item->id); //correct
-        //return DataTables::of(Stock::where('branch_id', $id)->get()->first()->make;
-        $details = Stock::select(['item_id', \DB::raw('count(status) as status')])
-            ->where('status', 'in')
-            ->where('branch_id', $id)
-            ->groupBy('item_id')->get();
-            //dd($details);
-        */
-        //$stat_out = \DB::raw("count(stocks.status) as stat_out where stocks.status in (out)");
-        //dd($stat_out);
         $details = DB::table('items')
             ->select(
-                        'stocks.item_id',
+                        'stocks.items_id',
                         'items.name',
                         DB::raw
                         (
@@ -75,9 +57,9 @@ class BranchController extends Controller
                             'SUM(CASE WHEN stocks.status = \'in\' THEN 1 ELSE 0 END) - SUM(CASE WHEN stocks.status = \'out\' THEN 1 ELSE 0 END) as available'
                         )
                     )
-            ->join('stocks', 'stocks.item_id', '=', 'items.id')
+            ->join('stocks', 'stocks.items_id', '=', 'items.id')
             ->where('branch_id', $id)
-            ->groupBy('item_id')
+            ->groupBy('items_id')
             ->get();
 
         return DataTables::of($details)

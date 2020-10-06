@@ -23,7 +23,7 @@
         $('table.branchTable').DataTable({ //user datatables
             "dom": 'lrtip',
             processing: true,
-            serverSide: true,
+            serverSide: false,
             ajax: '{{route('get.branches')}}',
             columns: [
                 { data: 'name', name:'name', "width": "14%" },
@@ -53,7 +53,7 @@
                     {"className": "dt-center", "targets": "_all"}
                 ],
                 columns: [
-                    { data: 'item_id', name:'item_id', "width": "20%",},
+                    { data: 'items_id', name:'items_id', "width": "20%",},
                     { data: 'name', name:'name', "width": "17%"},
                     { data: 'stock', name:'stock', "width": "14%"},
                     { data: 'available', name:'available', "width": "14%"},
