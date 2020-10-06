@@ -58,7 +58,6 @@
                     { data: 'stock', name:'stock', "width": "14%"},
                     { data: 'available', name:'available', "width": "14%"},
                     { data: 'stock_out', name:'stock_out', "width": "14%"}
-
                 ]
             });
             $('#branch_name').prop('disabled', true);
