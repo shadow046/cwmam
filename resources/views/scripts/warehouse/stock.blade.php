@@ -270,14 +270,16 @@
     $(document).on('click', '#sub_item_Btn', function(){
         var cat = "";
         var check = 1;
+        console.log(y);
         for(var q=1;q<=y;q++){
             if ($('#itemrow'+q).is(":visible")) {
+                console.log(y);
                 if ($('.add_item-desc[btn_id=\''+q+'\']').val() == 'Remove') {
                     check++;
                     cat = $('#itemcat'+q).val();
                     item = $('#item-desc'+q).val();
                     $.ajax({
-                        url: '{{route("add.category")}}',
+                        url: '{{route("add.item")}}',
                         dataType: 'json',
                         type: 'POST',
                         async: false,
@@ -290,8 +292,8 @@
             }
         }
         if (check > 1) {
-            alert("Item added!!!");
-            window.location.href = '{{route('stocks.index')}}';
+            //alert("Item added!!!");
+            //window.location.href = '{{route('stocks.index')}}';
         }
     });
 
