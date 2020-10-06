@@ -40,6 +40,7 @@
                     @include('modal.warehouse.add')
                     @include('modal.warehouse.category')
                     @include('modal.warehouse.item')
+                    @include('modal.warehouse.import')
                 @endrole
             @endif
 

@@ -21,6 +21,9 @@ Route::get('spare_parts', 'HomeController@spare_parts');
 Route::get('return', 'HomeController@return');
 
 
+
+
+Route::post('upload', 'StockController@import')->name('stock.upload');
 Route::post('additem', 'StockController@addItem')->name('add.item');
 Route::post('addcategory', 'StockController@addCategory')->name('add.category');
 Route::post('store', 'StockController@store')->name('stocks.store');

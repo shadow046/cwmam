@@ -9,6 +9,7 @@ use App\Item;
 use App\Category;
 use App\Stock;
 use DB;
+use Auth;
 class StockController extends Controller
 {
     /**
@@ -102,6 +103,64 @@ class StockController extends Controller
         $data = $add->save();
 
         return response()->json($data);
+    }
+
+    public function import(Request $request)
+    {
+        //get file
+        $upload = $request->file('upload-file');
+        $filePath = $upload->getRealPath();
+        //open and read
+        $file = fopen($filePath, 'r');
+        $header = fgetcsv($file);
+
+        $escapedHeader=[];
+        //validate
+        foreach ($header as $key => $value) {
+            $lheader = strtolower($value);
+            array_push($escapedHeader, $lheader);
+        }
+
+        //looping throu other columns
+        $notfound=[];
+        $duplicate=[];
+        $dup = false;
+        while ($columns = fgetcsv($file)) {
+
+            $item = Item::where('name', $columns[0])->first();
+            $serial = $columns[1];
+
+            if ($columns[1] == "") {
+                $serial = 'N/A';
+            }else{
+                $find = Stock::where('serial', $columns[1])
+                    ->where('status', 'in')->first();
+                if ($find) {
+                    array_push($duplicate, $columns[1]);
+                    $dup = true;
+                }
+            }
+
+            if ($columns[0] != $item->name) {
+                array_push($notfound, $columns[0]);
+            }else {
+
+                //dd($item->category->id);    
+                if ($dup == false) {
+                    $stock = new Stock;
+                    $stock->category_id = $item->category->id;
+                    $stock->items_id = $item->id;
+                    $stock->status = 'in';
+                    $stock->branch_id = Auth::user()->branch_id;
+                    $stock->serial = $serial;
+                    //dd($stock);
+                    $stock->save();
+                }
+                
+            }        
+        }
+
+        return redirect()->route('stocks.index');
     }
 
     /**

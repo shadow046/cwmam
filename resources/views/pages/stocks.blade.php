@@ -41,5 +41,7 @@
       </thead>
     </table>
   </div>
+  <input type="button" id="importBtn" class="btn btn-xs btn-primary" value="IMPORT">
   <input type="button" id="addStockBtn" class="btn btn-xs btn-primary" value="ADD STOCK">
+
 @endsection
