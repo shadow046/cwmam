@@ -30,7 +30,7 @@
                     @include('modal.warehouse.add')
                 @else
                     @include('modal.warehouse.request')
-                    @include('modal.branch.send')
+                    @include('modal.branch.request')
                 @endif
             @endif
 

@@ -1,10 +1,10 @@
 
 <script type="text/javascript">
-
+    var r = 1;
+    var y = 1;
     $(document).ready(function()
     {
-        var r = 1;
-        var y = 1;
+        
         var d = new Date();
         var hour = String(d.getHours()).padStart(2, '0') % 12 || 12
         var ampm = (String(d.getHours()).padStart(2, '0') < 12 || String(d.getHours()).padStart(2, '0') === 24) ? "AM" : "PM";

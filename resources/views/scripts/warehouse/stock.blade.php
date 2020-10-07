@@ -1,10 +1,11 @@
 <script type="text/javascript">
-    var r = 1;
-    var c = 1;
-    var y = 1;
-    var b = 1;
+    
     $(document).ready(function()
     {
+        var r = 1;
+        var c = 1;
+        var y = 1;
+        var b = 1;
         var table =
         $('table.stockTable').DataTable({ //user datatables
             "dom": 'lrtip',
@@ -137,6 +138,7 @@
             if ($('#row'+q).is(":visible")) {
                 if ($('.add_item[btn_id=\''+q+'\']').val() == 'Remove') {
                     check++;
+                    $('.sub_Btn').prop('disabled', true)
                     cat = $('#category'+q).val();
                     item = $('#item'+q).val();
                     serial = $('#serial'+q).val();
@@ -144,7 +146,6 @@
                         url: '{{route("stocks.store")}}',
                         dataType: 'json',
                         type: 'POST',
-                        async: false,
                         data: {
                             item: item,
                             serial: serial,
@@ -211,7 +212,7 @@
         console.log('1');
         if ($(this).val() == 'Add') {
             console.log('2');
-            if($('#item-desc'+ rowcount).val()){
+            if($('#item-desc'+ rowcount).val() && $('#itemcat'+ rowcount).val()){
                 y++;
                 var additem = '<div class="row no-margin" id="itemrow'+y+'"><div class="col-md-4 form-group"><select id="itemcat'+y+'" class="form-control item-category" row_count="'+y+'"></select></div><div class="col-md-4"><input type="text" id="item-desc'+y+'" class="form-control" row_count="'+y+'" placeholder="Item Description"></div><div class="col-md-1 form-group"><input type="button" class="add_item-desc btn btn-xs btn-primary" btn_id="'+y+'" value="Add"></div></div>'
                 $(this).val('Remove');
@@ -249,12 +250,12 @@
             if ($('#catrow'+q).is(":visible")) {
                 if ($('.add_cat[btn_id=\''+q+'\']').val() == 'Remove') {
                     check++;
+                    $('#sub_cat_Btn').prop('disabled', true)
                     cat = $('#cat'+q).val();
                     $.ajax({
                         url: '{{route("add.category")}}',
                         dataType: 'json',
                         type: 'POST',
-                        async: false,
                         data: {
                             cat : cat
                         },
@@ -277,13 +278,13 @@
                 console.log(y);
                 if ($('.add_item-desc[btn_id=\''+q+'\']').val() == 'Remove') {
                     check++;
+                    $('#sub_item_Btn').prop('disabled', true);
                     cat = $('#itemcat'+q).val();
                     item = $('#item-desc'+q).val();
                     $.ajax({
                         url: '{{route("add.item")}}',
                         dataType: 'json',
                         type: 'POST',
-                        async: false,
                         data: {
                             cat : cat,
                             item : item

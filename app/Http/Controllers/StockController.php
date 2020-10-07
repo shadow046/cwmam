@@ -78,7 +78,7 @@ class StockController extends Controller
 
         $add = new Item;
         $add->category_id = $request->cat;
-        $add->name = $request->item;
+        $add->name = ucfirst($request->item);
         $data = $add->save();
 
         return response()->json($data);
@@ -87,7 +87,7 @@ class StockController extends Controller
     public function addCategory(Request $request){
 
         $add = new Category;
-        $add->name = $request->cat;
+        $add->name = ucfirst($request->cat);
         $data = $add->save();
 
         return response()->json($data);

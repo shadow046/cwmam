@@ -26,5 +26,6 @@ class VerifyCsrfToken extends Middleware
         'addcategory',
         'additem',
         'upload',
+        'storerequest',
     ];
 }

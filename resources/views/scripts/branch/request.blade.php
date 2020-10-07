@@ -1,6 +1,6 @@
 
 <script type="text/javascript">
-
+    var y = 1;
     $(document).ready(function()
     {
         var d = new Date();
@@ -103,7 +103,7 @@
                 $('#sreqno').val(result);
             },
         });
-        $('#sendModal').modal('show');
+        $('#sendrequestModal').modal('show');
 
     });
 
@@ -112,14 +112,15 @@
         //$('.add_item').on('click', function(){ //show user/branch modal
             var rowcount = $(this).attr('btn_id');
             if ($(this).val() == 'Add Item') {
-                if($('#qty'+rowcount).val() != 0){
+                if($('#qty'+rowcount).val() != 0 && $('#purpose'+rowcount).val()){
                     var y = parseInt(rowcount) + 1;
-                    var additem = '<div class="row no-margin" id="row'+y+'"><div class="col-md-2 form-group"><select id="category'+y+'" class="form-control category" row_count="'+y+'"></select></div><div class="col-md-2 form-group"><select id="item'+y+'" class="form-control item" row_count="'+y+'"><option selected disabled>select item code</option></select></div><div class="col-md-3 form-group"><select id="desc'+y+'" class="form-control desc" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><input type="number" class="form-control" name="qty'+y+'" id="qty'+y+'" placeholder="0" style="width: 6em" disabled></div><div class="col-md-1 form-group"><input type="button" class="add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
+                    var additem = '<div class="row no-margin" id="row'+y+'"><div class="col-md-2 form-group"><select id="category'+y+'" class="form-control category" row_count="'+y+'"></select></div><div class="col-md-2 form-group"><select id="item'+y+'" class="form-control item" row_count="'+y+'"><option selected disabled>select item code</option></select></div><div class="col-md-3 form-group"><select id="desc'+y+'" class="form-control desc" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><select id="purpose'+y+'" class="form-control purpose" row_count="'+y+'"><option selected disabled>select purpose</option><option value="1">Service Unit</option><option value="2">Replacement</option><option value="3">Stock</option></select></div><div class="col-md-2 form-group"><input type="number" class="form-control" name="qty'+y+'" id="qty'+y+'" placeholder="0" style="width: 6em" disabled></div><div class="col-md-1 form-group"><input type="button" class="add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
                     $(this).val('Remove');
                     $('#category'+ rowcount).prop('disabled', true);
                     $('#item'+ rowcount).prop('disabled', true);
                     $('#desc'+ rowcount).prop('disabled', true);
                     $('#qty'+ rowcount).prop('disabled', true);
+                    $('#purpose'+ rowcount).prop('disabled', true);
                     $('#reqfield').append(additem);
                     $('#category'+ rowcount).find('option').clone().appendTo('#category'+y);
                 }else{
@@ -130,10 +131,12 @@
                 $('#item'+rowcount).val('select item code');
                 $('#desc'+rowcount).val('select description');
                 $('#serial'+rowcount).val('select serial');
+                $('#purpose'+rowcount).val('select purpose');
                 $('#category'+rowcount).prop('disabled', false);
                 $('#item'+rowcount).prop('disabled', false);
                 $('#desc'+rowcount).prop('disabled', false);
                 $('#serial'+rowcount).prop('disabled', false);
+                $('#purpose'+ rowcount).prop('disabled', false);
                 $('#row'+rowcount).hide();
                 $(this).val('Add Item');
             }
@@ -142,7 +145,7 @@
 
     });
 
-    $(document).on('click', '.sub_Btn', function(e){
+    $(document).on('click', '.send_sub_Btn', function(e){
 
         //$('.sub_Btn').on('click', function(e){ //show user/branch modal
             e.preventDefault();
@@ -152,58 +155,45 @@
             var qty = "";
             var stat = "notok";
             var reqno = $('#sreqno').val();
-            if ($('#datesched').val()) {
-                for(var q=1;q<=10;q++){
-                    if ($('#row'+q).is(":visible")) {
-                        if ($('.add_item[btn_id=\''+q+'\']').val() == 'Remove') {
-                            cat = $('#category'+q).val();
-                            item = $('#item'+q).val();
-                            desc = $('#desc'+q).val();
-                            serial = $('#serial'+q).val();
-                            datesched = $('#datesched').val();
-                            $.ajax({
-                                url: '/update/'+reqno,
-                                dataType: 'json',
-                                type: 'PUT',
-                                data: {
-                                    item: item,
-                                    serial: serial,
-                                    reqno : reqno
-                                },
-                            });
-                        }
-                    }
-                    if (q == 10) {
-                        var stat = "ok";
+            for(var q=1;q<=y;q++){
+                if ($('#row'+q).is(":visible")) {
+                    if ($('.add_item[btn_id=\''+q+'\']').val() == 'Remove') {
+                        cat = $('#category'+q).val();
+                        item = $('#item'+q).val();
+                        desc = $('#desc'+q).val();
+                        qty = $('#qty'+q).val();
+                        purpose = $('#purpose'+q).val();
                         $.ajax({
-                            url: '/update/'+reqno,
-                            type: 'PUT',
-                            data: { 
-                                reqno: reqno,
-                                datesched: datesched,
-                                stat: stat
-                                
-                            },
+                            url: '{{route("stock.store.request")}}',
                             dataType: 'json',
+                            type: 'POST',
+                            data: {
+                                reqno : reqno,
+                                item: item,
+                                purpose: purpose,
+                                qty: qty,
+                                stat: stat                           
+                            },
                         });
-                        alert("Branch data updated!!!!");
-                        window.location.href = '{{route('stock.index')}}';
                     }
                 }
-            }else{
-                alert("Please select schedule date!!!");
+                if (q == y) {
+                    stat = "ok";
+                    $.ajax({
+                        url: '{{route("stock.store.request")}}',
+                        dataType: 'json',
+                        type: 'POST',
+                        data: {
+                            reqno : reqno,  
+                            stat: stat                     
+                        },
+                    });
+                    alert("Request datails submitted!!!");
+                    window.location.href = '{{route('stock.index')}}';
+                }
             }
         //});
 
-    });
-
-    $(document).on('click', '.remove_btn', function(){
-            var btnCount = $(this).attr('btn_id');
-            $('#row'+btnCount).hide();
-            $('#category'+btnCount).val('select category');
-            $('#item'+btnCount).val('select item code');
-            $('#desc'+btnCount).val('select description');
-            $('#qty'+btnCount).val('0');
     });
 
     $(document).on('change', '.desc', function(){

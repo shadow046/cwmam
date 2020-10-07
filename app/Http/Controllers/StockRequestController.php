@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Carbon\Carbon;
 use App\StockRequest;
 use App\RequestedItem;
 use App\PreparedItem;
@@ -81,8 +82,11 @@ class StockRequestController extends Controller
     }
 
     public function generateBarcodeNumber() {
-        $number = mt_rand(1, 99999); // better than rand()
-    
+        $random = mt_rand(1, 999); // better than rand()
+        $today = Carbon::now()->format('d-m-Y');
+        $number = $today.'-'.$random;
+        //dd($number);
+        //dd($today);
         // call the same function if the barcode exists already
         if ($this->barcodeNumberExists($number)) {
             return generateBarcodeNumber();
@@ -189,7 +193,29 @@ class StockRequestController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        //dd(Auth::user()->area->id);
+        if ($request->stat == 'ok') {
+
+            $reqno = new StockRequest;
+            $reqno->request_no = $request->reqno;
+            $reqno->user_id = Auth::user()->id;
+            $reqno->branch_id = Auth::user()->branch->id;
+            $reqno->area_id = Auth::user()->area->id;
+            $reqno->status = 0;
+            $data = $reqno->save();
+
+        }
+        if ($request->stat == 'notok') {
+            $reqitem = new RequestedItem;
+            $reqitem->request_no = $request->reqno;
+            $reqitem->items_id = $request->item;
+            $reqitem->purpose = $request->purpose;
+            $reqitem->quantity = $request->qty;
+            $data = $reqitem->save();
+        }
+
+        return response()->json($data);
     }
 
     /**

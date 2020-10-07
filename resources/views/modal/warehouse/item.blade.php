@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h6 class="modal-title w-100 text-center">ADD CATEGORY FORM</h6>
+                <h6 class="modal-title w-100 text-center">ADD ITEM FORM</h6>
                 <button class="close" data-dismiss="modal" aria-label="Close" hidden>
                     
                 </button>

@@ -1,5 +1,5 @@
-<div id="sendModal" class="modal fade" >
-    <div class="modal-dialog modal-dialog-centered modal-full modal-dialog-scrollable">
+<div id="sendrequestModal" class="modal fade" >
+    <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title w-100 text-center">STOCK REQUEST FORM</h6>
@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body mod" style="max-height:300px;overflow-y: auto;">
+            <div class="modal-body">
                 <form id="sendForm">
                     {{ csrf_field() }}
                 <div class="row no-margin">
@@ -32,19 +32,7 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <h5 class="modal-title w-100 text-center">REQUEST DETAILS</h5>
-                </div>
-                <table class="table sendDetails" style="height: 150px;">
-                    <thead class="thead-dark">
-                        <th>Item Code</th>
-                        <th>Description</th>
-                        <th>Qty</th>
-                        <th>Purpose</th>
-                    </thead>
-                </table>
             </div>
-           
             <div class="modal-header">
                 <h6 class="modal-title w-100 text-center">ENTER ITEM HERE</h6>
             </div>
@@ -69,6 +57,14 @@
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
+                        <select id="purpose1" class="form-control purpose" row_count="1">
+                            <option selected disabled>select purpose</option>
+                            <option value="1">Service Unit</option>
+                            <option value="2">Replacement</option>
+                            <option value="3">Stock</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 form-group">
                         <input type="number" class="form-control" name="qty1" id="qty1" placeholder="0" style="width: 6em" disabled>
                     </div>
                     <div class="col-md-1 form-group">
@@ -78,7 +74,7 @@
             </div><hr>
             <div class="modal-footer">
             <input type="button" class="btn btn-primary" data-dismiss="modal" value="Cancel">
-            <input type="button" class="btn btn-primary sub_Btn" id="sub_Btn" class="button" value="Submit">
+            <input type="button" class="btn btn-primary send_sub_Btn" id="send_sub_Btn" class="button" value="Submit">
             </form>
                 
             </div>
