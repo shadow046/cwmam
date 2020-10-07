@@ -15,7 +15,7 @@ class CreateRequestsTable extends Migration
     {
         Schema::create('requests', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('request_no')->nullable();
+            $table->string('request_no')->nullable();
             $table->unsignedInteger('user_id')->nullable();
             $table->string('branch_id')->nullable();
             $table->string('area_id')->nullable();

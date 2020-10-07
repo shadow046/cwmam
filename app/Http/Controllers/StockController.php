@@ -40,13 +40,13 @@ class StockController extends Controller
 
         ->addColumn('category', function (Stock $request){
             $cat = Category::find($request->category_id);
-            return $cat->name;
+            return strtoupper($cat->name);
         })
 
         ->addColumn('description', function (Stock $request){
             $item = Item::where('id', $request->items_id)->first();
 
-            return $item->name;
+            return strtoupper($item->name);
         })
 
         ->addColumn('quantity', function (Stock $request){

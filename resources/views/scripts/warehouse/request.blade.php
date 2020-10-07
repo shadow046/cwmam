@@ -40,7 +40,8 @@
             if (trdata.status == 'SCHEDULED') {
                 $('#prcBtn').hide();
                 $('.sched').show();
-                $('#sched').val(trdata.sched);
+                var trsched = new Date(trdata.sched);
+                $('#sched').val(months[trsched.getMonth()]+' '+trsched.getDate()+', ' +trsched.getFullYear());
             }else if(trdata.status == 'PENDING'){
                 $('#prcBtn').show();
                 $('.sched').hide();
@@ -93,20 +94,6 @@
             
             $('#requestModal').modal('show');
         });
-    });
-
-    $(document).on('click', '#reqBtn', function(){
-        $.ajax({
-            type:'get',
-            url:'{{route("stock.gen")}}',
-            async: false,
-            success:function(result)
-            {
-                $('#sreqno').val(result);
-            },
-        });
-        $('#sendModal').modal('show');
-
     });
 
     $(document).on('click', '#prcBtn', function(){
@@ -469,7 +456,7 @@
                     descOp+='<option selected value="select" disabled>select description</option>';
                     for(var i=0;i<data.length;i++){
                         codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
-                        descOp+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
+                        descOp+='<option value="'+data[i].id+'">'+data[i].name.toUpperCase()+'</option>';
                     }
                     $("#item" + count).find('option').remove().end().append(codeOp);
                     $("#desc" + count).find('option').remove().end().append(descOp);

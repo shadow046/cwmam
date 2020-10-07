@@ -80,7 +80,7 @@
                     descOp+='<option selected value="select" disabled>select description</option>';
                     for(var i=0;i<data.length;i++){
                         codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
-                        descOp+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
+                        descOp+='<option value="'+data[i].id+'">'+data[i].name.toUpperCase()+'</option>';
                     }
                     $("#item" + count).find('option').remove().end().append(codeOp);
                     $("#desc" + count).find('option').remove().end().append(descOp);

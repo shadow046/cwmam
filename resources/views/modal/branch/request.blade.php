@@ -1,4 +1,4 @@
-<div id="sendrequestModal" class="modal fade" >
+<div id="sendrequestModal" class="modal fade">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -39,7 +39,7 @@
             <div class="modal-body" id="reqfield">
                 <div class="row no-margin" id="row1">
                     <div class="col-md-2 form-group">
-                        <select id="category1" class="form-control category" row_count="1">
+                        <select id="category1" class="form-control category" row_count="1" style="color: black;">
                             <option selected disabled>select category</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -47,17 +47,17 @@
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
-                        <select id="item1" class="form-control item" row_count="1">
+                        <select id="item1" class="form-control item" row_count="1" style="color: black;">
                             <option selected disabled>select item code</option>
                         </select>
                     </div>
                     <div class="col-md-3 form-group">
-                        <select id="desc1" class="form-control desc" row_count="1">
+                        <select id="desc1" class="form-control desc" row_count="1" style="color: black;">
                             <option selected disabled>select description</option>
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
-                        <select id="purpose1" class="form-control purpose" row_count="1">
+                        <select id="purpose1" class="form-control purpose" row_count="1" style="color: black;">
                             <option selected disabled>select purpose</option>
                             <option value="1">Service Unit</option>
                             <option value="2">Replacement</option>
@@ -65,7 +65,7 @@
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
-                        <input type="number" class="form-control" name="qty1" id="qty1" placeholder="0" style="width: 6em" disabled>
+                        <input type="number" class="form-control" min="0" name="qty1" id="qty1" placeholder="0" style="color:black; width: 6em" disabled>
                     </div>
                     <div class="col-md-1 form-group">
                         <input type="button" class="add_item btn btn-xs btn-primary" btn_id="1" value="Add Item">

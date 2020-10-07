@@ -35,12 +35,14 @@
             @endif
 
             @if(Request::is('stocks'))
-                @role('Administrator')
+                @if(Auth::user()->hasrole('Administrator'))
                     @include('modal.warehouse.add')
                     @include('modal.warehouse.category')
                     @include('modal.warehouse.item')
                     @include('modal.warehouse.import')
-                @endrole
+                @else
+                    @include('modal.branch.import')
+                @endif
             @endif
 
             @if(Request::is('user'))

@@ -1,6 +1,7 @@
 <style>
     body {
-        padding: 20px;   
+        padding: 20px;
+        color: black; 
     }
     .nav {
         background: #0d1a80;

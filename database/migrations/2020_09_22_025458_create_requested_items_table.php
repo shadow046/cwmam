@@ -15,7 +15,7 @@ class CreateRequestedItemsTable extends Migration
     {
         Schema::create('requested_items', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('request_no')->nullable();
+            $table->string('request_no')->nullable();
             $table->unsignedInteger('items_id')->nullable();
             $table->string('purpose')->nullable();
             $table->unsignedInteger('quantity')->nullable();

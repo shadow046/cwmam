@@ -40,4 +40,8 @@
         });
 
     });
+    
+    $(document).on('click', '#importBtn', function(){
+        $('#importModal').modal({backdrop: 'static', keyboard: false});
+    });
 </script>

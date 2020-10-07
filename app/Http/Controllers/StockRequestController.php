@@ -59,14 +59,14 @@ class StockRequestController extends Controller
         
     }
 
-    public function Send(Request $request, $id)
+    /*public function Send(Request $request, $id)
     {
         $reqItems = RequestedItem::where('request_no', $id)->get();
         $stocks = Warehouse::select('items_id', 'serial', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
                     ->where('status', 'in')
                     ->groupBy('items_id')->get();
         return json_encode($return_array);
-    }
+    }*/
 
     public function getsendDetails(Request $request, $id){
 
@@ -74,7 +74,12 @@ class StockRequestController extends Controller
 
         ->addColumn('item_name', function (PreparedItem $PreparedItem){
 
-            return $PreparedItem->items->name;
+            return strtoupper($PreparedItem->items->name);
+        })
+
+        ->addColumn('serial', function (PreparedItem $PreparedItem){
+
+            return strtoupper($PreparedItem->serial);
         })
 
         ->make(true);
@@ -110,17 +115,17 @@ class StockRequestController extends Controller
 
         ->addColumn('item_name', function (RequestedItem $RequestedItem){
 
-            return $RequestedItem->items->name;
+            return strtoupper($RequestedItem->items->name);
         })
 
         ->addColumn('purpose', function (RequestedItem $RequestedItem){
 
             if ($RequestedItem->purpose == "1") {
-                return 'Stock';
+                return 'STOCK';
             }elseif ($RequestedItem->purpose == "2") {
-                return 'Replacement';
+                return 'REPLACEMENT';
             }else{
-                return 'Service unit';
+                return 'SERVICE UNIT';
             }
 
         })
@@ -161,15 +166,15 @@ class StockRequestController extends Controller
         })
 
         ->addColumn('reqBy', function (StockRequest $request){
-            return $request->user->name;
+            return strtoupper($request->user->name);
         })
 
         ->addColumn('branch', function (StockRequest $request){
-            return $request->branch->name;
+            return strtoupper($request->branch->name);
         })
 
         ->addColumn('area', function (StockRequest $request){
-            return $request->area->name;
+            return strtoupper($request->area->name);
         })
 
         ->make(true);

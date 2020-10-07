@@ -17,7 +17,7 @@ class CreatePreparedItemsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('branch_id')->nullable();
             $table->unsignedInteger('items_id')->nullable();
-            $table->unsignedInteger('request_no')->nullable();
+            $table->string('request_no')->nullable();
             $table->string('serial')->nullable();
             $table->timestamps();
         });
