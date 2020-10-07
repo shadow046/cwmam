@@ -24,15 +24,14 @@
             @endif
 
             @if(Request::is('request'))
-                @role('Administrator')
+                @if(Auth::user()->hasrole('Administrator'))
                     @include('modal.warehouse.request')
                     @include('modal.warehouse.send')
                     @include('modal.warehouse.add')
-                @endrole
-                @role('Head')
+                @else
                     @include('modal.warehouse.request')
                     @include('modal.branch.send')
-                @endrole
+                @endif
             @endif
 
             @if(Request::is('stocks'))
@@ -62,23 +61,20 @@
             @endif
 
             @if(Request::is('request'))
-                @role('Administrator')
+                @if(Auth::user()->hasrole('Administrator'))
                     @include('scripts.warehouse.request')
-                @endrole
-                @role('Head')
+                @else
                     @include('scripts.branch.request')
-                @endrole
+                @endif
             @endif
 
             @if(Request::is('stocks'))
-                @role('Administrator')
+                @if(Auth::user()->hasrole('Administrator'))
                     @include('scripts.warehouse.stock')
-                @endrole
-                @role('Head')
+                @else
                     @include('scripts.branch.stock')
-                @endrole
+                @endif                
             @endif
-           
         </body>
     </html>
 @else

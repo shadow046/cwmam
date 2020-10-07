@@ -1,0 +1,107 @@
+### aMi STACX LEMP server configuration
+
+# Expires map sets static Cache Control
+map $sent_http_content_type $expires {
+    default                    off;
+    text/html                  epoch;
+    text/css                   max;
+    application/javascript     max;
+    ~image/                    max;
+}
+
+### SSL configuration
+### http1 and http2	
+server {
+	#listen 443 ssl;
+	#listen [::]:443 ssl;
+	
+	listen 443 ssl http2;
+  listen [::]:443 ssl http2; 
+  
+  expires $expires;
+  
+  server_name example.com www.example.com;
+  
+  ### Document Root
+	      root /var/www/laravel/public/;
+        index index.html index.php;
+
+  ### Decide if you want to use Let's Encrypt for Certificates
+  
+	      #ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
+        #ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
+        #ssl_trusted_certificate /etc/letsencrypt/live/example.com/chain.pem;
+        #ssl_dhparam  /etc/nginx/ssl/dhparam.pem;
+        
+        ### Snakeoil key is good to have handy for TLS/SSL Troubleshooting and placeholder app installs.
+        ### Also can be used with CloudFlare FULL SSL: 
+        ### https://support.cloudflare.com/hc/en-us/articles/200170416-What-do-the-SSL-options-mean-
+        
+         #ssl_certificate /etc/ssl/certs/ssl-cert-snakeoil.pem;
+         #ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
+              
+        ### To confirm that stapling works, see if "OCSP response: no response sent" is not present upon running 2nd time:
+        
+        include snippets/snakeoil.conf;
+        include /etc/nginx/snippets/ssl.conf;
+        ssl_dhparam  /etc/nginx/ssl/dhparam.pem;
+       
+        ### DO NOT ENABLE Strict-Transport-Security Unless you understand the potential impact to your visitors!###
+        ### Set HSTS to 365 days, The always parameter ensures that the header is set for all responses, including internally-generated error responses
+        # add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";
+        
+        ### Enable / Disable GZip Compression at you see fit. Default enabled in nginx.conf
+        ### Recommend researching TLS/GZip Compression as it pertains to security.
+	
+        location / {
+            try_files $uri $uri/ /index.php?q=$uri&$args;	
+}
+        # First attempt to serve request as file, then
+        # as directory, then fall back to displaying a 404.
+        location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+        }
+   
+}
+
+# Redirect http to https
+server {
+    listen 80;
+    listen [::]:80;
+    server_name example.com www.example.com;
+    
+        ### Let's Encrypt for Certificates
+            include /etc/nginx/snippets/letsencrypt.conf;
+    
+    #Local or via CloudFlare? If via CloudFlare, then leave remarked.
+    #return 301 https://example.com$request_uri;
+    
+      ### Document Root
+	      root /var/www/laravel/public/;
+        index index.html index.php;
+        
+    location / {
+            try_files $uri $uri/ /index.php?q=$uri&$args;	
+}
+        # First attempt to serve request as file, then
+        # as directory, then fall back to displaying a 404.
+        location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+        }
+}
+
+# Redirect www to non-www; remove comments when not using a third-party such as CloudFlare
+# server {
+   #listen 443;
+   #listen [::]:443;
+   #server_name www.example.com;
+
+   #return 301 https://example.com$request_uri;
+#}
+
+  
+  
+
+

@@ -42,6 +42,7 @@
     </table>
   </div>
   <input type="button" id="importBtn" class="btn btn-xs btn-primary" value="IMPORT">
-  <input type="button" id="addStockBtn" class="btn btn-xs btn-primary" value="ADD STOCK">
-
+  @if(Auth::user()->hasrole('Administrator'))
+    <input type="button" id="addStockBtn" class="btn btn-xs btn-primary" value="ADD STOCK">
+  @endif
 @endsection
