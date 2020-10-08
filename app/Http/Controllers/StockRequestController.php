@@ -11,6 +11,7 @@ use App\PreparedItem;
 use App\Warehouse;
 use App\Category;
 use App\Item;
+use App\Stock;
 use Auth;
 class StockRequestController extends Controller
 {
@@ -38,22 +39,39 @@ class StockRequestController extends Controller
 
     public function getStock(Request $request){
         //$data = Stock::select('id', 'name')->where('category_id', $request->id)->get();
-        $data = Warehouse::select(\DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
-                    ->where('status', 'in')
-                    ->where('items_id', $request->id)
-                    ->groupBy('items_id')
-                    ->get();
-                    
+        if (Auth::user()->branch->id == '999') {
+            $data = Warehouse::select(\DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
+                ->where('status', 'in')
+                ->where('items_id', $request->id)
+                ->groupBy('items_id')
+                ->get();
+        }else{
+            $data = Stock::select(\DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
+                ->where('status', 'in')
+                ->where('items_id', $request->id)
+                ->where('branch_id', Auth::user()->branch->id)
+                ->groupBy('items_id')
+                ->get();
+        }
+
         return response()->json($data);
         
     }
 
     public function getSerials(Request $request){
         //$data = Stock::select('id', 'name')->where('category_id', $request->id)->get();
-        $data = Warehouse::select('items_id', 'serial')
-                    ->where('status', 'in')
-                    ->where('items_id', $request->id)
-                    ->get();
+        if (Auth::user()->branch->id == '999') {
+            $data = Warehouse::select('items_id', 'serial')
+                ->where('status', 'in')
+                ->where('items_id', $request->id)
+                ->get();
+        }else{
+            $data = Stock::select('items_id', 'serial')
+                ->where('status', 'in')
+                ->where('items_id', $request->id)
+                ->where('branch_id', Auth::user()->branch->id)
+                ->get();
+        }
                     
         return response()->json($data);
         

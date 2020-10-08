@@ -22,8 +22,8 @@ Route::get('return', 'HomeController@return');
 
 
 
-
-Route::post('upload', 'StockController@import')->name('stock.upload');
+Route::put('service-out', 'StockController@serviceOut')->name('stocks.out');
+Route::post('upload', 'StockController@import')->name('stocks.upload');
 Route::post('additem', 'StockController@addItem')->name('add.item');
 Route::post('addcategory', 'StockController@addCategory')->name('add.category');
 Route::post('store', 'StockController@store')->name('stocks.store');

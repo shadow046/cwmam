@@ -46,15 +46,15 @@ class BranchController extends Controller
                         'items.name',
                         DB::raw
                         (
-                            'SUM(CASE WHEN stocks.status = \'in\' THEN 1 ELSE 0 END) as stock'
+                            'SUM(CASE WHEN stocks.status = \'in\' THEN 1 ELSE 0 END) as available'
                         ),
                         DB::raw
                         (
-                            'SUM(CASE WHEN stocks.status = \'out\' THEN 1 ELSE 0 END) as stock_out'
+                            'SUM(CASE WHEN stocks.status = \'service unit\' THEN 1 ELSE 0 END) as stock_out'
                         ),
                         DB::raw
                         (
-                            'SUM(CASE WHEN stocks.status = \'in\' THEN 1 ELSE 0 END) - SUM(CASE WHEN stocks.status = \'out\' THEN 1 ELSE 0 END) as available'
+                            'SUM(CASE WHEN stocks.status = \'in\' THEN 1 ELSE 0 END) + SUM(CASE WHEN stocks.status = \'service unit\' THEN 1 ELSE 0 END) as stock'
                         )
                     )
             ->join('stocks', 'stocks.items_id', '=', 'items.id')
