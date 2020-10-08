@@ -21,18 +21,12 @@
                 { data: 'created_at', name:'date', "width": "14%" },
                 { data: 'request_no', name:'request_no', "width": "14%"},
                 { data: 'reqBy', name:'reqBy', "width": "14%"},
-                { data: 'branch', name:'branch',"width": "14%"},
-                { data: 'area', name:'area',"width": "14%"},
                 { data: 'status', name:'status', "width": "14%"}
             ]
         });
 
         $('#requestTable tbody').on('click', 'tr', function () { //show branch details in modal
             var trdata = table.row(this).data();
-            var d = new Date(trdata.created_at);
-            var hour = String(d.getHours()).padStart(2, '0') % 12 || 12
-            var ampm = (String(d.getHours()).padStart(2, '0') < 12 || String(d.getHours()).padStart(2, '0') === 24) ? "AM" : "PM";
-            var trdate = months[d.getMonth()]+' '+d.getDate()+', ' +d.getFullYear()+' '+hour+':'+String(d.getMinutes()).padStart(2, '0')+ampm
             var dtdata = $('#requestTable tbody tr:eq(0)').data();
             //$('#requestModal').modal('show');
             if (trdata.status == 'SCHEDULED') {
@@ -44,7 +38,7 @@
                 $('.sched').hide();
                 $('#sched').val('');
             }
-            $('#date').val(trdate);
+            $('#date').val(trdata.created_at);
             $('#reqno').val(trdata.request_no);
             $('#branch').val(trdata.branch);
             $('#name').val(trdata.reqBy);

@@ -22,7 +22,6 @@
         text-align: left;
     } 
     .table-responsive{
-        height:350px;  
         overflow:scroll;
     }
     

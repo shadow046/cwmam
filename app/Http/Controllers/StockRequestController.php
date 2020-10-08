@@ -165,6 +165,11 @@ class StockRequestController extends Controller
             return $request->schedule;
         })
 
+        ->addColumn('created_at', function (StockRequest $request){
+            
+            return $request->created_at->toFormattedDateString().' '.$request->created_at->toTimeString();
+        })
+
         ->addColumn('reqBy', function (StockRequest $request){
             return strtoupper($request->user->name);
         })

@@ -29,8 +29,8 @@
                     @include('modal.warehouse.send')
                     @include('modal.warehouse.add')
                 @else
-                    @include('modal.warehouse.request')
                     @include('modal.branch.request')
+                    @include('modal.branch.send')
                 @endif
             @endif
 

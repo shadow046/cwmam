@@ -15,12 +15,14 @@
           <th>
             REQUESTED BY
           </th>
-          <th>
-            BRANCH NAME
-          </th>
-          <th>
-            AREA
-          </th>
+          @if(Auth::user()->hasrole('Administrator'))
+            <th>
+              BRANCH NAME
+            </th>
+            <th>
+              AREA
+            </th>
+          @endif
           <th>
             STATUS
           </th>
