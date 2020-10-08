@@ -3,7 +3,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title w-100 text-center">STOCK REQUEST</h6>
-                <button class="close" data-dismiss="modal" aria-label="Close">
+                <button class="close cancel" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <button hidden class="closes" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -74,7 +77,7 @@
             @role('Administrator')
             <div class="modal-footer">
                 <input type="button" class="btn btn-primary mr-auto" id="prcBtn" class="button" value="Proceed"> 
-                <input type="button" class="btn btn-primary" data-dismiss="modal" value="Close">
+                <input type="button" class="btn btn-primary cancel" value="Close">
             </div>
             @endrole
         </div>

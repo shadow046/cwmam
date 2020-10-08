@@ -30,8 +30,7 @@
       </thead>
     </table>
   </div>
-  @role('Head')
-  <input type="button" id="reqBtn" class="btn btn-primary" value="REQUEST STOCKS">
-  <input type="button" id="remBtn" class="btn btn-primary" value="DELETE PENDING REQUEST"> 
-  @endrole
+  @if(!Auth::user()->hasrole('Administrator'))
+    <input type="button" id="reqBtn" class="btn btn-primary" value="REQUEST STOCKS">
+  @endif
 @endsection

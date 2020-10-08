@@ -1,6 +1,7 @@
 
 <script type="text/javascript">
     var y = 1;
+    var interval = null;
     $(document).ready(function()
     {
         var d = new Date();
@@ -25,7 +26,12 @@
             ]
         });
 
+        interval = setInterval(function(){
+            table.draw();
+        }, 30000);
+
         $('#requestTable tbody').on('click', 'tr', function () { //show branch details in modal
+            clearInterval(interval);
             var trdata = table.row(this).data();
             var dtdata = $('#requestTable tbody tr:eq(0)').data();
             //$('#requestModal').modal('show');
@@ -49,6 +55,8 @@
             if (trdata.status == 'PENDING') {
                 $('table.schedDetails').hide();
                 $('table.requestDetails').show();
+                $('#del_Btn').show();
+                $('#del_Btn').attr('reqno', trdata.request_no);
                 $('table.requestDetails').DataTable({ //user datatables
                     "dom": 'lrtip',
                     processing: true,
@@ -67,6 +75,7 @@
             }else if(trdata.status == 'SCHEDULED'){
                 $('table.requestDetails').hide();
                 $('table.schedDetails').show();
+                $('#del_Btn').hide();
                 $('table.schedDetails').DataTable({ //user datatables
                     "dom": 'lrtip',
                     processing: true,
@@ -87,7 +96,24 @@
         });
     });
 
+    $(document).on('click', '#del_Btn', function(){
+        var reqno = $(this).attr('reqno');
+        $.ajax({
+            url: '{{route("stock.remove")}}',
+            dataType: 'json',
+            type: 'DELETE',
+            data: {
+                reqno : reqno                     
+            },
+            success: function(){
+                alert("Pending Request Deleted!!!");
+                window.location.href = '{{route('stock.index')}}';
+            }
+        });
+    });
+
     $(document).on('click', '#reqBtn', function(){
+        clearInterval(interval);
         $.ajax({
             type:'get',
             url:'{{route("stock.gen")}}',
@@ -182,7 +208,7 @@
                             stat: stat                     
                         },
                     });
-                    alert("Request datails submitted!!!");
+                    alert("Request details submitted!!!");
                     window.location.href = '{{route('stock.index')}}';
                 }
             }
@@ -232,5 +258,9 @@
                 },
             });
         }
+    });
+
+    $(document).on('click', '.cancel', function(){
+        window.location.href = '{{route('stock.index')}}';
     });
 </script>

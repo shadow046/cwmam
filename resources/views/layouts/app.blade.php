@@ -42,6 +42,8 @@
                     @include('modal.warehouse.import')
                 @else
                     @include('modal.branch.import')
+                    @include('modal.branch.add')
+                    @include('modal.branch.out')
                 @endif
             @endif
 

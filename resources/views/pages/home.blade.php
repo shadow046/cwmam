@@ -8,7 +8,7 @@
           <div class="card bg-card">
             <div class="card-body text-center">
               <p class="card-text">STOCK REQUEST</p>
-              <p class="card-text">258</p>
+              <p class="card-text">{{ $stockreq }}</p>
             </div>
           </div>
       </div>
@@ -16,15 +16,7 @@
           <div class="card bg-card">
             <div class="card-body text-center">
               <p class="card-text">SERVICE UNITS</p>
-              <p class="card-text">258</p>
-            </div>
-        </div>
-      </div>
-      <div class="col-sm-3">
-          <div class="card bg-card">
-            <div class="card-body text-center">
-              <p class="card-text">SPARE PARTS</p>
-              <p class="card-text">258</p>
+              <p class="card-text">{{ $units }}</p>
             </div>
         </div>
       </div>
@@ -32,7 +24,7 @@
           <div class="card bg-card">
             <div class="card-body text-center">
               <p class="card-text">RETURNS</p>
-              <p class="card-text">258</p>
+              <p class="card-text">0</p>
             </div>
           </div>
       </div>

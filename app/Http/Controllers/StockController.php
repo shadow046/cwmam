@@ -95,12 +95,23 @@ class StockController extends Controller
 
     public function store(Request $request)
     {
-        $add = new Warehouse;
-        $add->category_id = $request->cat;
-        $add->items_id = $request->item;
-        $add->serial = $request->serial;
-        $add->status = 'in';
-        $data = $add->save();
+        if (Auth::user()->branch->id == '999') {
+            $add = new Warehouse;
+            $add->category_id = $request->cat;
+            $add->items_id = $request->item;
+            $add->serial = $request->serial;
+            $add->status = 'in';
+            $data = $add->save();
+        }else{
+            $add = new Stock;
+            $add->category_id = $request->cat;
+            $add->branch_id = Auth::user()->branch->id;
+            $add->items_id = $request->item;
+            $add->serial = $request->serial;
+            $add->status = 'in';
+            $data = $add->save();
+        }
+        
 
         return response()->json($data);
     }

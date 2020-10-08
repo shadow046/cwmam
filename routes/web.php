@@ -34,6 +34,7 @@ Route::get('stocks', 'StockController@index')->name('stocks.index');
 Route::get('gen', 'StockRequestController@generateBarcodeNumber')->name('stock.gen');
 Route::put('update', 'StockRequestController@update')->name('stock.update');
 Route::post('storerequest', 'StockRequestController@store')->name('stock.store.request');
+Route::delete('remove', 'StockRequestController@dest')->name('stock.remove');
 Route::get('getstock', 'StockRequestController@getStock')->name('stock.get');
 Route::get('getserials', 'StockRequestController@getSerials')->name('stock.serials');
 Route::get('itemcode', 'StockRequestController@getItemCode')->name('stock.get.itemcode');

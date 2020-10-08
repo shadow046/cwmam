@@ -271,6 +271,7 @@ class StockRequestController extends Controller
                 ->where('serial', $request->serial)
                 ->first();
             $item->status = 'sent';
+            $item->request_no = $request->reqno;
             $item->branch_id = $reqbranch->branch_id;
             $item->schedule = $request->datesched;;
             $item->save();
@@ -297,5 +298,15 @@ class StockRequestController extends Controller
     {
         PreparedItem::find($id)->delete($id);
         //return redirect()->route('stock.index');
+    }
+
+    public function dest(Request $request)
+    {
+        
+        $delete = StockRequest::where('request_no', $request->reqno)->first();
+        $delete->status = 2;
+        $data = $delete->save();
+
+        return response()->json($data);
     }
 }

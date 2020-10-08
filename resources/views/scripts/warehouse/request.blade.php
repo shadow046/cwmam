@@ -2,6 +2,7 @@
 <script type="text/javascript">
     var r = 1;
     var y = 1;
+    var interval = null;
     $(document).ready(function()
     {
         
@@ -29,7 +30,12 @@
             ]
         });
 
+        interval = setInterval(function(){
+            table.draw();
+        }, 30000);
+
         $('#requestTable tbody').on('click', 'tr', function () { //show branch details in modal
+            clearInterval(interval);
             var trdata = table.row(this).data();
             var dtdata = $('#requestTable tbody tr:eq(0)').data();
             //$('#requestModal').modal('show');
@@ -94,7 +100,7 @@
 
     $(document).on('click', '#prcBtn', function(){
         var id = $('#myid').val();
-        $("#requestModal .close").click();
+        $("#requestModal .closes").click();
         $('#sdate').val($('#date').val());
         $('#sreqno').val($('#reqno').val());
         $('#sbranch').val($('#branch').val());
@@ -293,7 +299,7 @@
                             },
                             dataType: 'json',
                         });
-                        alert("Branch data updated!!!!");
+                        alert("Branch request updated!!!!");
                         window.location.href = '{{route('stock.index')}}';
                     }
                 }
@@ -459,5 +465,9 @@
                 },
             });
         }
+    });
+
+    $(document).on('click', '.cancel', function(){
+        window.location.href = '{{route('stock.index')}}';
     });
 </script>

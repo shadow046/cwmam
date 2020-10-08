@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title w-100 text-center">STOCK REQUEST FORM</h6>
-                <button class="close" data-dismiss="modal" aria-label="Close">
+                <button class="close cancel" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -73,7 +73,7 @@
                 </div>
             </div><hr>
             <div class="modal-footer">
-            <input type="button" class="btn btn-primary" data-dismiss="modal" value="Cancel">
+            <input type="button" class="btn btn-primary cancel" value="Cancel">
             <input type="button" class="btn btn-primary send_sub_Btn" id="send_sub_Btn" class="button" value="Submit">
             </form>
                 

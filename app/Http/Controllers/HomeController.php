@@ -7,6 +7,8 @@ use Spatie\Activitylog\Models\Activity;
 use Spatie\Permission\Models\Role;
 use App\User;
 use App\Branch;
+use App\Warehouse;
+use App\StockRequest;
 use Auth;
 
 class HomeController extends Controller
@@ -39,7 +41,9 @@ class HomeController extends Controller
         })->get();
         return dd($user);*/
 
-        return view('pages.home');
+        $stockreq = StockRequest::count();
+        $units = Warehouse::where('status', 'in')->count();
+        return view('pages.home', compact('stockreq', 'units'));
     }
 
     

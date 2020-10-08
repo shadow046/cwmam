@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title w-100 text-center">IMPORT STOCK FORM</h6>
-                <button class="close" data-dismiss="modal" aria-label="Close" hidden>
+                <button class="close cancel" aria-label="Close" hidden>
                     
                 </button>
             </div>
@@ -20,7 +20,7 @@
                 </div>
             </div><hr>
             <div class="modal-footer">
-                <input type="button" class="btn btn-primary cancel" data-dismiss="modal" value="Cancel">            
+                <input type="button" class="btn btn-primary cancel" value="Cancel">            
             </form>
                 
             </div>
