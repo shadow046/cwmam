@@ -15,7 +15,7 @@ class CreateCustomerBranchesTable extends Migration
     {
         Schema::create('customer_branches', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('customer_id')->nullable();
+            $table->string('customer_id')->nullable();
             $table->string('code');
             $table->string('customer_branch');
             $table->string('address')->nullable();

@@ -123,7 +123,7 @@
                 $('#sreqno').val(result);
             },
         });
-        $('#sendrequestModal').modal('show');
+        $('#sendrequestModal').modal({backdrop: 'static', keyboard: false});
 
     });
 
@@ -133,7 +133,7 @@
             var rowcount = $(this).attr('btn_id');
             if ($(this).val() == 'Add Item') {
                 if($('#qty'+rowcount).val() != 0 && $('#purpose'+rowcount).val()){
-                    var y = parseInt(rowcount) + 1;
+                    y++;
                     var additem = '<div class="row no-margin" id="row'+y+'"><div class="col-md-2 form-group"><select id="category'+y+'" style="color: black;" class="form-control category" row_count="'+y+'"></select></div><div class="col-md-2 form-group"><select id="item'+y+'" style="color: black;" class="form-control item" row_count="'+y+'"><option selected disabled>select item code</option></select></div><div class="col-md-3 form-group"><select id="desc'+y+'" class="form-control desc" style="color: black;" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><select id="purpose'+y+'" class="form-control purpose" style="color: black;" row_count="'+y+'"><option selected disabled>select purpose</option><option value="1">Service Unit</option><option value="2">Replacement</option><option value="3">Stock</option></select></div><div class="col-md-2 form-group"><input type="number" min="0" class="form-control" style="color: black; width: 6em" name="qty'+y+'" id="qty'+y+'" placeholder="0" disabled></div><div class="col-md-1 form-group"><input type="button" class="add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
                     $(this).val('Remove');
                     $('#category'+ rowcount).prop('disabled', true);
@@ -251,7 +251,7 @@
                     descOp+='<option selected value="select" disabled>select description</option>';
                     for(var i=0;i<data.length;i++){
                         codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
-                        descOp+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
+                        descOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
                     }
                     $("#item" + count).find('option').remove().end().append(codeOp);
                     $("#desc" + count).find('option').remove().end().append(descOp);

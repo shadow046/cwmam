@@ -147,7 +147,7 @@
                     descOp+='<option selected value="select" disabled>select description</option>';
                     for(var i=0;i<data.length;i++){
                         codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
-                        descOp+='<option value="'+data[i].id+'">'+data[i].name.toUpperCase()+'</option>';
+                        descOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
                     }
                     $("#item" + count).find('option').remove().end().append(codeOp);
                     $("#desc" + count).find('option').remove().end().append(descOp);
@@ -174,7 +174,7 @@
                     descOp+='<option selected value="select" disabled>select description</option>';
                     for(var i=0;i<data.length;i++){
                         //codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
-                        descOp+='<option value="'+data[i].id+'">'+data[i].name.toUpperCase()+'</option>';
+                        descOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
                     }
                     //$("#outitem" + count).find('option').remove().end().append(codeOp);
                     $("#outdesc" + count).find('option').remove().end().append(descOp);
@@ -227,7 +227,7 @@
         if ($(this).val() == 'Add Item') {
             if($('#outcategory'+ rowcount).val() && $('#outdesc'+ rowcount).val() && $('#outserial'+ rowcount).val() && $('#outpurpose'+ rowcount).val()) {
                 y++;
-                var additem = '<div class="row no-margin" id="outrow'+y+'"><div class="col-md-2 form-group"><select style="color:black" id="outcategory'+y+'" class="form-control outcategory" row_count="'+y+'"></select></div><div class="col-md-3 form-group"><select style="color:black" id="outdesc'+y+'" class="form-control outdesc" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><select id="outserial'+y+'" class="form-control outserial" row_count="'+y+'" style="color: black;"><option selected disabled>select serial</option></select></div><div class="col-md-2 form-group"><select id="outpurpose'+y+'" class="form-control outpurpose" row_count="'+y+'" style="color: black;"><option selected disabled>select purpose</option><option value="service unit">Service Unit</option><option value="out">Replacement</option></select></div><div class="col-md-1 form-group"><input type="number" class="form-control" min="0" name="outstock'+y+'" id="outstock'+y+'" placeholder="0" style="color:black; width: 6em" disabled></div><div class="col-md-1 form-group"><input type="button" class="out_add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
+                var additem = '<div class="row no-margin" id="outrow'+y+'"><div class="col-md-2 form-group"><select style="color:black" id="outcategory'+y+'" class="form-control outcategory" row_count="'+y+'"></select></div><div class="col-md-3 form-group"><select style="color:black" id="outdesc'+y+'" class="form-control outdesc" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><select id="outserial'+y+'" class="form-control outserial" row_count="'+y+'" style="color: black;"><option selected disabled>select serial</option></select></div><div class="col-md-1 form-group"><input type="number" class="form-control" min="0" name="outstock'+y+'" id="outstock'+y+'" placeholder="0" style="color:black; width: 6em" disabled></div><div class="col-md-1 form-group"><input type="button" class="out_add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
                 $(this).val('Remove');
                 $('#outcategory'+ rowcount).prop('disabled', true);
                 $('#outdesc'+ rowcount).prop('disabled', true);
@@ -242,7 +242,7 @@
         }else{
             if (r == 20) {
                 y++;
-                var additem = '<div class="row no-margin" id="outrow'+y+'"><div class="col-md-2 form-group"><select id="outcategory'+y+'" class="form-control outcategory" row_count="'+y+'"></select></div><div class="col-md-3 form-group"><select id="outdesc'+y+'" class="form-control outdesc" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><select id="outserial'+y+'" class="form-control outserial" row_count="'+y+'" style="color: black;"><option selected disabled>select serial</option></select></div><div class="col-md-2 form-group"><select id="outpurpose'+y+'" class="form-control outpurpose" row_count="'+y+'" style="color: black;"><option selected disabled>select purpose</option><option value="service unit">Service Unit</option><option value="out">Replacement</option></select></div><div class="col-md-1 form-group"><input type="number" class="form-control" min="0" name="outstock'+y+'" id="outstock'+y+'" placeholder="0" style="color:black; width: 6em" disabled></div><div class="col-md-1 form-group"><input type="button" class="out_add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
+                var additem = '<div class="row no-margin" id="outrow'+y+'"><div class="col-md-2 form-group"><select id="outcategory'+y+'" class="form-control outcategory" row_count="'+y+'"></select></div><div class="col-md-3 form-group"><select id="outdesc'+y+'" class="form-control outdesc" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><select id="outserial'+y+'" class="form-control outserial" row_count="'+y+'" style="color: black;"><option selected disabled>select serial</option></select></div><div class="col-md-1 form-group"><input type="number" class="form-control" min="0" name="outstock'+y+'" id="outstock'+y+'" placeholder="0" style="color:black; width: 6em" disabled></div><div class="col-md-1 form-group"><input type="button" class="out_add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
                 $('#outfield').append(additem);
                 $('#outcategory'+ rowcount).find('option').clone().appendTo('#outcategory'+y);
                 r++;

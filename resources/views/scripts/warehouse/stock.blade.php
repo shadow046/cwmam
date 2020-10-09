@@ -1,11 +1,10 @@
 <script type="text/javascript">
-    
+    var r = 1;
+    var c = 1;
+    var y = 1;
+    var b = 1;
     $(document).ready(function()
     {
-        var r = 1;
-        var c = 1;
-        var y = 1;
-        var b = 1;
         var table =
         $('table.stockTable').DataTable({ //user datatables
             "dom": 'lrtip',
@@ -80,7 +79,7 @@
                     descOp+='<option selected value="select" disabled>select description</option>';
                     for(var i=0;i<data.length;i++){
                         codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
-                        descOp+='<option value="'+data[i].id+'">'+data[i].name.toUpperCase()+'</option>';
+                        descOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
                     }
                     $("#item" + count).find('option').remove().end().append(codeOp);
                     $("#desc" + count).find('option').remove().end().append(descOp);

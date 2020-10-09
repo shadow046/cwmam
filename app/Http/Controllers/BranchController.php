@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Branch;
 use App\Area;
+use Auth;
 use DB;
 use Validator;
 class BranchController extends Controller
@@ -68,14 +69,19 @@ class BranchController extends Controller
 
     public function getBranches()
     {
-        
-        return DataTables::of(Branch::all())
+
+        $branches = Branch::select('*')
+                ->where('branches.id', '!=', Auth::user()->branch->id)
+                ->join('areas', 'areas.id', '=', 'branches.area_id')
+                ->get();
+        //dd($branches);
+        return DataTables::of($branches)
         ->setRowData([
             'data-id' => '{{$id}}',
             'data-status' => '{{ $status }}',
         ])
         ->addColumn('area', function (Branch $branch){
-            return $branch->area->area;
+            return $branch->area;
         })
         ->addColumn('status', function (Branch $branch){
 

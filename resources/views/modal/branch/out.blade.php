@@ -47,9 +47,9 @@
                         <th>Category</th>
                         <th>Description</th>
                         <th>Serial&nbsp;&nbsp;&nbsp;</th>
-                        <th>Purpose</th>
                         <th>Stock</th>
-                        <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                     </thead>
                 </table>
                 <div class="row no-margin" id="outrow1">
@@ -71,13 +71,7 @@
                             <option selected disabled>select serial</option>
                         </select>
                     </div>
-                    <div class="col-md-2 form-group">
-                        <select id="outpurpose1" class="form-control outpurpose" row_count="1" style="color: black;">
-                            <option selected disabled>select purpose</option>
-                            <option value="service unit">Service Unit</option>
-                            <option value="out">Replacement</option>
-                        </select>
-                    </div>
+                    
                     <div class="col-md-1 form-group">
                         <input type="number" class="form-control" min="0" name="outstock1" id="outstock1" placeholder="0" style="color:black; width: 6em" disabled>
                     </div>
