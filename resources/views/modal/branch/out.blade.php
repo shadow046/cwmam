@@ -26,7 +26,7 @@
                     <div class="col-md-6 form-group row">
                         <label class="col-md-5 col-form-label text-md-right">Customer name:</label>
                         <div class="col-md-7">
-                            <input type="text" style="color: black" class="form-control form-control-sm " id="customer" value="">
+                            <input type="text" style="color: black" class="form-control form-control-sm " id="customer" placeholder="customer name">
                         </div>
                     </div>
                     <div class="col-md-6 form-group row">

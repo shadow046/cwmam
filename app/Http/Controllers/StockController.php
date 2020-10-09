@@ -40,6 +40,7 @@ class StockController extends Controller
         return view('pages.stocks', compact('categories', 'service_units', 'customers'));
     }
 
+    
     public function viewStocks(Request $request, $id)
     {
 
