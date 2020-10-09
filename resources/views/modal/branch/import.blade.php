@@ -7,8 +7,8 @@
                     
                 </button>
             </div>
-            <div class="modal-body" id="catfield">
-                <div class="row no-margin" id="catrow1">
+            <div class="modal-body">
+                <div class="row no-margin">
                     <form action="{{ route('stocks.upload') }}" method="post" enctype="multipart/form-data">
                         <div class="col-md-11 form-group">
                             <input type="file" name="upload-file" class="form-control">

@@ -486,7 +486,17 @@
     });
 
     $(document).on('click', '#out_Btn', function(){
-        $('#outModal').modal({backdrop: 'static', keyboard: false});
+        $('#outOptionModal').modal({backdrop: 'static', keyboard: false});
+    });
+
+    $(document).on('click', '.service-unit', function(){
+        $("#outOptionModal .close").click();
+        $('#service-unitModal').modal({backdrop: 'static', keyboard: false});
+    });
+
+    $(document).on('click', '.replacement', function(){
+        $("#outOptionModal .close").click();
+        $('#replacementModal').modal({backdrop: 'static', keyboard: false});
     });
 
 </script>

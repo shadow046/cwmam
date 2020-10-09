@@ -42,10 +42,12 @@
     </table>
   </div>
   <div class="d-flex">
-    <input type="button" id="in_Btn" class="btn btn-xs btn-primary" value="SERVICE IN">&nbsp;
-    <input type="button" id="out_Btn" class="btn btn-xs btn-primary" value="SERVICE OUT">&nbsp;
-    <input type="button" id="loan_Btn" class="btn btn-xs btn-primary" value="LOAN UNIT">
-    <input type="button" id="importBtn" class="btn btn-xs btn-primary ml-auto" value="IMPORT">&nbsp;
-    <input type="button" id="addStockBtn" class="btn btn-xs btn-primary" value="ADD STOCK">
+    @if(!Auth::user()->hasrole('Administrator'))
+      <input type="button" id="in_Btn" class="btn btn-xs btn-primary" value="SERVICE IN">&nbsp;
+      <input type="button" id="out_Btn" class="btn btn-xs btn-primary" value="SERVICE OUT">&nbsp;
+      <input type="button" id="loan_Btn" class="btn btn-xs btn-primary" value="LOAN UNIT">
+    @endif
+      <input type="button" id="importBtn" class="btn btn-xs btn-primary ml-auto" value="IMPORT">&nbsp;
+      <input type="button" id="addStockBtn" class="btn btn-xs btn-primary" value="ADD STOCK">
   </div>
 @endsection
