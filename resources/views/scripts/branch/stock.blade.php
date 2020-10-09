@@ -225,14 +225,13 @@
     $(document).on('click', '.out_add_item', function(){
         var rowcount = $(this).attr('btn_id');
         if ($(this).val() == 'Add Item') {
-            if($('#outcategory'+ rowcount).val() && $('#outdesc'+ rowcount).val() && $('#outserial'+ rowcount).val() && $('#outpurpose'+ rowcount).val()) {
+            if($('#outcategory'+ rowcount).val() && $('#outdesc'+ rowcount).val() && $('#outserial'+ rowcount).val()) {
                 y++;
                 var additem = '<div class="row no-margin" id="outrow'+y+'"><div class="col-md-2 form-group"><select style="color:black" id="outcategory'+y+'" class="form-control outcategory" row_count="'+y+'"></select></div><div class="col-md-3 form-group"><select style="color:black" id="outdesc'+y+'" class="form-control outdesc" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><select id="outserial'+y+'" class="form-control outserial" row_count="'+y+'" style="color: black;"><option selected disabled>select serial</option></select></div><div class="col-md-1 form-group"><input type="number" class="form-control" min="0" name="outstock'+y+'" id="outstock'+y+'" placeholder="0" style="color:black; width: 6em" disabled></div><div class="col-md-1 form-group"><input type="button" class="out_add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
                 $(this).val('Remove');
                 $('#outcategory'+ rowcount).prop('disabled', true);
                 $('#outdesc'+ rowcount).prop('disabled', true);
                 $('#outserial'+ rowcount).prop('disabled', true);
-                $('#outpurpose'+ rowcount).prop('disabled', true);
                 if (r < 20 ) {
                     $('#outfield').append(additem);
                     $('#outcategory'+ rowcount).find('option').clone().appendTo('#outcategory'+y);
@@ -250,11 +249,9 @@
             $('#outcategory'+rowcount).val('select category');
             $('#outdesc'+rowcount).val('select description');
             $('#outserial'+rowcount).val('select serial');
-            $('#outpurpose'+rowcount).val('select purpose');
             $('#outcategory'+rowcount).prop('disabled', false);
             $('#outdesc'+rowcount).prop('disabled', false);
             $('#outserial'+rowcount).prop('disabled', false);
-            $('#outpurpose'+ rowcount).prop('disabled', true);
             $('#outrow'+rowcount).hide();
             $(this).val('Add Item');
             r--;
