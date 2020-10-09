@@ -17,7 +17,7 @@ class CreateCustomerBranchesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('customer_id')->nullable();
             $table->string('code');
-            $table->string('name');
+            $table->string('customer_branch');
             $table->string('address')->nullable();
             $table->string('contact')->nullable();
             $table->timestamps();

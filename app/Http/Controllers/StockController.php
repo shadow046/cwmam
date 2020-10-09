@@ -26,7 +26,18 @@ class StockController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view('pages.stocks', compact('categories'));
+        $service_units = Stock::where('branch_id', Auth::user()->branch->id)
+            ->where('status', 'service unit')
+            ->join('categories', 'stocks.category_id', '=', 'categories.id')
+            ->get();
+        $customers = Stock::where('branch_id', Auth::user()->branch->id)
+            ->where('status', 'service unit')
+            ->join('customer_branches', 'stocks.customer_branches_id', '=', 'customer_branches.id')
+            ->join('categories', 'stocks.category_id', '=', 'categories.id')
+            ->join('customers', 'customer_branches.customer_id', '=', 'customers.id')
+            ->get();
+        //dd($customers);
+        return view('pages.stocks', compact('categories', 'service_units', 'customers'));
     }
 
     public function viewStocks(Request $request, $id)
@@ -46,13 +57,13 @@ class StockController extends Controller
 
         ->addColumn('category', function (Stock $request){
             $cat = Category::find($request->category_id);
-            return strtoupper($cat->name);
+            return strtoupper($cat->category);
         })
 
         ->addColumn('description', function (Stock $request){
             $item = Item::where('id', $request->items_id)->first();
 
-            return strtoupper($item->name);
+            return strtoupper($item->item);
         })
 
         ->addColumn('quantity', function (Stock $request){
@@ -84,7 +95,7 @@ class StockController extends Controller
 
         $add = new Item;
         $add->category_id = $request->cat;
-        $add->name = ucfirst($request->item);
+        $add->item = ucfirst($request->item);
         $data = $add->save();
 
         return response()->json($data);
@@ -93,7 +104,7 @@ class StockController extends Controller
     public function addCategory(Request $request){
 
         $add = new Category;
-        $add->name = ucfirst($request->cat);
+        $add->category = ucfirst($request->cat);
         $data = $add->save();
 
         return response()->json($data);
@@ -158,7 +169,7 @@ class StockController extends Controller
         $dup = false;
         while ($columns = fgetcsv($file)) {
 
-            $item = Item::where('name', $columns[0])->first();
+            $item = Item::where('item', $columns[0])->first();
             $serial = $columns[1];
 
             if ($columns[1] == "") {
@@ -172,7 +183,7 @@ class StockController extends Controller
                 }
             }
 
-            if ($columns[0] != $item->name) {
+            if ($columns[0] != $item->item) {
                 array_push($notfound, $columns[0]);
             }else {
 
@@ -215,13 +226,13 @@ class StockController extends Controller
 
         ->addColumn('category', function (Warehouse $request){
             $cat = Category::find($request->category_id);
-            return $cat->name;
+            return $cat->category;
         })
 
         ->addColumn('description', function (Warehouse $request){
             $item = Item::where('id', $request->items_id)->first();
 
-            return $item->name;
+            return $item->item;
         })
 
         ->addColumn('quantity', function (Warehouse $request){

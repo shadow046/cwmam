@@ -12,4 +12,9 @@ class Stock extends Model
     {
         return $this->belongsTo(Item::class);
     }
+
+    public function categ()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

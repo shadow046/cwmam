@@ -45,6 +45,8 @@
                     @include('modal.branch.add')
                     @include('modal.branch.out')
                     @include('modal.branch.out-option')
+                    @include('modal.branch.in-option')
+                    @include('modal.branch.good')
                 @endif
             @endif
 

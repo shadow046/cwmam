@@ -26,7 +26,7 @@
             serverSide: false,
             ajax: '{{route('get.branches')}}',
             columns: [
-                { data: 'name', name:'name', "width": "14%" },
+                { data: 'branch', name:'branch', "width": "14%" },
                 { data: 'area', name:'area', "width": "14%"},
                 { data: 'head', name:'head', "width": "14%"},
                 { data: 'phone', name:'phone',"width": "14%"},
@@ -54,7 +54,7 @@
                 ],
                 columns: [
                     { data: 'items_id', name:'items_id', "width": "20%",},
-                    { data: 'name', name:'name', "width": "17%"},
+                    { data: 'item', name:'item', "width": "17%"},
                     { data: 'stock', name:'stock', "width": "14%"},
                     { data: 'available', name:'available', "width": "14%"},
                     { data: 'stock_out', name:'stock_out', "width": "14%"}
@@ -68,7 +68,7 @@
             $('#email').prop('disabled', true);
             $('#status').prop('disabled', true);
             $('#myid').val(trdata.id);
-            $('#branch_name').val(trdata.name);
+            $('#branch_name').val(trdata.branch);
             $('#address').val(trdata.address);
             $('#area').val(trdata.area_id);
             $('#contact_person').val(trdata.head);

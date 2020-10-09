@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Branch;
 use App\Area;
-use App\Item;
-use App\Stock;
 use DB;
 use Validator;
 class BranchController extends Controller
@@ -26,14 +24,14 @@ class BranchController extends Controller
 
     public function index()
     {
-        $branch = Branch::all()->sortBy('name');
+        $branch = Branch::all()->sortBy('branch');
         $areas = Area::all();
         return view('pages.branch', compact('branch', 'areas'));
     }
 
     public function showModal()
     {
-        $branch = Branch::all()->sortBy('name');
+        $branch = Branch::all()->sortBy('branch');
         $areas = Area::all();
         //dd($branches);
         return view('modal.add-branch', compact('branch', 'areas'));
@@ -44,7 +42,7 @@ class BranchController extends Controller
         $details = DB::table('items')
             ->select(
                         'stocks.items_id',
-                        'items.name',
+                        'items.item',
                         DB::raw
                         (
                             'SUM(CASE WHEN stocks.status = \'in\' THEN 1 ELSE 0 END) as available'
@@ -77,7 +75,7 @@ class BranchController extends Controller
             'data-status' => '{{ $status }}',
         ])
         ->addColumn('area', function (Branch $branch){
-            return $branch->area->name;
+            return $branch->area->area;
         })
         ->addColumn('status', function (Branch $branch){
 
@@ -129,7 +127,7 @@ class BranchController extends Controller
 
             $branch = new Branch;
 
-            $branch->name = $request->input('branch_name');
+            $branch->branch = $request->input('branch_name');
             $branch->email = $request->input('email');
             $branch->address = $request->input('address');
             $branch->area_id = $request->input('area');
@@ -191,7 +189,7 @@ class BranchController extends Controller
 
             $branch = Branch::find($id);
 
-            $branch->name = $request->input('branch_name');
+            $branch->branch = $request->input('branch_name');
             $branch->email = $request->input('email');
             $branch->address = $request->input('address');
             $branch->area_id = $request->input('area');

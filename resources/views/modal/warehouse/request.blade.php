@@ -29,7 +29,7 @@
                     <div class="col-md-6 form-group row">
                         <label class="col-md-5 col-form-label text-md-right">Branch name:</label>
                         <div class="col-md-7">
-                            <input type="text" class="form-control form-control-sm " id="branch" value="{{ Auth::user()->branch->name }}" disabled>
+                            <input type="text" class="form-control form-control-sm " id="branch" value="{{ Auth::user()->branch->branch }}" disabled>
                         </div>
                     </div>
                     <div class="col-md-6 form-group row">
@@ -43,7 +43,7 @@
                     <div class="col-md-6 form-group row">
                         <label class="col-md-5 col-form-label text-md-right">Area:</label>
                         <div class="col-md-7">
-                            <input type="text" class="form-control form-control-sm " id="area" value="{{ Auth::user()->area->name }}" disabled>
+                            <input type="text" class="form-control form-control-sm " id="area" value="{{ Auth::user()->area->area }}" disabled>
                         </div>
                     </div>
                     <div class="col-md-6 form-group row sched">

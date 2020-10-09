@@ -40,11 +40,11 @@ class UserController extends Controller
         ])
 
         ->addColumn('area', function (User $user){
-            return $user->area->name;
+            return $user->area->area;
         })
 
         ->addColumn('branch', function (User $user){
-            return $user->branch->name;
+            return $user->branch->branch;
         })
 
         ->addColumn('role', function (User $user){
@@ -67,8 +67,8 @@ class UserController extends Controller
 
     public function getBranchName(Request $request)
     {
-        $data = Branch::select('name', 'id')->where('area_id', $request->id)->get();
-        
+        $data = Branch::select('branch', 'id')->where('area_id', $request->id)->get();
+        //dd($data);
         return response()->json($data);
     }
     /**

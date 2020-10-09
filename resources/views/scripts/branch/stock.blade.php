@@ -499,4 +499,13 @@
         $('#replacementModal').modal({backdrop: 'static', keyboard: false});
     });
 
+    $(document).on('click', '#in_Btn', function(){
+        $('#inOptionModal').modal({backdrop: 'static', keyboard: false});
+    });
+
+    $(document).on('click', '.good', function(){
+        $("#inOptionModal .close").click();
+        $('#goodModal').modal({backdrop: 'static', keyboard: false});
+    });
+
 </script>

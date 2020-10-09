@@ -40,15 +40,16 @@ class LoginController extends Controller
         /*Role::create(['name'=>'super-admin']);
         Role::create(['name'=>'admin']);
         Role::create(['name'=>'head']);
-        Area::create(['name'=>'Metro Manila']);
-        Area::create(['name'=>'North Luzon']);
-        Area::create(['name'=>'South Luzon']);
-        Area::create(['name'=>'Visaya']);
-        Area::create(['name'=>'Mindanao']);
+        Area::create(['area'=>'Metro Manila']);
+        Area::create(['area'=>'North Luzon']);
+        Area::create(['area'=>'South Luzon']);
+        Area::create(['area'=>'Visaya']);
+        Area::create(['area'=>'Mindanao']);
         //Branch::create(['area_id'=>'1','email'=>'vher@test.com', 'name'=>'San Juan', 'address'=>'441 Lt. Artiaga St., Brgy. Corazon De Jesus San Juan City', 'head'=>'Vergilio Cabacungan', 'phone'=>'0998-5883595', 'status'=>'1']);
         $user = User::create(['area_id'=>'1', 'name'=>'Jerome Lopez', 'email'=>'emorej046@gmail.com', 'password'=>bcrypt('1'), 'branch_id'=>'1', 'status'=>'1']);
+        $user->save();
         $user->assignRole('admin');
-        */
+        //*/
         $this->middleware('guest')->except('logout');
     }
 }

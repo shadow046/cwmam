@@ -12,7 +12,7 @@
                         <select id="category1" class="form-control category" row_count="1">
                             <option selected disabled>select category</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ strtoupper($category->name) }}</option>
+                                <option value="{{ $category->id }}">{{ strtoupper($category->category) }}</option>
                             @endforeach
                         </select>
                     </div>

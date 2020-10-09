@@ -68,11 +68,11 @@
                     success:function(data)
                     {
                         //console.log('success');
-                        //console.log(data);
+                        console.log(data);
                         //console.log(data.length);
                         op+='<option selected disabled>select branch</option>';
                         for(var i=0;i<data.length;i++){
-                            op+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
+                            op+='<option value="'+data[i].id+'">'+data[i].branch+'</option>';
                         }
                         $('#branch').find('option').remove().end().append(op);
                         callback();
@@ -144,7 +144,7 @@
                         //console.log(data.length);
                         op+='<option selected disabled>select branch</option>';
                         for(var i=0;i<data.length;i++){
-                            op+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
+                            op+='<option value="'+data[i].id+'">'+data[i].branch+'</option>';
                         }
                         $('#branch').find('option').remove().end().append(op);
                         callback();

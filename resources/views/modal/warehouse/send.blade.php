@@ -28,7 +28,7 @@
                     <div class="col-md-6 form-group row">
                         <label for="branch" class="col-md-5 col-form-label text-md-right">Branch name:</label>
                         <div class="col-md-7">
-                            <input type="text" class="form-control form-control-sm " name="branch" id="sbranch" value="{{ Auth::user()->branch->name }}" disabled>
+                            <input type="text" class="form-control form-control-sm " name="branch" id="sbranch" value="{{ Auth::user()->branch->branch }}" disabled>
                         </div>
                     </div>
                     <div class="col-md-6 form-group row">
@@ -69,7 +69,7 @@
                         <select id="category1" class="form-control category" row_count="1">
                             <option selected disabled>select category</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ strtoupper($category->name) }}</option>
+                                <option value="{{ $category->id }}">{{ strtoupper($category->category) }}</option>
                             @endforeach
                         </select>
                     </div>

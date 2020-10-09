@@ -33,7 +33,7 @@
                             <select name="area" id="area" class="form-control area" disabled>
                                 <option selected disabled>select area</option>
                                 @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}">{{ $area->name}}</option>
+                                    <option value="{{ $area->id }}">{{ $area->area}}</option>
                                 @endforeach
                             </select>
                         </div>

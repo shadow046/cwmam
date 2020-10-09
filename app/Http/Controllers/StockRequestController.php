@@ -37,7 +37,7 @@ class StockRequestController extends Controller
     }
 
     public function getItemCode(Request $request){
-        $data = Item::select('id', 'name')->where('category_id', $request->id)->get();
+        $data = Item::select('id', 'item')->where('category_id', $request->id)->get();
         
         return response()->json($data);
         
@@ -98,7 +98,7 @@ class StockRequestController extends Controller
 
         ->addColumn('item_name', function (PreparedItem $PreparedItem){
 
-            return strtoupper($PreparedItem->items->name);
+            return strtoupper($PreparedItem->items->item);
         })
 
         ->addColumn('serial', function (PreparedItem $PreparedItem){
@@ -139,7 +139,7 @@ class StockRequestController extends Controller
 
         ->addColumn('item_name', function (RequestedItem $RequestedItem){
 
-            return strtoupper($RequestedItem->items->name);
+            return strtoupper($RequestedItem->items->item);
         })
 
         ->addColumn('purpose', function (RequestedItem $RequestedItem){
@@ -199,11 +199,11 @@ class StockRequestController extends Controller
         })
 
         ->addColumn('branch', function (StockRequest $request){
-            return strtoupper($request->branch->name);
+            return strtoupper($request->branch->branch);
         })
 
         ->addColumn('area', function (StockRequest $request){
-            return strtoupper($request->area->name);
+            return strtoupper($request->area->area);
         })
 
         ->make(true);

@@ -20,7 +20,7 @@
                             <select name="area" id="area" class="form-control form-control-sm area @error('area') is-invalid @enderror" disabled>
                                 <option selected disabled>select area</option>
                                 @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}">{{ $area->name}}</option>
+                                    <option value="{{ $area->id }}">{{ $area->area}}</option>
                                 @endforeach
                             </select>
                         </div>
