@@ -29,5 +29,6 @@ class VerifyCsrfToken extends Middleware
         'storerequest',
         'remove',
         'service-out',
+        'service-in',
     ];
 }

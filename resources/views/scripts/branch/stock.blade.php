@@ -1,6 +1,7 @@
 <script type="text/javascript">
     var y = 1;
     var r = 1;
+    var b =1;
     $(document).ready(function()
     {
         var branchid = $('#branchid').attr('branchid');
@@ -128,6 +129,40 @@
 
     });
 
+    $(document).on('change', '.gooddesc', function(){
+        //var codeOp = " ";
+        var serialOp = " ";
+        var count = $(this).attr('row_count');
+        var customerid = $('#goodcustomer'+ count).val();
+        var categoryid = $('#goodcategory'+ count).val();
+        var descid = $(this).val();
+        selectdesc(gooddesc1);
+        $('#goodserial' + count).val('select serial');
+        function selectdesc(gooddesc1) {
+            $.ajax({
+                type:'get',
+                url:'{{route("stock.serial")}}',
+                data:{
+                    'customerid':customerid,
+                    'categoryid':categoryid,
+                    'descid':descid
+                },
+                success:function(data)
+                {
+                    console.log(data);
+                    //codeOp+='<option selected value="select" disabled>select item code</option>';
+                    serialOp+='<option selected value="select" disabled>select description</option>';
+                    for(var i=0;i<data.length;i++){
+                        //codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
+                        serialOp+='<option value="'+data[i].id+'">'+data[i].serial.toUpperCase()+'</option>';
+                    }
+                    //$("#outitem" + count).find('option').remove().end().append(codeOp);
+                    $("#goodserial" + count).find('option').remove().end().append(serialOp);
+                },
+            });
+        }
+    });
+
     $(document).on('change', '.category', function(){
         var codeOp = " ";
         var descOp = " ";
@@ -178,6 +213,66 @@
                     }
                     //$("#outitem" + count).find('option').remove().end().append(codeOp);
                     $("#outdesc" + count).find('option').remove().end().append(descOp);
+                },
+            });
+        }
+    });
+
+    $(document).on('change', '.goodcategory', function(){
+        //var codeOp = " ";
+        var catOp = " ";
+        var count = $(this).attr('row_count');
+        var customerid = $('#goodcustomer'+ count).val();
+        var categoryid = $(this).val();
+        selectCategory(goodcategory1);
+        $('#gooddesc' + count).val('select description');
+        function selectCategory(goodcategory1) {
+            $.ajax({
+                type:'get',
+                url:'{{route("stock.description")}}',
+                data:{
+                    'customerid':customerid,
+                    'categoryid':categoryid,
+                },
+                success:function(data)
+                {
+                    console.log(data);
+                    //codeOp+='<option selected value="select" disabled>select item code</option>';
+                    catOp+='<option selected value="select" disabled>select description</option>';
+                    for(var i=0;i<data.length;i++){
+                        //codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
+                        catOp+='<option value="'+data[i].items_id+'">'+data[i].item.toUpperCase()+'</option>';
+                    }
+                    //$("#outitem" + count).find('option').remove().end().append(codeOp);
+                    $("#gooddesc" + count).find('option').remove().end().append(catOp);
+                },
+            });
+        }
+    });
+
+    $(document).on('change', '.goodcustomer', function(){
+        //var codeOp = " ";
+        var custOp = " ";
+        var count = $(this).attr('row_count');
+        var id = $(this).val();
+        selectCustomer(goodcustomer1);
+        $('#goodcategory' + count).val('select category');
+        function selectCustomer(goodcustomer1) {
+            $.ajax({
+                type:'get',
+                url:'{{route("stock.category")}}',
+                data:{'id':id},
+                success:function(data)
+                {
+                    console.log(data);
+                    //codeOp+='<option selected value="select" disabled>select item code</option>';
+                    custOp+='<option selected value="select" disabled>select description</option>';
+                    for(var i=0;i<data.length;i++){
+                        //codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
+                        custOp+='<option value="'+data[i].category_id+'">'+data[i].category.toUpperCase()+'</option>';
+                    }
+                    //$("#outitem" + count).find('option').remove().end().append(codeOp);
+                    $("#goodcategory" + count).find('option').remove().end().append(custOp);
                 },
             });
         }
@@ -308,7 +403,7 @@
                         cat = $('#outcategory'+q).val();
                         item = $('#outdesc'+q).val();
                         serial = $('#outserial'+q).val();
-                        purpose = 'service-unit';
+                        purpose = 'service unit';
                         client = $('#client-id').val();
                         customer = $('#customer-id').val();
                         $.ajax({
@@ -420,6 +515,43 @@
         }
     });
 
+    $(document).on('click', '.good_add_item', function(){
+        var rowcount = $(this).attr('btn_id');
+        console.log('1');
+        if ($(this).val() == 'Add Item') {
+            console.log('2');
+            if($('#goodserial'+ rowcount).val()){
+                y++;
+                var additem = '<div class="row no-margin" id="goodrow'+y+'"><div class="col-md-3 form-group"><select id="goodcustomer'+y+'" class="form-control goodcustomer" row_count="'+y+'"><option selected disabled>select customer</option></select></div><div class="col-md-2 form-group"><select id="goodcategory'+y+'" class="form-control goodcategory" row_count="'+y+'"><option selected disabled>select category</option></select></div><div class="col-md-3 form-group"><select id="gooddesc'+y+'" class="form-control gooddesc" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><select id="goodserial'+y+'" class="form-control goodserial" row_count="'+y+'"><option selected disabled>select serial</option></select></div><div class="col-md-1 form-group"><input type="button" class="good_add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
+                $(this).val('Remove');
+                $('#goodcustomer'+ rowcount).prop('disabled', true);
+                $('#goodcategory'+ rowcount).prop('disabled', true);
+                $('#gooddesc'+ rowcount).prop('disabled', true);
+                $('#goodserial'+ rowcount).prop('disabled', true);
+                console.log('3');
+            }
+            if (b < 10 ) {
+                $('#service-unitfield').append(additem);
+                $('#goodcustomer'+ rowcount).find('option').clone().appendTo('#goodcustomer'+y);
+                b++;
+                console.log('4');
+            }
+        }else{
+            console.log('5');
+            if (b == 10) {
+                y++;
+                var additem = '<div class="row no-margin" id="goodrow'+y+'"><div class="col-md-3 form-group"><select id="goodcustomer'+y+'" class="form-control goodcustomer" row_count="'+y+'"><option selected disabled>select customer</option></select></div><div class="col-md-2 form-group"><select id="goodcategory'+y+'" class="form-control goodcategory" row_count="'+y+'"><option selected disabled>select category</option></select></div><div class="col-md-3 form-group"><select id="gooddesc'+y+'" class="form-control gooddesc" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><select id="goodserial'+y+'" class="form-control goodserial" row_count="'+y+'"><option selected disabled>select serial</option></select></div><div class="col-md-1 form-group"><input type="button" class="good_add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
+                $('#service-unitfield').append(additem);
+                $('#goodcustomer'+ rowcount).find('option').clone().appendTo('#goodcustomer'+y);
+                console.log('6');
+                b++;
+            }
+            $('#goodrow'+rowcount).hide();
+            $(this).val('Add');
+            b--;
+        }
+    });
+
     $(document).on('click', '#sub_cat_Btn', function(){
         var cat = "";
         var check = 1;
@@ -476,6 +608,36 @@
         }
     });
 
+    $(document).on('click', '#good_sub_Btn', function(){
+        var serial = "";
+        var check = 1;
+        console.log(y);
+        for(var q=1;q<=y;q++){
+            if ($('#goodrow'+q).is(":visible")) {
+                console.log(y);
+                if ($('.good_add_item[btn_id=\''+q+'\']').val() == 'Remove') {
+                    check++;
+                    $('#good_sub_Btn').prop('disabled', true);
+                    serial = $('#goodserial'+q).val();
+                    status = $('#status').val();
+                    $.ajax({
+                        url: '{{route("stock.service-in")}}',
+                        dataType: 'json',
+                        type: 'PUT',
+                        data: {
+                            serial : serial,
+                            status : status
+                        },
+                    });
+                }
+            }
+        }
+        if (check > 1) {
+            alert("Inventory updated!!!");
+            window.location.href = '{{route('stocks.index')}}';
+        }
+    });
+
     $(document).on('click', '.cancel', function(){
         window.location.href = '{{route('stocks.index')}}';
     });
@@ -504,6 +666,13 @@
 
     $(document).on('click', '.good', function(){
         $("#inOptionModal .close").click();
+        $('#status').val('in');
+        $('#goodModal').modal({backdrop: 'static', keyboard: false});
+    });
+
+    $(document).on('click', '.defective', function(){
+        $("#inOptionModal .close").click();
+        $('#status').val('defective');
         $('#goodModal').modal({backdrop: 'static', keyboard: false});
     });
 

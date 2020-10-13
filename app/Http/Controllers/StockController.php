@@ -37,33 +37,63 @@ class StockController extends Controller
             ->join('customer_branches', 'stocks.customer_branches_id', '=', 'customer_branches.id')
             ->join('categories', 'stocks.category_id', '=', 'categories.id')
             ->join('customers', 'customer_branches.customer_id', '=', 'customers.id')
+            ->join('items', 'stocks.items_id', '=', 'items.id')
             ->get();
         //dd($customers);
         return view('pages.stocks', compact('categories', 'service_units', 'customers'));
     }
 
-    public function service()
-    {
-
-        $categories = Category::all();
-        $service_units = Stock::where('branch_id', Auth::user()->branch->id)
+    public function category(Request $request){
+        //$data = Item::select('id', 'item')->where('category_id', $request->id)->get();
+        $cat = Stock::where('branch_id', Auth::user()->branch->id)
             ->where('status', 'service unit')
-            ->join('categories', 'stocks.category_id', '=', 'categories.id')
-            ->get();
-        $customers = Stock::where('branch_id', Auth::user()->branch->id)
-            ->where('status', 'service unit')
+            ->where('customer_branches_id', $request->id)
             ->join('customer_branches', 'stocks.customer_branches_id', '=', 'customer_branches.id')
             ->join('categories', 'stocks.category_id', '=', 'categories.id')
             ->join('customers', 'customer_branches.customer_id', '=', 'customers.id')
             ->get();
-        //dd($customers);
-        return view('pages.service-unit', compact('categories', 'service_units', 'customers'));
+        return response()->json($cat);
+    }
+
+    public function description(Request $request){
+        //$data = Item::select('id', 'item')->where('category_id', $request->id)->get();
+        $desc = Stock::where('branch_id', Auth::user()->branch->id)
+            ->where('status', 'service unit')
+            ->where('customer_branches_id', $request->customerid)
+            ->where('stocks.category_id', $request->categoryid)
+            ->join('customer_branches', 'stocks.customer_branches_id', '=', 'customer_branches.id')
+            ->join('categories', 'stocks.category_id', '=', 'categories.id')
+            ->join('customers', 'customer_branches.customer_id', '=', 'customers.id')
+            ->join('items', 'stocks.items_id', '=', 'items.id')
+            ->get();
+            //dd($customer);
+        return response()->json($desc);
+    }
+
+    public function serial(Request $request){
+        $serial = Stock::where('branch_id', Auth::user()->branch->id)
+            ->where('status', 'service unit')
+            ->where('customer_branches_id', $request->customerid)
+            ->where('stocks.category_id', $request->categoryid)
+            ->where('stocks.items_id', $request->descid)
+            ->join('customer_branches', 'stocks.customer_branches_id', '=', 'customer_branches.id')
+            ->join('categories', 'stocks.category_id', '=', 'categories.id')
+            ->join('customers', 'customer_branches.customer_id', '=', 'customers.id')
+            ->join('items', 'stocks.items_id', '=', 'items.id')
+            ->get();
+            //dd($customer);
+        return response()->json($serial);
+    }
+
+    public function service()
+    {
+        return view('pages.service-unit');
 
     }
 
     public function serviceUnit()
     {
-        $stock = Stock::where('status', 'service-unit')
+        $stock = Stock::where('status', 'service unit')
                     ->where('branch_id', Auth::user()->branch->id)
                     ->get();
 
@@ -181,6 +211,17 @@ class StockController extends Controller
 
         return response()->json($data);
     }
+
+    public function servicein(Request $request){
+
+        $stock = Stock::where('id', $request->serial)->first();
+
+        $stock->status = $request->status;
+        $data = $stock->save();
+
+        return response()->json($data);
+    }
+
 
     public function addCategory(Request $request){
 
