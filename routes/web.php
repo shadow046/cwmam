@@ -22,12 +22,16 @@ Route::get('return', 'HomeController@return');
 
 
 
+Route::get('service-unit', 'StockController@service')->name('stock.service-unit');
+Route::get('sUnit', 'StockController@serviceUnit')->name('stock.sUnit');
+Route::get('client-autocomplete', 'StockController@autocompleteClient')->name('client.autocomplete');
+Route::get('customer-autocomplete', 'StockController@autocompleteCustomer')->name('customer.autocomplete');
 Route::put('service-out', 'StockController@serviceOut')->name('stocks.out');
 Route::post('upload', 'StockController@import')->name('stocks.upload');
 Route::post('additem', 'StockController@addItem')->name('add.item');
 Route::post('addcategory', 'StockController@addCategory')->name('add.category');
 Route::post('store', 'StockController@store')->name('stocks.store');
-Route::get('view/{id}', 'StockController@viewStocks')->name('stock.view');
+Route::get('viewStock', 'StockController@viewStocks')->name('stocks.view');
 Route::get('show', 'StockController@show')->name('stocks.show');
 Route::get('stocks', 'StockController@index')->name('stocks.index');
 

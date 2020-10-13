@@ -8,6 +8,8 @@ use App\Warehouse;
 use App\Item;
 use App\Category;
 use App\Stock;
+use App\CustomerBranch;
+use App\Customer;
 use DB;
 use Auth;
 class StockController extends Controller
@@ -40,13 +42,91 @@ class StockController extends Controller
         return view('pages.stocks', compact('categories', 'service_units', 'customers'));
     }
 
+    public function service()
+    {
+
+        $categories = Category::all();
+        $service_units = Stock::where('branch_id', Auth::user()->branch->id)
+            ->where('status', 'service unit')
+            ->join('categories', 'stocks.category_id', '=', 'categories.id')
+            ->get();
+        $customers = Stock::where('branch_id', Auth::user()->branch->id)
+            ->where('status', 'service unit')
+            ->join('customer_branches', 'stocks.customer_branches_id', '=', 'customer_branches.id')
+            ->join('categories', 'stocks.category_id', '=', 'categories.id')
+            ->join('customers', 'customer_branches.customer_id', '=', 'customers.id')
+            ->get();
+        //dd($customers);
+        return view('pages.service-unit', compact('categories', 'service_units', 'customers'));
+
+    }
+
+    public function serviceUnit()
+    {
+        $stock = Stock::where('status', 'service-unit')
+                    ->where('branch_id', Auth::user()->branch->id)
+                    ->get();
+
+        return DataTables::of($stock)
+
+        ->addColumn('date', function (Stock $request){
+
+            return $request->updated_at->toFormattedDateString().' '.$request->updated_at->toTimeString();
+        })
+       
+        ->addColumn('items_id', function (Stock $request){
+            return $request->items_id;
+        })
+
+        ->addColumn('category', function (Stock $request){
+            $cat = Category::find($request->category_id);
+            return strtoupper($cat->category);
+        })
+
+        ->addColumn('description', function (Stock $request){
+            $item = Item::where('id', $request->items_id)->first();
+
+            return strtoupper($item->item);
+        })
+
+        ->addColumn('serial', function (Stock $request){
+            return $request->serial;
+        })
+
+        ->addColumn('client', function (Stock $request){
+            $client = CustomerBranch::where('id', $request->customer_branches_id)->first();
+            return $client->customer_branch;
+        })
+
+        ->make(true);
+    }
+
+    public function autocompleteCustomer(Request $request)
+    {
+
+        $customer = CustomerBranch::where("customer_branch", "LIKE", "%{$request->id}%")
+                    ->where('customer_id', $request->client)
+                    ->limit(10)
+                    ->get();
+        return response()->json($customer);
+    }
+
+    public function autocompleteClient(Request $request)
+    {
+
+        $client = Customer::where("customer", "LIKE", "%{$request->id}%")
+                    ->limit(10)
+                    ->get();
+        return response()->json($client);
+    }
+
     
-    public function viewStocks(Request $request, $id)
+    public function viewStocks(Request $request)
     {
 
         $stock = Stock::select('category_id','items_id', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
                     ->where('status', 'in')
-                    ->where('branch_id', $id)
+                    ->where('branch_id', Auth::user()->branch->id)
                     ->groupBy('items_id')->get();
 
 

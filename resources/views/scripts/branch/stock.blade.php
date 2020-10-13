@@ -9,7 +9,7 @@
             "dom": 'lrtip',
             processing: true,
             serverSide: true,
-            ajax: "/view/"+branchid,
+            ajax: '{{route("stocks.view")}}',
             columnDefs: [
                     {"className": "dt-center", "targets": "_all"}
                 ],
@@ -297,7 +297,7 @@
         var desc = "";
         var qty = "";
         var check = 1;
-        if ($('#customer').val()) {
+        if ($('#customer-id').val() != "") {
             console.log(1);
             for(var q=1;q<=y;q++){
                 if ($('#outrow'+q).is(":visible")) {
@@ -308,8 +308,9 @@
                         cat = $('#outcategory'+q).val();
                         item = $('#outdesc'+q).val();
                         serial = $('#outserial'+q).val();
-                        purpose = $('#outpurpose'+q).val();
-                        customer = $('#customer').val();
+                        purpose = 'service-unit';
+                        client = $('#client-id').val();
+                        customer = $('#customer-id').val();
                         $.ajax({
                             url: '{{route("stocks.out")}}',
                             dataType: 'json',
@@ -319,7 +320,8 @@
                                 serial: serial,
                                 cat : cat,
                                 purpose: purpose,
-                                customer: customer
+                                customer: customer,
+                                client: client
                             },
                         });
                     }
@@ -504,5 +506,67 @@
         $("#inOptionModal .close").click();
         $('#goodModal').modal({backdrop: 'static', keyboard: false});
     });
+
+    $(document).on('keyup', '#client', function(){
+        var id = $(this).val();
+        var op = " ";
+        $('#customer').val('');
+        $("#customer-name").find('option').remove();
+        selectClient(client);
+        function selectClient(client) {
+            $.ajax({
+                type:'get',
+                url:'{{route("client.autocomplete")}}',
+                data:{
+                    'id':id
+                },
+                success:function(data)
+                {
+                    //console.log(data);
+                    op+=' ';
+                    for(var i=0;i<data.length;i++){
+                        op+='<option data-value="'+data[i].id+'" value="'+data[i].customer.toUpperCase()+'"></option>';
+                    }
+                    $("#client-name").find('option').remove().end().append(op);
+                    
+                    $('#client-id').val($('#client-name [value="'+$('#client').val()+'"]').data('value'));
+                },
+            });
+        }
+    });
+
+    $(document).on('keyup', '#customer', function(){
+        var id = $(this).val();
+        var op = " ";
+        if ($('#client-id').val()) {
+            var client = $('#client-id').val();
+        }else{
+            alert("Incomplete Client Name!!!!");
+            return false;
+        }
+        selectCustomer(customer);
+        function selectCustomer(customer) {
+            $.ajax({
+                type:'get',
+                url:'{{route("customer.autocomplete")}}',
+                data:{
+                    'id':id,
+                    'client':client
+                },
+                success:function(data)
+                {
+                    //console.log(data);
+                    op+=' ';
+                    for(var i=0;i<data.length;i++){
+                        op+='<option data-value="'+data[i].id+'" value="'+data[i].customer_branch.toUpperCase()+'"></option>';
+                    }
+                    $("#customer-name").find('option').remove().end().append(op);
+                    $('#customer-id').val($('#customer-name [value="'+$('#customer').val()+'"]').data('value'));
+                },
+            });
+        }
+    });
+
+
 
 </script>

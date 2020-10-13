@@ -24,14 +24,28 @@
                 </div>
                 <div class="row no-margin">
                     <div class="col-md-6 form-group row">
-                        <label class="col-md-5 col-form-label text-md-right">Customer name:</label>
+                        <label class="col-md-5 col-form-label text-md-right">Client Name:</label>
                         <div class="col-md-7">
-                            <input type="text" style="color: black" class="form-control form-control-sm " id="customer" placeholder="customer name">
+                            <input type="text" list="client-name" style="color: black" class="form-control form-control-sm " id="client" placeholder="client name" autocomplete="off">
+                            <datalist id="client-name">
+                            </datalist>
+                            <input type="text" id="client-id" value="" hidden>
                         </div>
                     </div>
                     <div class="col-md-6 form-group row">
-                        <label class="col-md-6 col-form-label text-md-right">Service Engineer:</label>
+                        <label class="col-md-6 col-form-label text-md-right">Client Branch Name:</label>
                         <div class="col-md-6">
+                            <input type="text" list="customer-name" style="color: black" class="form-control form-control-sm " id="customer" placeholder="customer name" autocomplete="off">
+                            <datalist id="customer-name">
+                            </datalist>
+                            <input type="text" id="customer-id" value="" hidden>
+                        </div>
+                    </div>
+                </div>
+                <div class="row no-margin">
+                    <div class="col-md-6 form-group row">
+                        <label class="col-md-5 col-form-label text-md-right">Service Engineer:</label>
+                        <div class="col-md-7">
                             <input type="text" style="color: black" class="form-control form-control-sm " id="engr" value="{{ strtoupper(Auth::user()->name) }}" disabled>
                         </div>
                     </div>
