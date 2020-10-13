@@ -16,9 +16,9 @@
                         </div>
                     </div>
                     <div class="col-md-6 form-group row">
-                        <label class="col-md-6 col-form-label text-md-right">Service Reference No.:</label>
+                        <label class="col-md-6 col-form-label text-md-right">Service Engineer:</label>
                         <div class="col-md-6">
-                            <input type="text" style="color: black" class="form-control form-control-sm " id="serviceno" placeholder="1-001" disabled>
+                            <input type="text" style="color: black" class="form-control form-control-sm " id="engr" value="{{ strtoupper(Auth::user()->name) }}" disabled>
                         </div>
                     </div>
                 </div>
@@ -35,18 +35,10 @@
                     <div class="col-md-6 form-group row">
                         <label class="col-md-6 col-form-label text-md-right">Client Branch Name:</label>
                         <div class="col-md-6">
-                            <input type="text" list="customer-name" style="color: black" class="form-control form-control-sm " id="customer" placeholder="customer name" autocomplete="off">
+                            <input type="text" list="customer-name" style="color: black" class="form-control form-control-sm " id="customer" placeholder="client branch name" autocomplete="off">
                             <datalist id="customer-name">
                             </datalist>
                             <input type="text" id="customer-id" value="" hidden>
-                        </div>
-                    </div>
-                </div>
-                <div class="row no-margin">
-                    <div class="col-md-6 form-group row">
-                        <label class="col-md-5 col-form-label text-md-right">Service Engineer:</label>
-                        <div class="col-md-7">
-                            <input type="text" style="color: black" class="form-control form-control-sm " id="engr" value="{{ strtoupper(Auth::user()->name) }}" disabled>
                         </div>
                     </div>
                 </div>

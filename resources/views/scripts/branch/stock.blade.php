@@ -676,6 +676,11 @@
         $('#goodModal').modal({backdrop: 'static', keyboard: false});
     });
 
+    $(document).on('click', '.pull-out', function(){
+        $("#inOptionModal .close").click();
+        $('#service-unitModal').modal({backdrop: 'static', keyboard: false});
+    });
+
     $(document).on('keyup', '#client', function(){
         var id = $(this).val();
         var op = " ";
