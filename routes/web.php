@@ -30,6 +30,7 @@ Route::get('sUnit', 'StockController@serviceUnit')->name('stock.sUnit');
 Route::get('client-autocomplete', 'StockController@autocompleteClient')->name('client.autocomplete');
 Route::get('customer-autocomplete', 'StockController@autocompleteCustomer')->name('customer.autocomplete');
 Route::put('service-out', 'StockController@serviceOut')->name('stocks.out');
+Route::post('pull-out', 'StockController@pullOut')->name('stocks.pullout');
 Route::post('upload', 'StockController@import')->name('stocks.upload');
 Route::post('additem', 'StockController@addItem')->name('add.item');
 Route::post('addcategory', 'StockController@addCategory')->name('add.category');

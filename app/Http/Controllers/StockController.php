@@ -232,6 +232,20 @@ class StockController extends Controller
         return response()->json($data);
     }
 
+    public function pullOut(Request $request)
+    {
+        $stock = Stock::where('items_id', $request->item)
+                    ->where('branch_id', Auth::user()->branch->id)
+                    ->where('serial', $request->serial)
+                    ->where('status', 'in')
+                    ->first();
+        $stock->status = $request->purpose;
+        $stock->customer_branches_id = $request->customer;
+        $data = $stock->save();
+
+        return response()->json($data);
+    }
+
     public function serviceOut(Request $request)
     {
         $stock = Stock::where('items_id', $request->item)
