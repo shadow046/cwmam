@@ -21,12 +21,18 @@ Route::get('spare_parts', 'HomeController@spare_parts');
 Route::get('return', 'HomeController@return');
 
 
+
+
+Route::get('pull-itemcode', 'StockController@pullItemCode')->name('stocks.itemcode.pullout');
+Route::get('pull-category', 'StockController@pullCategory')->name('stocks.category.pullout');
 Route::put('service-in', 'StockController@servicein')->name('stock.service-in');
 Route::get('serial', 'StockController@serial')->name('stock.serial');
 Route::get('description', 'StockController@description')->name('stock.description');
 Route::get('category', 'StockController@category')->name('stock.category');
 Route::get('service-unit', 'StockController@service')->name('stock.service-unit');
 Route::get('sUnit', 'StockController@serviceUnit')->name('stock.sUnit');
+Route::get('pclient-autocomplete', 'StockController@pautocompleteClient')->name('pclient.autocomplete');
+Route::get('pcustomer-autocomplete', 'StockController@pautocompleteCustomer')->name('pcustomer.autocomplete');
 Route::get('client-autocomplete', 'StockController@autocompleteClient')->name('client.autocomplete');
 Route::get('customer-autocomplete', 'StockController@autocompleteCustomer')->name('customer.autocomplete');
 Route::put('service-out', 'StockController@serviceOut')->name('stocks.out');

@@ -70,7 +70,7 @@ class BranchController extends Controller
     public function getBranches()
     {
 
-        $branches = Branch::select('*')
+        $branches = Branch::select('branches.*', 'areas.area',)
                 ->where('branches.id', '!=', Auth::user()->branch->id)
                 ->join('areas', 'areas.id', '=', 'branches.area_id')
                 ->get();

@@ -134,6 +134,27 @@
         $('#poutserial'+count).val('N/A');
     });
 
+    $(document).on('change', '.replacementdesc', function(){
+        var count = $(this).attr('row_count');
+        var id = $(this).val();
+        var serialOp = " ";
+        $('#replacementserial'+count).val('select serial');
+        $.ajax({
+            type:'get',
+            url:'{{route("stock.serials")}}',
+            data:{'id':id},
+            async: false,
+            success:function(data)
+            {
+                serialOp+='<option selected value="select" disabled>select serial</option>';
+                for(var i=0;i<data.length;i++){
+                    serialOp+='<option value="'+data[i].serial+'">'+data[i].serial+'</option>';
+                }
+                $("#replacementserial" + count).find('option').remove().end().append(serialOp);
+            },
+        });
+    });
+
     $(document).on('change', '.gooddesc', function(){
         //var codeOp = " ";
         var serialOp = " ";
@@ -245,6 +266,37 @@
                     }
                     //$("#outitem" + count).find('option').remove().end().append(codeOp);
                     $("#poutdesc" + count).find('option').remove().end().append(descOp);
+                },
+            });
+        }
+    });
+
+    $(document).on('change', '.replacementcategory', function(){
+        //var codeOp = " ";
+        var descOp = " ";
+        var count = $(this).attr('row_count');
+        var id = $(this).val();
+        var custid = $('#replacementcustomer-id').val();
+        selectDesc(replacementdesc1);
+        $('#replacementdesc' + count).val('select description');
+        function selectDesc(replacementdesc1) {
+            $.ajax({
+                type:'get',
+                url:'{{route("stocks.itemcode.pullout")}}',
+                data:{
+                    'id':id,
+                    'custid':custid
+                },
+                success:function(data)
+                {
+                    //codeOp+='<option selected value="select" disabled>select item code</option>';
+                    descOp+='<option selected value="select" disabled>select description</option>';
+                    for(var i=0;i<data.length;i++){
+                        //codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
+                        descOp+='<option value="'+data[i].items_id+'">'+data[i].item.toUpperCase()+'</option>';
+                    }
+                    //$("#outitem" + count).find('option').remove().end().append(codeOp);
+                    $("#replacementdesc" + count).find('option').remove().end().append(descOp);
                 },
             });
         }
@@ -390,7 +442,7 @@
         if ($(this).val() == 'Add Item') {
             if($('#poutcategory'+ rowcount).val() && $('#poutdesc'+ rowcount).val() && $('#poutserial'+ rowcount).val()) {
                 y++;
-                var additem = '<div class="row no-margin" id="poutrow1"><div class="col-md-2 form-group"><select id="poutcategory'+y+'" class="form-control poutcategory" row_count="'+y+'" style="color: black;"><option selected disabled>select category</option></select></div><div class="col-md-3 form-group"><select id="poutdesc'+y+'" class="form-control poutdesc" row_count="'+y+'" style="color: black;"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><input type="text" id="poutserial'+y+'" class="form-control poutserial" row_count="'+y+'" style="color: black;" value="N/A"></div><div class="col-md-1 form-group"><input type="button" class="pout_add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>';
+                var additem = '<div class="row no-margin" id="poutrow'+y+'"><div class="col-md-2 form-group"><select id="poutcategory'+y+'" class="form-control poutcategory" row_count="'+y+'" style="color: black;"><option selected disabled>select category</option></select></div><div class="col-md-3 form-group"><select id="poutdesc'+y+'" class="form-control poutdesc" row_count="'+y+'" style="color: black;"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><input type="text" id="poutserial'+y+'" class="form-control poutserial" row_count="'+y+'" style="color: black;" value="N/A"></div><div class="col-md-1 form-group"><input type="button" class="pout_add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>';
                 $(this).val('Remove');
                 $('#poutcategory'+ rowcount).prop('disabled', true);
                 $('#poutdesc'+ rowcount).prop('disabled', true);
@@ -404,7 +456,7 @@
         }else{
             if (r == 20) {
                 y++;
-                var additem = '<div class="row no-margin" id="poutrow1"><div class="col-md-2 form-group"><select id="poutcategory'+y+'" class="form-control poutcategory" row_count="'+y+'" style="color: black;"><option selected disabled>select category</option></select></div><div class="col-md-3 form-group"><select id="poutdesc'+y+'" class="form-control poutdesc" row_count="'+y+'" style="color: black;"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><input type="text" id="poutserial'+y+'" class="form-control poutserial" row_count="'+y+'" style="color: black;" value="N/A"></div><div class="col-md-1 form-group"><input type="button" class="pout_add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>';
+                var additem = '<div class="row no-margin" id="poutrow'+y+'"><div class="col-md-2 form-group"><select id="poutcategory'+y+'" class="form-control poutcategory" row_count="'+y+'" style="color: black;"><option selected disabled>select category</option></select></div><div class="col-md-3 form-group"><select id="poutdesc'+y+'" class="form-control poutdesc" row_count="'+y+'" style="color: black;"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><input type="text" id="poutserial'+y+'" class="form-control poutserial" row_count="'+y+'" style="color: black;" value="N/A"></div><div class="col-md-1 form-group"><input type="button" class="pout_add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>';
                 $('#poutfield').append(additem);
                 $('#poutcategory'+ rowcount).find('option').clone().appendTo('#poutcategory'+y);
                 r++;
@@ -793,6 +845,11 @@
         $('#pulloutModal').modal({backdrop: 'static', keyboard: false});
     });
 
+    $(document).on('click', '.replacement', function(){
+        $("#outOptionModal .close").click();
+        $('#replacementModal').modal({backdrop: 'static', keyboard: false});
+    });
+
     $(document).on('keyup', '#client', function(){
         var id = $(this).val();
         var op = " ";
@@ -908,6 +965,91 @@
                     }
                     $("#pcustomer-name").find('option').remove().end().append(op);
                     $('#pcustomer-id').val($('#pcustomer-name [value="'+$('#pcustomer').val()+'"]').data('value'));
+                },
+            });
+        }
+    });
+
+    $(document).on('keyup', '#replacementclient', function(){
+        var id = $(this).val();
+        var op = " ";
+        $('#replacementcustomer').val('');
+        $("#replacementcustomer-name").find('option').remove();
+        selectClient(replacementclient);
+        function selectClient(replacementclient) {
+            $.ajax({
+                type:'get',
+                url:'{{route("pclient.autocomplete")}}',
+                data:{
+                    'id':id
+                },
+                success:function(data)
+                {
+                    //console.log(data);
+                    op+=' ';
+                    for(var i=0;i<data.length;i++){
+                        op+='<option data-value="'+data[i].customer_id+'" value="'+data[i].customer.toUpperCase()+'"></option>'; 
+                    }
+                    $("#replacementclient-name").find('option').remove().end().append(op);
+                    
+                    $('#replacementclient-id').val($('#replacementclient-name [value="'+$('#replacementclient').val()+'"]').data('value'));
+                },
+            });
+        }
+    });
+
+    $(document).on('keyup', '#replacementcustomer', function(){
+        var id = $(this).val();
+        var op = " ";
+        //$('#replacementcustomer-id').val('');
+        if ($('#replacementclient-id').val()) {
+            var client = $('#replacementclient-id').val();
+        }else{
+            alert("Incomplete Client Name!!!!");
+            return false;
+        }
+        selectCustomer(replacementcustomer);
+        function selectCustomer(replacementcustomer) {
+            $.ajax({
+                type:'get',
+                url:'{{route("pcustomer.autocomplete")}}',
+                async: false,
+                data:{
+                    'id':id,
+                    'client':client
+                },
+                success:function(data)
+                {
+                    //console.log(data);
+                    op+=' ';
+                    for(var i=0;i<data.length;i++){
+                        op+='<option data-value="'+data[i].customer_branch_id+'" value="'+data[i].customer_branch.toUpperCase()+'"></option>';
+                    }
+                    $("#replacementcustomer-name").find('option').remove().end().append(op);
+                    $('#replacementcustomer-id').val($('#replacementcustomer-name [value="'+$('#replacementcustomer').val()+'"]').data('value'));
+                    console.log($('#replacementcustomer-id').val());
+                },
+            });
+        }
+        if ($('#replacementcustomer-id').val()) {
+            var custid = $('#replacementcustomer-id').val();
+            var op = " ";
+            $.ajax({
+                type:'get',
+                url:'{{route("stocks.category.pullout")}}',
+                async: false,
+                data:{
+                    'custid':custid
+                },
+                success:function(data)
+                {
+                    console.log(data);
+                    op+='<option selected value="select" disabled>select category</option>';
+                    for(var i=0;i<data.length;i++){
+                        console.log(data[i].category);
+                        op+='<option value="'+data[i].category_id+'">'+data[i].category.toUpperCase()+'</option>';
+                    }
+                    $("#replacementcategory1").find('option').remove().end().append(op);
                 },
             });
         }

@@ -48,6 +48,7 @@
                     @include('modal.branch.out-option')
                     @include('modal.branch.in-option')
                     @include('modal.branch.good')
+                    @include('modal.branch.replacement')
                 @endif
             @endif
 

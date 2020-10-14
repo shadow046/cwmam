@@ -10,6 +10,7 @@ use App\Category;
 use App\Stock;
 use App\CustomerBranch;
 use App\Customer;
+use App\Pullout;
 use DB;
 use Auth;
 class StockController extends Controller
@@ -150,7 +151,34 @@ class StockController extends Controller
         return response()->json($client);
     }
 
-    
+    public function pautocompleteCustomer(Request $request)
+    {
+
+        $pcustomer = Pullout::select('pullouts.customer_branch_id', 'pullouts.customer_id', 'customer_branches.customer_branch')
+                    ->join('customer_branches', 'pullouts.customer_branch_id', '=', 'customer_branches.id')
+                    ->where('branch_id', Auth::user()->branch->id)
+                    ->where('pullouts.customer_id', $request->client)
+                    ->where("customer_branch", "LIKE", "%{$request->id}%")
+                    ->groupBy('pullouts.customer_branch_id')
+                    ->limit(10)
+                    ->get();
+
+        return response()->json($pcustomer);
+    }
+
+    public function pautocompleteClient(Request $request)
+    {
+        $pclient = Pullout::select('pullouts.customer_id', 'customers.customer')
+                ->where('branch_id', Auth::user()->branch->id)
+                ->where("customer", "LIKE", "%{$request->id}%")
+                ->join('customers', 'pullouts.customer_id', '=', 'customers.id')
+                ->limit(10)
+                ->groupBy('pullouts.customer_id')
+                ->get();
+
+        return response()->json($pclient);
+    }
+
     public function viewStocks(Request $request)
     {
 
@@ -232,16 +260,45 @@ class StockController extends Controller
         return response()->json($data);
     }
 
+    public function pullCategory(Request $request)
+    {
+
+        $pullout = Pullout::select('pullouts.category_id', 'categories.category')
+            ->where('customer_branch_id', $request->custid)
+            ->where('status', 'pullout')
+            ->join('categories', 'pullouts.category_id', '=', 'categories.id')
+            ->groupBy('pullouts.category_id')
+            ->get();
+        //dd($pullout);
+        return response()->json($pullout);
+    }
+
+    public function pullItemCode(Request $request){
+
+        $pullout = Pullout::select('pullouts.items_id', 'items.item')
+            ->join('items', 'pullouts.items_id', '=', 'items.id')
+            ->where('branch_id', Auth::user()->branch->id)
+            ->where('customer_branch_id', $request->custid)
+            ->where('pullouts.category_id', $request->id)
+            ->groupBy('pullouts.items_id')
+            ->get();
+        return response()->json($pullout);
+        
+    }
+
     public function pullOut(Request $request)
     {
-        $stock = Stock::where('items_id', $request->item)
-                    ->where('branch_id', Auth::user()->branch->id)
-                    ->where('serial', $request->serial)
-                    ->where('status', 'in')
-                    ->first();
-        $stock->status = $request->purpose;
-        $stock->customer_branches_id = $request->customer;
-        $data = $stock->save();
+
+        $pullout = new Pullout;
+        $pullout->user_id = Auth::user()->id;
+        $pullout->branch_id = Auth::user()->branch->id;
+        $pullout->customer_id = $request->client;
+        $pullout->customer_branch_id = $request->customer;
+        $pullout->category_id = $request->cat;
+        $pullout->items_id = $request->item;
+        $pullout->serial = $request->serial;
+        $pullout->status = 'pullout';
+        $data = $pullout->save();
 
         return response()->json($data);
     }
