@@ -6,7 +6,7 @@
                 <button class="close cancel" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <button hidden class="closes" aria-label="Close">
+                <button hidden class="closes" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>

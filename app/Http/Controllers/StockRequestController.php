@@ -72,7 +72,7 @@ class StockRequestController extends Controller
                 ->where('items_id', $request->id)
                 ->get();
         }else{
-            $data = Stock::select('items_id', 'serial')
+            $data = Stock::select('id', 'items_id', 'serial')
                 ->where('status', 'in')
                 ->where('items_id', $request->id)
                 ->where('branch_id', Auth::user()->branch->id)

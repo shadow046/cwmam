@@ -31,5 +31,6 @@ class VerifyCsrfToken extends Middleware
         'service-out',
         'service-in',
         'pull-out',
+        'rep-update',
     ];
 }

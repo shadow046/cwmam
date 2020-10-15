@@ -48,7 +48,7 @@
                 <h6 class="modal-title w-100 text-center">ITEM DETAILS</h6>
             </div>
             <div class="modal-body" id="poutfield">
-                <table class="table requestDetails">
+                <table class="table pullDetails">
                     <thead class="thead-dark">
                         <th>Category</th>
                         <th>Description</th>

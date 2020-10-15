@@ -49,6 +49,8 @@
                     @include('modal.branch.in-option')
                     @include('modal.branch.good')
                     @include('modal.branch.replacement')
+                    @include('modal.branch.replace-details')
+                    @include('modal.branch.replace-details-select')
                 @endif
             @endif
 

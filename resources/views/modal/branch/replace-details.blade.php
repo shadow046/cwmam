@@ -1,4 +1,4 @@
-<div id="replacementModal" class="modal fade" >
+<div id="replacementTableModal" class="modal fade" >
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -15,13 +15,13 @@
                     <div class="col-md-6 form-group row">
                         <label class="col-md-5 col-form-label text-md-right">Date:</label>
                         <div class="col-md-7">
-                        <input type="text" style="color: black" class="form-control form-control-sm " id="replacementdate" value="{{ Carbon\Carbon::now()->toDayDateTimeString() }}" disabled>
+                        <input type="text" style="color: black" class="form-control form-control-sm " id="replacedate" value="{{ Carbon\Carbon::now()->toDayDateTimeString() }}" disabled>
                         </div>
                     </div>
                     <div class="col-md-6 form-group row">
                         <label class="col-md-6 col-form-label text-md-right">Service Engineer:</label>
                         <div class="col-md-6">
-                            <input type="text" style="color: black" class="form-control form-control-sm " id="replacementengr" value="{{ strtoupper(Auth::user()->name) }}" disabled>
+                            <input type="text" style="color: black" class="form-control form-control-sm " id="replaceengr" value="{{ strtoupper(Auth::user()->name) }}" disabled>
                         </div>
                     </div>
                 </div>
@@ -29,25 +29,27 @@
                     <div class="col-md-6 form-group row">
                         <label class="col-md-5 col-form-label text-md-right">Client Name:</label>
                         <div class="col-md-7">
-                            <input type="text" list="replacementclient-name" style="color: black" class="form-control form-control-sm " id="replacementclient" placeholder="client name" autocomplete="off">
-                            <datalist id="replacementclient-name">
-                            </datalist>
-                            <input type="text" id="replacementclient-id" value="" hidden>
+                            <input type="text" style="color: black" class="form-control form-control-sm " id="replaceclient" placeholder="client name" disabled>
                         </div>
                     </div>
                     <div class="col-md-6 form-group row">
                         <label class="col-md-6 col-form-label text-md-right">Client Branch Name:</label>
                         <div class="col-md-6">
-                            <input type="text" list="replacementcustomer-name" style="color: black" class="form-control form-control-sm " id="replacementcustomer" placeholder="client branch name" autocomplete="off">
-                            <datalist id="replacementcustomer-name">
-                            </datalist>
-                            <input type="text" id="replacementcustomer-id" value="" hidden>
+                            <input type="text" style="color: black" class="form-control form-control-sm " id="replacecustomer" placeholder="client branch name" disabled>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <input type="button" class="btn btn-primary replacement_next_Btn" id="replacement_next_Btn" class="button" value="Next">
+                <div id="table">
+                    <table class="table replacementDetails" id="replacementDetails">
+                        <thead class="thead-dark">
+                            <th>Date</th>
+                            <th>Category</th>
+                            <th>Item Code</th>
+                            <th>Description</th>
+                            <th>Serial</th>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

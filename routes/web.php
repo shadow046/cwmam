@@ -21,10 +21,9 @@ Route::get('spare_parts', 'HomeController@spare_parts');
 Route::get('return', 'HomeController@return');
 
 
-
-
-Route::get('pull-itemcode', 'StockController@pullItemCode')->name('stocks.itemcode.pullout');
-Route::get('pull-category', 'StockController@pullCategory')->name('stocks.category.pullout');
+Route::put('rep-update', 'StockController@update')->name('stocks.update');
+Route::get('pull-details1/{id}', 'StockController@pulldetails1')->name('stocks.details1.pullout');
+Route::get('pull-details/{id}', 'StockController@pulldetails')->name('stocks.details.pullout');
 Route::put('service-in', 'StockController@servicein')->name('stock.service-in');
 Route::get('serial', 'StockController@serial')->name('stock.serial');
 Route::get('description', 'StockController@description')->name('stock.description');

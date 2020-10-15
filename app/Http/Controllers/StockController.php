@@ -172,8 +172,8 @@ class StockController extends Controller
                 ->where('branch_id', Auth::user()->branch->id)
                 ->where("customer", "LIKE", "%{$request->id}%")
                 ->join('customers', 'pullouts.customer_id', '=', 'customers.id')
-                ->limit(10)
                 ->groupBy('pullouts.customer_id')
+                ->limit(10)
                 ->get();
 
         return response()->json($pclient);
@@ -260,17 +260,42 @@ class StockController extends Controller
         return response()->json($data);
     }
 
-    public function pullCategory(Request $request)
-    {
+    public function pulldetails(Request $request, $id)
+    {   
 
-        $pullout = Pullout::select('pullouts.category_id', 'categories.category')
-            ->where('customer_branch_id', $request->custid)
-            ->where('status', 'pullout')
-            ->join('categories', 'pullouts.category_id', '=', 'categories.id')
-            ->groupBy('pullouts.category_id')
-            ->get();
-        //dd($pullout);
-        return response()->json($pullout);
+        $pullouts = Pullout::select('categories.category', 'items.item', 'pullouts.category_id', 'pullouts.created_at', 'pullouts.id', 'pullouts.items_id', 'pullouts.serial')
+                ->where('branch_id', Auth::user()->branch->id)
+                ->where('customer_branch_id', $id)
+                ->where('status', 'pullout')
+                ->join('categories', 'pullouts.category_id', '=', 'categories.id')
+                ->join('items', 'pullouts.items_id', '=', 'items.id')
+                ->get();
+        //dd($pullouts);
+        return DataTables::of($pullouts)
+
+        ->addColumn('date', function (Pullout $pullout){
+            return $pullout->created_at->toFormattedDateString().' '.$pullout->created_at->toTimeString();
+        })
+
+        ->make(true);
+    }
+
+    public function pulldetails1(Request $request, $id)
+    {   
+
+        $pullouts = Pullout::select('categories.category', 'items.item', 'pullouts.category_id', 'pullouts.created_at', 'pullouts.id', 'pullouts.items_id', 'pullouts.serial')
+                ->where('pullouts.id', $id)
+                ->join('categories', 'pullouts.category_id', '=', 'categories.id')
+                ->join('items', 'pullouts.items_id', '=', 'items.id')
+                ->get();
+        //dd($pullouts);
+        return DataTables::of($pullouts)
+
+        ->addColumn('date', function (Pullout $pullout){
+            return $pullout->created_at->toFormattedDateString().' '.$pullout->created_at->toTimeString();
+        })
+
+        ->make(true);
     }
 
     public function pullItemCode(Request $request){
@@ -453,9 +478,20 @@ class StockController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $update = Stock::where('id', $request->item)->first();
+        $update->status = 'replacement';
+        $update->customer_branches_id = $request->custid;
+        $update->user_id = Auth::user()->id;
+        $update->save();
+
+        $pullout = Pullout::where('id', $request->repdata)->first();
+        $pullout->status = 'replaced';
+        $pullout->user_id = Auth::user()->id;
+        $data = $pullout->save();
+
+        return response()->json($data);
     }
 
     /**

@@ -2,6 +2,8 @@
     var y = 1;
     var r = 1;
     var b =1;
+    var replaceTable;
+    var repdata;
     $(document).ready(function()
     {
         var branchid = $('#branchid').attr('branchid');
@@ -24,7 +26,7 @@
 
         $('.tbsearch').delay().fadeOut('slow'); //hide search
 
-        $('#search-ic').on("click", function (event) { //clear search box on hide
+        $('#search-ic').on("click", function () { //clear search box on hide
             for ( var i=0 ; i<=6 ; i++ ) {
                 
                 $('.fl-'+i).val('').change();
@@ -41,7 +43,6 @@
                 .search( $(this).val())
                 .draw();
         });
-
     });
     
     $(document).on('click', '#addStockBtn', function(){
@@ -266,37 +267,6 @@
                     }
                     //$("#outitem" + count).find('option').remove().end().append(codeOp);
                     $("#poutdesc" + count).find('option').remove().end().append(descOp);
-                },
-            });
-        }
-    });
-
-    $(document).on('change', '.replacementcategory', function(){
-        //var codeOp = " ";
-        var descOp = " ";
-        var count = $(this).attr('row_count');
-        var id = $(this).val();
-        var custid = $('#replacementcustomer-id').val();
-        selectDesc(replacementdesc1);
-        $('#replacementdesc' + count).val('select description');
-        function selectDesc(replacementdesc1) {
-            $.ajax({
-                type:'get',
-                url:'{{route("stocks.itemcode.pullout")}}',
-                data:{
-                    'id':id,
-                    'custid':custid
-                },
-                success:function(data)
-                {
-                    //codeOp+='<option selected value="select" disabled>select item code</option>';
-                    descOp+='<option selected value="select" disabled>select description</option>';
-                    for(var i=0;i<data.length;i++){
-                        //codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
-                        descOp+='<option value="'+data[i].items_id+'">'+data[i].item.toUpperCase()+'</option>';
-                    }
-                    //$("#outitem" + count).find('option').remove().end().append(codeOp);
-                    $("#replacementdesc" + count).find('option').remove().end().append(descOp);
                 },
             });
         }
@@ -1027,32 +997,134 @@
                     }
                     $("#replacementcustomer-name").find('option').remove().end().append(op);
                     $('#replacementcustomer-id').val($('#replacementcustomer-name [value="'+$('#replacementcustomer').val()+'"]').data('value'));
-                    console.log($('#replacementcustomer-id').val());
                 },
             });
         }
+        
+    });
+    
+    $(document).on('click', '.replacement_next_Btn', function(){
+
         if ($('#replacementcustomer-id').val()) {
+            var id = $('#replacementcustomer-id').val();
+            $("#replacementModal .closes").click();
+            $('table.replacementDetails').dataTable().fnDestroy();
+            replaceTable =
+            $('table.replacementDetails').DataTable({ //user datatables
+                "dom": 'lrtip',
+                processing: true,
+                serverSide: true,
+                ajax: "/pull-details/"+id,
+                columnDefs: [
+                    {"className": "dt-center", "targets": "_all"}
+                ],
+                columns: [
+                    { data: 'date', name:'date'},
+                    { data: 'category', name:'category'},
+                    { data: 'items_id', name:'items_id'},
+                    { data: 'item', name:'item'},
+                    { data: 'serial', name:'serial'}
+                ]
+            });
+            $('#replacementTableModal').modal({backdrop: 'static', keyboard: false});
+            $('#replacecustomer').val($('#replacementcustomer').val());
+            $('#replaceclient').val($('#replacementclient').val());
+        }
+
+    });
+
+    
+    $(document).on("click", "#replacementDetails tr", function () {
+      //alert('clicked!');
+      console.log('test');
+        var dtdata = $('#replacementDetails tbody tr:eq(0)').data();
+        var trdata = replaceTable.row(this).data();
+        var catid = trdata.category_id;
+        var id = trdata.id;
+        repdata = trdata.id;
+        var repOp = " ";
+        console.log(trdata.id);
+        $("#replacementTableModal .closes").click();
+        $('#replaceselectcustomer').val($('#replacementcustomer').val());
+        $('#replaceselectclient').val($('#replacementclient').val());
+        var replace1Table =
+        $('table.replacement1Details').DataTable({ //user datatables
+            "dom": 'rt',
+            processing: true,
+            serverSide: true,
+            ajax: "/pull-details1/"+id,
+            columnDefs: [
+                {"className": "dt-center", "targets": "_all"}
+            ],
+            columns: [
+                { data: 'date', name:'date'},
+                { data: 'category', name:'category'},
+                { data: 'items_id', name:'items_id'},
+                { data: 'item', name:'item'},
+                { data: 'serial', name:'serial'}
+            ]
+        });
+        $('#replacementSelectModal').modal({backdrop: 'static', keyboard: false});
+
+        $.ajax({
+            type:'get',
+            url:'{{route("stock.get.itemcode")}}',
+            data:{'id':catid},
+            success:function(data)
+            {
+                //codeOp+='<option selected value="select" disabled>select item code</option>';
+                repOp+='<option selected value="select" disabled>select description</option>';
+                for(var i=0;i<data.length;i++){
+                    //codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
+                    repOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
+                }
+                //$("#outitem" + count).find('option').remove().end().append(codeOp);
+                $("#repdesc1").find('option').remove().end().append(repOp);
+            },
+        });
+    });
+
+    $(document).on('change', '#repdesc1', function(){
+        //var codeOp = " ";
+        var id = $(this).val();
+        var serialOp = " ";
+        $.ajax({
+            type:'get',
+            url:'{{route("stock.serials")}}',
+            data:{'id':id},
+            async: false,
+            success:function(data)
+            {
+                serialOp+='<option selected value="select" disabled>select serial</option>';
+                for(var i=0;i<data.length;i++){
+                    serialOp+='<option value="'+data[i].id+'">'+data[i].serial+'</option>';
+                }
+                $("#repserial1").find('option').remove().end().append(serialOp);
+            },
+        });
+    });
+
+    $(document).on('click', '.rep_sub_Btn', function(){
+
+        if ($('#repserial1').val()) {
+            var item = $('#repserial1').val();
             var custid = $('#replacementcustomer-id').val();
-            var op = " ";
             $.ajax({
-                type:'get',
-                url:'{{route("stocks.category.pullout")}}',
-                async: false,
-                data:{
-                    'custid':custid
-                },
-                success:function(data)
-                {
-                    console.log(data);
-                    op+='<option selected value="select" disabled>select category</option>';
-                    for(var i=0;i<data.length;i++){
-                        console.log(data[i].category);
-                        op+='<option value="'+data[i].category_id+'">'+data[i].category.toUpperCase()+'</option>';
-                    }
-                    $("#replacementcategory1").find('option').remove().end().append(op);
+                url: '{{route("stocks.update")}}',
+                dataType: 'json',
+                type: 'PUT',
+                data: {
+                    item: item,
+                    repdata: repdata,
+                    custid : custid
                 },
             });
+
+            alert("Inventory updated!!!");
+            window.location.href = '{{route('stocks.index')}}';
+
         }
     });
+
 
 </script>
