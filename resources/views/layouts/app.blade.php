@@ -51,6 +51,7 @@
                     @include('modal.branch.replacement')
                     @include('modal.branch.replace-details')
                     @include('modal.branch.replace-details-select')
+                    @include('modal.branch.loan')
                 @endif
             @endif
 
@@ -85,6 +86,11 @@
                     @include('scripts.warehouse.stock')
                 @else
                     @include('scripts.branch.stock')
+                    @include('scripts.branch.addstock')
+                    @include('scripts.branch.service-in')
+                    @include('scripts.branch.service-out')
+                    @include('scripts.branch.loan')
+
                 @endif                
             @endif
 

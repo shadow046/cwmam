@@ -5,6 +5,7 @@
   <div class="table-responsive">
     <div class="container">
       <div style="display: flex; justify-content: flex-end" class="pt-3">
+      <input type="hidden" id="check" value="{{ $customers }}" />
         <a href="#" id="search-ic"><i class="fa fa-lg fa-search" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       </div>
     </div>

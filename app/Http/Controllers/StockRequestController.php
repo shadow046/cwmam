@@ -286,6 +286,7 @@ class StockRequestController extends Controller
         if ($request->stat == 'ok') {
             $reqno = StockRequest::where('request_no', $request->reqno)->first();
             $reqno->status = '1';
+            $reqno->user_id = Auth::user()->id;
             $reqno->schedule = $request->datesched;
             $data = $reqno->save();
         }else{
@@ -298,6 +299,7 @@ class StockRequestController extends Controller
             $item->request_no = $request->reqno;
             $item->branch_id = $reqbranch->branch_id;
             $item->schedule = $request->datesched;;
+            $item->user_id = Auth::user()->id;
             $item->save();
             $prep = new PreparedItem;
             $prep->items_id = $request->item;

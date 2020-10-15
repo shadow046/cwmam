@@ -11,6 +11,7 @@ use App\Stock;
 use App\CustomerBranch;
 use App\Customer;
 use App\Pullout;
+use App\Branch;
 use DB;
 use Auth;
 class StockController extends Controller
@@ -40,8 +41,10 @@ class StockController extends Controller
             ->join('customers', 'customer_branches.customer_id', '=', 'customers.id')
             ->join('items', 'stocks.items_id', '=', 'items.id')
             ->get();
-        //dd($customers);
-        return view('pages.stocks', compact('categories', 'service_units', 'customers'));
+
+        $branches = Branch::where('area_id', Auth::user()->area->id)->get();
+        //dd($branch);
+        return view('pages.stocks', compact('categories', 'service_units', 'customers', 'branches'));
     }
 
     public function category(Request $request){
@@ -54,6 +57,41 @@ class StockController extends Controller
             ->join('customers', 'customer_branches.customer_id', '=', 'customers.id')
             ->get();
         return response()->json($cat);
+    }
+
+    public function bcategory(Request $request){
+        //$data = Item::select('id', 'item')->where('category_id', $request->id)->get();
+        $cat = Stock::select('stocks.category_id', 'categories.category')
+            ->where('stocks.branch_id', $request->id)
+            ->where('stocks.status', 'in')
+            ->join('categories', 'stocks.category_id', '=', 'categories.id')
+            ->groupBy('stocks.category_id')
+            ->get();
+        return response()->json($cat);
+    }
+
+    public function bitem(Request $request){
+        //$data = Item::select('id', 'item')->where('category_id', $request->id)->get();
+        $item = Stock::select('stocks.items_id', 'items.item')
+            ->where('stocks.branch_id', $request->branchid)
+            ->where('stocks.category_id', $request->catid)
+            ->where('stocks.status', 'in')
+            ->join('items', 'stocks.items_id', '=', 'items.id')
+            ->groupBy('stocks.items_id')
+            ->get();
+        return response()->json($item);
+    }
+
+    public function bserial(Request $request){
+        //$data = Item::select('id', 'item')->where('category_id', $request->id)->get();
+        $serial = Stock::select('stocks.id', 'stocks.serial', 'items.item')
+            ->where('stocks.branch_id', $request->branchid)
+            ->where('stocks.items_id', $request->itemid)
+            ->where('stocks.status', 'in')
+            ->join('items', 'stocks.items_id', '=', 'items.id')
+            ->groupBy('stocks.items_id')
+            ->get();
+        return response()->json($serial);
     }
 
     public function description(Request $request){
@@ -72,7 +110,8 @@ class StockController extends Controller
     }
 
     public function serial(Request $request){
-        $serial = Stock::where('branch_id', Auth::user()->branch->id)
+        $serial = Stock::select('stocks.serial', 'stocks.id')
+            ->where('branch_id', Auth::user()->branch->id)
             ->where('status', 'service unit')
             ->where('customer_branches_id', $request->customerid)
             ->where('stocks.category_id', $request->categoryid)
@@ -245,6 +284,7 @@ class StockController extends Controller
         $stock = Stock::where('id', $request->serial)->first();
 
         $stock->status = $request->status;
+        $stock->user_id = Auth::user()->id;
         $data = $stock->save();
 
         return response()->json($data);
@@ -337,6 +377,7 @@ class StockController extends Controller
                     ->first();
         $stock->status = $request->purpose;
         $stock->customer_branches_id = $request->customer;
+        $stock->user_id = Auth::user()->id;
         $data = $stock->save();
 
         return response()->json($data);
@@ -350,12 +391,14 @@ class StockController extends Controller
             $add->items_id = $request->item;
             $add->serial = $request->serial;
             $add->status = 'in';
+            $add->user_id = Auth::user()->id;
             $data = $add->save();
         }else{
             $add = new Stock;
             $add->category_id = $request->cat;
             $add->branch_id = Auth::user()->branch->id;
             $add->items_id = $request->item;
+            $add->user_id = Auth::user()->id;
             $add->serial = $request->serial;
             $add->status = 'in';
             $data = $add->save();
