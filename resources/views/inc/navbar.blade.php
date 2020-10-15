@@ -27,7 +27,7 @@
                     <a class="nav-link {{ Request::is('service-unit') ? 'active' : '' }}" href="{{ route('stock.service-unit') }}">Service unit</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('loans') ? 'active' : '' }}" href="{{ route('stock.loans') }}">Loans</a>
+                    <a class="nav-link {{ Request::is('loans') ? 'active' : '' }}" href="{{ route('loans') }}">Loans</a>
                 </li>
             </ul>
             <ul class="nav">
