@@ -11,6 +11,7 @@ use App\Stock;
 use App\CustomerBranch;
 use App\Customer;
 use App\Pullout;
+use App\Loan;
 use App\Branch;
 use DB;
 use Auth;
@@ -364,6 +365,19 @@ class StockController extends Controller
         $pullout->serial = $request->serial;
         $pullout->status = 'pullout';
         $data = $pullout->save();
+
+        return response()->json($data);
+    }
+
+    public function loan(Request $request)
+    {
+        $loan = new Loan;
+        $loan->user_id = Auth::user()->id;
+        $loan->from_branch_id = Auth::user()->branch->id;
+        $loan->to_branch_id = $request->branchid;
+        $loan->items_id = $request->itemid;
+        $loan->status = 'pending';
+        $data = $loan->save();
 
         return response()->json($data);
     }

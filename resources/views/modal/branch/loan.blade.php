@@ -45,9 +45,7 @@
                 <table class="table requestDetails">
                     <thead class="thead-dark">
                         <th>Category</th>
-                        <th>Description</th>
-                        <th>Serial&nbsp;&nbsp;&nbsp;</th>
-                        <th>Stock</th>
+                        <th>Description&nbsp;&nbsp;&nbsp;&nbsp;</th>
                         <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                         <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                     </thead>
@@ -61,11 +59,6 @@
                     <div class="col-md-3 form-group">
                         <select id="loandesc1" class="form-control loandesc" row_count="1" style="color: black;">
                             <option selected disabled>select description</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2 form-group">
-                        <select id="loanserial1" class="form-control loanserial" row_count="1" style="color: black;">
-                            <option selected disabled>select serial</option>
                         </select>
                     </div>
                 </div>

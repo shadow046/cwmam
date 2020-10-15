@@ -21,6 +21,8 @@ Route::get('spare_parts', 'HomeController@spare_parts');
 Route::get('return', 'HomeController@return');
 
 
+
+Route::post('loan', 'StockController@loan')->name('stocks.loan');
 Route::put('rep-update', 'StockController@update')->name('stocks.update');
 Route::get('pull-details1/{id}', 'StockController@pulldetails1')->name('stocks.details1.pullout');
 Route::get('pull-details/{id}', 'StockController@pulldetails')->name('stocks.details.pullout');
