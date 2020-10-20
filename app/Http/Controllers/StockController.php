@@ -43,7 +43,9 @@ class StockController extends Controller
             ->join('items', 'stocks.items_id', '=', 'items.id')
             ->get();
 
-        $branches = Branch::where('area_id', Auth::user()->area->id)->get();
+        $branches = Branch::where('area_id', Auth::user()->area->id)
+            ->where('id', '!=', Auth::user()->branch->id)
+            ->get();
         //dd($branch);
         return view('pages.stocks', compact('categories', 'service_units', 'customers', 'branches'));
     }

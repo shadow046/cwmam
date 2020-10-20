@@ -33,5 +33,7 @@ class VerifyCsrfToken extends Middleware
         'pull-out',
         'rep-update',
         'loan',
+        'loansapproved',
+        'loanstock',
     ];
 }

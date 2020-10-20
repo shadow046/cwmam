@@ -21,6 +21,11 @@ Route::get('spare_parts', 'HomeController@spare_parts');
 Route::get('return', 'HomeController@return');
 
 
+
+Route::put('loanstock', 'LoanController@stock')->name('loans.stock');
+Route::get('loanitemcode', 'LoanController@getItemCode')->name('loan.get.itemcode');
+Route::put('loansapproved', 'LoanController@update')->name('loans.approved');
+Route::get('loanrequesttable', 'LoanController@tablerequest')->name('loansrequest.table');
 Route::get('loanstable', 'LoanController@table')->name('loans.table');
 Route::get('loans', 'LoanController@index')->name('loans');
 Route::post('loan', 'StockController@loan')->name('stocks.loan');
@@ -49,6 +54,7 @@ Route::post('store', 'StockController@store')->name('stocks.store');
 Route::get('viewStock', 'StockController@viewStocks')->name('stocks.view');
 Route::get('show', 'StockController@show')->name('stocks.show');
 Route::get('stocks', 'StockController@index')->name('stocks.index');
+
 
 Route::get('gen', 'StockRequestController@generateBarcodeNumber')->name('stock.gen');
 Route::put('update', 'StockRequestController@update')->name('stock.update');
