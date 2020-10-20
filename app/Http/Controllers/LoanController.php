@@ -111,9 +111,22 @@ class LoanController extends Controller
         $add->items_id = $request->item;
         $add->user_id = Auth::user()->id;
         $add->serial = $stock->serial;
-        $add->status = 'pending';
+        $add->status = $request->id;
         $add->id_branch = Auth::user()->branch->id;
         $data = $add->save();
+
+        return response()->json($data);
+    }
+
+    public function stockUpdate(Request $request)
+    {
+        $update = Stock::where('branch_id', Auth::user()->branch->id)
+            ->where('status', $request->id)
+            ->where('id_branch', $request->branch)
+            ->first();
+        $update->status = 'in';
+        $update->user_id = Auth::user()->id;
+        $data = $update->save();
 
         return response()->json($data);
     }
@@ -124,9 +137,13 @@ class LoanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function getitem(Request $request)
     {
-        //
+        $serial = Stock::where('branch_id', Auth::user()->branch->id)
+            ->where('status', $request->id)
+            ->where('id_branch', $request->branch)
+            ->first();
+        return response()->json($serial);
     }
 
     /**
@@ -150,7 +167,7 @@ class LoanController extends Controller
     public function update(Request $request)
     {
         $loan = Loan::where('id', $request->id)->first();
-        $loan->status = 'approved';
+        $loan->status = $request->status;
         $loan->user_id = Auth::user()->id;
         $data = $loan->save();
 

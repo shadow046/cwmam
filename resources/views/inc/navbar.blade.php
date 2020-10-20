@@ -21,14 +21,17 @@
                     <a class="nav-link {{ Request::is('stocks') ? 'active' : '' }}" href="{{ route('stocks.index') }}">Stock</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('return') ? 'active' : '' }}" href="{{ url('return') }}">Return</a>
+                    <a class="nav-link {{ Request::is('return') ? 'active' : '' }}" href="{{ route('return.index') }}">Return</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('service-unit') ? 'active' : '' }}" href="{{ route('stock.service-unit') }}">Service unit</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('loans') ? 'active' : '' }}" href="{{ route('loans') }}">Loans</a>
-                </li>
+                @if(Auth::user()->branch->branch != 'Warehouse')
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('service-unit') ? 'active' : '' }}" href="{{ route('stock.service-unit') }}">Service unit</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('loans') ? 'active' : '' }}" href="{{ route('loans') }}">Loans</a>
+                    </li>
+                @endif
+
             </ul>
             <ul class="nav">
                 @role('Administrator')

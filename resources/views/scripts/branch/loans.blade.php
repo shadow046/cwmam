@@ -1,6 +1,7 @@
 <script type="text/javascript">
     var table;
     var requesttable;
+    var interval = null;
     $(document).ready(function()
     {
         table =
@@ -43,6 +44,10 @@
             ]
         });
 
+        interval = setInterval(function(){
+            requesttable.draw();
+        }, 30000);
+
     });
 
     $(document).on("click", "#loanTable tr", function () {
@@ -51,11 +56,12 @@
         var descop = " ";
         console.log(trdata);
         $('#date').val(trdata.date);
-        $('#branch').val(trdata.branch);
         $('#description').val(trdata.item);
         $('#status').val(trdata.status);
         $('#myid').val(trdata.id);
         $('#branch_id').val(trdata.branchid);
+        $('#serials').hide();
+        $('#received_Btn').hide();
         $.ajax({
             type:'get',
             url:'{{route("loan.get.itemcode")}}',
@@ -84,16 +90,58 @@
         $('#loansModal').modal({backdrop: 'static', keyboard: false});
     });
 
+    $(document).on('click', '#loanrequestTable tr', function(){
+        clearInterval(interval);
+        var trdata = requesttable.row(this).data();
+        var id = trdata.id;
+        var branch = trdata.branchid;
+        var descop = " ";
+        console.log(trdata);
+        $('#date').val(trdata.date);
+        $('#branch').val(trdata.branch);
+        $('#description').val(trdata.item);
+        $('#status').val(trdata.status);
+        $('#myid').val(trdata.id);
+        $('#branch_id').val(trdata.branchid);
+        $('#submit_Btn').hide();
+        $('#loanrow1').hide();
+        if (trdata.status == 'approved') {
+            $('#received_Btn').show();
+            $('#serials').show();
+            $.ajax({
+                url: '{{route("loans.getitem")}}',
+                dataType: 'json',
+                type: 'GET',
+                async: false,
+                data: {
+                    id: id,
+                    branch: branch
+                },
+                success:function(data)
+                {
+                    $('#serial').val(data.serial);
+                }
+            });
+        }else{
+            $('#received_Btn').hide();
+            $('#serials').hide();
+        }
+        
+        $('#loansModal').modal({backdrop: 'static', keyboard: false});
+    })
+
     $(document).on("click", "#submit_Btn", function () {
         var id = $('#myid').val();
         var item = $('#loanserial1').val();
         var branch = $('#branch_id').val();
-        if ($('#loanserial1').val()) {
+        var status = 'approved';
+        if ($('#loanserial1').val() && $('#status').val() == 'pending') {
             $.ajax({
                 url: '{{route("loans.stock")}}',
                 dataType: 'json',
                 type: 'PUT',
                 data: {
+                    id: id,
                     item: item,
                     branch: branch
                 },
@@ -104,7 +152,42 @@
                 dataType: 'json',
                 type: 'PUT',
                 data: {
-                    id: id
+                    id: id,
+                    status: status
+
+                },
+                success:function(data)
+                {
+                    window.location.href = '{{route('loans')}}';
+                }
+            });
+        }
+        
+    });
+
+    $(document).on("click", "#received_Btn", function () {
+        var id = $('#myid').val();
+        var branch = $('#branch_id').val();
+        var status = 'completed';
+        if ($('#serial').val() && $('#status').val() == 'approved') {
+            $.ajax({
+                url: '{{route("loans.stock.update")}}',
+                dataType: 'json',
+                type: 'PUT',
+                data: {
+                    id: id,
+                    branch: branch
+                },
+            });
+
+            $.ajax({
+                url: '{{route("loans.approved")}}',
+                dataType: 'json',
+                type: 'PUT',
+                data: {
+                    id: id,
+                    status: status
+
                 },
                 success:function(data)
                 {
@@ -132,6 +215,10 @@
                     $("#loanserial1").find('option').remove().end().append(serialOp);
                 },
             });
+    });
+
+    $(document).on('click', '.cancel', function(){
+        window.location.href = '{{route('loans')}}';
     });
     
 </script>

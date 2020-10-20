@@ -18,10 +18,15 @@ Route::get('/', 'HomeController@index');
 Route::get('customer', 'HomeController@customer');
 Route::get('service_units', 'HomeController@service_units');
 Route::get('spare_parts', 'HomeController@spare_parts');
-Route::get('return', 'HomeController@return');
 
 
 
+Route::put('return-update', 'DefectiveController@update')->name('return.update');
+Route::get('return-table', 'DefectiveController@table')->name('return.table');
+Route::get('return', 'DefectiveController@index')->name('return.index');
+
+Route::put('loanupdate', 'LoanController@stockUpdate')->name('loans.stock.update');
+Route::get('loanget', 'LoanController@getitem')->name('loans.getitem');
 Route::put('loanstock', 'LoanController@stock')->name('loans.stock');
 Route::get('loanitemcode', 'LoanController@getItemCode')->name('loan.get.itemcode');
 Route::put('loansapproved', 'LoanController@update')->name('loans.approved');
@@ -29,6 +34,7 @@ Route::get('loanrequesttable', 'LoanController@tablerequest')->name('loansreques
 Route::get('loanstable', 'LoanController@table')->name('loans.table');
 Route::get('loans', 'LoanController@index')->name('loans');
 Route::post('loan', 'StockController@loan')->name('stocks.loan');
+
 Route::put('rep-update', 'StockController@update')->name('stocks.update');
 Route::get('pull-details1/{id}', 'StockController@pulldetails1')->name('stocks.details1.pullout');
 Route::get('pull-details/{id}', 'StockController@pulldetails')->name('stocks.details.pullout');

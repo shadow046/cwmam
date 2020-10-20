@@ -24,7 +24,7 @@
           <div class="card bg-card">
             <div class="card-body text-center">
               <p class="card-text">RETURNS</p>
-              <p class="card-text">0</p>
+              <p class="card-text">{{ $returns }}</p>
             </div>
           </div>
       </div>

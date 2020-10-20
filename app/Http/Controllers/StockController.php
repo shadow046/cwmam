@@ -13,6 +13,7 @@ use App\Customer;
 use App\Pullout;
 use App\Loan;
 use App\Branch;
+use App\Defective;
 use DB;
 use Auth;
 class StockController extends Controller
@@ -284,7 +285,18 @@ class StockController extends Controller
 
     public function servicein(Request $request){
 
+        
+
         $stock = Stock::where('id', $request->serial)->first();
+        if ($request->status == 'defective') {
+            $defective = new Defective;
+            $defective->branch_id = Auth::user()->branch->id;
+            $defective->user_id = Auth::user()->id;
+            $defective->items_id = $stock->items_id;
+            $defective->status = 'in';
+            $defective->serial = $pullout->serial;
+            $defective->save();
+        }
 
         $stock->status = $request->status;
         $stock->user_id = Auth::user()->id;
@@ -546,6 +558,15 @@ class StockController extends Controller
         $update->save();
 
         $pullout = Pullout::where('id', $request->repdata)->first();
+
+        $defective = new Defective;
+        $defective->branch_id = Auth::user()->branch->id;
+        $defective->user_id = Auth::user()->branch->id;
+        $defective->items_id = $pullout->items_id;
+        $defective->serial = $pullout->serial;
+        $defective->status = 'in';
+        $defective->save();
+
         $pullout->status = 'replaced';
         $pullout->user_id = Auth::user()->id;
         $data = $pullout->save();

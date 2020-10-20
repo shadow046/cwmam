@@ -9,6 +9,8 @@ use App\User;
 use App\Branch;
 use App\Warehouse;
 use App\StockRequest;
+use App\Stock;
+use App\Defective;
 use Auth;
 
 class HomeController extends Controller
@@ -42,8 +44,15 @@ class HomeController extends Controller
         return dd($user);*/
 
         $stockreq = StockRequest::count();
-        $units = Warehouse::where('status', 'in')->count();
-        return view('pages.home', compact('stockreq', 'units'));
+        if (Auth::user()->branch->branch != "Warehouse") {
+            $units = Stock::wherein('status', ['in', 'service unit'])->count();
+            $returns = Defective::where('status', '!=', 'Received')->count();
+        }else{
+            $units = Warehouse::where('status', 'in')->count();
+            $returns = Defective::wherein('status', ['For return', 'For receiving'])->count();
+        }
+
+        return view('pages.home', compact('stockreq', 'units', 'returns'));
     }
 
     
@@ -66,5 +75,11 @@ class HomeController extends Controller
     {
         $users = User::all();
         return view('pages.service-units', compact('users'));
+    }
+
+    public function return()
+    {
+        $users = User::all();
+        return view('pages.return', compact('users'));
     }
 }
