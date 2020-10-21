@@ -120,6 +120,8 @@
                     @include('scripts.warehouse.defective')
                 @endif
             @endif
+            @include('scripts.home')
+
         </body>
     </html>
 @else

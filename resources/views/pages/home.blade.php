@@ -42,8 +42,9 @@
       <a>USER ACTIVITIES</a>
     </li>
   </ul>
+  <br><br>
   <div class="table-responsive">
-    <table class="table">
+    <table class="table activityTable" id="activityTable">
       <thead class="thead-dark">
         <tr>
           <th>
@@ -66,30 +67,6 @@
           </th>
         </tr>
       </thead>
-      <tbody>
-        @for($i = 1; $i<=6; $i++)
-          <tr>
-            <td>
-              ----
-            </td>
-            <td>
-              ----
-            </td>
-            <td>
-              ----
-            </td>
-            <td>
-              ----
-            </td>
-            <td>
-              ----
-            </td>
-            <td>
-              ----
-            </td>
-          </tr>
-          @endfor
-      </tbody>
     </table>
   </div>
 @endsection

@@ -8,6 +8,8 @@ use Yajra\DataTables\Facades\DataTables;
 use App\User;
 use App\Area;
 use App\Branch;
+use App\UserLog;
+
 use Validator;
 class UserController extends Controller
 {

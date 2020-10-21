@@ -9,6 +9,8 @@ use App\Area;
 use Auth;
 use DB;
 use Validator;
+use App\UserLog;
+
 class BranchController extends Controller
 {
     /**

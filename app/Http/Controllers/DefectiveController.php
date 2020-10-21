@@ -8,6 +8,7 @@ use App\User;
 use App\Defective;
 use App\Branch;
 use App\Item;
+use App\UserLog;
 use Auth;
 class DefectiveController extends Controller
 {

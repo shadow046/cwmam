@@ -8,6 +8,7 @@ use App\Loan;
 use Auth;
 use App\Item;
 use App\Stock;
+use App\UserLog;
 class LoanController extends Controller
 {
 

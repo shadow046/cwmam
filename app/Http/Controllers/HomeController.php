@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Permission\Models\Role;
+use Yajra\DataTables\Facades\DataTables;
 use App\User;
 use App\Branch;
 use App\Warehouse;
 use App\StockRequest;
 use App\Stock;
 use App\Defective;
+use App\UserLog;
+
 use Auth;
 
 class HomeController extends Controller
@@ -32,16 +35,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        /*$users = User::whereHas('roles', function ($query) {
-            $query->where('name', '=', 'Viewer');
-        })->get();
-        foreach ($users as $user) {
-            $user->syncRoles('Head');
-        }
-        $users = User::whereHas('roles', function ($query) {
-            $query->where('name', '=', 'Head');
-        })->get();
-        return dd($user);*/
 
         if (auth()->user()->branch->branch != "Warehouse") {
             $units = Stock::wherein('status', ['in', 'service unit'])->count();
@@ -56,6 +49,47 @@ class HomeController extends Controller
         }
 
         return view('pages.home', compact('stockreq', 'units', 'returns'));
+    }
+
+    public function activity()
+    {
+        if (auth()->user()->roles->first()->name == 'Administrator') {
+            $act = UserLog::all();
+        }else{
+            $act = UserLog::where('user_id', auth()->user()->id);
+        }
+        
+        //dd($act);
+        return DataTables::of($act)
+        
+        ->addColumn('date', function (UserLog $request){
+
+            return $request->updated_at->toFormattedDateString();
+
+        })
+
+        ->addColumn('time', function (UserLog $request){
+            return $request->updated_at->toTimeString();
+
+        })
+
+        ->addColumn('username', function (UserLog $request){
+            $username = User::where('id', $request->user_id)->first();
+            return $username->email;
+        })
+
+        ->addColumn('fullname', function (UserLog $request){
+            $username = User::where('id', $request->user_id)->first();
+            return $username->name;
+        })
+
+        ->addColumn('userlevel', function (UserLog $request){
+            $username = User::where('id', $request->user_id)->first();
+            return $username->roles->first()->name;
+        })
+                
+        ->make(true);
+
     }
     
     public function customer()

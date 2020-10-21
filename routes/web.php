@@ -21,6 +21,8 @@ Route::get('/', 'HomeController@index');
 Route::get('customer', 'HomeController@customer');
 Route::get('service_units', 'HomeController@service_units');
 Route::get('spare_parts', 'HomeController@spare_parts');
+Route::get('activity', 'HomeController@activity')->name('get.activity');
+
 
 
 
