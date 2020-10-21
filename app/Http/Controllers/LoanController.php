@@ -132,8 +132,14 @@ class LoanController extends Controller
             ->where('status', $request->id)
             ->where('id_branch', $request->branch)
             ->first();
+        $item = Item::where('id', $update->items_id)->first();
+        $branch = Branch::where('id', $update->id_branch)->first();
         $update->status = 'in';
         $update->user_id = auth()->user()->id;
+        $log = new UserLog;
+        $log->activity = "Received request $item->item from $branch->branch." ;
+        $log->user_id = auth()->user()->id;
+        $log->save();
         $data = $update->save();
 
         return response()->json($data);
@@ -174,9 +180,16 @@ class LoanController extends Controller
      */
     public function update(Request $request)
     {
+
         $loan = Loan::where('id', $request->id)->first();
+        $branch = Branch::where('id', $loan->from_branch_id)->first();
+        $item = Item::where('id', $loan->items_id)->first();
         $loan->status = $request->status;
         $loan->user_id = auth()->user()->id;
+        $log = new UserLog;
+        $log->activity = "Approved request $item->item from $branch->branch" ;
+        $log->user_id = auth()->user()->id;
+        $log->save();
         $data = $loan->save();
 
         return response()->json($data);

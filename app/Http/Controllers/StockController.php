@@ -14,6 +14,7 @@ use App\Pullout;
 use App\Loan;
 use App\Branch;
 use App\Defective;
+use App\UserLog;
 use DB;
 use Auth;
 class StockController extends Controller
@@ -288,17 +289,28 @@ class StockController extends Controller
 
     public function servicein(Request $request){
 
-        
 
         $stock = Stock::where('id', $request->serial)->first();
+        $item = Item::where('id', $stock->items_id)->first();
+        $customer = CustomerBranch::where('id', $stock->customer_branches_id)->first();
+
         if ($request->status == 'defective') {
             $defective = new Defective;
             $defective->branch_id = auth()->user()->branch->id;
             $defective->user_id = auth()->user()->id;
             $defective->items_id = $stock->items_id;
             $defective->status = 'in';
-            $defective->serial = $pullout->serial;
+            $defective->serial = $stock->serial;
             $defective->save();
+            $log = new UserLog;
+            $log->activity = "Service in $item->item(defective) from $customer->customer_branch." ;
+            $log->user_id = auth()->user()->id;
+            $log->save();
+        }else{
+            $log = new UserLog;
+            $log->activity = "Service in $item->item(good) from $customer->customer_branch." ;
+            $log->user_id = auth()->user()->id;
+            $log->save();
         }
 
         $stock->status = $request->status;
@@ -371,6 +383,13 @@ class StockController extends Controller
 
     public function pullOut(Request $request)
     {
+        $item = Item::where('id', $request->item)->first();
+        $customer = Customerbranch::where('id', $request->customer)->first();
+
+        $log = new UserLog;
+        $log->activity = "Pull-out $item->item from $customer->customer_branch." ;
+        $log->user_id = auth()->user()->id;
+        $log->save();
 
         $pullout = new Pullout;
         $pullout->user_id = auth()->user()->id;
@@ -388,12 +407,19 @@ class StockController extends Controller
 
     public function loan(Request $request)
     {
+        $item = Item::where('id', $request->itemid)->first();
+        $branch = Branch::where('id', $request->branchid)->first();
+
         $loan = new Loan;
         $loan->user_id = auth()->user()->id;
         $loan->from_branch_id = auth()->user()->branch->id;
         $loan->to_branch_id = $request->branchid;
         $loan->items_id = $request->itemid;
         $loan->status = 'pending';
+        $log = new UserLog;
+        $log->activity = "Request $item->item from $branch->branch." ;
+        $log->user_id = auth()->user()->id;
+        $log->save();
         $data = $loan->save();
 
         return response()->json($data);
@@ -406,9 +432,16 @@ class StockController extends Controller
                     ->where('serial', $request->serial)
                     ->where('status', 'in')
                     ->first();
+        $item = Item::where('id', $request->item)->first();
+        $customer = CustomerBranch::where('id', $request->customer)->first();
+
         $stock->status = $request->purpose;
         $stock->customer_branches_id = $request->customer;
         $stock->user_id = auth()->user()->id;
+        $log = new UserLog;
+        $log->activity = "Service out $item->item to $customer->customer_branch." ;
+        $log->user_id = auth()->user()->id;
+        $log->save();
         $data = $stock->save();
 
         return response()->json($data);
@@ -416,6 +449,8 @@ class StockController extends Controller
 
     public function store(Request $request)
     {
+        $item = Item::where('id', $request->item)->first();
+
         if (auth()->user()->branch->id == '999') {
             $add = new Warehouse;
             $add->category_id = $request->cat;
@@ -423,6 +458,10 @@ class StockController extends Controller
             $add->serial = $request->serial;
             $add->status = 'in';
             $add->user_id = auth()->user()->id;
+            $log = new UserLog;
+            $log->activity = "Add stock $item->item with serial no. $request->serial." ;
+            $log->user_id = auth()->user()->id;
+            $log->save();
             $data = $add->save();
         }else{
             $add = new Stock;
@@ -432,6 +471,10 @@ class StockController extends Controller
             $add->user_id = auth()->user()->id;
             $add->serial = $request->serial;
             $add->status = 'in';
+            $log = new UserLog;
+            $log->activity = "Add stock $item->item with serial no. $request->serial." ;
+            $log->user_id = auth()->user()->id;
+            $log->save();
             $data = $add->save();
         }
         
@@ -474,7 +517,7 @@ class StockController extends Controller
                     $dup = true;
                 }
             }
-
+            $item = Item::where('id', $item->id)->first();
             if ($columns[0] != $item->item) {
                 array_push($notfound, $columns[0]);
             }else {
@@ -488,6 +531,10 @@ class StockController extends Controller
                     $stock->branch_id = auth()->user()->branch_id;
                     $stock->serial = $serial;
                     //dd($stock);
+                    $log = new UserLog;
+                    $log->activity = "Import $item->item with serial no. $serial." ;
+                    $log->user_id = auth()->user()->id;
+                    $log->save();
                     $stock->save();
                 }
                 

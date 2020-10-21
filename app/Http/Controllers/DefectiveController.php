@@ -126,16 +126,31 @@ class DefectiveController extends Controller
      */
     public function update(Request $request)
     {
+
+
         if (auth()->user()->branch->branch != 'Warehouse') {
             $update = Defective::where('branch_id', auth()->user()->branch->id)
                 ->where('id', $request->id)
                 ->where('status', 'in')
                 ->first();
+            $item = Item::where('id', $update->items_id)->first();
+            $branch = Branch::where('id', $update->branch_id)->first();
+
+            $log = new UserLog;
+            $log->activity = "Receive defective $item->item from $branch->branch." ;
+            $log->user_id = auth()->user()->id;
+            $log->save();
         }else{
             $update = Defective::where('id', $request->id)
                 ->where('branch_id', $request->branch)
                 ->where('status', 'For receiving')
                 ->first();
+            $item = Item::where('id', $update->items_id)->first();
+
+            $log = new UserLog;
+            $log->activity = "Return defective $item->item to Warehouse." ;
+            $log->user_id = auth()->user()->id;
+            $log->save();
         }
         
         $update->status = $request->status;

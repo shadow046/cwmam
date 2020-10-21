@@ -12,6 +12,7 @@ use App\Warehouse;
 use App\Category;
 use App\Item;
 use App\Stock;
+use App\UserLog;
 use Auth;
 class StockRequestController extends Controller
 {
@@ -237,9 +238,14 @@ class StockRequestController extends Controller
             $reqno->branch_id = auth()->user()->branch->id;
             $reqno->area_id = auth()->user()->area->id;
             $reqno->status = 0;
+            $log = new UserLog;
+            $log->activity = "Create Stock Request no. $request->reqno";
+            $log->user_id = auth()->user()->id;
+            $log->save();
             $data = $reqno->save();
 
         }
+
         if ($request->stat == 'notok') {
             $reqitem = new RequestedItem;
             $reqitem->request_no = $request->reqno;
@@ -330,7 +336,11 @@ class StockRequestController extends Controller
     {
         
         $delete = StockRequest::where('request_no', $request->reqno)->first();
-        $delete->status = 2;
+        $delete->status = 3;
+        $log = new UserLog;
+        $log->activity = "Delete request no. $request->reqno" ;
+        $log->user_id = auth()->user()->id;
+        $log->save();
         $data = $delete->save();
 
         return response()->json($data);
