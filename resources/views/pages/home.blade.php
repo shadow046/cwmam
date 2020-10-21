@@ -5,28 +5,34 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-3">
+        <a href="{{ route('stock.index')}}">
           <div class="card bg-card">
             <div class="card-body text-center">
               <p class="card-text">STOCK REQUEST</p>
               <p class="card-text">{{ $stockreq }}</p>
             </div>
           </div>
+        </a>
       </div>
       <div class="col-sm-3">
+        <a href="{{ route('stocks.index')}}">
           <div class="card bg-card">
             <div class="card-body text-center">
-              <p class="card-text">SERVICE UNITS</p>
+              <p class="card-text">STOCK</p>
               <p class="card-text">{{ $units }}</p>
             </div>
-        </div>
+          </div>
+        </a>
       </div>
       <div class="col-sm-3">
+        <a href="{{ route('return.index')}}">
           <div class="card bg-card">
             <div class="card-body text-center">
               <p class="card-text">RETURNS</p>
               <p class="card-text">{{ $returns }}</p>
             </div>
           </div>
+        </a>
       </div>
     </div>  
   </div>

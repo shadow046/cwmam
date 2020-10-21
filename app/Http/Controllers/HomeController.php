@@ -43,11 +43,14 @@ class HomeController extends Controller
         })->get();
         return dd($user);*/
 
-        $stockreq = StockRequest::count();
         if (Auth::user()->branch->branch != "Warehouse") {
             $units = Stock::wherein('status', ['in', 'service unit'])->count();
             $returns = Defective::where('status', '!=', 'Received')->count();
+            $stockreq = StockRequest::where('branch_id', Auth::user()->branch->id)
+                ->where('status', '!=', '2')
+                ->count();
         }else{
+            $stockreq = StockRequest::where('status', '!=', '2')->count();
             $units = Warehouse::where('status', 'in')->count();
             $returns = Defective::wherein('status', ['For return', 'For receiving'])->count();
         }
