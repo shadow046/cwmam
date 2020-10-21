@@ -21,8 +21,5 @@
       </thead>
     </table>
   </div>
-  <input type="button" value="Add">
-  <input type="button" value="Edit">
-  <input type="button" value="Save">
-  <input type="button" value="Cancel">
+  
 @endsection

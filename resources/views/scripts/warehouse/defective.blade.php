@@ -5,6 +5,9 @@
         table =
         $('table.defectiveTable').DataTable({ //user datatables
             "dom": 'lrtip',
+            "language": {
+                "emptyTable": " "
+            },
             processing: true,
             serverSide: true,
             "language": {

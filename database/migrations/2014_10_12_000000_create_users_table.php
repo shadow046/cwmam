@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->unsignedInteger('area_id');
             $table->unsignedInteger('branch_id');
             $table->string('name');
+            $table->string('lastname');
             $table->string('email')->unique();
             $table->string('password');
             $table->integer('status');

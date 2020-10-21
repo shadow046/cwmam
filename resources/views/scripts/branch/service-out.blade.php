@@ -224,6 +224,9 @@
             replaceTable =
             $('table.replacementDetails').DataTable({ //user datatables
                 "dom": 'lrtip',
+                "language": {
+                    "emptyTable": " "
+                },
                 processing: true,
                 serverSide: true,
                 ajax: "/pull-details/"+id,
@@ -261,6 +264,9 @@
         var replace1Table =
         $('table.replacement1Details').DataTable({ //user datatables
             "dom": 'rt',
+            "language": {
+                "emptyTable": " "
+            },
             processing: true,
             serverSide: true,
             ajax: "/pull-details1/"+id,

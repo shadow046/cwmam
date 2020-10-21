@@ -4,6 +4,9 @@
         var table =
         $('table.customerTable').DataTable({ //user datatables
             "dom": 'lrtip',
+            "language": {
+                    "emptyTable": " "
+                },
             processing: true,
             serverSide: false,
             ajax: '{{route('customer.list')}}',

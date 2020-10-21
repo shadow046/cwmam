@@ -37,15 +37,15 @@ class HomeController extends Controller
     {
 
         if (auth()->user()->branch->branch != "Warehouse") {
-            $units = Stock::wherein('status', ['in', 'service unit'])->count();
-            $returns = Defective::where('status', '!=', 'Received')->count();
+            $units = Stock::wherein('status', ['in', 'service unit'])->where('branch_id', auth()->user()->branch->id)->count();
+            $returns = Defective::where('status', '!=', 'Received')->where('branch_id', auth()->user()->branch->id)->count();
             $stockreq = StockRequest::where('branch_id', auth()->user()->branch->id)
                 ->where('status', '!=', '2')
                 ->count();
         }else{
             $stockreq = StockRequest::where('status', '!=', '2')->count();
             $units = Warehouse::where('status', 'in')->count();
-            $returns = Defective::wherein('status', ['For return', 'For receiving'])->count();
+            $returns = Defective::where('status', 'For receiving')->count();
         }
 
         return view('pages.home', compact('stockreq', 'units', 'returns'));

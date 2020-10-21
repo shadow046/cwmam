@@ -17,6 +17,9 @@
         var table =
         $('table.requestTable').DataTable({ //user datatables
             "dom": 'lrtip',
+            "language": {
+                "emptyTable": " "
+            },
             processing: true,
             serverSide: true,
             ajax: '{{route('get.requests')}}',
@@ -62,6 +65,9 @@
                 $('table.requestDetails').show();
                 $('table.requestDetails').DataTable({ //user datatables
                     "dom": 'lrtip',
+                    "language": {
+                        "emptyTable": " "
+                    },
                     processing: true,
                     serverSide: true,
                     ajax: "/requests/"+trdata.request_no,
@@ -80,6 +86,9 @@
                 $('table.schedDetails').show();
                 $('table.schedDetails').DataTable({ //user datatables
                     "dom": 'lrtip',
+                    "language": {
+                        "emptyTable": " "
+                    },
                     processing: true,
                     serverSide: true,
                     ajax: "/send/"+trdata.request_no,
@@ -122,6 +131,9 @@
         $('table.sendDetails').dataTable().fnDestroy();
         $('table.sendDetails').DataTable({ //user datatables
             "dom": 'lrtip',
+            "language": {
+                "emptyTable": " "
+            },
             processing: true,
             serverSide: true,
             ajax: "/requests/"+$('#sreqno').val(),

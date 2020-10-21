@@ -37,11 +37,15 @@ class UserController extends Controller
     public function getUsers()
     {
         
-        return DataTables::of(User::get()->all())
+        return DataTables::of(User::where('id', '!=', auth()->user()->id))
         ->setRowData([
             'data-id' => '{{$id}}',
             'data-status' => '{{ $status }}',
         ])
+        
+        ->addColumn('fname', function (User $user){
+            return $user->name. ' ' . $user->lastname;
+        })
 
         ->addColumn('area', function (User $user){
             return $user->area->area;
@@ -94,7 +98,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'full_name' => ['required', 'string', 'min:3', 'max:255'],
+            'first_name' => ['required', 'string', 'min:3', 'max:255'],
+            'last_name' => ['required', 'string', 'min:3', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'branch' => ['required', 'string'],
             'area' => ['required', 'string'],
@@ -108,7 +113,8 @@ class UserController extends Controller
 
             $user = new User;
 
-            $user->name = $request->input('full_name');
+            $user->name = $request->input('first_name');
+            $user->lastname = $request->input('last_name');
             $user->email = $request->input('email');
             $user->area_id = $request->input('area');
             $user->branch_id = $request->input('branch');
@@ -155,7 +161,8 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'full_name' => ['required', 'string', 'min:3', 'max:255'],
+            'first_name' => ['required', 'string', 'min:3', 'max:255'],
+            'last_name' => ['required', 'string', 'min:3', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'branch' => ['required', 'string'],
             'area' => ['required', 'string'],
@@ -168,7 +175,8 @@ class UserController extends Controller
         if ($validator->passes()) {
 
             $user = User::find($id);
-            $user->name = $request->input('full_name');
+            $user->name = $request->input('first_name');
+            $user->lastname = $request->input('last_name');
             $user->email = $request->input('email');
             $user->area_id = $request->input('area');
             $user->branch_id = $request->input('branch');

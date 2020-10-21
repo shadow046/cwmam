@@ -6,6 +6,9 @@
         var table =
         $('table.sUnitTable').DataTable({ //user datatables
             "dom": 'lrtip',
+            "language": {
+                "emptyTable": " "
+            },
             processing: true,
             serverSide: true,
             ajax: '{{route("stock.sUnit")}}',

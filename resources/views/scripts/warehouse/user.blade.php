@@ -24,7 +24,7 @@
             serverSide: true,
             ajax: '{{route('get.users')}}',
             columns: [
-                { data: 'name', name:'name' },
+                { data: 'fname', name:'fname' },
                 { data: 'email', name:'email' },
                 { data: 'area', name:'area' },
                 { data: 'branch', name:'branch' },
@@ -39,7 +39,8 @@
             var area = trdata.area_id;
             var op=" ";
             $('#myid').val(trdata.id);
-            $('#full_name').prop('disabled', false);
+            $('#first_name').prop('disabled', false);
+            $('#last_name').prop('disabled', false);
             $('#email').prop('disabled', false);
             $('#password').prop('disabled', true);
             $('#password_confirmation').prop('disabled', true);
@@ -51,10 +52,12 @@
             $('#status').prop('disabled', false);
             $('#userModal').modal('show');
             selectBranch(branch, function() {
-                $('#full_name').val(trdata.name);
+                $('#first_name').val(trdata.name);
+                $('#last_name').val(trdata.lastname);
                 $('#email').val(trdata.email);
                 $('#area').val(area);
                 $('#branch').val(trdata.branch_id);
+
             });
             $('#role').val(trdata.role);
             $('#status').val(dtdata.dataStatus);
@@ -65,6 +68,7 @@
                     type:'get',
                     url:'{{route("user.getBranch")}}',
                     data:{'id':area},
+                    async: false,
                     success:function(data)
                     {
                         //console.log('success');
@@ -106,7 +110,8 @@
                 $("#divpass1").show();
                 $("#divpass2").show();
                 $('#userModal').modal('show');
-                $('#full_name').val('');
+                $('#first_name').val('');
+                $('#last_name').val('');
                 $('#email').val('');
                 $('#password').val('');
                 $('#password_confirmation').val('');
@@ -114,7 +119,8 @@
                 $('#area').val('select area');
                 $('#branch').val('select branch');
                 $('#status').val('select status');
-                $('#full_name').prop('disabled', false);
+                $('#first_name').prop('disabled', false);
+                $('#last_name').prop('disabled', false);
                 $('#email').prop('disabled', false);
                 $('#password').prop('disabled', false);
                 $('#password_confirmation').prop('disabled', false);

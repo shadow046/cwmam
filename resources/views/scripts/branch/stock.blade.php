@@ -9,6 +9,9 @@
         var table =
         $('table.stockTable').DataTable({ //user datatables
             "dom": 'lrtip',
+            "language": {
+                "emptyTable": " "
+            },
             processing: true,
             serverSide: true,
             ajax: '{{route("stocks.view")}}',

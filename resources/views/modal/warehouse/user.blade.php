@@ -13,9 +13,16 @@
                     {{ csrf_field() }}
                     <input type="hidden" name="myid" id="myid">
                     <div class="form-group row">
-                        <label for="full_name" class="col-md-4 col-form-label text-md-right">{{ __('Full Name') }}</label>
+                        <label for="first_name" class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
                         <div class="col-md-6">
-                            <input id="full_name" type="text" class="form-control" name="full_name" disabled>
+                            <input id="first_name" type="text" class="form-control" name="first_name" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="last_name" class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
+                        <div class="col-md-6">
+                            <input id="last_name" type="text" class="form-control" name="last_name" disabled>
                         </div>
                     </div>
 

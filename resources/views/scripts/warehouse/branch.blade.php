@@ -22,6 +22,9 @@
         var table =
         $('table.branchTable').DataTable({ //user datatables
             "dom": 'lrtip',
+            "language": {
+                "emptyTable": " "
+            },
             processing: true,
             serverSide: false,
             ajax: '{{route('get.branches')}}',
@@ -46,6 +49,9 @@
             var stockTable =
             $('table.branchDetails').DataTable({ //user datatables
                 "dom": 'lrtip',
+                "language": {
+                    "emptyTable": " "
+                },
                 processing: true,
                 serverSide: true,
                 ajax: "/stocks/"+id,
