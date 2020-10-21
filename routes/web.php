@@ -12,6 +12,9 @@
 */
 
 Auth::routes();
+Route::get('change-password', 'ChangePasswordController@index');
+Route::post('change-password', 'ChangePasswordController@store')->name('change.password');
+
 
 Route::get('/', 'HomeController@index');
 //Route::get('service_center', 'BranchController@index');
