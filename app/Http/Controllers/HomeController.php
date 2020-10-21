@@ -43,10 +43,10 @@ class HomeController extends Controller
         })->get();
         return dd($user);*/
 
-        if (Auth::user()->branch->branch != "Warehouse") {
+        if (auth()->user()->branch->branch != "Warehouse") {
             $units = Stock::wherein('status', ['in', 'service unit'])->count();
             $returns = Defective::where('status', '!=', 'Received')->count();
-            $stockreq = StockRequest::where('branch_id', Auth::user()->branch->id)
+            $stockreq = StockRequest::where('branch_id', auth()->user()->branch->id)
                 ->where('status', '!=', '2')
                 ->count();
         }else{
@@ -57,8 +57,6 @@ class HomeController extends Controller
 
         return view('pages.home', compact('stockreq', 'units', 'returns'));
     }
-
-    
     
     public function customer()
     {

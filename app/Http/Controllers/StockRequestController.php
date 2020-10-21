@@ -45,7 +45,7 @@ class StockRequestController extends Controller
 
     public function getStock(Request $request){
         //$data = Stock::select('id', 'name')->where('category_id', $request->id)->get();
-        if (Auth::user()->branch->id == '999') {
+        if (auth()->user()->branch->id == '999') {
             $data = Warehouse::select(\DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
                 ->where('status', 'in')
                 ->where('items_id', $request->id)
@@ -55,7 +55,7 @@ class StockRequestController extends Controller
             $data = Stock::select(\DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
                 ->where('status', 'in')
                 ->where('items_id', $request->id)
-                ->where('branch_id', Auth::user()->branch->id)
+                ->where('branch_id', auth()->user()->branch->id)
                 ->groupBy('items_id')
                 ->get();
         }
@@ -66,7 +66,7 @@ class StockRequestController extends Controller
 
     public function getSerials(Request $request){
         //$data = Stock::select('id', 'name')->where('category_id', $request->id)->get();
-        if (Auth::user()->branch->id == '999') {
+        if (auth()->user()->branch->id == '999') {
             $data = Warehouse::select('items_id', 'serial')
                 ->where('status', 'in')
                 ->where('items_id', $request->id)
@@ -75,7 +75,7 @@ class StockRequestController extends Controller
             $data = Stock::select('id', 'items_id', 'serial')
                 ->where('status', 'in')
                 ->where('items_id', $request->id)
-                ->where('branch_id', Auth::user()->branch->id)
+                ->where('branch_id', auth()->user()->branch->id)
                 ->get();
         }
                     
@@ -158,7 +158,7 @@ class StockRequestController extends Controller
 
     public function getRequests()
     {
-        $user = Auth::user()->branch->id;
+        $user = auth()->user()->branch->id;
         //dd($user);
         if ($user != '999') {
             $stock = StockRequest::where('status', '!=', '2')
@@ -228,14 +228,14 @@ class StockRequestController extends Controller
     public function store(Request $request)
     {
 
-        //dd(Auth::user()->area->id);
+        //dd(auth()->user()->area->id);
         if ($request->stat == 'ok') {
 
             $reqno = new StockRequest;
             $reqno->request_no = $request->reqno;
-            $reqno->user_id = Auth::user()->id;
-            $reqno->branch_id = Auth::user()->branch->id;
-            $reqno->area_id = Auth::user()->area->id;
+            $reqno->user_id = auth()->user()->id;
+            $reqno->branch_id = auth()->user()->branch->id;
+            $reqno->area_id = auth()->user()->area->id;
             $reqno->status = 0;
             $data = $reqno->save();
 
@@ -286,7 +286,7 @@ class StockRequestController extends Controller
         if ($request->stat == 'ok') {
             $reqno = StockRequest::where('request_no', $request->reqno)->first();
             $reqno->status = '1';
-            $reqno->user_id = Auth::user()->id;
+            $reqno->user_id = auth()->user()->id;
             $reqno->schedule = $request->datesched;
             $data = $reqno->save();
         }else{
@@ -299,7 +299,7 @@ class StockRequestController extends Controller
             $item->request_no = $request->reqno;
             $item->branch_id = $reqbranch->branch_id;
             $item->schedule = $request->datesched;;
-            $item->user_id = Auth::user()->id;
+            $item->user_id = auth()->user()->id;
             $item->save();
             $prep = new PreparedItem;
             $prep->items_id = $request->item;

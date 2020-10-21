@@ -71,7 +71,7 @@ class BranchController extends Controller
     {
 
         $branches = Branch::select('branches.*', 'areas.area',)
-                ->where('branches.id', '!=', Auth::user()->branch->id)
+                ->where('branches.id', '!=', auth()->user()->branch->id)
                 ->join('areas', 'areas.id', '=', 'branches.area_id')
                 ->get();
         //dd($branches);

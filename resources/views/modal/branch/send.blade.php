@@ -28,7 +28,7 @@
                     <div class="col-md-6 form-group row">
                         <label for="name" class="col-md-5 col-form-label text-md-right">Requested by:</label>
                         <div class="col-md-7">
-                            <input type="text" class="form-control form-control-sm " name="name" id="sname" value="{{ Auth::user()->name }}" disabled>
+                            <input type="text" class="form-control form-control-sm " name="name" id="sname" value="{{ auth()->user()->name }}" disabled>
                         </div>
                     </div>
                 </div>

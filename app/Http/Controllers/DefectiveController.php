@@ -19,7 +19,7 @@ class DefectiveController extends Controller
     public function index()
     {
         $users = User::all();
-        if (Auth::user()->branch->branch != 'Warehouse') {
+        if (auth()->user()->branch->branch != 'Warehouse') {
             return view('pages.branch.return', compact('users'));
         }else{
             return view('pages.warehouse.return', compact('users'));
@@ -34,7 +34,7 @@ class DefectiveController extends Controller
     public function table()
     {
         $defective = Defective::select('defectives.updated_at', 'defectives.id as id', 'items.item', 'items.id as itemid', 'defectives.serial', 'defectives.status')
-            ->where('branch_id', Auth::user()->branch->id)
+            ->where('branch_id', auth()->user()->branch->id)
             ->join('items', 'defectives.items_id', '=', 'items.id')
             ->where('status', '!=', 'received')
             ->get();
@@ -46,7 +46,7 @@ class DefectiveController extends Controller
             ->get();
         //dd($defective);
 
-        if (Auth::user()->branch->branch == 'Warehouse') {
+        if (auth()->user()->branch->branch == 'Warehouse') {
             $data = $waredef;
         }else{
             $data = $defective;
@@ -126,8 +126,8 @@ class DefectiveController extends Controller
      */
     public function update(Request $request)
     {
-        if (Auth::user()->branch->branch != 'Warehouse') {
-            $update = Defective::where('branch_id', Auth::user()->branch->id)
+        if (auth()->user()->branch->branch != 'Warehouse') {
+            $update = Defective::where('branch_id', auth()->user()->branch->id)
                 ->where('id', $request->id)
                 ->where('status', 'in')
                 ->first();
@@ -139,7 +139,7 @@ class DefectiveController extends Controller
         }
         
         $update->status = $request->status;
-        $update->user_id = Auth::user()->id;
+        $update->user_id = auth()->user()->id;
         $data = $update->save();
 
         return response()->json($data);

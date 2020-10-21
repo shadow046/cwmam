@@ -32,11 +32,11 @@ class StockController extends Controller
     public function index()
     {
         $categories = Category::all();
-        $service_units = Stock::where('branch_id', Auth::user()->branch->id)
+        $service_units = Stock::where('branch_id', auth()->user()->branch->id)
             ->where('status', 'service unit')
             ->join('categories', 'stocks.category_id', '=', 'categories.id')
             ->get();
-        $customers = Stock::where('branch_id', Auth::user()->branch->id)
+        $customers = Stock::where('branch_id', auth()->user()->branch->id)
             ->where('status', 'service unit')
             ->join('customer_branches', 'stocks.customer_branches_id', '=', 'customer_branches.id')
             ->join('categories', 'stocks.category_id', '=', 'categories.id')
@@ -44,8 +44,8 @@ class StockController extends Controller
             ->join('items', 'stocks.items_id', '=', 'items.id')
             ->get();
 
-        $branches = Branch::where('area_id', Auth::user()->area->id)
-            ->where('id', '!=', Auth::user()->branch->id)
+        $branches = Branch::where('area_id', auth()->user()->area->id)
+            ->where('id', '!=', auth()->user()->branch->id)
             ->get();
         //dd($branch);
         return view('pages.stocks', compact('categories', 'service_units', 'customers', 'branches'));
@@ -53,7 +53,7 @@ class StockController extends Controller
 
     public function category(Request $request){
         //$data = Item::select('id', 'item')->where('category_id', $request->id)->get();
-        $cat = Stock::where('branch_id', Auth::user()->branch->id)
+        $cat = Stock::where('branch_id', auth()->user()->branch->id)
             ->where('status', 'service unit')
             ->where('customer_branches_id', $request->id)
             ->join('customer_branches', 'stocks.customer_branches_id', '=', 'customer_branches.id')
@@ -100,7 +100,7 @@ class StockController extends Controller
 
     public function description(Request $request){
         //$data = Item::select('id', 'item')->where('category_id', $request->id)->get();
-        $desc = Stock::where('branch_id', Auth::user()->branch->id)
+        $desc = Stock::where('branch_id', auth()->user()->branch->id)
             ->where('status', 'service unit')
             ->where('customer_branches_id', $request->customerid)
             ->where('stocks.category_id', $request->categoryid)
@@ -115,7 +115,7 @@ class StockController extends Controller
 
     public function serial(Request $request){
         $serial = Stock::select('stocks.serial', 'stocks.id')
-            ->where('branch_id', Auth::user()->branch->id)
+            ->where('branch_id', auth()->user()->branch->id)
             ->where('status', 'service unit')
             ->where('customer_branches_id', $request->customerid)
             ->where('stocks.category_id', $request->categoryid)
@@ -131,6 +131,9 @@ class StockController extends Controller
 
     public function service()
     {
+        if (auth()->user()->hasrole('Administrator')) {
+            return redirect('/');
+        }
         return view('pages.service-unit');
 
     }
@@ -138,7 +141,7 @@ class StockController extends Controller
     public function serviceUnit()
     {
         $stock = Stock::where('status', 'service unit')
-                    ->where('branch_id', Auth::user()->branch->id)
+                    ->where('branch_id', auth()->user()->branch->id)
                     ->get();
 
         return DataTables::of($stock)
@@ -199,7 +202,7 @@ class StockController extends Controller
 
         $pcustomer = Pullout::select('pullouts.customer_branch_id', 'pullouts.customer_id', 'customer_branches.customer_branch')
                     ->join('customer_branches', 'pullouts.customer_branch_id', '=', 'customer_branches.id')
-                    ->where('branch_id', Auth::user()->branch->id)
+                    ->where('branch_id', auth()->user()->branch->id)
                     ->where('pullouts.customer_id', $request->client)
                     ->where("customer_branch", "LIKE", "%{$request->id}%")
                     ->groupBy('pullouts.customer_branch_id')
@@ -212,7 +215,7 @@ class StockController extends Controller
     public function pautocompleteClient(Request $request)
     {
         $pclient = Pullout::select('pullouts.customer_id', 'customers.customer')
-                ->where('branch_id', Auth::user()->branch->id)
+                ->where('branch_id', auth()->user()->branch->id)
                 ->where("customer", "LIKE", "%{$request->id}%")
                 ->join('customers', 'pullouts.customer_id', '=', 'customers.id')
                 ->groupBy('pullouts.customer_id')
@@ -227,7 +230,7 @@ class StockController extends Controller
 
         $stock = Stock::select('category_id','items_id', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
                     ->where('status', 'in')
-                    ->where('branch_id', Auth::user()->branch->id)
+                    ->where('branch_id', auth()->user()->branch->id)
                     ->groupBy('items_id')->get();
 
 
@@ -290,8 +293,8 @@ class StockController extends Controller
         $stock = Stock::where('id', $request->serial)->first();
         if ($request->status == 'defective') {
             $defective = new Defective;
-            $defective->branch_id = Auth::user()->branch->id;
-            $defective->user_id = Auth::user()->id;
+            $defective->branch_id = auth()->user()->branch->id;
+            $defective->user_id = auth()->user()->id;
             $defective->items_id = $stock->items_id;
             $defective->status = 'in';
             $defective->serial = $pullout->serial;
@@ -299,7 +302,7 @@ class StockController extends Controller
         }
 
         $stock->status = $request->status;
-        $stock->user_id = Auth::user()->id;
+        $stock->user_id = auth()->user()->id;
         $data = $stock->save();
 
         return response()->json($data);
@@ -319,7 +322,7 @@ class StockController extends Controller
     {   
 
         $pullouts = Pullout::select('categories.category', 'items.item', 'pullouts.category_id', 'pullouts.created_at', 'pullouts.id', 'pullouts.items_id', 'pullouts.serial')
-                ->where('branch_id', Auth::user()->branch->id)
+                ->where('branch_id', auth()->user()->branch->id)
                 ->where('customer_branch_id', $id)
                 ->where('status', 'pullout')
                 ->join('categories', 'pullouts.category_id', '=', 'categories.id')
@@ -357,7 +360,7 @@ class StockController extends Controller
 
         $pullout = Pullout::select('pullouts.items_id', 'items.item')
             ->join('items', 'pullouts.items_id', '=', 'items.id')
-            ->where('branch_id', Auth::user()->branch->id)
+            ->where('branch_id', auth()->user()->branch->id)
             ->where('customer_branch_id', $request->custid)
             ->where('pullouts.category_id', $request->id)
             ->groupBy('pullouts.items_id')
@@ -370,8 +373,8 @@ class StockController extends Controller
     {
 
         $pullout = new Pullout;
-        $pullout->user_id = Auth::user()->id;
-        $pullout->branch_id = Auth::user()->branch->id;
+        $pullout->user_id = auth()->user()->id;
+        $pullout->branch_id = auth()->user()->branch->id;
         $pullout->customer_id = $request->client;
         $pullout->customer_branch_id = $request->customer;
         $pullout->category_id = $request->cat;
@@ -386,8 +389,8 @@ class StockController extends Controller
     public function loan(Request $request)
     {
         $loan = new Loan;
-        $loan->user_id = Auth::user()->id;
-        $loan->from_branch_id = Auth::user()->branch->id;
+        $loan->user_id = auth()->user()->id;
+        $loan->from_branch_id = auth()->user()->branch->id;
         $loan->to_branch_id = $request->branchid;
         $loan->items_id = $request->itemid;
         $loan->status = 'pending';
@@ -399,13 +402,13 @@ class StockController extends Controller
     public function serviceOut(Request $request)
     {
         $stock = Stock::where('items_id', $request->item)
-                    ->where('branch_id', Auth::user()->branch->id)
+                    ->where('branch_id', auth()->user()->branch->id)
                     ->where('serial', $request->serial)
                     ->where('status', 'in')
                     ->first();
         $stock->status = $request->purpose;
         $stock->customer_branches_id = $request->customer;
-        $stock->user_id = Auth::user()->id;
+        $stock->user_id = auth()->user()->id;
         $data = $stock->save();
 
         return response()->json($data);
@@ -413,20 +416,20 @@ class StockController extends Controller
 
     public function store(Request $request)
     {
-        if (Auth::user()->branch->id == '999') {
+        if (auth()->user()->branch->id == '999') {
             $add = new Warehouse;
             $add->category_id = $request->cat;
             $add->items_id = $request->item;
             $add->serial = $request->serial;
             $add->status = 'in';
-            $add->user_id = Auth::user()->id;
+            $add->user_id = auth()->user()->id;
             $data = $add->save();
         }else{
             $add = new Stock;
             $add->category_id = $request->cat;
-            $add->branch_id = Auth::user()->branch->id;
+            $add->branch_id = auth()->user()->branch->id;
             $add->items_id = $request->item;
-            $add->user_id = Auth::user()->id;
+            $add->user_id = auth()->user()->id;
             $add->serial = $request->serial;
             $add->status = 'in';
             $data = $add->save();
@@ -482,7 +485,7 @@ class StockController extends Controller
                     $stock->category_id = $item->category->id;
                     $stock->items_id = $item->id;
                     $stock->status = 'in';
-                    $stock->branch_id = Auth::user()->branch_id;
+                    $stock->branch_id = auth()->user()->branch_id;
                     $stock->serial = $serial;
                     //dd($stock);
                     $stock->save();
@@ -554,21 +557,21 @@ class StockController extends Controller
         $update = Stock::where('id', $request->item)->first();
         $update->status = 'replacement';
         $update->customer_branches_id = $request->custid;
-        $update->user_id = Auth::user()->id;
+        $update->user_id = auth()->user()->id;
         $update->save();
 
         $pullout = Pullout::where('id', $request->repdata)->first();
 
         $defective = new Defective;
-        $defective->branch_id = Auth::user()->branch->id;
-        $defective->user_id = Auth::user()->branch->id;
+        $defective->branch_id = auth()->user()->branch->id;
+        $defective->user_id = auth()->user()->branch->id;
         $defective->items_id = $pullout->items_id;
         $defective->serial = $pullout->serial;
         $defective->status = 'in';
         $defective->save();
 
         $pullout->status = 'replaced';
-        $pullout->user_id = Auth::user()->id;
+        $pullout->user_id = auth()->user()->id;
         $data = $pullout->save();
 
         return response()->json($data);

@@ -24,7 +24,7 @@
             @endif
 
             @if(Request::is('request'))
-                @if(Auth::user()->hasrole('Administrator'))
+                @if(auth()->user()->hasrole('Administrator'))
                     @include('modal.warehouse.request')
                     @include('modal.warehouse.send')
                     @include('modal.warehouse.add')
@@ -35,7 +35,7 @@
             @endif
 
             @if(Request::is('stocks'))
-                @if(Auth::user()->hasrole('Administrator'))
+                @if(auth()->user()->hasrole('Administrator'))
                     @include('modal.warehouse.add')
                     @include('modal.warehouse.category')
                     @include('modal.warehouse.item')
@@ -56,7 +56,9 @@
             @endif
 
             @if(Request::is('user'))
-                @include('modal.warehouse.user')
+                @if(auth()->user()->hasrole('Administrator'))
+                    @include('modal.warehouse.user')
+                @endif
             @endif
 
             @if(Request::is('loans'))
@@ -74,7 +76,9 @@
             <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
             
             @if(Request::is('user'))
-                @include('scripts.warehouse.user')
+                @if(auth()->user()->hasrole('Administrator'))
+                    @include('scripts.warehouse.user')
+                @endif
             @endif
 
             @if(Request::is('branch'))
@@ -82,7 +86,7 @@
             @endif
 
             @if(Request::is('request'))
-                @if(Auth::user()->hasrole('Administrator'))
+                @if(auth()->user()->hasrole('Administrator'))
                     @include('scripts.warehouse.request')
                 @else
                     @include('scripts.branch.request')
@@ -90,7 +94,7 @@
             @endif
 
             @if(Request::is('stocks'))
-                @if(Auth::user()->hasrole('Administrator'))
+                @if(auth()->user()->hasrole('Administrator'))
                     @include('scripts.warehouse.stock')
                 @else
                     @include('scripts.branch.stock')
@@ -109,10 +113,10 @@
                     @include('scripts.branch.loans')
             @endif
             @if(Request::is('return'))
-                @if(Auth::user()->branch->branch != 'Warehouse')
+                @if(auth()->user()->branch->branch != 'Warehouse')
                     @include('scripts.branch.defective')
                 @endif
-                @if(Auth::user()->branch->branch == 'Warehouse')
+                @if(auth()->user()->branch->branch == 'Warehouse')
                     @include('scripts.warehouse.defective')
                 @endif
             @endif

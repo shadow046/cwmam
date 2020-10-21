@@ -15,7 +15,7 @@
           <th>
             REQUESTED BY
           </th>
-          @if(Auth::user()->hasrole('Administrator'))
+          @if(auth()->user()->hasrole('Administrator'))
             <th>
               BRANCH NAME
             </th>
@@ -30,7 +30,7 @@
       </thead>
     </table>
   </div>
-  @if(!Auth::user()->hasrole('Administrator'))
+  @if(!auth()->user()->hasrole('Administrator'))
     <input type="button" id="reqBtn" class="btn btn-primary" value="REQUEST STOCKS">
   @endif
 @endsection

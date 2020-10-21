@@ -10,6 +10,11 @@ use App\Item;
 use App\Stock;
 class LoanController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,6 +22,9 @@ class LoanController extends Controller
      */
     public function index()
     {
+        if (auth()->user()->hasrole('Administrator')) {
+            return redirect('/');
+        }
         return view('pages.loan');
 
     }
@@ -24,7 +32,7 @@ class LoanController extends Controller
     public function tablerequest(Request $request)
     {
         $myloans = Loan::select('loans.id', 'branches.branch', 'branches.id as branchid', 'loans.updated_at', 'items.item', 'loans.status', 'loans.updated_at')
-            ->where('loans.from_branch_id', Auth::user()->branch->id)
+            ->where('loans.from_branch_id', auth()->user()->branch->id)
             ->where('loans.status', '!=', 'completed')
             ->join('branches', 'loans.to_branch_id', '=', 'branches.id')
             ->join('items', 'loans.items_id', '=', 'items.id')
@@ -59,7 +67,7 @@ class LoanController extends Controller
     {
 
         $loans = Loan::select('loans.id', 'branches.id as branchid', 'branches.branch', 'loans.updated_at', 'items.item', 'loans.status', 'loans.updated_at')
-            ->where('loans.to_branch_id', Auth::user()->branch->id)
+            ->where('loans.to_branch_id', auth()->user()->branch->id)
             ->where('loans.status', '!=', 'completed')
             ->join('branches', 'loans.from_branch_id', '=', 'branches.id')
             ->join('items', 'loans.items_id', '=', 'items.id')
@@ -99,20 +107,20 @@ class LoanController extends Controller
         $stock = Stock::where('id', $request->item)->first();
 
 
-        $update = Stock::where('id', $request->item)->where('branch_id', Auth::user()->branch->id)->first();
+        $update = Stock::where('id', $request->item)->where('branch_id', auth()->user()->branch->id)->first();
         $update->status = 'loan';
         $update->id_branch = $request->branch;
-        $update->user_id = Auth::user()->id;
+        $update->user_id = auth()->user()->id;
         $update->save();
 
         $add = new Stock;
         $add->category_id = $item->category_id;
         $add->branch_id = $request->branch;
         $add->items_id = $request->item;
-        $add->user_id = Auth::user()->id;
+        $add->user_id = auth()->user()->id;
         $add->serial = $stock->serial;
         $add->status = $request->id;
-        $add->id_branch = Auth::user()->branch->id;
+        $add->id_branch = auth()->user()->branch->id;
         $data = $add->save();
 
         return response()->json($data);
@@ -120,12 +128,12 @@ class LoanController extends Controller
 
     public function stockUpdate(Request $request)
     {
-        $update = Stock::where('branch_id', Auth::user()->branch->id)
+        $update = Stock::where('branch_id', auth()->user()->branch->id)
             ->where('status', $request->id)
             ->where('id_branch', $request->branch)
             ->first();
         $update->status = 'in';
-        $update->user_id = Auth::user()->id;
+        $update->user_id = auth()->user()->id;
         $data = $update->save();
 
         return response()->json($data);
@@ -139,7 +147,7 @@ class LoanController extends Controller
      */
     public function getitem(Request $request)
     {
-        $serial = Stock::where('branch_id', Auth::user()->branch->id)
+        $serial = Stock::where('branch_id', auth()->user()->branch->id)
             ->where('status', $request->id)
             ->where('id_branch', $request->branch)
             ->first();
@@ -168,7 +176,7 @@ class LoanController extends Controller
     {
         $loan = Loan::where('id', $request->id)->first();
         $loan->status = $request->status;
-        $loan->user_id = Auth::user()->id;
+        $loan->user_id = auth()->user()->id;
         $data = $loan->save();
 
         return response()->json($data);

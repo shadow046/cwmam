@@ -43,7 +43,7 @@
     </table>
   </div>
   <div class="d-flex">
-    @if(!Auth::user()->hasrole('Administrator'))
+    @if(!auth()->user()->hasrole('Administrator'))
       <input type="button" id="in_Btn" class="btn btn-xs btn-primary" value="SERVICE IN">&nbsp;
       <input type="button" id="out_Btn" class="btn btn-xs btn-primary" value="SERVICE OUT">&nbsp;
       <input type="button" id="loan_Btn" class="btn btn-xs btn-primary" value="LOAN UNIT">

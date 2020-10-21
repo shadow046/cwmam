@@ -55,7 +55,7 @@
                                 <option selected disabled>select roles</option>
                                 @role('Administrator')
                                     @foreach ($roles as $role)
-                                            @if( $role->id > Auth::user()->roles->first()->id)
+                                            @if( $role->id > auth()->user()->roles->first()->id)
                                                 <option value="{{ $role->name }}">{{ $role->name }}</option>
                                             @endif
                                     @endforeach
