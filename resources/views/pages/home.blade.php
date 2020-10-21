@@ -18,7 +18,7 @@
         <a href="{{ route('stocks.index')}}">
           <div class="card bg-card">
             <div class="card-body text-center">
-              <p class="card-text">STOCK</p>
+              <p class="card-text">STOCKS</p>
               <p class="card-text">{{ $units }}</p>
             </div>
           </div>

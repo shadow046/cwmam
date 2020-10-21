@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
-class UserLogController extends Controller
+use App\CustomerBranch;
+
+class CustomerController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -17,9 +21,24 @@ class UserLogController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.customer');
     }
 
+    public function customertable()
+    {
+
+        $customer = CustomerBranch::all();
+
+        return DataTables::of($customer)
+
+        ->addColumn('status', function (CustomerBranch $data){
+            return 'Active';
+
+        })
+        
+        ->make(true);
+
+    }
     /**
      * Show the form for creating a new resource.
      *

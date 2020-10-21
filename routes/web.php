@@ -18,13 +18,14 @@ Route::post('change-password', 'ChangePasswordController@store')->name('change.p
 
 Route::get('/', 'HomeController@index');
 //Route::get('service_center', 'BranchController@index');
-Route::get('customer', 'HomeController@customer');
 Route::get('service_units', 'HomeController@service_units');
 Route::get('spare_parts', 'HomeController@spare_parts');
 Route::get('activity', 'HomeController@activity')->name('get.activity');
 
 
 
+Route::get('customer-list', 'CustomerController@customertable')->name('customer.list');
+Route::get('customer', 'CustomerController@index')->name('customer.index');
 
 Route::put('return-update', 'DefectiveController@update')->name('return.update');
 Route::get('return-table', 'DefectiveController@table')->name('return.table');

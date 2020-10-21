@@ -92,29 +92,10 @@ class HomeController extends Controller
 
     }
     
-    public function customer()
-    {
-        return view('pages.customer');
-    }
-    public function stock_request()
-    {
-        return view('pages.stock-request');
-    }
-    public function users()
-    {
-        $users = User::all();
-        return view('pages.users', compact('users'));
-    }
-
     public function service_units()
     {
         $users = User::all();
         return view('pages.service-units', compact('users'));
     }
 
-    public function return()
-    {
-        $users = User::all();
-        return view('pages.return', compact('users'));
-    }
 }

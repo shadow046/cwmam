@@ -121,6 +121,9 @@
                 @endif
             @endif
             @include('scripts.home')
+            @if(Request::is('customer'))
+                @include('scripts.customer')
+            @endif
 
         </body>
     </html>
