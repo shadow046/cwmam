@@ -2,14 +2,20 @@
 
 @section('content')
   <div class="table-responsive">
-    <table class="table customerTable" id="customerTable">
+    <table class="table customerbranchTable" id="customerbranchTable">
       <thead class="thead-dark">
         <tr>
           <th>
-            CUSTOMER CODE
+            BRANCH CODE
           </th>
           <th>
-            CUSTOMER NAME
+            BRANCH NAME
+          </th>
+          <th>
+            PHONE 
+          </th>
+          <th>
+            STATUS 
           </th>
         </tr>
       </thead>

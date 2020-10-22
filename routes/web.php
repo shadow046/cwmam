@@ -16,15 +16,16 @@ Route::get('change-password', 'ChangePasswordController@index');
 Route::post('change-password', 'ChangePasswordController@store')->name('change.password');
 
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('home.index');
 //Route::get('service_center', 'BranchController@index');
 Route::get('service_units', 'HomeController@service_units');
 Route::get('spare_parts', 'HomeController@spare_parts');
 Route::get('activity', 'HomeController@activity')->name('get.activity');
 
 
-
+Route::get('customerbranch-list/{id}', 'CustomerController@customerbranchtable');
 Route::get('customer-list', 'CustomerController@customertable')->name('customer.list');
+Route::get('customer/{id}', 'CustomerController@branchindex')->name('customerbranch.index');
 Route::get('customer', 'CustomerController@index')->name('customer.index');
 
 Route::put('return-update', 'DefectiveController@update')->name('return.update');

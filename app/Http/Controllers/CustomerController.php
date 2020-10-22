@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 use App\CustomerBranch;
-
+use App\Customer;
 class CustomerController extends Controller
 {
 
@@ -27,18 +27,34 @@ class CustomerController extends Controller
     public function customertable()
     {
 
-        $customer = CustomerBranch::all();
+        $customer = Customer::all();
+
+        return DataTables::of($customer)
+
+        ->make(true);
+
+    }
+
+    public function branchindex(Request $request, $id)
+    {
+        return view('pages.customerbranch');
+    }
+
+    public function customerbranchtable($id)
+    {
+
+        $customer = CustomerBranch::where('customer_id', $id);
 
         return DataTables::of($customer)
 
         ->addColumn('status', function (CustomerBranch $data){
             return 'Active';
-
         })
-        
+
         ->make(true);
 
     }
+
     /**
      * Show the form for creating a new resource.
      *

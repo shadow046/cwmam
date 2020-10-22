@@ -120,11 +120,15 @@
                     @include('scripts.warehouse.defective')
                 @endif
             @endif
-            @include('scripts.home')
             @if(Request::is('customer'))
                 @include('scripts.customer')
             @endif
-
+            @if(Request::is('customer/*'))
+                @include('scripts.customerbranch')
+            @endif
+            @if(Request::is('/'))
+                @include('scripts.home')
+            @endif
         </body>
     </html>
 @else

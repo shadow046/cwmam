@@ -46,6 +46,7 @@
 
         interval = setInterval(function(){
             requesttable.draw();
+            table.draw();
         }, 30000);
 
     });
