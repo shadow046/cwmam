@@ -11,9 +11,7 @@
                     "emptyTable": " "
                 },
             ajax: '{{route("return.table")}}',
-            columnDefs: [
-                    {"className": "dt-center", "targets": "_all"}
-                ],
+            
             columns: [
                 { data: 'date', name:'date'},
                 { data: 'category', name:'category'},
@@ -69,6 +67,8 @@
         var branch = $('#branch_id').val();
         var id = $('#myid').val();
         var status = 'For receiving';
+        console.log(branch);
+        console.log(id+'id');
         $.ajax({
             url: '{{route("return.update")}}',
             dataType: 'json',
@@ -77,11 +77,13 @@
                 id: id,
                 branch: branch,
                 status: status
-
             },
             success:function(data)
             {
                 window.location.href = '{{route('return.index')}}';
+            },
+            error: function (data,error, errorThrown) {
+                alert(data.responseText);
             }
         });
     });

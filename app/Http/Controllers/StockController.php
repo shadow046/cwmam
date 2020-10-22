@@ -33,6 +33,12 @@ class StockController extends Controller
     public function index()
     {
         $categories = Category::all();
+            /*select('categories.category')
+            ->join('categories', 'stocks.category_id', '=', 'categories.id')
+            ->where('stocks.status', 'in')
+            ->where('branch_id', auth()->user()->branch->id)
+            ->groupBy('stocks.category_id')
+            ->get();*/
         $service_units = Stock::where('branch_id', auth()->user()->branch->id)
             ->where('status', 'service unit')
             ->join('categories', 'stocks.category_id', '=', 'categories.id')

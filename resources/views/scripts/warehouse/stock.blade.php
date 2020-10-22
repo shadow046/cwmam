@@ -14,9 +14,7 @@
             processing: true,
             serverSide: true,
             ajax: '{{route('stocks.show')}}',
-            columnDefs: [
-                    {"className": "dt-center", "targets": "_all"}
-                ],
+            
             columns: [
                 { data: 'category', name:'category', color: 'black'},
                 { data: 'items_id', name:'items_id'},

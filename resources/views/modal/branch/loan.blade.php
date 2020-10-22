@@ -27,7 +27,7 @@
                         <label class="col-md-5 col-form-label text-md-right">Branch Name:</label>
                         <div class="col-md-7">
                             <select style="color: black" class="form-control form-control-sm " id="loanbranch">
-                                <option selected disabled>select category</option>
+                                <option selected disabled>select branch</option>
                                 @foreach ($branches as $branch)
                                     <option value="{{ $branch->id }}">{{ $branch->branch }}</option>
                                 @endforeach

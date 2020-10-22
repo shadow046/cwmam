@@ -14,9 +14,7 @@
                     "emptyTable": " "
                 },
             ajax: '{{route("return.table")}}',
-            columnDefs: [
-                    {"className": "dt-center", "targets": "_all"}
-                ],
+            
             columns: [
                 { data: 'date', name:'date'},
                 { data: 'branch', name:'branch'},

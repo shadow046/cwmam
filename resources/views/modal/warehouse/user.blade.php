@@ -62,14 +62,13 @@
                                 <option selected disabled>select roles</option>
                                 @role('Administrator')
                                     @foreach ($roles as $role)
-                                            @if( $role->id > auth()->user()->roles->first()->id)
-                                                <option value="{{ $role->name }}">{{ $role->name }}</option>
-                                            @endif
+                                        <option value="{{ $role->name }}">{{ $role->name }}</option>
                                     @endforeach
-                                @else
-                                    @foreach ($roles as $role)
-                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
-                                    @endforeach
+                                @endrole
+                                @role('Head')
+                                    @if( $role->id > auth()->user()->roles->first()->id)
+                                        <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                    @endif
                                 @endrole
                             </select>
                         </div>

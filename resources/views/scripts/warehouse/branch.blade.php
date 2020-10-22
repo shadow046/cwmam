@@ -55,9 +55,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: "/stocks/"+id,
-                columnDefs: [
-                    {"className": "dt-center", "targets": "_all"}
-                ],
+                
                 columns: [
                     { data: 'items_id', name:'items_id', "width": "20%",},
                     { data: 'item', name:'item', "width": "17%"},

@@ -71,11 +71,18 @@ class BranchController extends Controller
 
     public function getBranches()
     {
-
-        $branches = Branch::select('branches.*', 'areas.area',)
+        if (auth()->user()->roles->first()->name == 'Administrator') {
+            $branches = Branch::select('branches.*', 'areas.area',)
                 ->where('branches.id', '!=', auth()->user()->branch->id)
                 ->join('areas', 'areas.id', '=', 'branches.area_id')
                 ->get();
+        }else{
+            $branches = Branch::select('branches.*', 'areas.area',)
+                ->where('branches.id', '!=', auth()->user()->branch->id)
+                ->where('branches.area_id', '=', auth()->user()->area->id)
+                ->join('areas', 'areas.id', '=', 'branches.area_id')
+                ->get();
+        }
         //dd($branches);
         return DataTables::of($branches)
         ->setRowData([

@@ -230,9 +230,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: "/pull-details/"+id,
-                columnDefs: [
-                    {"className": "dt-center", "targets": "_all"}
-                ],
+                
                 columns: [
                     { data: 'date', name:'date'},
                     { data: 'category', name:'category'},

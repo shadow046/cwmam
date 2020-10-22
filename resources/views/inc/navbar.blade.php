@@ -10,7 +10,7 @@
                 </li>
                 @role('Administrator')
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('customer') ? 'active' : '' }}" href="{{ url('customer') }}">Customer</a>
+                    <a class="nav-link {{ Request::is('customer') ? 'active' : '' }} {{ Request::is('customer/*') ? 'active' : '' }}" href="{{ url('customer') }}">Customer</a>
                 </li>
                 @endrole
                 </li>

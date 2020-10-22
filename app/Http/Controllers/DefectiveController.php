@@ -40,7 +40,7 @@ class DefectiveController extends Controller
      */
     public function table()
     {
-        $defective = Defective::select('defectives.updated_at', 'defectives.id as id', 'items.item', 'items.id as itemid', 'defectives.serial', 'defectives.status')
+        $defective = Defective::select('defectives.updated_at', 'branch_id as branchid', 'defectives.id as id', 'items.item', 'items.id as itemid', 'defectives.serial', 'defectives.status')
             ->where('branch_id', auth()->user()->branch->id)
             ->join('items', 'defectives.items_id', '=', 'items.id')
             ->where('status', '!=', 'received')
@@ -133,15 +133,13 @@ class DefectiveController extends Controller
      */
     public function update(Request $request)
     {
-
-
         if (auth()->user()->branch->branch != 'Warehouse') {
             $update = Defective::where('branch_id', auth()->user()->branch->id)
                 ->where('id', $request->id)
-                ->where('status', 'in')
+                ->where('status', 'For return')
                 ->first();
             $item = Item::where('id', $update->items_id)->first();
-            $branch = Branch::where('id', $update->branch_id)->first();
+            $branch = Branch::where('id', auth()->user()->branch->id)->first();
 
             $log = new UserLog;
             $log->activity = "Receive defective $item->item from $branch->branch." ;
@@ -163,7 +161,7 @@ class DefectiveController extends Controller
         $update->status = $request->status;
         $update->user_id = auth()->user()->id;
         $data = $update->save();
-
+        //dd($data);
         return response()->json($data);
 
     }

@@ -12,9 +12,7 @@
             processing: true,
             serverSide: true,
             ajax: '{{route("stock.sUnit")}}',
-            columnDefs: [
-                    {"className": "dt-center", "targets": "_all"}
-                ],
+            
             columns: [
                 { data: 'date', name:'date'},
                 { data: 'client', name:'client'},
