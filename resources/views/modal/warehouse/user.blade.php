@@ -12,6 +12,7 @@
                 <form id="userForm">
                     {{ csrf_field() }}
                     <input type="hidden" name="myid" id="myid">
+                    <input type="text" hidden id="myrole" value="{{ auth()->user()->roles->first()->id }}">
                     <div class="form-group row">
                         <label for="first_name" class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
                         <div class="col-md-6">
@@ -66,9 +67,12 @@
                                     @endforeach
                                 @endrole
                                 @role('Head')
-                                    @if( $role->id > auth()->user()->roles->first()->id)
-                                        <option value="{{ $role->name }}">{{ $role->name }}</option>
-                                    @endif
+                                    @foreach ($roles as $role)
+                                        @if( $role->id > auth()->user()->roles->first()->id)
+                                            <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                        @endif
+                                    @endforeach
+
                                 @endrole
                             </select>
                         </div>
@@ -104,9 +108,7 @@
 
                     <div class="modal-footer">
                         <input type="button" class="btn btn-primary" data-dismiss="modal" value="Close">
-                        @role('Administrator')
                         <input type="submit" id="subBtn" class="btn btn-primary" value="Update">
-                        @endrole
                     </div>
                 </form>
             </div>  

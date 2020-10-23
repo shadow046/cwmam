@@ -73,7 +73,7 @@
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
-                        <input type="text" id="poutserial1" class="form-control poutserial" row_count="1" style="color: black;" value="N/A">
+                        <input type="text" id="poutserial1" class="form-control poutserial" row_count="1" style="color: black;" placeholder="serial">
                     </div>
                     <div class="col-md-1 form-group">
                         <input type="button" class="pout_add_item btn btn-xs btn-primary" btn_id="1" value="Add Item">

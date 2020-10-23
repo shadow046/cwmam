@@ -56,9 +56,7 @@
             @endif
 
             @if(Request::is('user'))
-                @if(auth()->user()->hasrole('Administrator'))
                     @include('modal.warehouse.user')
-                @endif
             @endif
 
             @if(Request::is('loans'))
@@ -76,9 +74,7 @@
             <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
             
             @if(Request::is('user'))
-                @if(auth()->user()->hasrole('Administrator'))
-                    @include('scripts.warehouse.user')
-                @endif
+                @include('scripts.warehouse.user')
             @endif
 
             @if(Request::is('branch'))

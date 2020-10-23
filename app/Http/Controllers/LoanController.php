@@ -17,33 +17,24 @@ class LoanController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         if (auth()->user()->hasrole('Administrator')) {
             return redirect('/');
         }
         return view('pages.loan');
-
     }
 
-    public function getItemCode(Request $request){
-        
-
+    public function getItemCode(Request $request)
+    {
         $cat = Item::select('category_id')
             ->where('items.id', $request->id)
             ->first();
-        
         $items = Item::select('item', 'id')
             ->where('category_id', $cat->category_id)
             ->get();
-        
         return response()->json($items);
-        
     }
 
     public function table(Request $request)
@@ -54,7 +45,6 @@ class LoanController extends Controller
             ->join('branches', 'loans.to_branch_id', '=', 'branches.id')
             ->join('items', 'loans.items_id', '=', 'items.id')
             ->get();
-
         $loans = Loan::select('loans.id', 'loans.items_id', 'loans.to_branch_id', 'loans.from_branch_id', 'branches.id as branchid', 'branches.branch', 'loans.updated_at', 'items.item', 'loans.status', 'loans.updated_at')
             ->where('loans.to_branch_id', auth()->user()->branch->id)
             ->where('loans.status', '!=', 'completed')
@@ -77,34 +67,14 @@ class LoanController extends Controller
             }else{
                 return 'OUT-BOUND';
             }
-
         })
 
         ->make(true);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function stock(Request $request)
     {
-
         $item = Item::where('id', $request->item)->first();
         $stock = Stock::where('id', $request->item)->first();
-
 
         $update = Stock::where('id', $request->item)->where('branch_id', auth()->user()->branch->id)->first();
         $update->status = 'loan';
@@ -140,16 +110,9 @@ class LoanController extends Controller
         $log->user_id = auth()->user()->id;
         $log->save();
         $data = $update->save();
-
         return response()->json($data);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function getitem(Request $request)
     {
         $serial = Stock::where('branch_id', auth()->user()->branch->id)
@@ -159,27 +122,8 @@ class LoanController extends Controller
         return response()->json($serial);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request)
     {
-
         $loan = Loan::where('id', $request->id)->first();
         $branch = Branch::where('id', $loan->from_branch_id)->first();
         $item = Item::where('id', $loan->items_id)->first();
@@ -190,18 +134,6 @@ class LoanController extends Controller
         $log->user_id = auth()->user()->id;
         $log->save();
         $data = $loan->save();
-
         return response()->json($data);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

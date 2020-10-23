@@ -18,11 +18,6 @@ class DefectiveController extends Controller
         $this->middleware('auth');
     }
     
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $users = User::all();
@@ -33,11 +28,6 @@ class DefectiveController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function table()
     {
         $defective = Defective::select('defectives.updated_at', 'branch_id as branchid', 'defectives.id as id', 'items.item', 'items.id as itemid', 'defectives.serial', 'defectives.status')
@@ -51,7 +41,6 @@ class DefectiveController extends Controller
             ->join('items', 'defectives.items_id', '=', 'items.id')
             ->join('branches', 'defectives.branch_id', '=', 'branches.id')
             ->get();
-        //dd($defective);
 
         if (auth()->user()->branch->branch == 'Warehouse') {
             $data = $waredef;
@@ -62,7 +51,6 @@ class DefectiveController extends Controller
         
         ->addColumn('date', function (Defective $data){
             return $data->updated_at->toFormattedDateString().' '.$data->updated_at->toTimeString();
-
         })
 
         ->addColumn('category', function (Defective $data){
@@ -71,9 +59,7 @@ class DefectiveController extends Controller
                 ->where('items.id', $data->itemid)
                 ->join('categories', 'items.category_id', '=', 'categories.id')
                 ->first();
-
             return $cat->category;
-
         })
 
         ->addColumn('status', function (Defective $data){
@@ -83,54 +69,11 @@ class DefectiveController extends Controller
             }else{
                 return $data->status;
             }
-
-
         })
-
 
         ->make(true);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request)
     {
         if (auth()->user()->branch->branch != 'Warehouse') {
@@ -161,19 +104,7 @@ class DefectiveController extends Controller
         $update->status = $request->status;
         $update->user_id = auth()->user()->id;
         $data = $update->save();
-        //dd($data);
         return response()->json($data);
 
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

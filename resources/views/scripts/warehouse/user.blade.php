@@ -97,10 +97,12 @@
                 $('#email').val('');
                 $('#password').val('');
                 $('#password_confirmation').val('');
-                $('role').val('select role');
+                if ($('#myrole').val() == 2) {
+                    $('#role').val('Tech');   
+                }
                 $('#area').val('select area');
                 $('#branch').val('select branch');
-                $('#status').val('select status');
+                $('#status').val('1');
                 $('#first_name').prop('disabled', false);
                 $('#last_name').prop('disabled', false);
                 $('#email').prop('disabled', false);

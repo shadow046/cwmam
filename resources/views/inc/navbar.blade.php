@@ -34,11 +34,11 @@
 
             </ul>
             <ul class="nav">
-                @role('Administrator')
+                @hasanyrole('Administrator|Head')
                 <li class="nav-item mr-1">
                     <a class="nav-link {{ Request::is('user') ? 'active' : '' }}" href="{{ url('user') }}">Users</a>
                 </li>
-                @endrole
+                @endhasanyrole
                 <li class="nav-item">
                     <a href="{{route('logout')}}" class="nav-link">logout</a>
                 </li>

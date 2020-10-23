@@ -28,7 +28,7 @@ class UserController extends Controller
         $users = User::all();
         $areas = Area::all();
         $roles = Role::all();
-        if (!auth()->user()->hasrole('Administrator')) {
+        if (!auth()->user()->hasanyrole('Administrator|Head')) {
             return redirect('/');
         }
         return view('pages.user', compact('users', 'areas','roles'));
