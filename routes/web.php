@@ -69,6 +69,7 @@ Route::get('show', 'StockController@show')->name('stocks.show');
 Route::get('stocks', 'StockController@index')->name('stocks.index');
 
 
+Route::POST('storerreceived', 'StockRequestController@received')->name('stock.received.request');
 Route::get('gen', 'StockRequestController@generateBarcodeNumber')->name('stock.gen');
 Route::put('update', 'StockRequestController@update')->name('stock.update');
 Route::post('storerequest', 'StockRequestController@store')->name('stock.store.request');

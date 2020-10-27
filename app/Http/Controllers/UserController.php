@@ -31,13 +31,24 @@ class UserController extends Controller
         if (!auth()->user()->hasanyrole('Administrator|Head')) {
             return redirect('/');
         }
+        if (auth()->user()->hasrole('Head')) {
+            $areas = Area::where('id', auth()->user()->area->id)->get();
+        }
+
         return view('pages.user', compact('users', 'areas','roles'));
     }
 
     public function getUsers()
     {
-        
-        return DataTables::of(User::where('id', '!=', auth()->user()->id))
+        if (!auth()->user()->hasrole('Administrator')) {
+            $user = User::where('id', '!=', auth()->user()->id)
+                ->where('branch_id', auth()->user()->branch->id)
+                ->get();
+        }else{
+            $user = User::where('id', '!=', auth()->user()->id)->get();
+        }
+
+        return DataTables::of($user)
         ->setRowData([
             'data-id' => '{{$id}}',
             'data-status' => '{{ $status }}',
@@ -76,6 +87,9 @@ class UserController extends Controller
     public function getBranchName(Request $request)
     {
         $data = Branch::select('branch', 'id')->where('area_id', $request->id)->get();
+        if (auth()->user()->hasrole('Head')) {
+            $data = Branch::where('id', auth()->user()->branch->id)->get();
+        }
         //dd($data);
         return response()->json($data);
     }
@@ -112,9 +126,9 @@ class UserController extends Controller
         if ($validator->passes()) {
 
             $user = new User;
-
-            $user->name = $request->input('first_name');
-            $user->lastname = $request->input('last_name');
+            
+            $user->name = ucwords(strtolower($request->input('first_name')));
+            $user->lastname = ucwords(strtolower($request->input('last_name')));
             $user->email = $request->input('email');
             $user->area_id = $request->input('area');
             $user->branch_id = $request->input('branch');
@@ -175,8 +189,8 @@ class UserController extends Controller
         if ($validator->passes()) {
 
             $user = User::find($id);
-            $user->name = $request->input('first_name');
-            $user->lastname = $request->input('last_name');
+            $user->name = ucwords(strtolower($request->input('first_name')));
+            $user->lastname = ucwords(strtolower($request->input('last_name')));
             $user->email = $request->input('email');
             $user->area_id = $request->input('area');
             $user->branch_id = $request->input('branch');

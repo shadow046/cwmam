@@ -301,13 +301,15 @@
                 if (q == y) {
                     if (check > 1) {
                         var stat = "ok";
+                        var status = "1";
                         $.ajax({
                             url: '{{route("stock.update")}}',
                             type: 'PUT',
                             data: { 
                                 reqno: reqno,
                                 datesched: datesched,
-                                stat: stat
+                                stat: stat,
+                                status: status
                             },
                             dataType: 'json',
                         });

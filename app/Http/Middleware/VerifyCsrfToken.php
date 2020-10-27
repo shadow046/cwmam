@@ -37,5 +37,6 @@ class VerifyCsrfToken extends Middleware
         'loanstock',
         'loanupdate',
         'return-update',
+        'storerreceived',
     ];
 }

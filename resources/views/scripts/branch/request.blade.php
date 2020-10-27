@@ -38,15 +38,7 @@
             var trdata = table.row(this).data();
             var dtdata = $('#requestTable tbody tr:eq(0)').data();
             //$('#requestModal').modal('show');
-            if (trdata.status == 'SCHEDULED') {
-                $('#prcBtn').hide();
-                $('.sched').show();
-                $('#sched').val(trdata.sched);
-            }else if(trdata.status == 'PENDING'){
-                $('#prcBtn').show();
-                $('.sched').hide();
-                $('#sched').val('');
-            }
+            
             $('#date').val(trdata.created_at);
             $('#reqno').val(trdata.request_no);
             $('#branch').val(trdata.branch);
@@ -58,7 +50,9 @@
             if (trdata.status == 'PENDING') {
                 $('table.schedDetails').hide();
                 $('table.requestDetails').show();
+                $('.sched').hide();
                 $('#del_Btn').show();
+                $('#rec_Btn').hide();
                 $('#del_Btn').attr('reqno', trdata.request_no);
                 $('table.requestDetails').DataTable({ //user datatables
                     "dom": 'lrtip',
@@ -80,8 +74,11 @@
                 });
             }else if(trdata.status == 'SCHEDULED'){
                 $('table.requestDetails').hide();
+                $('.sched').show();
                 $('table.schedDetails').show();
+                $('#sched').val(trdata.sched);
                 $('#del_Btn').hide();
+                $('#rec_Btn').show();
                 $('table.schedDetails').DataTable({ //user datatables
                     "dom": 'lrtip',
                     "language": {
@@ -100,7 +97,6 @@
                     ]
                 });
             }
-            
             $('#requestModal').modal('show');
         });
     });
@@ -117,6 +113,48 @@
             success: function(){
                 alert("Pending Request Deleted!!!");
                 window.location.href = '{{route('stock.index')}}';
+            }
+        });
+    });
+
+    $(document).on('click', '#rec_Btn', function(){
+        var reqno = $('#reqno').val();
+        var status = "2";
+        var stat = "ok";
+        var datesched = $('#sched').val();
+        console.log(datesched);
+        $.ajax({
+            url: '{{route("stock.update")}}',
+            dataType: 'json',
+            type: 'PUT',
+            data: {
+                reqno : reqno,
+                status: status,
+                datesched: datesched,
+                stat: stat                    
+            },
+            success: function(){
+                //alert("Pending Request Deleted!!!");
+                //window.location.href = '{{route('stock.index')}}';
+            },
+            error: function (data,error, errorThrown) {
+                alert(data.responseText);
+            }
+        });
+
+        $.ajax({
+            url: '{{route("stock.received.request")}}',
+            dataType: 'json',
+            type: 'POST',
+            data: {
+                reqno : reqno     
+            },
+            success: function(){
+                //alert("Pending Request Deleted!!!");
+                //window.location.href = '{{route('stock.index')}}';
+            },
+            error: function (data,error, errorThrown) {
+                alert(data.responseText);
             }
         });
     });

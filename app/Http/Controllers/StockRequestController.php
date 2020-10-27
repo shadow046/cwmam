@@ -204,16 +204,43 @@ class StockRequestController extends Controller
         return response()->json($data);
     }
 
+
+    public function received(Request $request)
+    {
+        $preparedItems = PreparedItem::select('prepared_items.items_id as itemid', 'prepared_items.serial as serial')
+            ->join('items', 'prepared_items.items_id', '=', 'items.id')
+            //->join('categories', 'items.category_id', '=', 'categories.id')
+            ->where('branch_id', auth()->user()->branch->id)
+            ->where('request_no', $request->reqno)
+            ->get();
+        foreach ($preparedItems as $preparedItem) {
+            
+            $items = Item::where('id', $preparedItem->itemid)->first();
+            //dd($items);
+            $stock = new Stock;
+            $stock->category_id = $items->category_id;
+            $stock->branch_id = auth()->user()->branch->id;
+            $stock->items_id = $preparedItem->itemid;
+            $stock->user_id = auth()->user()->id;
+            $stock->serial = $preparedItem->serial;
+            $stock->status = 'in';
+            $data = $stock->save();
+        }
+            
+        return response()->json($data);
+    }
+
     public function update(Request $request)
     {
         if ($request->stat == 'ok') {
             $reqno = StockRequest::where('request_no', $request->reqno)->first();
-            $reqno->status = '1';
+            //dd($reqno);
+            $reqno->status = $request->status;
             $reqno->user_id = auth()->user()->id;
             $reqno->schedule = $request->datesched;
             $data = $reqno->save();
         }else{
-            $reqbranch= StockRequest::where('request_no', $request->reqno)->first();
+            $reqbranch= StockRequest::where('request_no', $request->reqno)->where('branch_id', auth()->user()->branch->id)->first();
             $item = Warehouse::where('status', 'in')
                 ->where('items_id', $request->item)
                 ->where('serial', $request->serial)

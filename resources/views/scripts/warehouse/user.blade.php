@@ -22,6 +22,9 @@
             "dom": 'lrtip',
             processing: true,
             serverSide: true,
+            "language": {
+                "emptyTable": "No registered user to this branch"
+            },
             ajax: '{{route('get.users')}}',
             columns: [
                 { data: 'fname', name:'fname' },
@@ -51,38 +54,32 @@
             $('#branch').prop('disabled', false);
             $('#status').prop('disabled', false);
             $('#userModal').modal('show');
-            selectBranch(branch, function() {
-                $('#first_name').val(trdata.name);
-                $('#last_name').val(trdata.lastname);
-                $('#email').val(trdata.email);
-                $('#area').val(area);
-                $('#branch').val(trdata.branch_id);
-
+            $.ajax({
+                type:'get',
+                url:'{{route("user.getBranch")}}',
+                data:{'id':area},
+                async: false,
+                success:function(data)
+                {
+                    //console.log('success');
+                    console.log(data);
+                    //console.log(data.length);
+                    op+='<option selected disabled>select branch</option>';
+                    for(var i=0;i<data.length;i++){
+                        op+='<option value="'+data[i].id+'">'+data[i].branch+'</option>';
+                    }
+                    $('#branch').find('option').remove().end().append(op);
+                    $('#branch').val(trdata.branch_id);
+                },
             });
+            $('#first_name').val(trdata.name);
+            $('#last_name').val(trdata.lastname);
+            $('#email').val(trdata.email);
+            $('#area').val(area);
             $('#role').val(trdata.role);
             $('#status').val(dtdata.dataStatus);
             $('#subBtn').val('Update');
 
-            function selectBranch(branch, callback) {
-                $.ajax({
-                    type:'get',
-                    url:'{{route("user.getBranch")}}',
-                    data:{'id':area},
-                    async: false,
-                    success:function(data)
-                    {
-                        //console.log('success');
-                        console.log(data);
-                        //console.log(data.length);
-                        op+='<option selected disabled>select branch</option>';
-                        for(var i=0;i<data.length;i++){
-                            op+='<option value="'+data[i].id+'">'+data[i].branch+'</option>';
-                        }
-                        $('#branch').find('option').remove().end().append(op);
-                        callback();
-                    },
-                });
-            }
         });
         
         $('#addBtn').on('click', function(e){ //show user/branch modal
@@ -117,29 +114,28 @@
         $('.area').change(function(){ //get branches of this area
             var area = $(this).val();
             var op=" ";
-            selectBranch(branch, function() {
-                $('#branch').val('select branch');
+            
+            $.ajax({
+                type:'get',
+                url:'{{route("user.getBranch")}}',
+                data:{'id':area},
+                success:function(data)
+                {
+                    //console.log('success');
+                    //console.log(data);
+                    //console.log(data.length);
+                    op+='<option selected disabled>select branch</option>';
+                    for(var i=0;i<data.length;i++){
+                        op+='<option value="'+data[i].id+'">'+data[i].branch+'</option>';
+                    }
+                    $('#branch').find('option').remove().end().append(op);
+                    if (data.length == 1) {
+                        $('#branch').val('1');
+                    }else{
+                        $('#branch').val('select branch');
+                    }
+                },
             });
-
-            function selectBranch(branch, callback) {
-                $.ajax({
-                    type:'get',
-                    url:'{{route("user.getBranch")}}',
-                    data:{'id':area},
-                    success:function(data)
-                    {
-                        //console.log('success');
-                        //console.log(data);
-                        //console.log(data.length);
-                        op+='<option selected disabled>select branch</option>';
-                        for(var i=0;i<data.length;i++){
-                            op+='<option value="'+data[i].id+'">'+data[i].branch+'</option>';
-                        }
-                        $('#branch').find('option').remove().end().append(op);
-                        callback();
-                    },
-                });
-            }
         });
 
         $('#userForm').on('submit', function(e){ //user modal update/save button

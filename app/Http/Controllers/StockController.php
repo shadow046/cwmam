@@ -208,31 +208,13 @@ class StockController extends Controller
 
     public function viewStocks(Request $request)
     {
-        $stock = Stock::select('category_id','items_id', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
+        $stock = Stock::select('categories.category', 'stocks.items_id as items_id', 'items.item as description', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as quantity'))
             ->where('status', 'in')
             ->where('branch_id', auth()->user()->branch->id)
+            ->join('categories', 'stocks.category_id', '=', 'categories.id')
+            ->join('items', 'stocks.items_id', '=', 'items.id')
             ->groupBy('items_id')->get();
-        return DataTables::of($stock)
-       
-        ->addColumn('items_id', function (Stock $request){
-            return $request->items_id;
-        })
-
-        ->addColumn('category', function (Stock $request){
-            $cat = Category::find($request->category_id);
-            return strtoupper($cat->category);
-        })
-
-        ->addColumn('description', function (Stock $request){
-            $item = Item::where('id', $request->items_id)->first();
-            return strtoupper($item->item);
-        })
-
-        ->addColumn('quantity', function (Stock $request){
-            return $request->stock;
-        })
-
-        ->make(true);
+        return DataTables::of($stock)->make(true);
     }
 
     public function addItem(Request $request)

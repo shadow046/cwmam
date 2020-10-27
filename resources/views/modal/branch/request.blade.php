@@ -73,6 +73,7 @@
             </div>
             <div class="modal-footer">
                 <input type="button" class="btn btn-primary del_Btn" id="del_Btn" reqno="0" class="button" value="Delete">
+                <input type="button" class="btn btn-primary rec_Btn" id="rec_Btn" class="button" value="Received">
             </div>
         </div>
     </div>
