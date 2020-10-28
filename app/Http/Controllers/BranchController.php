@@ -46,10 +46,10 @@ class BranchController extends Controller
                         (
                             'SUM(CASE WHEN stocks.status = \'service unit\' THEN 1 ELSE 0 END) as stock_out'
                         ),
-                        DB::raw
-                        (
-                            'SUM(CASE WHEN stocks.status = \'in\' THEN 1 ELSE 0 END) + SUM(CASE WHEN stocks.status = \'service unit\' THEN 1 ELSE 0 END) as stock'
-                        )
+                        #DB::raw
+                        #(
+                        #    'SUM(CASE WHEN stocks.status = \'in\' THEN 1 ELSE 0 END) + SUM(CASE WHEN stocks.status = \'service unit\' THEN 1 ELSE 0 END) as stock'
+                        #)
                     )
             ->join('stocks', 'stocks.items_id', '=', 'items.id')
             ->where('branch_id', $id)
