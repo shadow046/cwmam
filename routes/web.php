@@ -52,7 +52,7 @@ Route::get('description', 'StockController@description')->name('stock.descriptio
 Route::get('category', 'StockController@category')->name('stock.category');
 Route::get('bcategory', 'StockController@bcategory')->name('stock.bcategory');
 Route::get('bitem', 'StockController@bitem')->name('stock.bitem');
-Route::get('bserial', 'StockController@bserial')->name('stock.bserial');
+Route::get('bserial/{id}', 'StockController@bserial')->name('stock.bserial');
 Route::get('service-unit', 'StockController@service')->name('stock.service-unit');
 Route::get('sUnit', 'StockController@serviceUnit')->name('stock.sUnit');
 Route::get('pclient-autocomplete', 'StockController@pautocompleteClient')->name('pclient.autocomplete');

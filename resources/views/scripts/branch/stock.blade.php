@@ -4,6 +4,7 @@
     var b =1;
     var table;
     var branchid;
+    var stock;
     $(document).ready(function()
     {
         branchid = $('#branchid').attr('branchid');
@@ -311,55 +312,28 @@
     });
 
 
-    /*$(document).on("click", "#stockTable tr", function () {
+    $(document).on("click", "#stockTable tr", function () {
         var dtdata = $('#stockTable tbody tr:eq(0)').data();
         var trdata = table.row(this).data();
-        var catid = trdata.category_id;
-        var id = trdata.id;
-        repdata = trdata.id;
-        var repOp = " ";
-        console.log(trdata.id);
-        $("#replacementTableModal .closes").click();
-        $('#replaceselectcustomer').val($('#replacementcustomer').val());
-        $('#replaceselectclient').val($('#replacementclient').val());
-        var replace1Table =
-        $('table.replacement1Details').DataTable({ //user datatables
+        var id = trdata.items_id;
+        $('table.stockDetails').dataTable().fnDestroy();
+        $('#head').text(trdata.category);
+        $('#stockModal').modal({backdrop: 'static', keyboard: false});
+        stock = 
+        $('table.stockDetails').DataTable({ //user datatables
             "dom": 'rt',
             "language": {
-                "emptyTable": " "
+                "emptyTable": "No Stock Available for this Item"
             },
             processing: true,
             serverSide: true,
-            ajax: "/pull-details1/"+id,
-            columnDefs: [
-                {"className": "dt-center", "targets": "_all"}
-            ],
+            ajax: "/bserial/"+id,
             columns: [
-                { data: 'date', name:'date'},
-                { data: 'category', name:'category'},
-                { data: 'items_id', name:'items_id'},
+                { data: 'updated_at', name:'updated_at'},
                 { data: 'item', name:'item'},
                 { data: 'serial', name:'serial'}
             ]
         });
-        $('#replacementSelectModal').modal({backdrop: 'static', keyboard: false});
-
-        $.ajax({
-            type:'get',
-            url:'{{route("stock.get.itemcode")}}',
-            data:{'id':catid},
-            success:function(data)
-            {
-                //codeOp+='<option selected value="select" disabled>select item code</option>';
-                repOp+='<option selected value="select" disabled>select description</option>';
-                for(var i=0;i<data.length;i++){
-                    //codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
-                    repOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
-                }
-                //$("#outitem" + count).find('option').remove().end().append(codeOp);
-                $("#repdesc1").find('option').remove().end().append(repOp);
-            },
-        });
-    });*/
+    });
 
 </script>

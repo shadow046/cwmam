@@ -76,15 +76,14 @@ class StockController extends Controller
         return response()->json($item);
     }
 
-    public function bserial(Request $request){
-        $serial = Stock::select('stocks.id', 'stocks.serial', 'items.item')
-            ->where('stocks.branch_id', $request->branchid)
-            ->where('stocks.items_id', $request->itemid)
+    public function bserial($id){
+        $serial = Stock::select('items.item', 'stocks.*')
+            ->where('stocks.branch_id', auth()->user()->branch->id)
+            ->where('stocks.items_id', $id)
             ->where('stocks.status', 'in')
             ->join('items', 'stocks.items_id', '=', 'items.id')
-            ->groupBy('stocks.items_id')
             ->get();
-        return response()->json($serial);
+        return DataTables::of($serial)->make(true);
     }
 
     public function description(Request $request){

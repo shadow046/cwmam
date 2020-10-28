@@ -51,6 +51,7 @@
                     @include('modal.branch.replacement')
                     @include('modal.branch.replace-details')
                     @include('modal.branch.replace-details-select')
+                    @include('modal.branch.stock')
                 @endif
             @endif
 
