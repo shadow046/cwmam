@@ -23,7 +23,12 @@ class LoanController extends Controller
         if (auth()->user()->hasrole('Administrator')) {
             return redirect('/');
         }
-        return view('pages.loan');
+
+        $branches = Branch::where('area_id', auth()->user()->area->id)
+            ->where('id', '!=', auth()->user()->branch->id)
+            ->get();
+
+        return view('pages.loan', compact('branches'));
     }
 
     public function getItemCode(Request $request)
@@ -42,12 +47,14 @@ class LoanController extends Controller
         $myloans = Loan::select('loans.id', 'loans.items_id', 'loans.to_branch_id', 'loans.from_branch_id', 'branches.id as branchid', 'branches.branch', 'loans.updated_at', 'items.item', 'loans.status', 'loans.updated_at')
             ->where('loans.from_branch_id', auth()->user()->branch->id)
             ->where('loans.status', '!=', 'completed')
+            ->where('loans.status', '!=', 'deleted')
             ->join('branches', 'loans.to_branch_id', '=', 'branches.id')
             ->join('items', 'loans.items_id', '=', 'items.id')
             ->get();
         $loans = Loan::select('loans.id', 'loans.items_id', 'loans.to_branch_id', 'loans.from_branch_id', 'branches.id as branchid', 'branches.branch', 'loans.updated_at', 'items.item', 'loans.status', 'loans.updated_at')
             ->where('loans.to_branch_id', auth()->user()->branch->id)
             ->where('loans.status', '!=', 'completed')
+            ->where('loans.status', '!=', 'deleted')
             ->join('branches', 'loans.from_branch_id', '=', 'branches.id')
             ->join('items', 'loans.items_id', '=', 'items.id')
             ->get();
@@ -134,6 +141,20 @@ class LoanController extends Controller
         $log->user_id = auth()->user()->id;
         $log->save();
         $data = $loan->save();
+        return response()->json($data);
+    }
+
+    public function destroy(Request $request)
+    {
+        $delete = Loan::where('id', $request->id)->first();
+        $item = Item::where('id', $delete->items_id)->first();
+        $branch = Branch::where('id', $delete->to_branch_id)->first();
+        $delete->status = $request->status;
+        $log = new UserLog;
+        $log->activity = "Delete $item->item loan request to $branch->branch";
+        $log->user_id = auth()->user()->id;
+        $log->save();
+        $data = $delete->save();
         return response()->json($data);
     }
 }

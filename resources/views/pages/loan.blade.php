@@ -25,5 +25,7 @@
       </thead>
     </table>
   </div>
-  
+  @if(!auth()->user()->hasrole('Administrator'))
+    <input type="button" id="loan_Btn" class="btn btn-xs btn-primary" value="LOAN UNIT">
+  @endif
 @endsection

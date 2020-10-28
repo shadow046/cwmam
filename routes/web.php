@@ -32,6 +32,7 @@ Route::put('return-update', 'DefectiveController@update')->name('return.update')
 Route::get('return-table', 'DefectiveController@table')->name('return.table');
 Route::get('return', 'DefectiveController@index')->name('return.index');
 
+Route::put('loandelete', 'LoanController@destroy')->name('loans.stock.delete');
 Route::put('loanupdate', 'LoanController@stockUpdate')->name('loans.stock.update');
 Route::get('loanget', 'LoanController@getitem')->name('loans.getitem');
 Route::put('loanstock', 'LoanController@stock')->name('loans.stock');

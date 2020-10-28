@@ -247,8 +247,6 @@
     });
 
     $(document).on("click", "#replacementDetails tr", function () {
-      //alert('clicked!');
-      console.log('test');
         var dtdata = $('#replacementDetails tbody tr:eq(0)').data();
         var trdata = replaceTable.row(this).data();
         var catid = trdata.category_id;

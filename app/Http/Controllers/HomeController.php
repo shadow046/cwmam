@@ -44,10 +44,11 @@ class HomeController extends Controller
 
     public function activity()
     {
+        
         if (auth()->user()->roles->first()->name == 'Administrator') {
-            $act = UserLog::all();
+            $act = UserLog::orderBy('id', 'DESC')->get();
         }else{
-            $act = UserLog::where('user_id', auth()->user()->id);
+            $act = UserLog::where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();;
         }
         
         //dd($act);

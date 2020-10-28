@@ -44,6 +44,7 @@
         if (trdata.stat == 'IN-BOUND') {
             $('#serials').hide();
             $('#received_Btn').hide();
+            $('#del_Btn').hide();
             $.ajax({
                 type:'get',
                 url:'{{route("loan.get.itemcode")}}',
@@ -75,6 +76,7 @@
             if (trdata.status == 'approved') {
                 $('#received_Btn').show();
                 $('#serials').show();
+                $('#del_Btn').hide();
                 $.ajax({
                     url: '{{route("loans.getitem")}}',
                     dataType: 'json',
@@ -92,6 +94,7 @@
             }else{
                 $('#received_Btn').hide();
                 $('#serials').hide();
+                $('#del_Btn').show();
             }
         }
         $('#loansModal').modal({backdrop: 'static', keyboard: false});
@@ -165,6 +168,22 @@
         
     });
 
+    $(document).on("click", "#del_Btn", function () {
+        var id = $('#myid').val();
+        var branch = $('#branch_id').val();
+        var status = 'deleted';
+        $.ajax({
+            url: '{{route("loans.stock.delete")}}',
+            dataType: 'json',
+            type: 'PUT',
+            data: {
+                id: id,
+                status: status
+            },
+        });
+        window.location.href = '{{route('loans')}}';
+    });
+
     $(document).on('change', '#loandesc1', function(){
         var id = $(this).val();
         var serialOp = " ";
@@ -188,4 +207,82 @@
         window.location.href = '{{route('loans')}}';
     });
     
+    $(document).on('change', '#loanbranch', function(){
+        var id = $(this).val();
+        var itemOp ='<option selected value="select" disabled>select description</option>';
+        var catOp = " ";
+        $.ajax({
+            type:'get',
+            url:'{{route("stock.bcategory")}}',
+            data:{'id':id},
+            success:function(data)
+            {
+                console.log(data);
+                //codeOp+='<option selected value="select" disabled>select item code</option>';
+                catOp+='<option selected value="select" disabled>select category</option>';
+                for(var i=0;i<data.length;i++){
+                    //codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
+                    catOp+='<option value="'+data[i].category_id+'">'+data[i].category.toUpperCase()+'</option>';
+                }
+                //$("#outitem" + count).find('option').remove().end().append(codeOp);
+                $("#loanreqcategory1").find('option').remove().end().append(catOp);
+                $("#loanreqdesc1").find('option').remove().end().append(itemOp);
+            },
+        });
+
+    });
+
+    $(document).on('change', '#loanreqcategory1', function(){
+        var catid = $(this).val();
+        var branchid = $('#loanbranch').val();
+        var itemOp = " ";
+        $.ajax({
+            type:'get',
+            url:'{{route("stock.bitem")}}',
+            data:{
+                'catid':catid,
+                'branchid':branchid
+            },
+            success:function(data)
+            {
+                console.log(data);
+                //codeOp+='<option selected value="select" disabled>select item code</option>';
+                itemOp+='<option selected value="select" disabled>select description</option>';
+                for(var i=0;i<data.length;i++){
+                    //codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
+                    itemOp+='<option value="'+data[i].items_id+'">'+data[i].item.toUpperCase()+'</option>';
+                }
+                //$("#outitem" + count).find('option').remove().end().append(codeOp);
+                console.log(data[0].items_id);
+                $("#loanreqdesc1").find('option').remove().end().append(itemOp);
+            },
+        });
+
+    });
+
+    $(document).on('click', '#serial_sub_Btn', function(){
+
+        if ($('#loanreqdesc1').val()) {
+            
+            var branchid = $('#loanbranch').val();
+            var itemid = $('#loanreqdesc1').val();
+            $.ajax({
+                url: '{{route("stocks.loan")}}',
+                dataType: 'json',
+                type: 'POST',
+                data: {
+                    branchid: branchid,
+                    itemid: itemid
+                },
+            });
+            window.location.href = '{{route('loans')}}';
+        }
+
+    });
+
+    $(document).on('click', '#loan_Btn', function(){
+        clearInterval(interval);
+        $('#loanModal').modal({backdrop: 'static', keyboard: false});
+    });
+
 </script>

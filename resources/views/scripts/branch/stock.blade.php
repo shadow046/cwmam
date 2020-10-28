@@ -2,11 +2,12 @@
     var y = 1;
     var r = 1;
     var b =1;
-    
+    var table;
+    var branchid;
     $(document).ready(function()
     {
-        var branchid = $('#branchid').attr('branchid');
-        var table =
+        branchid = $('#branchid').attr('branchid');
+        table =
         $('table.stockTable').DataTable({ //user datatables
             "dom": 'lrtip',
             "language": {
@@ -18,7 +19,6 @@
             
             columns: [
                 { data: 'category', name:'category'},
-                { data: 'items_id', name:'items_id'},
                 { data: 'description', name:'description'},
                 { data: 'quantity', name:'quantity'}
             ]
@@ -52,10 +52,6 @@
 
     $(document).on('click', '#importBtn', function(){
         $('#importModal').modal({backdrop: 'static', keyboard: false});
-    });
-    
-    $(document).on('click', '#loan_Btn', function(){
-        $('#loanModal').modal({backdrop: 'static', keyboard: false});
     });
 
     $(document).on('click', '#in_Btn', function(){
@@ -313,5 +309,57 @@
             });
         }
     });
+
+
+    /*$(document).on("click", "#stockTable tr", function () {
+        var dtdata = $('#stockTable tbody tr:eq(0)').data();
+        var trdata = table.row(this).data();
+        var catid = trdata.category_id;
+        var id = trdata.id;
+        repdata = trdata.id;
+        var repOp = " ";
+        console.log(trdata.id);
+        $("#replacementTableModal .closes").click();
+        $('#replaceselectcustomer').val($('#replacementcustomer').val());
+        $('#replaceselectclient').val($('#replacementclient').val());
+        var replace1Table =
+        $('table.replacement1Details').DataTable({ //user datatables
+            "dom": 'rt',
+            "language": {
+                "emptyTable": " "
+            },
+            processing: true,
+            serverSide: true,
+            ajax: "/pull-details1/"+id,
+            columnDefs: [
+                {"className": "dt-center", "targets": "_all"}
+            ],
+            columns: [
+                { data: 'date', name:'date'},
+                { data: 'category', name:'category'},
+                { data: 'items_id', name:'items_id'},
+                { data: 'item', name:'item'},
+                { data: 'serial', name:'serial'}
+            ]
+        });
+        $('#replacementSelectModal').modal({backdrop: 'static', keyboard: false});
+
+        $.ajax({
+            type:'get',
+            url:'{{route("stock.get.itemcode")}}',
+            data:{'id':catid},
+            success:function(data)
+            {
+                //codeOp+='<option selected value="select" disabled>select item code</option>';
+                repOp+='<option selected value="select" disabled>select description</option>';
+                for(var i=0;i<data.length;i++){
+                    //codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
+                    repOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
+                }
+                //$("#outitem" + count).find('option').remove().end().append(codeOp);
+                $("#repdesc1").find('option').remove().end().append(repOp);
+            },
+        });
+    });*/
 
 </script>

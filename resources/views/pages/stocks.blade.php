@@ -21,16 +21,10 @@
           <td>
             <input type="text" class="form-control filter-input fl-2" data-column="2" />
           </td>
-          <td>
-            <input type="text" class="form-control filter-input fl-3" data-column="3" />
-          </td>
         </tr>
         <tr>
           <th>
             Category
-          </th>
-          <th>
-            Item Code
           </th>
           <th>
             Item Description
@@ -46,7 +40,6 @@
     @if(!auth()->user()->hasrole('Administrator'))
       <input type="button" id="in_Btn" class="btn btn-xs btn-primary" value="SERVICE IN">&nbsp;
       <input type="button" id="out_Btn" class="btn btn-xs btn-primary" value="SERVICE OUT">&nbsp;
-      <input type="button" id="loan_Btn" class="btn btn-xs btn-primary" value="LOAN UNIT">
     @endif
       <input type="button" id="importBtn" class="btn btn-xs btn-primary ml-auto" value="IMPORT">&nbsp;
       <input type="button" id="addStockBtn" class="btn btn-xs btn-primary" value="ADD STOCK">

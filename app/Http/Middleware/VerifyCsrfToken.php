@@ -38,5 +38,6 @@ class VerifyCsrfToken extends Middleware
         'loanupdate',
         'return-update',
         'storerreceived',
+        'loandelete',
     ];
 }

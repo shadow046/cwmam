@@ -52,12 +52,12 @@
                 </table>
                 <div class="row no-margin" id="outrow1">
                     <div class="col-md-2 form-group">
-                        <select id="loancategory1" class="form-control loancategory" row_count="1" style="color: black;">
+                        <select id="loanreqcategory1" class="form-control loancategory" row_count="1" style="color: black;">
                             <option selected disabled>select category</option>
                         </select>
                     </div>
                     <div class="col-md-3 form-group">
-                        <select id="loandesc1" class="form-control loandesc" row_count="1" style="color: black;">
+                        <select id="loanreqdesc1" class="form-control loandesc" row_count="1" style="color: black;">
                             <option selected disabled>select description</option>
                         </select>
                     </div>

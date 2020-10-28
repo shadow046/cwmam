@@ -51,7 +51,6 @@
                     @include('modal.branch.replacement')
                     @include('modal.branch.replace-details')
                     @include('modal.branch.replace-details-select')
-                    @include('modal.branch.loan')
                 @endif
             @endif
 
@@ -61,6 +60,7 @@
 
             @if(Request::is('loans'))
                 @include('modal.branch.loans')
+                @include('modal.branch.loan')
             @endif
 
             @if(Request::is('return'))
@@ -97,7 +97,6 @@
                     @include('scripts.branch.addstock')
                     @include('scripts.branch.service-in')
                     @include('scripts.branch.service-out')
-                    @include('scripts.branch.loan')
 
                 @endif                
             @endif

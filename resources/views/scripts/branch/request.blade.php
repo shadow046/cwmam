@@ -150,8 +150,8 @@
                 reqno : reqno     
             },
             success: function(){
-                //alert("Pending Request Deleted!!!");
-                //window.location.href = '{{route('stock.index')}}';
+                alert("Stock added to inventory!!!");
+                window.location.href = '{{route('stock.index')}}';
             },
             error: function (data,error, errorThrown) {
                 alert(data.responseText);

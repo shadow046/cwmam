@@ -64,6 +64,7 @@
                 <div class="modal-footer">
                     <input type="button" class="btn btn-primary" id="submit_Btn" value="Approved request">
                     <input type="button" class="btn btn-primary" id="received_Btn" value="Received">
+                    <input type="button" class="btn btn-primary" id="del_Btn" value="Delete request">
                 </div>
             </div>  
         </div>

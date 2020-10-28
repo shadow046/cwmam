@@ -50,7 +50,7 @@
         console.log(trdata);
         $('#branch_id').val(trdata.branchid);
         $('#date').val(trdata.date);
-        $('#description').val(trdata.item);
+        $('#description').val(convert(trdata.item));
         $('#status').val(trdata.status);
         $('#myid').val(trdata.id);
         $('#serial').val(trdata.serial);
@@ -61,6 +61,12 @@
         }
 
         $('#returnModal').modal({backdrop: 'static', keyboard: false});
+
+        function convert (string) {
+            return string.replace(/&#(?:x([\da-f]+)|(\d+));/ig, function (_, hex, dec) {
+                return String.fromCharCode(dec || +('0x' + hex))
+            })
+        }
     });
 
     $(document).on('click', '#submit_Btn', function(){
