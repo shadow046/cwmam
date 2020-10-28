@@ -52,7 +52,7 @@
                                 <tr>
                                     <th>ITEM CODE</th>
                                     <th>DESCRIPTION</th>
-                                    <th>STOCK</th>
+                                    <th>INITIAL STOCK</th>
                                     <th>AVAILABLE</th>
                                     <th>OUT</th>
                                 </tr>
