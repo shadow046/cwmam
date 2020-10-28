@@ -318,7 +318,7 @@
         var id = trdata.items_id;
         $('table.stockDetails').dataTable().fnDestroy();
         $('#head').text(trdata.category);
-        $('#stockModal').modal({backdrop: 'static', keyboard: false});
+        $('#stockModal').modal();
         stock = 
         $('table.stockDetails').DataTable({ //user datatables
             "dom": 'rt',
