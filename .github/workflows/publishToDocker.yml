@@ -15,7 +15,7 @@ jobs:
       with:
         name: nuserv/stock-inventory-monitoring/tim:latest
         username: ${{ github.actor }}
-        password:  4cc03c3ba9e808c529bcac491b2a02860f9fc28c
+        password:  08d84f10a401ae131a486c14f4e2fd61bc50c3ae
         registry: docker.pkg.github.com
     - uses: actions/checkout@master
     - name: Publish to Registry (Version Release)
@@ -23,6 +23,6 @@ jobs:
       with:
         name: nuserv/stock-inventory-monitoring/tim
         username: ${{ github.actor }}
-        password: 4cc03c3ba9e808c529bcac491b2a02860f9fc28c
+        password: 08d84f10a401ae131a486c14f4e2fd61bc50c3ae
         registry: docker.pkg.github.com
         tag_names: true
