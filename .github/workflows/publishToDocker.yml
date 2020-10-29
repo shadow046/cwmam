@@ -1,9 +1,7 @@
 name: Publish to docker
 
 on:    
-  release:
-      types: [published]
-
+  push
 jobs:
   build:
     runs-on: ubuntu-latest
