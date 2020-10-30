@@ -72,7 +72,7 @@ Route::get('stocks', 'StockController@index')->name('stocks.index');
 
 Route::POST('storerreceived', 'StockRequestController@received')->name('stock.received.request');
 Route::get('gen', 'StockRequestController@generateBarcodeNumber')->name('stock.gen');
-Route::put('update', 'StockRequestController@update')->name('stock.update');
+Route::any('update', 'StockRequestController@update')->name('stock.update');
 Route::post('storerequest', 'StockRequestController@store')->name('stock.store.request');
 Route::delete('remove', 'StockRequestController@dest')->name('stock.remove');
 Route::get('getstock', 'StockRequestController@getStock')->name('stock.get');
@@ -96,7 +96,13 @@ Route::get('stocks/{id}', 'BranchController@getStocks')->name('get.stocks');
 Route::get('branches', 'BranchController@getBranches')->name('get.branches');
 Route::get('branch', 'BranchController@index')->name('branch.index');
 Route::post('branch_add', 'BranchController@store')->name('branch.add');
+Route::put('branch_ini', 'BranchController@initial')->name('branch.ini');
 Route::put('branch_update/{id}', 'BranchController@update')->name('branch.update');
 
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
+Route::get('print/{id}', 'HomeController@print')->name('branch.print');
+Route::get('getprint/{id}', 'HomeController@getprint')->name('getprint');
+
+
 

@@ -1,6 +1,6 @@
 
 <script type="text/javascript">
-
+    var stockTable;
     $(document).on('click', function (e) //hide popover on click outside
     {
         $('[data-toggle="popover"]').each(function () {
@@ -46,7 +46,7 @@
             console.log(trdata.id);
             $('table.branchDetails').dataTable().fnDestroy();
             $('#table').show();
-            var stockTable =
+            stockTable =
             $('table.branchDetails').DataTable({ //user datatables
                 "dom": 'lrtip',
                 "language": {
@@ -59,7 +59,7 @@
                 columns: [
                     { data: 'items_id', name:'items_id', "width": "20%",},
                     { data: 'item', name:'item', "width": "17%"},
-                    { data: 'stock', name:'stock', "width": "14%"},
+                    { data: 'initial', name:'initial', "width": "17%"},
                     { data: 'available', name:'available', "width": "14%"},
                     { data: 'stock_out', name:'stock_out', "width": "14%"}
                 ]
@@ -210,5 +210,36 @@
                 .draw();
         });
 
+    });
+
+
+    $(document).on('click', '#branchDetails tr', function(){
+        var trdata = stockTable.row(this).data();
+        $('#head4').text(trdata.item);
+        $('#item-qty').val(trdata.initial);
+        $('#iniitemid').val(trdata.items_id);
+        $('#inibranchid').val(trdata.branch_id);
+        $('#updateModal').modal({backdrop: 'static', keyboard: false});
+        
+    });
+
+    $(document).on('click', '#updateBtn', function(){
+        var itemid = $('#iniitemid').val();
+        var branchid = $('#inibranchid').val();
+        var qty = $('#item-qty').val();
+        $.ajax({
+            url: '{{route("branch.ini")}}',
+            dataType: 'json',
+            type: 'PUT',
+            data: {
+                itemid: itemid,
+                branchid: branchid,
+                qty: qty
+            },
+            success:function(data)
+            {
+                window.location.href = '{{route('branch.index')}}';
+            }
+        });
     });
 </script>

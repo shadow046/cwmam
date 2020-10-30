@@ -76,8 +76,9 @@
             </div>
             @role('Administrator')
             <div class="modal-footer">
-                <input type="button" class="btn btn-primary mr-auto" id="prcBtn" class="button" value="Proceed"> 
-                <input type="button" class="btn btn-primary cancel" value="Close">
+                <input type="button" class="btn btn-primary mr-auto" id="prcBtn" class="button" value="Proceed">
+                <input type="button" id="printBtn" class="btn btn-primary mr-auto" value="PRINT">
+                <input type="button" class="btn btn-primary" data-dismiss="modal" value="Close">
             </div>
             @endrole
         </div>

@@ -39,5 +39,8 @@ class VerifyCsrfToken extends Middleware
         'return-update',
         'storerreceived',
         'loandelete',
+        'branch_ini',
+        'branch_add',
+
     ];
 }

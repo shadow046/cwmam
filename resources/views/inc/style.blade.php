@@ -3,6 +3,17 @@
         padding: 20px;
         color: black; 
     }
+
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button {  
+
+    opacity: 1;
+
+    }
+
+    input[type=number] {
+    -moz-appearance: textfield;
+    }
     .nav {
         background: #0d1a80;
     }

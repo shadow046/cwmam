@@ -377,11 +377,10 @@ class StockController extends Controller
             $add = new Warehouse;
             $add->category_id = $request->cat;
             $add->items_id = $request->item;
-            $add->serial = $request->serial;
             $add->status = 'in';
             $add->user_id = auth()->user()->id;
             $log = new UserLog;
-            $log->activity = "Add stock $item->item with serial no. $request->serial." ;
+            $log->activity = "Add $item->item to stocks." ;
             $log->user_id = auth()->user()->id;
             $log->save();
             $data = $add->save();
@@ -394,7 +393,7 @@ class StockController extends Controller
             $add->serial = $request->serial;
             $add->status = 'in';
             $log = new UserLog;
-            $log->activity = "Add stock $item->item with serial no. $request->serial." ;
+            $log->activity = "Add $item->item with serial no. $request->serial to stocks" ;
             $log->user_id = auth()->user()->id;
             $log->save();
             $data = $add->save();
