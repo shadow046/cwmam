@@ -259,7 +259,7 @@ class StockRequestController extends Controller
             $prep->branch_id = $reqbranch->branch_id;
             $prep->save();
             $log = new UserLog;
-            $log->activity = "Prepare $scheditem->item and schedule for delivery on $request->datesched with Request no. $request->reqno ";
+            $log->activity = "Schedule $scheditem->item on $request->datesched with Request no. $request->reqno ";
             $log->user_id = auth()->user()->id;
             $log->save();
             $data = $log->save();
