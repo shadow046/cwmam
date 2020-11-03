@@ -244,7 +244,7 @@
                     "dom": 'lrtip',
                     "language": {
                         "emptyTable": " ",
-                        "processing": "Updating. Please wait..."
+                        "processing": "Updating. Please wait.."
                     },
                     processing: true,
                     serverSide: true,
