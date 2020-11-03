@@ -62,9 +62,6 @@
                     processing: true,
                     serverSide: true,
                     ajax: "/requests/"+trdata.request_no,
-                    columnDefs: [
-                        {"className": "dt-body-center", "targets": "_all"}
-                    ],
                     columns: [
                         { data: 'items_id', name:'items_id'},
                         { data: 'item_name', name:'item_name'},
@@ -87,9 +84,6 @@
                     processing: true,
                     serverSide: true,
                     ajax: "/send/"+trdata.request_no,
-                    columnDefs: [
-                        {"className": "dt-center", "targets": "_all"}
-                    ],
                     columns: [
                         { data: 'items_id', name:'items_id'},
                         { data: 'item_name', name:'item_name'},
@@ -213,8 +207,6 @@
     });
 
     $(document).on('click', '.send_sub_Btn', function(e){
-
-        //$('.sub_Btn').on('click', function(e){ //show user/branch modal
             e.preventDefault();
             var cat = "";
             var item = "";
@@ -256,11 +248,9 @@
                         },
                     });
                     alert("Request details submitted!!!");
-                    window.location.href = '{{route('stock.index')}}';
+                    window.location.href = '/print/'+reqno;
                 }
             }
-        //});
-
     });
 
     $(document).on('change', '.desc', function(){

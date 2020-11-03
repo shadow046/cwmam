@@ -236,14 +236,12 @@ class StockRequestController extends Controller
             $reqno = StockRequest::where('request_no', $request->reqno)->first();
             //dd($reqno);
             $reqno->status = $request->status;
-            $reqno->user_id = auth()->user()->id;
             $reqno->schedule = $request->datesched;
             $data = $reqno->save();
         }else{
-            $reqbranch= StockRequest::where('request_no', $request->reqno)->where('branch_id', auth()->user()->branch->id)->first();
+            $reqbranch= StockRequest::where('request_no', $request->reqno)->where('branch_id', $request->branchid)->first();
             $item = Warehouse::where('status', 'in')
                 ->where('items_id', $request->item)
-                ->where('serial', $request->serial)
                 ->first();
             $item->status = 'sent';
             $item->request_no = $request->reqno;
@@ -251,14 +249,21 @@ class StockRequestController extends Controller
             $item->schedule = $request->datesched;;
             $item->user_id = auth()->user()->id;
             $item->save();
+
+            $scheditem = Item::where('id', $request->item)->first();
+
             $prep = new PreparedItem;
             $prep->items_id = $request->item;
             $prep->request_no = $request->reqno;
             $prep->serial = $request->serial;
             $prep->branch_id = $reqbranch->branch_id;
             $prep->save();
-            $data = $user->save();
-            $data = 'save';
+            $log = new UserLog;
+            $log->activity = "Schedule $scheditem->item on $request->datesched with Request no. $request->reqno ";
+            $log->user_id = auth()->user()->id;
+            $log->save();
+            $data = $log->save();
+            
         }
         return response()->json($data);
     }

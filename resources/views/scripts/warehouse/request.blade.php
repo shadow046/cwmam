@@ -45,22 +45,26 @@
             if (trdata.status == 'SCHEDULED') {
                 $('#prcBtn').hide();
                 $('.sched').show();
+                $('#printBtn').show();
                 var trsched = new Date(trdata.sched);
                 $('#sched').val(months[trsched.getMonth()]+' '+trsched.getDate()+', ' +trsched.getFullYear());
             }else if(trdata.status == 'PENDING'){
                 $('#prcBtn').show();
                 $('.sched').hide();
                 $('#sched').val('');
+                $('#printBtn').hide();
             }
             $('#date').val(trdata.created_at);
             $('#reqno').val(trdata.request_no);
             $('#branch').val(trdata.branch);
             $('#name').val(trdata.reqBy);
             $('#area').val(trdata.area);
+            $('#reqbranch').val(trdata.branch_id);
             $('table.requestDetails').dataTable().fnDestroy();
             $('table.schedDetails').dataTable().fnDestroy();
 
             if (trdata.status == 'PENDING') {
+                $('#printBtn').hide();
                 $('table.schedDetails').hide();
                 $('table.requestDetails').show();
                 $('table.requestDetails').DataTable({ //user datatables
@@ -82,6 +86,7 @@
                     ]
                 });
             }else if(trdata.status == 'SCHEDULED'){
+                $('#printBtn').show();
                 $('table.requestDetails').hide();
                 $('table.schedDetails').show();
                 $('table.schedDetails').DataTable({ //user datatables
@@ -206,7 +211,7 @@
             }
             if (x == 0) {
                 y++;
-                var additem = '<div class="row no-margin" id="row'+y+'"><div class="col-md-2 form-group"><select id="category'+y+'" class="form-control category" row_count="'+y+'"></select></div><div class="col-md-2 form-group"><select id="item'+y+'" class="form-control item" row_count="'+y+'"><option selected disabled>select item code</option></select></div><div class="col-md-3 form-group"><select id="desc'+y+'" class="form-control desc" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><select id="serial'+y+'" class="form-control serial" row_count="'+y+'"><option selected disabled>select serial</option></select></div><div class="col-md-2 form-group"><input type="number" class="form-control" name="stock'+y+'" id="stock'+y+'" placeholder="0" style="width: 6em" disabled></div><div class="col-md-1 form-group"><input type="button" class="add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
+                var additem = '<div class="row no-margin" id="row'+y+'"><div class="col-md-2 form-group"><select id="category'+y+'" class="form-control category" row_count="'+y+'"></select></div><div class="col-md-2 form-group"><select id="item'+y+'" class="form-control item" row_count="'+y+'"><option selected disabled>select item code</option></select></div><div class="col-md-3 form-group"><select id="desc'+y+'" class="form-control desc" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><input type="text" class="form-control serial" row_count="'+y+'" name="serial1" id="serial'+y+'" placeholder="input serial"></div><div class="col-md-2 form-group"><input type="number" class="form-control" name="stock'+y+'" id="stock'+y+'" placeholder="0" style="width: 6em" disabled></div><div class="col-md-1 form-group"><input type="button" class="add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
                 $(this).val('Remove');
                 $('#category'+ rowcount).prop('disabled', true);
                 $('#item'+ rowcount).prop('disabled', true);
@@ -223,7 +228,7 @@
         }else{
             if (r == 20) {
                 y++;
-                var additem = '<div class="row no-margin" id="row'+y+'"><div class="col-md-2 form-group"><select id="category'+y+'" class="form-control category" row_count="'+y+'"></select></div><div class="col-md-2 form-group"><select id="item'+y+'" class="form-control item" row_count="'+y+'"><option selected disabled>select item code</option></select></div><div class="col-md-3 form-group"><select id="desc'+y+'" class="form-control desc" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><select id="serial'+y+'" class="form-control serial" row_count="'+y+'"><option selected disabled>select serial</option></select></div><div class="col-md-2 form-group"><input type="number" class="form-control" name="stock'+y+'" id="stock'+y+'" placeholder="0" style="width: 6em" disabled></div><div class="col-md-1 form-group"><input type="button" class="add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
+                var additem = '<div class="row no-margin" id="row'+y+'"><div class="col-md-2 form-group"><select id="category'+y+'" class="form-control category" row_count="'+y+'"></select></div><div class="col-md-2 form-group"><select id="item'+y+'" class="form-control item" row_count="'+y+'"><option selected disabled>select item code</option></select></div><div class="col-md-3 form-group"><select id="desc'+y+'" class="form-control desc" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><input type="text" class="form-control serial" row_count="'+y+'" name="serial1" id="serial'+y+'" placeholder="input serial"></div><div class="col-md-2 form-group"><input type="number" class="form-control" name="stock'+y+'" id="stock'+y+'" placeholder="0" style="width: 6em" disabled></div><div class="col-md-1 form-group"><input type="button" class="add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
                 $('#reqfield').append(additem);
                 $('#category'+ rowcount).find('option').clone().appendTo('#category'+y);
                 r++;
@@ -286,6 +291,7 @@
                         desc = $('#desc'+q).val();
                         serial = $('#serial'+q).val();
                         datesched = $('#datesched').val();
+                        branchid = $('#reqbranch').val();
                         $.ajax({
                             url: '{{route("stock.update")}}',
                             dataType: 'json',
@@ -293,7 +299,8 @@
                             data: {
                                 item: item,
                                 serial: serial,
-                                reqno : reqno
+                                reqno: reqno,
+                                branchid: branchid
                             },
                         });
                     }
@@ -314,7 +321,7 @@
                             dataType: 'json',
                         });
                         alert("Branch request updated!!!!");
-                        window.location.href = '{{route('stock.index')}}';
+                        window.location.href = '/print/'+reqno;
                     }
                 }
             }
@@ -483,5 +490,9 @@
 
     $(document).on('click', '.cancel', function(){
         window.location.href = '{{route('stock.index')}}';
+    });
+
+    $(document).on('click', '#printBtn', function(){
+        window.location.href = '/print/'+$('#reqno').val();
     });
 </script>

@@ -14,10 +14,10 @@
                     <input type="hidden" name="myid" id="myid">
                     <div class="row no-margin">
                         <div class="col-md-3 form-group">
-                            <input type="text" class="form-control form-control-sm " name="branch_name" id="branch_name" placeholder="Enter Branch Name" disabled>
+                            <input type="text" class="form-control form-control-sm " name="branch_name" style="color: black;" id="branch_name" placeholder="Enter Branch Name" disabled>
                         </div>
                         <div class="col-md-3 form-group">
-                            <select name="area" id="area" class="form-control form-control-sm area @error('area') is-invalid @enderror" disabled>
+                            <select name="area" id="area" class="form-control form-control-sm area @error('area') is-invalid @enderror" style="color: black;" disabled>
                                 <option selected disabled>select area</option>
                                 @foreach ($areas as $area)
                                     <option value="{{ $area->id }}">{{ $area->area}}</option>
@@ -25,21 +25,21 @@
                             </select>
                         </div>
                         <div class="col-md-6 form-group">
-                            <input type="text" class="form-control form-control-sm" name="address" id="address" placeholder="Enter address" disabled>
+                            <input type="text" class="form-control form-control-sm" name="address" id="address" style="color: black;" placeholder="Enter address" disabled>
                         </div>
                     </div>
                     <div class="row no-margin">
                         <div class="col-md-3 form-group">
-                            <input type="text" class="form-control form-control-sm" name="contact_person" id="contact_person" placeholder="Enter Contact person" disabled>
+                            <input type="text" class="form-control form-control-sm" name="contact_person" id="contact_person" style="color: black;" placeholder="Enter Contact person" disabled>
                         </div>
                         <div class="col-md-3">
-                            <input type="text" class="form-control form-control-sm" name="mobile" id="mobile" placeholder="Enter mobile number" disabled>
+                            <input type="text" class="form-control form-control-sm" name="mobile" id="mobile" style="color: black;" placeholder="Enter mobile number" disabled>
                         </div>
                         <div class="col-md-3">
-                            <input type="text" class="form-control form-control-sm" name="email" id="email" placeholder="Enter email address" disabled>
+                            <input type="text" class="form-control form-control-sm" name="email" id="email" style="color: black;" placeholder="Enter email address" disabled>
                         </div>
                         <div class="col-md-3">
-                            <select name="status" id="status" class="form-control form-control-sm status @error('status') is-invalid @enderror" disabled>
+                            <select name="status" id="status" class="form-control form-control-sm status @error('status') is-invalid @enderror" style="color: black;" disabled>
                                 <option selected disabled>select status</option>
                                 <option value="1">Active</option>
                                 <option value="0">Inactive</option>
@@ -63,7 +63,7 @@
                     <div class="modal-footer">
                         <input type="button" id="editBtn" class="btn btn-primary" value="Edit">
                         <input type="submit" id="saveBtn" class="btn btn-primary" value="Save">
-                        <input type="button" class="btn btn-primary mr-auto" data-dismiss="modal" value="Cancel">                        
+                        <input type="button" class="btn btn-primary mr-auto" data-dismiss="modal" value="Cancel">
                     </div>
                     @endrole
                 </form>

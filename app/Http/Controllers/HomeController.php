@@ -10,6 +10,7 @@ use App\User;
 use App\Branch;
 use App\Warehouse;
 use App\StockRequest;
+use App\PreparedItem;
 use App\Stock;
 use App\Defective;
 use App\UserLog;
@@ -42,14 +43,33 @@ class HomeController extends Controller
         return view('pages.home', compact('stockreq', 'units', 'returns'));
     }
 
+    public function print($id)
+    {
+        $request = StockRequest::where('request_no', $id)->first();
+        //dd($request);
+        return view('pages.warehouse.print', compact('request'));
+    }
+
     public function activity()
     {
         
-        if (auth()->user()->roles->first()->name == 'Administrator') {
-            $act = UserLog::orderBy('id', 'DESC')->get();
-        }else{
-            $act = UserLog::where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();;
+        if (auth()->user()->hasAnyRole('Administrator')) {
+            $act = UserLog::all();
         }
+
+        if (auth()->user()->roles->first()->name == 'Head') {
+            $myuser = [];
+            $user = User::where('branch_id', auth()->user()->branch->id)->get();
+            foreach ($user as $user) {
+                $myuser[] = $user->id;
+            }
+            $act = UserLog::wherein('user_id', $myuser)->orderBy('id', 'DESC')->get();
+        }
+
+        if (!auth()->user()->hasAnyRole('Head', 'Administrator')) {
+            $act = UserLog::where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
+        }
+        
         
         //dd($act);
         return DataTables::of($act)
@@ -88,6 +108,17 @@ class HomeController extends Controller
     {
         $users = User::all();
         return view('pages.service-units', compact('users'));
+    }
+
+    public function getprint($id)
+    {
+        $request = StockRequest::where('request_no', $id)->first();
+        $prepared = PreparedItem::where('request_no', $id)
+            ->where('branch_id', $request->branch_id)
+            ->join('items', 'items_id', '=', 'items.id')
+            ->get();
+
+        return DataTables::of($prepared)->make(true);
     }
 
 }

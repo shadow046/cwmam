@@ -7,6 +7,7 @@
             "language": {
                     "emptyTable": " "
                 },
+            "order": [[ 0, 'desc' ], [ 1, 'desc' ]],
             processing: true,
             serverSide: false,
             ajax: '{{route('get.activity')}}',

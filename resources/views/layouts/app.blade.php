@@ -21,6 +21,9 @@
 
             @if(Request::is('branch'))
                 @include('modal.warehouse.branch')
+                @if(auth()->user()->hasrole('Administrator'))
+                    @include('modal.warehouse.initial')
+                @endif
             @endif
 
             @if(Request::is('request'))
@@ -98,13 +101,17 @@
                     @include('scripts.branch.addstock')
                     @include('scripts.branch.service-in')
                     @include('scripts.branch.service-out')
-
                 @endif                
             @endif
 
             @if(Request::is('service-unit'))
                     @include('scripts.branch.service-unit')
             @endif
+
+            @if(Request::is('print/*'))
+                    @include('scripts.warehouse.print')
+            @endif
+
             @if(Request::is('loans'))
                     @include('scripts.branch.loans')
             @endif

@@ -11,6 +11,7 @@
                 <form id="sendForm">
                     {{ csrf_field() }}
                 <div class="row no-margin">
+                    <input type="text" hidden id="reqbranch">
                     <div class="col-md-6 form-group row">
                         <label for="bname" class="col-md-5 col-form-label text-md-right">Date requested:</label>
                         <div class="col-md-7">
@@ -84,12 +85,10 @@
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
-                        <select id="serial1" class="form-control serial" row_count="1">
-                            <option selected disabled>select serial</option>
-                        </select>
+                        <input type="text" class="form-control serial" row_count="1" name="serial1" id="serial1" placeholder="input serial">
                     </div>
                     <div class="col-md-2 form-group">
-                        <input type="number" class="form-control" name="stock1" id="stock1" placeholder="0" style="width: 6em" disabled>
+                        <input type="number" class="form-control" row_count="1" name="stock1" id="stock1" placeholder="0" style="width: 6em" disabled>
                     </div>
                     <div class="col-md-1 form-group">
                         <input type="button" class="add_item btn btn-xs btn-primary" btn_id="1" value="Add Item">

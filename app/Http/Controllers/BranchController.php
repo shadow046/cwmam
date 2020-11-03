@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Branch;
 use App\Area;
+use App\Stock;
+use App\Initial;
+use App\Item;
 use Auth;
 use DB;
 use Validator;
@@ -36,27 +39,59 @@ class BranchController extends Controller
     {
         $details = DB::table('items')
             ->select(
-                        'stocks.items_id',
-                        'items.item',
-                        DB::raw
-                        (
-                            'SUM(CASE WHEN stocks.status = \'in\' THEN 1 ELSE 0 END) as available'
-                        ),
-                        DB::raw
-                        (
-                            'SUM(CASE WHEN stocks.status = \'service unit\' THEN 1 ELSE 0 END) as stock_out'
-                        ),
-                        #DB::raw
-                        #(
-                        #    'SUM(CASE WHEN stocks.status = \'in\' THEN 1 ELSE 0 END) + SUM(CASE WHEN stocks.status = \'service unit\' THEN 1 ELSE 0 END) as stock'
-                        #)
-                    )
+                'stocks.id',
+                'stocks.items_id',
+                'items.item',
+                'stocks.branch_id as branchid',
+                DB::raw
+                (
+                    'SUM(CASE WHEN stocks.status = \'in\' THEN 1 ELSE 0 END) as available'
+                ),
+                DB::raw
+                (
+                    'SUM(CASE WHEN stocks.status = \'service unit\' THEN 1 ELSE 0 END) as stock_out'
+                ),
+                DB::raw
+                (
+                    'SUM(CASE WHEN initials.qty = \'0\' THEN 0 ELSE initials.qty END) as initial'
+                )
+                #DB::raw
+                #(
+                #    'SUM(CASE WHEN stocks.status = \'in\' THEN 1 ELSE 0 END) + SUM(CASE WHEN stocks.status = \'service unit\' THEN 1 ELSE 0 END) as stock'
+                #)
+            )
             ->join('stocks', 'stocks.items_id', '=', 'items.id')
-            ->where('branch_id', $id)
-            ->groupBy('items_id')
+            ->join('initials', 'initials.items_id', '=', 'items.id')
+            ->where('stocks.branch_id', $id)
+            ->groupBy('stocks.items_id')
             ->get();
+            
+        
+        return DataTables::of(Item::select('items.id as items_id', 'item', 'qty', 'initials.branch_id')->join('initials', 'initials.items_id', '=', 'items.id')->where('branch_id', $id))
 
-        return DataTables::of($details)->make(true);
+            ->addColumn('initial', function (Item $item){
+                return $item->qty;
+            })
+
+            ->addColumn('stock_out', function (Item $item){
+                $stock_out = Stock::where('status', 'service unit')
+                    ->where('branch_id', $item->branch_id)
+                    ->where('items_id', $item->items_id)
+                    ->count();
+                return $stock_out;
+            })
+
+            ->addColumn('available', function (Item $item){
+                $avail = Stock::select('status')
+                    ->where('status', 'in')
+                    ->where('branch_id', $item->branch_id)
+                    ->where('items_id', $item->items_id)
+                    ->count();
+                return $avail;
+            })
+
+        ->make(true);
+        
     }
 
     public function getBranches()
@@ -105,6 +140,7 @@ class BranchController extends Controller
         ]);
 
         if ($validator->passes()) {
+            $items = Item::all();
 
             $branch = new Branch;
 
@@ -115,12 +151,29 @@ class BranchController extends Controller
             $branch->head = $request->input('contact_person');
             $branch->phone = $request->input('mobile');
             $branch->status = $request->input('status');
-
-            $data = $branch->save();
-
+            $branch->save();
+            foreach ($items as $item) {
+                $initial = new Initial;
+                $initial->items_id = $item->id;
+                $initial->branch_id = $branch->id;
+                $initial->qty = 0;
+                $initial->save();
+            }
+            $data = 'save';
             return response()->json($data);
         }
         return response()->json(['error'=>$validator->errors()->all()]);
+    }
+
+    public function initial(Request $request)
+    {
+        $initial = Initial::where('items_id', $request->itemid)
+            ->where('branch_id', $request->branchid)
+            ->first();
+        $initial->qty = $request->qty;
+        $data = $initial->save();
+
+        return response()->json($data);
     }
 
     public function update(Request $request, $id)
