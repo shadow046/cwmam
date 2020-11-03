@@ -238,7 +238,26 @@
             },
             success:function(data)
             {
-                window.location.href = '{{route('branch.index')}}';
+                $('table.branchDetails').dataTable().fnDestroy();
+                stockTable =
+                $('table.branchDetails').DataTable({ //user datatables
+                    "dom": 'lrtip',
+                    "language": {
+                        "emptyTable": " ",
+                        "processing": "Updating. Please wait..."
+                    },
+                    processing: true,
+                    serverSide: true,
+                    ajax: "/stocks/"+branchid,
+                    columns: [
+                        { data: 'items_id', name:'items_id', "width": "20%",},
+                        { data: 'item', name:'item', "width": "17%"},
+                        { data: 'initial', name:'initial', "width": "17%"},
+                        { data: 'available', name:'available', "width": "14%"},
+                        { data: 'stock_out', name:'stock_out', "width": "14%"}
+                    ]
+                });
+                $("#updateModal .close").click();
             }
         });
     });

@@ -101,7 +101,6 @@
                     @include('scripts.branch.addstock')
                     @include('scripts.branch.service-in')
                     @include('scripts.branch.service-out')
-
                 @endif                
             @endif
 
