@@ -251,7 +251,7 @@
                     $('#sub_cat_Btn').prop('disabled', true)
                     cat = $('#cat'+q).val();
                     $.ajax({
-                        url: '{{route("add.category")}}',
+                        url: 'addcategory',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
