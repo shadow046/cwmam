@@ -77,6 +77,9 @@
         console.log(id+'id');
         $.ajax({
             url: '{{route("return.update")}}',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             dataType: 'json',
             type: 'PUT',
             data: {

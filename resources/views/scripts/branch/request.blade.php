@@ -20,7 +20,7 @@
                 },
             processing: true,
             serverSide: true,
-            ajax: '{{route('get.requests')}}',
+            ajax: 'requests',
             columns: [
                 { data: 'created_at', name:'date', "width": "14%" },
                 { data: 'request_no', name:'request_no', "width": "14%"},
@@ -98,7 +98,7 @@
     $(document).on('click', '#del_Btn', function(){
         var reqno = $(this).attr('reqno');
         $.ajax({
-            url: '{{route("stock.remove")}}',
+            url: 'remove',
             dataType: 'json',
             type: 'DELETE',
             data: {
@@ -106,7 +106,7 @@
             },
             success: function(){
                 alert("Pending Request Deleted!!!");
-                window.location.href = '{{route('stock.index')}}';
+                window.location.href = 'request';
             }
         });
     });
@@ -118,7 +118,7 @@
         var datesched = $('#sched').val();
         console.log(datesched);
         $.ajax({
-            url: '{{route("stock.update")}}',
+            url: 'update',
             dataType: 'json',
             type: 'PUT',
             data: {
@@ -128,8 +128,7 @@
                 stat: stat                    
             },
             success: function(){
-                //alert("Pending Request Deleted!!!");
-                //window.location.href = '{{route('stock.index')}}';
+                
             },
             error: function (data,error, errorThrown) {
                 alert(data.responseText);
@@ -137,7 +136,7 @@
         });
 
         $.ajax({
-            url: '{{route("stock.received.request")}}',
+            url: 'storerreceived',
             dataType: 'json',
             type: 'POST',
             data: {
@@ -145,7 +144,7 @@
             },
             success: function(){
                 alert("Stock added to inventory!!!");
-                window.location.href = '{{route('stock.index')}}';
+                window.location.href = 'request';
             },
             error: function (data,error, errorThrown) {
                 alert(data.responseText);
@@ -157,7 +156,7 @@
         clearInterval(interval);
         $.ajax({
             type:'get',
-            url:'{{route("stock.gen")}}',
+            url:'gen',
             async: false,
             success:function(result)
             {
@@ -223,7 +222,7 @@
                         qty = $('#qty'+q).val();
                         purpose = $('#purpose'+q).val();
                         $.ajax({
-                            url: '{{route("stock.store.request")}}',
+                            url: 'storerequest',
                             dataType: 'json',
                             type: 'POST',
                             data: {
@@ -239,7 +238,7 @@
                 if (q == y) {
                     stat = "ok";
                     $.ajax({
-                        url: '{{route("stock.store.request")}}',
+                        url: 'storerequest',
                         dataType: 'json',
                         type: 'POST',
                         data: {
@@ -280,7 +279,7 @@
         function selectItem(item1) {
             $.ajax({
                 type:'get',
-                url:'{{route("stock.get.itemcode")}}',
+                url:'itemcode',
                 data:{'id':id},
                 success:function(data)
                 {
@@ -298,6 +297,6 @@
     });
 
     $(document).on('click', '.cancel', function(){
-        window.location.href = '{{route('stock.index')}}';
+        window.location.href = 'request';
     });
 </script>

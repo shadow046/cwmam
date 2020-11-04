@@ -167,6 +167,9 @@
                         customer = $('#pcustomer-id').val();
                         $.ajax({
                             url: '{{route("stocks.pullout")}}',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
                             dataType: 'json',
                             type: 'POST',
                             data: {
@@ -242,6 +245,9 @@
                     status = $('#status').val();
                     $.ajax({
                         url: '{{route("stock.service-in")}}',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
                         dataType: 'json',
                         type: 'PUT',
                         data: {

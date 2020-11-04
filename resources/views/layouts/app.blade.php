@@ -4,7 +4,9 @@
         <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
+            @auth
             <meta name="csrf-token" content="{{ csrf_token() }}">
+            @endauth
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
             <link rel="stylesheet" type="text/css" href="{{ url('/css/style.css') }}" />
             <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
@@ -82,14 +84,14 @@
             @endif
 
             @if(Request::is('branch'))
-                @include('scripts.warehouse.branch')
+                <script src="{{asset('js/branch.js')}}"></script>
             @endif
 
             @if(Request::is('request'))
                 @if(auth()->user()->hasrole('Administrator'))
                     @include('scripts.warehouse.request')
                 @else
-                    @include('scripts.branch.request')
+                    <script src="{{asset('js/branch/request.js')}}"></script>
                 @endif
             @endif
 
@@ -97,7 +99,7 @@
                 @if(auth()->user()->hasrole('Administrator'))
                     @include('scripts.warehouse.stock')
                 @else
-                    @include('scripts.branch.stock')
+                    <script src="{{asset('js/branch/stocks.js')}}"></script>
                     @include('scripts.branch.addstock')
                     @include('scripts.branch.service-in')
                     @include('scripts.branch.service-out')

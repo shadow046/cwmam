@@ -55,6 +55,9 @@
                         customer = $('#customer-id').val();
                         $.ajax({
                             url: '{{route("stocks.out")}}',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
                             dataType: 'json',
                             type: 'PUT',
                             data: {
@@ -324,6 +327,9 @@
             var custid = $('#replacementcustomer-id').val();
             $.ajax({
                 url: '{{route("stocks.update")}}',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 dataType: 'json',
                 type: 'PUT',
                 data: {

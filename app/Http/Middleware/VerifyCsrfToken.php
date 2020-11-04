@@ -20,27 +20,6 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
-        'delete/*',
-        'update',
-        'store',
-        'addcategory',
-        'additem',
-        'upload',
-        'storerequest',
-        'remove',
-        'service-out',
-        'service-in',
-        'pull-out',
-        'rep-update',
-        'loan',
-        'loansapproved',
-        'loanstock',
-        'loanupdate',
-        'return-update',
-        'storerreceived',
-        'loandelete',
-        'branch_ini',
-        'branch_add',
-
+        
     ];
 }

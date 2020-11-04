@@ -294,6 +294,9 @@
                         branchid = $('#reqbranch').val();
                         $.ajax({
                             url: '{{route("stock.update")}}',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
                             dataType: 'json',
                             type: 'PUT',
                             data: {
@@ -311,6 +314,9 @@
                         var status = "1";
                         $.ajax({
                             url: '{{route("stock.update")}}',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
                             type: 'PUT',
                             data: { 
                                 reqno: reqno,

@@ -108,6 +108,9 @@
         if ($('#loanserial1').val() && $('#status').val() == 'pending') {
             $.ajax({
                 url: '{{route("loans.stock")}}',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 dataType: 'json',
                 type: 'PUT',
                 data: {
@@ -119,6 +122,9 @@
 
             $.ajax({
                 url: '{{route("loans.approved")}}',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 dataType: 'json',
                 type: 'PUT',
                 data: {
@@ -142,6 +148,9 @@
         if ($('#serial').val() && $('#status').val() == 'approved') {
             $.ajax({
                 url: '{{route("loans.stock.update")}}',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 dataType: 'json',
                 type: 'PUT',
                 data: {
@@ -152,6 +161,9 @@
 
             $.ajax({
                 url: '{{route("loans.approved")}}',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 dataType: 'json',
                 type: 'PUT',
                 data: {
@@ -174,6 +186,9 @@
         var status = 'deleted';
         $.ajax({
             url: '{{route("loans.stock.delete")}}',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             dataType: 'json',
             type: 'PUT',
             data: {
@@ -268,6 +283,9 @@
             var itemid = $('#loanreqdesc1').val();
             $.ajax({
                 url: '{{route("stocks.loan")}}',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 dataType: 'json',
                 type: 'POST',
                 data: {

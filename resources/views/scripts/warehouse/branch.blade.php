@@ -27,7 +27,7 @@
             },
             processing: true,
             serverSide: false,
-            ajax: '{{route('get.branches')}}',
+            ajax: 'branches',
             columns: [
                 { data: 'branch', name:'branch', "width": "14%" },
                 { data: 'area', name:'area', "width": "14%"},
@@ -130,6 +130,9 @@
                 $.ajax({
                     type: "PUT",
                     url: "/branch_update/"+myid,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     data: $('#branchForm').serialize(),
                     success: function(data){
                         if($.isEmptyObject(data.error)){
@@ -145,7 +148,10 @@
             if(editBtn == 'Save'){
                 $.ajax({
                     type: "POST",
-                    url: "{{route("branch.add")}}",
+                    url: "branch_add",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     data: $('#branchForm').serialize(),
                     success: function(data){
                         if($.isEmptyObject(data.error)){
@@ -228,7 +234,10 @@
         var branchid = $('#inibranchid').val();
         var qty = $('#item-qty').val();
         $.ajax({
-            url: '{{route("branch.ini")}}',
+            url: 'branch_ini',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             dataType: 'json',
             type: 'PUT',
             data: {

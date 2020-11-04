@@ -146,6 +146,9 @@
                 $.ajax({
                     type: "PUT",
                     url: "/user_update/"+myid,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     data: $('#userForm').serialize(),
                     success: function(data){
                         if($.isEmptyObject(data.error)){
@@ -162,6 +165,9 @@
                 $.ajax({
                     type: "POST",
                     url: "{{route("user.add")}}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     data: $('#userForm').serialize(),
                     success: function(data){
                         if($.isEmptyObject(data.error)){

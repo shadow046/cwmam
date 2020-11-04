@@ -16,6 +16,9 @@
                     serial = $('#serial'+q).val();
                     $.ajax({
                         url: '{{route("stocks.store")}}',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
                         dataType: 'json',
                         type: 'POST',
                         data: {

@@ -16,8 +16,7 @@
             },
             processing: true,
             serverSide: true,
-            ajax: '{{route("stocks.view")}}',
-            
+            ajax: 'viewStock',
             columns: [
                 { data: 'category', name:'category'},
                 { data: 'description', name:'description'},
@@ -201,7 +200,10 @@
                     $('#sub_cat_Btn').prop('disabled', true)
                     cat = $('#cat'+q).val();
                     $.ajax({
-                        url: '{{route("add.category")}}',
+                        url: 'addcategory',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
                         dataType: 'json',
                         type: 'POST',
                         data: {
@@ -213,7 +215,7 @@
         }
         if (check > 1) {
             alert("Category added!!!");
-            window.location.href = '{{route('stocks.index')}}';
+            window.location.href = 'stocks';
         }
     });
 
@@ -230,7 +232,10 @@
                     cat = $('#itemcat'+q).val();
                     item = $('#item-desc'+q).val();
                     $.ajax({
-                        url: '{{route("add.item")}}',
+                        url: 'additem',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
                         dataType: 'json',
                         type: 'POST',
                         data: {
@@ -243,12 +248,12 @@
         }
         if (check > 1) {
             alert("Item added!!!");
-            window.location.href = '{{route('stocks.index')}}';
+            window.location.href = 'stocks';
         }
     });
 
     $(document).on('click', '.cancel', function(){
-        window.location.href = '{{route('stocks.index')}}';
+        window.location.href = 'stocks';
     });
 
     $(document).on('keyup', '#client', function(){
@@ -260,7 +265,7 @@
         function selectClient(client) {
             $.ajax({
                 type:'get',
-                url:'{{route("client.autocomplete")}}',
+                url:'client-autocomplete',
                 data:{
                     'id':id
                 },
@@ -292,7 +297,7 @@
         function selectCustomer(customer) {
             $.ajax({
                 type:'get',
-                url:'{{route("customer.autocomplete")}}',
+                url:'customer-autocomplete',
                 data:{
                     'id':id,
                     'client':client
