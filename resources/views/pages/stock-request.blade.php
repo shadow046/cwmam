@@ -33,5 +33,4 @@
   @if(!auth()->user()->hasrole('Administrator'))
     <input type="button" id="reqBtn" class="btn btn-primary" value="REQUEST STOCKS">
   @endif
-  <input type="button" id="printBtn" class="btn btn-primary" value="PRINT" onclick="window.print();">
 @endsection

@@ -100,7 +100,7 @@
                     @include('scripts.warehouse.stock')
                 @else
                     <script src="{{asset('js/branch/stocks.js')}}"></script>
-                    @include('scripts.branch.addstock')
+                    <script src="{{asset('js/branch/addstock.js')}}"></script>
                     @include('scripts.branch.service-in')
                     @include('scripts.branch.service-out')
                 @endif                

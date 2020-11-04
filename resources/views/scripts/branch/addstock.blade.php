@@ -15,7 +15,7 @@
                     item = $('#item'+q).val();
                     serial = $('#serial'+q).val();
                     $.ajax({
-                        url: '{{route("stocks.store")}}',
+                        url: 'store',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
@@ -32,7 +32,7 @@
         }
         if (check > 1) {
             alert("Inventory updated!!!");
-            window.location.href = '{{route('stocks.index')}}';
+            window.location.href = 'stocks';
         }
     });
 
@@ -47,7 +47,7 @@
         function selectItem(item1) {
             $.ajax({
                 type:'get',
-                url:'{{route("stock.get.itemcode")}}',
+                url:'itemcode',
                 data:{'id':id},
                 success:function(data)
                 {

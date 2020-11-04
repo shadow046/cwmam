@@ -99,6 +99,9 @@
         var reqno = $(this).attr('reqno');
         $.ajax({
             url: 'remove',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             dataType: 'json',
             type: 'DELETE',
             data: {
@@ -119,6 +122,9 @@
         console.log(datesched);
         $.ajax({
             url: 'update',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             dataType: 'json',
             type: 'PUT',
             data: {
@@ -137,6 +143,9 @@
 
         $.ajax({
             url: 'storerreceived',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             dataType: 'json',
             type: 'POST',
             data: {
@@ -223,6 +232,9 @@
                         purpose = $('#purpose'+q).val();
                         $.ajax({
                             url: 'storerequest',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
                             dataType: 'json',
                             type: 'POST',
                             data: {
@@ -239,6 +251,9 @@
                     stat = "ok";
                     $.ajax({
                         url: 'storerequest',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
                         dataType: 'json',
                         type: 'POST',
                         data: {
@@ -247,7 +262,7 @@
                         },
                     });
                     alert("Request details submitted!!!");
-                    window.location.href = '/print/'+reqno;
+                    window.location.href = 'request';
                 }
             }
     });
