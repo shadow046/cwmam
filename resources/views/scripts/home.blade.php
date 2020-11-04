@@ -10,7 +10,7 @@
             "order": [[ 0, 'desc' ], [ 1, 'desc' ]],
             processing: true,
             serverSide: false,
-            ajax: '{{route('get.activity')}}',
+            ajax: 'activity',
             columns: [
                 { data: 'date', name:'date'},
                 { data: 'time', name:'time',},

@@ -11,7 +11,7 @@
             },
             processing: true,
             serverSide: true,
-            ajax: '{{route("stock.sUnit")}}',
+            ajax: 'sUnit',
             
             columns: [
                 { data: 'date', name:'date'},

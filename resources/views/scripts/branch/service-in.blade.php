@@ -28,7 +28,7 @@
         function selectCategory(goodcategory1) {
             $.ajax({
                 type:'get',
-                url:'{{route("stock.description")}}',
+                url:'description',
                 data:{
                     'customerid':customerid,
                     'categoryid':categoryid,
@@ -59,7 +59,7 @@
         function selectCustomer(goodcustomer1) {
             $.ajax({
                 type:'get',
-                url:'{{route("stock.category")}}',
+                url:'category',
                 data:{'id':id},
                 success:function(data)
                 {
@@ -89,7 +89,7 @@
         function selectdesc(gooddesc1) {
             $.ajax({
                 type:'get',
-                url:'{{route("stock.serial")}}',
+                url:'serial',
                 data:{
                     'customerid':customerid,
                     'categoryid':categoryid,
@@ -166,7 +166,7 @@
                         client = $('#pclient-id').val();
                         customer = $('#pcustomer-id').val();
                         $.ajax({
-                            url: '{{route("stocks.pullout")}}',
+                            url: 'pull-out',
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
@@ -190,7 +190,7 @@
         if (check > 1) {
             console.log(3);
             alert("Inventory updated!!!");
-            window.location.href = '{{route('stocks.index')}}';
+            window.location.href = 'stocks';
         }
     });
 
@@ -244,7 +244,7 @@
                     serial = $('#goodserial'+q).val();
                     status = $('#status').val();
                     $.ajax({
-                        url: '{{route("stock.service-in")}}',
+                        url: 'service-in',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
@@ -260,7 +260,7 @@
         }
         if (check > 1) {
             alert("Inventory updated!!!");
-            window.location.href = '{{route('stocks.index')}}';
+            window.location.href = 'stocks';
         }
     });
 
@@ -273,7 +273,7 @@
         function selectClient(pclient) {
             $.ajax({
                 type:'get',
-                url:'{{route("client.autocomplete")}}',
+                url:'client-autocomplete',
                 data:{
                     'id':id
                 },
@@ -305,7 +305,7 @@
         function selectCustomer(pcustomer) {
             $.ajax({
                 type:'get',
-                url:'{{route("customer.autocomplete")}}',
+                url:'customer-autocomplete',
                 data:{
                     'id':id,
                     'client':client
@@ -339,7 +339,7 @@
         function selectDesc(poutdesc1) {
             $.ajax({
                 type:'get',
-                url:'{{route("stock.get.itemcode")}}',
+                url:'itemcode',
                 data:{'id':id},
                 success:function(data)
                 {

@@ -1,0 +1,1 @@
+$(document).ready(function(){var a=$("#reqno").val();$("table.itemDetails").DataTable({drawCallback:function(b){$("#printBtn").click()},dom:"t",language:{emptyTable:" "},iDisplayLength:100,processing:!0,serverSide:!0,async:!1,ajax:"/getprint/"+a,columns:[{data:"items_id",name:"items_id"},{data:"item",name:"item"},{data:"serial",name:"serial"}]})});

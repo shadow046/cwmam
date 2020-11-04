@@ -10,7 +10,7 @@
                 },
             processing: true,
             serverSide: false,
-            ajax: '{{route('customer.list')}}',
+            ajax: 'customer-list',
             columns: [
                 { data: 'code', name:'code'},
                 { data: 'customer', name:'customer',}
@@ -22,8 +22,7 @@
     
         var trdata = customertable.row(this).data();
         var id = trdata.id;
-        var url = '{{ route('home.index') }}';
-        window.location.href = url+'/customer/'+trdata.id;
+        window.location.href = 'customer/'+trdata.id;
     
     });
 

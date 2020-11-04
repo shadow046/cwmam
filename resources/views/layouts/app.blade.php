@@ -80,7 +80,7 @@
             <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
             
             @if(Request::is('user'))
-                @include('scripts.warehouse.user')
+                <script src="{{asset('js/warehouse/user.js')}}"></script>
             @endif
 
             @if(Request::is('branch'))
@@ -89,7 +89,7 @@
 
             @if(Request::is('request'))
                 @if(auth()->user()->hasrole('Administrator'))
-                    @include('scripts.warehouse.request')
+                    <script src="{{asset('js/warehouse/request.js')}}"></script>
                 @else
                     <script src="{{asset('js/branch/request.js')}}"></script>
                 @endif
@@ -100,39 +100,43 @@
                     @include('scripts.warehouse.stock')
                 @else
                     <script src="{{asset('js/branch/stocks.js')}}"></script>
+                    <script src="{{asset('js/branch/service-in.js')}}"></script>
+                    <script src="{{asset('js/branch/service-out.js')}}"></script>
+                @endif
+                @if(auth()->user()->hasrole('Head'))
                     <script src="{{asset('js/branch/addstock.js')}}"></script>
-                    @include('scripts.branch.service-in')
-                    @include('scripts.branch.service-out')
-                @endif                
+                @endif
+
             @endif
 
             @if(Request::is('service-unit'))
-                    @include('scripts.branch.service-unit')
+                <script src="{{asset('js/branch/service-unit.js')}}"></script>
             @endif
 
             @if(Request::is('print/*'))
-                    @include('scripts.warehouse.print')
+                <script src="{{asset('js/warehouse/print.js')}}"></script>
             @endif
 
             @if(Request::is('loans'))
-                    @include('scripts.branch.loans')
+                <script src="{{asset('js/branch/loans.js')}}"></script>
             @endif
+
             @if(Request::is('return'))
                 @if(auth()->user()->branch->branch != 'Warehouse')
-                    @include('scripts.branch.defective')
+                    <script src="{{asset('js/branch/defective.js')}}"></script>
                 @endif
                 @if(auth()->user()->branch->branch == 'Warehouse')
-                    @include('scripts.warehouse.defective')
+                    <script src="{{asset('js/warehouse/defective.js')}}"></script>
                 @endif
             @endif
             @if(Request::is('customer'))
-                @include('scripts.customer')
+                <script src="{{asset('js/customer.js')}}"></script>
             @endif
             @if(Request::is('customer/*'))
-                @include('scripts.customerbranch')
+                <script src="{{asset('js/customerbranch.js')}}"></script>
             @endif
             @if(Request::is('/'))
-                @include('scripts.home')
+                <script src="{{asset('js/home.js')}}"></script>
             @endif
         </body>
     </html>

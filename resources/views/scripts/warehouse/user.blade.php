@@ -25,7 +25,7 @@
             "language": {
                 "emptyTable": "No registered user to this branch"
             },
-            ajax: '{{route('get.users')}}',
+            ajax: 'users',
             columns: [
                 { data: 'fname', name:'fname' },
                 { data: 'email', name:'email' },
@@ -56,7 +56,7 @@
             $('#userModal').modal('show');
             $.ajax({
                 type:'get',
-                url:'{{route("user.getBranch")}}',
+                url:'getBranchName',
                 data:{'id':area},
                 async: false,
                 success:function(data)
@@ -117,7 +117,7 @@
             
             $.ajax({
                 type:'get',
-                url:'{{route("user.getBranch")}}',
+                url:'getBranchName',
                 data:{'id':area},
                 success:function(data)
                 {
@@ -164,7 +164,7 @@
             if(subBtn == 'Save'){
                 $.ajax({
                     type: "POST",
-                    url: "{{route("user.add")}}",
+                    url: "user_add",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },

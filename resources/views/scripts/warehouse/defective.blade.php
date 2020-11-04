@@ -10,10 +10,7 @@
             },
             processing: true,
             serverSide: true,
-            "language": {
-                    "emptyTable": " "
-                },
-            ajax: '{{route("return.table")}}',
+            ajax: 'return-table',
             
             columns: [
                 { data: 'date', name:'date'},
@@ -74,7 +71,7 @@
         var status = 'Received';
         if ($('#submit_Btn').val() == 'Received'){
             $.ajax({
-                url: '{{route("return.update")}}',
+                url: 'return-update',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -87,14 +84,14 @@
                 },
                 success:function(data)
                 {
-                    window.location.href = '{{route('return.index')}}';
+                    window.location.href = 'return';
                 }
             });
         }
     });
 
     $(document).on('click', '.cancel', function(){
-        window.location.href = '{{route('return.index')}}';
+        window.location.href = 'return';
     });
 
 

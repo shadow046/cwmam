@@ -14,7 +14,7 @@
         $('#replacementserial'+count).val('select serial');
         $.ajax({
             type:'get',
-            url:'{{route("stock.serials")}}',
+            url:'getserials',
             data:{'id':id},
             async: false,
             success:function(data)
@@ -54,7 +54,7 @@
                         client = $('#client-id').val();
                         customer = $('#customer-id').val();
                         $.ajax({
-                            url: '{{route("stocks.out")}}',
+                            url: 'service-out',
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
@@ -79,7 +79,7 @@
         if (check > 1) {
             console.log(3);
             alert("Inventory updated!!!");
-            window.location.href = '{{route('stocks.index')}}';
+            window.location.href = 'stocks';
         }
     });
 
@@ -106,7 +106,7 @@
         function selectStock(outstock1) {
             $.ajax({
                 type:'get',
-                url:'{{route("stock.get")}}',
+                url:'getstock',
                 data:{'id':id},
                 async: false,
                 success:function(data)
@@ -129,7 +129,7 @@
 
             $.ajax({
                 type:'get',
-                url:'{{route("stock.serials")}}',
+                url:'getserials',
                 data:{'id':id},
                 async: false,
                 success:function(data)
@@ -155,7 +155,7 @@
         function selectDesc(outdesc1) {
             $.ajax({
                 type:'get',
-                url:'{{route("stock.get.itemcode")}}',
+                url:'itemcode',
                 data:{'id':id},
                 success:function(data)
                 {
@@ -284,7 +284,7 @@
 
         $.ajax({
             type:'get',
-            url:'{{route("stock.get.itemcode")}}',
+            url:'itemcode',
             data:{'id':catid},
             success:function(data)
             {
@@ -306,7 +306,7 @@
         var serialOp = " ";
         $.ajax({
             type:'get',
-            url:'{{route("stock.serials")}}',
+            url:'getserials',
             data:{'id':id},
             async: false,
             success:function(data)
@@ -326,7 +326,7 @@
             var item = $('#repserial1').val();
             var custid = $('#replacementcustomer-id').val();
             $.ajax({
-                url: '{{route("stocks.update")}}',
+                url: 'rep-update',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -340,7 +340,7 @@
             });
 
             alert("Inventory updated!!!");
-            window.location.href = '{{route('stocks.index')}}';
+            window.location.href = 'stocks';
 
         }
     });
@@ -354,7 +354,7 @@
         function selectClient(replacementclient) {
             $.ajax({
                 type:'get',
-                url:'{{route("pclient.autocomplete")}}',
+                url:'pclient-autocomplete',
                 data:{
                     'id':id
                 },
@@ -387,7 +387,7 @@
         function selectCustomer(replacementcustomer) {
             $.ajax({
                 type:'get',
-                url:'{{route("pcustomer.autocomplete")}}',
+                url:'pcustomer-autocomplete',
                 async: false,
                 data:{
                     'id':id,

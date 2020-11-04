@@ -22,7 +22,7 @@
             },
             processing: true,
             serverSide: true,
-            ajax: '{{route('get.requests')}}',
+            ajax: 'requests',
             columns: [
                 { data: 'created_at', name:'date', "width": "14%" },
                 { data: 'request_no', name:'request_no', "width": "14%"},
@@ -165,7 +165,7 @@
                 function selectBranch(stock1) {
                     $.ajax({
                         type:'get',
-                        url:'{{route("stock.get")}}',
+                        url:'getstock',
                         async: false,
                         data:{'id':id},
                         success:function(data)
@@ -250,7 +250,7 @@
             function selectItem(stock1) {
                 $.ajax({
                     type:'get',
-                    url:'{{route("stock.get")}}',
+                    url:'getstock',
                     data:{'id':id},
                     async: false,
                     success:function(data)
@@ -293,7 +293,7 @@
                         datesched = $('#datesched').val();
                         branchid = $('#reqbranch').val();
                         $.ajax({
-                            url: '{{route("stock.update")}}',
+                            url: 'update',
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
@@ -313,7 +313,7 @@
                         var stat = "ok";
                         var status = "1";
                         $.ajax({
-                            url: '{{route("stock.update")}}',
+                            url: 'update',
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
@@ -360,7 +360,7 @@
         function selectItem(stock1) {
             $.ajax({
                 type:'get',
-                url:'{{route("stock.get")}}',
+                url:'getstock',
                 data:{'id':id},
                 async: false,
                 success:function(data)
@@ -383,7 +383,7 @@
 
             $.ajax({
                 type:'get',
-                url:'{{route("stock.serials")}}',
+                url:'getserials',
                 data:{'id':id},
                 async: false,
                 success:function(data)
@@ -424,7 +424,7 @@
         function selectItem(stock1) {
             $.ajax({
                 type:'get',
-                url:'{{route("stock.get")}}',
+                url:'getstock',
                 data:{'id':id},
                 async: false,
                 success:function(data)
@@ -448,7 +448,7 @@
 
             $.ajax({
                 type:'get',
-                url:'{{route("stock.serials")}}',
+                url:'getserials',
                 data:{'id':id},
                 async: false,
                 success:function(data)
@@ -477,7 +477,7 @@
         function selectItem(item1) {
             $.ajax({
                 type:'get',
-                url:'{{route("stock.get.itemcode")}}',
+                url:'itemcode',
                 data:{'id':id},
                 success:function(data)
                 {
@@ -495,7 +495,7 @@
     });
 
     $(document).on('click', '.cancel', function(){
-        window.location.href = '{{route('stock.index')}}';
+        window.location.href = 'request';
     });
 
     $(document).on('click', '#printBtn', function(){

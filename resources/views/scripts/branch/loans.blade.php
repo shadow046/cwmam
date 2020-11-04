@@ -12,7 +12,7 @@
             "language": {
                     "emptyTable": " "
                 },
-            ajax: '{{route("loans.table")}}',
+            ajax: 'loanstable',
             
             columns: [
                 { data: 'date', name:'date'},
@@ -47,7 +47,7 @@
             $('#del_Btn').hide();
             $.ajax({
                 type:'get',
-                url:'{{route("loan.get.itemcode")}}',
+                url:'loanitemcode',
                 data:{'id':trdata.items_id},
                 success:function(data)
                 {
@@ -78,7 +78,7 @@
                 $('#serials').show();
                 $('#del_Btn').hide();
                 $.ajax({
-                    url: '{{route("loans.getitem")}}',
+                    url: 'loanget',
                     dataType: 'json',
                     type: 'GET',
                     async: false,
@@ -107,7 +107,7 @@
         var status = 'approved';
         if ($('#loanserial1').val() && $('#status').val() == 'pending') {
             $.ajax({
-                url: '{{route("loans.stock")}}',
+                url: 'loanstock',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -121,7 +121,7 @@
             });
 
             $.ajax({
-                url: '{{route("loans.approved")}}',
+                url: 'loansapproved',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -134,7 +134,7 @@
                 },
                 success:function(data)
                 {
-                    window.location.href = '{{route('loans')}}';
+                    window.location.href = 'loans';
                 }
             });
         }
@@ -147,7 +147,7 @@
         var status = 'completed';
         if ($('#serial').val() && $('#status').val() == 'approved') {
             $.ajax({
-                url: '{{route("loans.stock.update")}}',
+                url: 'loanupdate',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -160,7 +160,7 @@
             });
 
             $.ajax({
-                url: '{{route("loans.approved")}}',
+                url: 'loansapproved',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -173,7 +173,7 @@
                 },
                 success:function(data)
                 {
-                    window.location.href = '{{route('loans')}}';
+                    window.location.href = 'loans';
                 }
             });
         }
@@ -185,7 +185,7 @@
         var branch = $('#branch_id').val();
         var status = 'deleted';
         $.ajax({
-            url: '{{route("loans.stock.delete")}}',
+            url: 'loandelete',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -196,7 +196,7 @@
                 status: status
             },
         });
-        window.location.href = '{{route('loans')}}';
+        window.location.href = 'loans';
     });
 
     $(document).on('change', '#loandesc1', function(){
@@ -204,7 +204,7 @@
         var serialOp = " ";
         $.ajax({
                 type:'get',
-                url:'{{route("stock.serials")}}',
+                url:'getserials',
                 data:{'id':id},
                 async: false,
                 success:function(data)
@@ -219,7 +219,7 @@
     });
 
     $(document).on('click', '.cancel', function(){
-        window.location.href = '{{route('loans')}}';
+        window.location.href = 'loans';
     });
     
     $(document).on('change', '#loanbranch', function(){
@@ -228,7 +228,7 @@
         var catOp = " ";
         $.ajax({
             type:'get',
-            url:'{{route("stock.bcategory")}}',
+            url:'bcategory',
             data:{'id':id},
             success:function(data)
             {
@@ -253,7 +253,7 @@
         var itemOp = " ";
         $.ajax({
             type:'get',
-            url:'{{route("stock.bitem")}}',
+            url:'bitem',
             data:{
                 'catid':catid,
                 'branchid':branchid
@@ -282,7 +282,7 @@
             var branchid = $('#loanbranch').val();
             var itemid = $('#loanreqdesc1').val();
             $.ajax({
-                url: '{{route("stocks.loan")}}',
+                url: 'loan',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -293,7 +293,7 @@
                     itemid: itemid
                 },
             });
-            window.location.href = '{{route('loans')}}';
+            window.location.href = 'loans';
         }
 
     });

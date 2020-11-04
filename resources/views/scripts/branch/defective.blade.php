@@ -10,7 +10,7 @@
             "language": {
                     "emptyTable": " "
                 },
-            ajax: '{{route("return.table")}}',
+            ajax: 'return-table',
             
             columns: [
                 { data: 'date', name:'date'},
@@ -76,7 +76,7 @@
         console.log(branch);
         console.log(id+'id');
         $.ajax({
-            url: '{{route("return.update")}}',
+            url: 'return-update',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -89,7 +89,7 @@
             },
             success:function(data)
             {
-                window.location.href = '{{route('return.index')}}';
+                window.location.href = 'return';
             },
             error: function (data,error, errorThrown) {
                 alert(data.responseText);
@@ -98,7 +98,7 @@
     });
 
     $(document).on('click', '.cancel', function(){
-        window.location.href = '{{route('return.index')}}';
+        window.location.href = 'return';
     });
 
 

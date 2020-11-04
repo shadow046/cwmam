@@ -1,0 +1,1 @@
+$(document).ready(function(){$("table.activityTable").DataTable({dom:"lrtip",language:{emptyTable:" "},order:[[0,"desc"],[1,"desc"]],processing:!0,serverSide:!1,ajax:"activity",columns:[{data:"date",name:"date"},{data:"time",name:"time"},{data:"username",name:"username"},{data:"fullname",name:"fullname"},{data:"userlevel",name:"userlevel"},{data:"activity",name:"activity"}]})});
