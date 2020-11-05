@@ -42,8 +42,16 @@ class DefectiveController extends Controller
             ->join('branches', 'defectives.branch_id', '=', 'branches.id')
             ->get();
 
-        if (auth()->user()->branch->branch == 'Warehouse') {
+        $repair = Defective::select('branches.branch', 'branches.id as branchid', 'defectives.updated_at', 'defectives.id as id', 'items.item', 'items.id as itemid', 'defectives.serial', 'defectives.status')
+            ->where('defectives.status', 'Received')
+            ->join('items', 'defectives.items_id', '=', 'items.id')
+            ->join('branches', 'defectives.branch_id', '=', 'branches.id')
+            ->get();
+
+        if (auth()->user()->branch->branch == 'Warehouse' && !auth()->user()->hasrole('Repair')) {
             $data = $waredef;
+        }else if (auth()->user()->branch->branch == 'Warehouse' && auth()->user()->hasrole('Repair')){
+            $data = $repair;
         }else{
             $data = $defective;
         }
@@ -77,6 +85,7 @@ class DefectiveController extends Controller
     public function update(Request $request)
     {
         if (auth()->user()->branch->branch != 'Warehouse') {
+
             $update = Defective::where('branch_id', auth()->user()->branch->id)
                 ->where('id', $request->id)
                 ->where('status', 'For return')
@@ -85,25 +94,54 @@ class DefectiveController extends Controller
             $branch = Branch::where('id', auth()->user()->branch->id)->first();
 
             $log = new UserLog;
-            $log->activity = "Receive defective $item->item from $branch->branch." ;
+            $log->activity = "Return defective $item->item to warehouse." ;
             $log->user_id = auth()->user()->id;
             $log->save();
-        }else{
-            $update = Defective::where('id', $request->id)
-                ->where('branch_id', $request->branch)
-                ->where('status', 'For receiving')
-                ->first();
-            $item = Item::where('id', $update->items_id)->first();
+            $update->status = $request->status;
+            $update->user_id = auth()->user()->id;
+            $data = $update->save();
 
-            $log = new UserLog;
-            $log->activity = "Return defective $item->item to Warehouse." ;
-            $log->user_id = auth()->user()->id;
-            $log->save();
+        }else{
+            if ($request->status == 'Received') {
+                $update = Defective::where('id', $request->id)
+                    ->where('branch_id', $request->branch)
+                    ->where('status', 'For receiving')
+                    ->first();
+                $item = Item::where('id', $update->items_id)->first();
+                $branch = Branch::where('id', $update->branch_id)->first();
+
+                $log = new UserLog;
+                $log->activity = "Received defective $item->item from $branch->branch." ;
+                $log->user_id = auth()->user()->id;
+                $log->save();
+                $update->status = $request->status;
+                $update->user_id = auth()->user()->id;
+                $data = $update->save();
+            }
+
+            if ($request->status == 'Repaired') {
+                $repaired = Defective::where('id', $request->id)
+                    ->where('branch_id', $request->branch)
+                    ->where('status', 'Received')
+                    ->first();
+                $item = Item::where('id', $repaired->items_id)->first();
+                $cat = Category::where('id', $item->category_id)->first();
+
+                $add = new Warehouse;
+                $add->category_id = $cat->id;
+                $add->items_id = $repaired->items_id;
+                $add->status = 'in';
+                $add->user_id = auth()->user()->id;
+                $add->save();
+
+                $log = new UserLog;
+                $log->activity = "Add $item->item from Repair to Stock." ;
+                $log->user_id = auth()->user()->id;
+                $data = $log->save();
+
+            }
         }
         
-        $update->status = $request->status;
-        $update->user_id = auth()->user()->id;
-        $data = $update->save();
         return response()->json($data);
 
     }

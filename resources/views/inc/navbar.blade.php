@@ -5,33 +5,34 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('branch') ? 'active' : '' }}" href="{{ route('branch.index') }}">Service Center</a>
-                </li>
-                @role('Administrator')
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('customer') ? 'active' : '' }} {{ Request::is('customer/*') ? 'active' : '' }}" href="{{ url('customer') }}">Customer</a>
-                </li>
-                @endrole
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('request') ? 'active' : '' }}" href="{{ route('stock.index') }}">Stock Request</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('stocks') ? 'active' : '' }}" href="{{ route('stocks.index') }}">Stock</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('return') ? 'active' : '' }}" href="{{ route('return.index') }}">Return</a>
-                </li>
-                @if(auth()->user()->branch->branch != 'Warehouse')
+                @if(!auth()->user()->hasrole('Repair'))
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('service-unit') ? 'active' : '' }}" href="{{ route('stock.service-unit') }}">Service unit</a>
+                        <a class="nav-link {{ Request::is('branch') ? 'active' : '' }}" href="{{ route('branch.index') }}">Service Center</a>
+                    </li>
+                    @role('Administrator')
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('customer') ? 'active' : '' }} {{ Request::is('customer/*') ? 'active' : '' }}" href="{{ url('customer') }}">Customer</a>
+                    </li>
+                    @endrole
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('loans') ? 'active' : '' }}" href="{{ route('loans') }}">Loans</a>
+                        <a class="nav-link {{ Request::is('request') ? 'active' : '' }}" href="{{ route('stock.index') }}">Stock Request</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('stocks') ? 'active' : '' }}" href="{{ route('stocks.index') }}">Stock</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('return') ? 'active' : '' }}" href="{{ route('return.index') }}">Return</a>
+                    </li>
+                    @if(auth()->user()->branch->branch != 'Warehouse')
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::is('service-unit') ? 'active' : '' }}" href="{{ route('stock.service-unit') }}">Service unit</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::is('loans') ? 'active' : '' }}" href="{{ route('loans') }}">Loans</a>
+                        </li>
+                    @endif
                 @endif
-
             </ul>
             <ul class="nav">
                 @hasanyrole('Administrator|Head')

@@ -17,6 +17,7 @@ Route::post('change-password', 'ChangePasswordController@store')->name('change.p
 
 
 Route::get('/', 'HomeController@index')->name('home.index');
+Route::get('/home', 'HomeController@index')->name('home.index');
 //Route::get('service_center', 'BranchController@index');
 Route::get('service_units', 'HomeController@service_units');
 Route::get('spare_parts', 'HomeController@spare_parts');
@@ -103,6 +104,8 @@ Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 Route::get('print/{id}', 'HomeController@print')->name('branch.print');
 Route::get('getprint/{id}', 'HomeController@getprint')->name('getprint');
+Route::get('initial/{id}', 'HomeController@initial');
+
 
 
 

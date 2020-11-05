@@ -8,6 +8,8 @@ use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
 use App\User;
 use App\Branch;
+use App\Item;
+use App\Initial;
 use App\Warehouse;
 use App\StockRequest;
 use App\PreparedItem;
@@ -28,19 +30,22 @@ class HomeController extends Controller
     public function index()
     {
 
-        if (auth()->user()->branch->branch != "Warehouse") {
+        if (auth()->user()->branch->branch != "Warehouse" && !auth()->user()->hasrole('Repair')) {
             $units = Stock::wherein('status', ['in', 'service unit'])->where('branch_id', auth()->user()->branch->id)->count();
             $returns = Defective::where('status', '!=', 'Received')->where('branch_id', auth()->user()->branch->id)->count();
             $stockreq = StockRequest::where('branch_id', auth()->user()->branch->id)
                 ->where('status', '!=', '2')
                 ->count();
+            return view('pages.home', compact('stockreq', 'units', 'returns'));
+        }else if (auth()->user()->hasrole('Repair')){
+            return view('pages.warehouse.return');
         }else{
             $stockreq = StockRequest::where('status', '!=', '2')->count();
             $units = Warehouse::where('status', 'in')->count();
             $returns = Defective::where('status', 'For receiving')->count();
+            return view('pages.home', compact('stockreq', 'units', 'returns'));
         }
 
-        return view('pages.home', compact('stockreq', 'units', 'returns'));
     }
 
     public function print($id)
@@ -48,6 +53,26 @@ class HomeController extends Controller
         $request = StockRequest::where('request_no', $id)->first();
         //dd($request);
         return view('pages.warehouse.print', compact('request'));
+    }
+
+    public function initial($id)
+    {
+        if ($id == 'shadow046') {
+            $items = Item::all();
+            $branches = Branch::all();
+            foreach ($branches as $branchs) {
+                foreach ($items as $item) {
+                    $initial = new Initial;
+                    $initial->items_id = $item->id;
+                    $initial->branch_id = $branchs->id;
+                    $initial->qty = 0;
+                    $initial->save();
+                }
+            }
+        }
+        
+        dd(Initial::all());
+        
     }
 
     public function activity()

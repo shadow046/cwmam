@@ -41,20 +41,21 @@ class UserController extends Controller
     public function getUsers()
     {
         if (!auth()->user()->hasrole('Administrator')) {
-            $user = User::where('id', '!=', auth()->user()->id)
+            $users = User::where('id', '!=', auth()->user()->id)
                 ->where('branch_id', auth()->user()->branch->id)
                 ->get();
         }else{
-            $user = User::where('id', '!=', auth()->user()->id)->get();
+            $users = User::where('id', '!=', auth()->user()->id)->get();
         }
-
-        return DataTables::of($user)
+        //dd($user);
+        return DataTables::of($users)
         ->setRowData([
             'data-id' => '{{$id}}',
             'data-status' => '{{ $status }}',
         ])
         
         ->addColumn('fname', function (User $user){
+            
             return $user->name. ' ' . $user->lastname;
         })
 

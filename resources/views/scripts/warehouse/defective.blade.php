@@ -58,6 +58,9 @@
         if (trdata.status == 'For receiving') {
             $('#submit_Btn').val('Received');
             $('#submit_Btn').show();
+        }else if (trdata.status == 'Received') {
+            $('#submit_Btn').val('Repaired');
+            $('#submit_Btn').show();
         }else{
             $('#submit_Btn').hide();
         }
@@ -68,7 +71,7 @@
     $(document).on('click', '#submit_Btn', function(){
         var branch = $('#branch_id').val();
         var id = $('#myid').val();
-        var status = 'Received';
+        var status = $('#submit_Btn').val()
         if ($('#submit_Btn').val() == 'Received'){
             $.ajax({
                 url: 'return-update',
@@ -87,6 +90,27 @@
                     window.location.href = 'return';
                 }
             });
+        }
+        if ($('#submit_Btn').val() == 'Repaired'){
+            $.ajax({
+                url: 'return-update',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                type: 'PUT',
+                data: {
+                    id: id,
+                    branch: branch,
+                    status: status
+                },
+                success:function(data)
+                {
+                    window.location.href = 'return';
+                }
+            });
+            
+
         }
     });
 

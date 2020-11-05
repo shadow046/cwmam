@@ -57,7 +57,6 @@
                 ajax: "/stocks/"+id,
                 
                 columns: [
-                    { data: 'items_id', name:'items_id', "width": "20%",},
                     { data: 'item', name:'item', "width": "17%"},
                     { data: 'initial', name:'initial', "width": "17%"},
                     { data: 'available', name:'available', "width": "14%"},
