@@ -51,16 +51,16 @@
                             <thead class="thead-dark">
                                 <tr class="tbsearchm">
                                     <td>
-                                        <input type="text" class="form-control filter-input fl-0m" data-column="0" />
+                                        <input type="text" class="form-control mfilter-input fl-0m" data-column="0" />
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control filter-input fl-1m" data-column="1" />
+                                        <input type="text" class="form-control mfilter-input fl-1m" data-column="1" />
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control filter-input fl-2m" data-column="2" />
+                                        <input type="text" class="form-control mfilter-input fl-2m" data-column="2" />
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control filter-input fl-3m" data-column="3" />
+                                        <input type="text" class="form-control mfilter-input fl-3m" data-column="3" />
                                     </td>
                                 <tr>
                                     <th>DESCRIPTION</th>

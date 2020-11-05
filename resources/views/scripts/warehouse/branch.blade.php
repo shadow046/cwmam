@@ -215,6 +215,12 @@
                 .draw();
         });
 
+        $('.mfilter-input').keyup(function() { //search columns
+            stockTable.column($(this).data('column'))
+                .search($(this).val())
+                .draw();
+        });
+
     });
 
 
@@ -258,7 +264,6 @@
                     serverSide: true,
                     ajax: "/stocks/"+branchid,
                     columns: [
-                        { data: 'items_id', name:'items_id', "width": "20%",},
                         { data: 'item', name:'item', "width": "17%"},
                         { data: 'initial', name:'initial', "width": "17%"},
                         { data: 'available', name:'available', "width": "14%"},
