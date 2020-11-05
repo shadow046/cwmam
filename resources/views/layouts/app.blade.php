@@ -145,6 +145,9 @@
             @if (Request::is('/') && auth()->user()->hasrole('Repair'))
                 <script src="{{asset('js/warehouse/defective.js')}}"></script>
             @endif
+            @if(Request::is('log') && auth()->user()->hasrole('Repair'))
+                <script src="{{asset('js/home.js')}}"></script>
+            @endif
 
         </body>
     </html>

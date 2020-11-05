@@ -18,6 +18,8 @@ Route::post('change-password', 'ChangePasswordController@store')->name('change.p
 
 Route::get('/', 'HomeController@index')->name('home.index');
 Route::get('/home', 'HomeController@index')->name('home.index');
+Route::get('/log', 'HomeController@log')->name('home.log');
+
 //Route::get('service_center', 'BranchController@index');
 Route::get('service_units', 'HomeController@service_units');
 Route::get('spare_parts', 'HomeController@spare_parts');
@@ -29,7 +31,7 @@ Route::get('customer-list', 'CustomerController@customertable')->name('customer.
 Route::get('customer/{id}', 'CustomerController@branchindex')->name('customerbranch.index');
 Route::get('customer', 'CustomerController@index')->name('customer.index');
 
-Route::put('return-update', 'DefectiveController@update')->name('return.update');
+Route::any('return-update', 'DefectiveController@update')->name('return.update');
 Route::get('return-table', 'DefectiveController@table')->name('return.table');
 Route::get('return', 'DefectiveController@index')->name('return.index');
 

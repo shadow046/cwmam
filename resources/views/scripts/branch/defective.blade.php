@@ -54,6 +54,7 @@
         $('#status').val(trdata.status);
         $('#myid').val(trdata.id);
         $('#serial').val(trdata.serial);
+        $('#return_id').val(trdata.itemid);
         if (trdata.status == 'For return') {
             $('#submit_Btn').show();
         }else{
@@ -73,6 +74,8 @@
         var branch = $('#branch_id').val();
         var id = $('#myid').val();
         var status = 'For receiving';
+        var itemid = $('#return_id').val();
+
         console.log(branch);
         console.log(id+'id');
         $.ajax({
@@ -85,7 +88,8 @@
             data: {
                 id: id,
                 branch: branch,
-                status: status
+                status: status,
+                itemid: itemid
             },
             success:function(data)
             {

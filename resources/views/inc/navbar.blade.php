@@ -5,6 +5,11 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a>
                 </li>
+                @if(auth()->user()->hasrole('Repair'))
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('/log') ? 'active' : '' }}" href="{{ url('/log') }}">Activities</a>
+                    </li>
+                @endif
                 @if(!auth()->user()->hasrole('Repair'))
                     <li class="nav-item">
                         <a class="nav-link {{ Request::is('branch') ? 'active' : '' }}" href="{{ route('branch.index') }}">Service Center</a>

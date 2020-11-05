@@ -494,9 +494,13 @@ class StockController extends Controller
         $update->user_id = auth()->user()->id;
         $update->save();
         $pullout = Pullout::where('id', $request->repdata)->first();
+        $item = Item::where('id', $pullout->items_id)->first();
+    
+        $category = Category::where('id', $item->category_id)->first();
         $defective = new Defective;
         $defective->branch_id = auth()->user()->branch->id;
         $defective->user_id = auth()->user()->branch->id;
+        $defective->category_id = $category->id;
         $defective->items_id = $pullout->items_id;
         $defective->serial = $pullout->serial;
         $defective->status = 'in';

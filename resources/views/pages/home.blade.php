@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@if(!auth()->user()->hasrole('Repair'))
   <div class="container pt-5">  
   <div class="container-fluid">
     <div class="row">
@@ -42,6 +43,7 @@
       <a>USER ACTIVITIES</a>
     </li>
   </ul>
+@endif
   <br><br>
   <div class="table-responsive">
     <table class="table activityTable" id="activityTable">

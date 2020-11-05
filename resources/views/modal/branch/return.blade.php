@@ -13,6 +13,8 @@
                     {{ csrf_field() }}
                     <input type="hidden" id="myid">
                     <input type="hidden" id="branch_id">
+                    <input type="hidden" id="return_id">
+                    <input type="hidden" id="return_name">
                     <div class="form-group row">
                         <label for="date" class="col-md-4 col-form-label text-md-right">{{ __('Date') }}</label>
                         <div class="col-md-6">

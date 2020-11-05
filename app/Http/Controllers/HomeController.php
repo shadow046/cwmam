@@ -48,6 +48,10 @@ class HomeController extends Controller
 
     }
 
+    public function log()
+    {
+        return view('pages.home');
+    }
     public function print($id)
     {
         $request = StockRequest::where('request_no', $id)->first();

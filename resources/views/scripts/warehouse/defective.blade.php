@@ -61,6 +61,9 @@
         }else if (trdata.status == 'Received') {
             $('#submit_Btn').val('Repaired');
             $('#submit_Btn').show();
+        }else if (trdata.status == 'pending') {
+            $('#submit_Btn').val('pending');
+            $('#submit_Btn').show();
         }else{
             $('#submit_Btn').hide();
         }
@@ -109,8 +112,25 @@
                     window.location.href = 'return';
                 }
             });
-            
-
+        }
+        if ($('#submit_Btn').val() == 'pending'){
+            $.ajax({
+                url: 'return-update',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                type: 'PUT',
+                data: {
+                    id: id,
+                    branch: branch,
+                    status: status
+                },
+                success:function(data)
+                {
+                    window.location.href = 'return';
+                }
+            });
         }
     });
 
