@@ -35,7 +35,7 @@ class DefectiveController extends Controller
         $defective = Defective::select('defectives.updated_at', 'defectives.category_id', 'branch_id as branchid', 'defectives.id as id', 'items.item', 'items.id as itemid', 'defectives.serial', 'defectives.status')
             ->where('branch_id', auth()->user()->branch->id)
             ->join('items', 'defectives.items_id', '=', 'items.id')
-            ->where('status', '!=', 'Received')
+            ->where('status', '=', 'For return')
             ->get();
             
         $waredef =Defective::select('branches.branch', 'defectives.category_id', 'branches.id as branchid', 'defectives.updated_at', 'defectives.id as id', 'items.item', 'items.id as itemid', 'defectives.serial', 'defectives.status')
@@ -45,7 +45,7 @@ class DefectiveController extends Controller
             ->get();
 
         $repair = Defective::select('branches.branch', 'defectives.category_id', 'branches.id as branchid', 'defectives.updated_at', 'defectives.id as id', 'items.item', 'items.id as itemid', 'defectives.serial', 'defectives.status')
-            ->where('defectives.status', 'Received')
+            ->where('defectives.status', 'For repair')
             ->join('items', 'defectives.items_id', '=', 'items.id')
             ->join('branches', 'defectives.branch_id', '=', 'branches.id')
             ->get();
@@ -73,14 +73,6 @@ class DefectiveController extends Controller
             return $cat->category;
         })
 
-        ->addColumn('status', function (Defective $data){
-
-            if ($data->status == 'in') {
-                return 'For return';
-            }else{
-                return $data->status;
-            }
-        })
 
         ->make(true);
     }
@@ -91,13 +83,13 @@ class DefectiveController extends Controller
 
             $updates = Defective::where('branch_id', auth()->user()->branch->id)
                 ->where('id', $request->id)
-                ->where('status', 'in')
+                ->where('status', 'For return')
                 ->first();
             $updates->status = 'For receiving';
             $updates->user_id = auth()->user()->id;
 
 
-            $items = Item::where('id', $update->items_id)->first();
+            $items = Item::where('id', $updates->items_id)->first();
             $branch = Branch::where('id', auth()->user()->branch->id)->first();
             
             $log = new UserLog;
@@ -120,7 +112,7 @@ class DefectiveController extends Controller
                 $log->activity = "Received defective $item->item($update->serial) from $branch->branch." ;
                 $log->user_id = auth()->user()->id;
                 $log->save();
-                $update->status = $request->status;
+                $update->status = "For repair";
                 $update->user_id = auth()->user()->id;
                 $data = $update->save();
             }

@@ -503,7 +503,7 @@ class StockController extends Controller
         $defective->category_id = $category->id;
         $defective->items_id = $pullout->items_id;
         $defective->serial = $pullout->serial;
-        $defective->status = 'in';
+        $defective->status = 'For return';
         $defective->save();
         $pullout->status = 'replaced';
         $pullout->user_id = auth()->user()->id;

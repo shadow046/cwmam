@@ -58,7 +58,7 @@
         if (trdata.status == 'For receiving') {
             $('#submit_Btn').val('Received');
             $('#submit_Btn').show();
-        }else if (trdata.status == 'Received') {
+        }else if (trdata.status == 'For repair') {
             $('#submit_Btn').val('Repaired');
             $('#submit_Btn').show();
         }else if (trdata.status == 'pending') {
