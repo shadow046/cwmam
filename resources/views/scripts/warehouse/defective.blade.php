@@ -62,7 +62,7 @@
             $('#submit_Btn').val('Repaired');
             $('#submit_Btn').show();
         }else if (trdata.status == 'pending') {
-            $('#submit_Btn').val('pending');
+            $('#submit_Btn').val('add to stock');
             $('#submit_Btn').show();
         }else{
             $('#submit_Btn').hide();
@@ -113,7 +113,8 @@
                 }
             });
         }
-        if ($('#submit_Btn').val() == 'pending'){
+        if ($('#submit_Btn').val() == 'add to stock'){
+            status = 'warehouse'
             $.ajax({
                 url: 'return-update',
                 headers: {

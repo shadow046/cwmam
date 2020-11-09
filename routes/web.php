@@ -46,7 +46,7 @@ Route::get('loanstable', 'LoanController@table')->name('loans.table');
 Route::get('loans', 'LoanController@index')->name('loans');
 Route::post('loan', 'StockController@loan')->name('stocks.loan');
 
-Route::put('rep-update', 'StockController@update')->name('stocks.update');
+Route::any('rep-update', 'StockController@update')->name('stocks.update');
 Route::get('pull-details1/{id}', 'StockController@pulldetails1')->name('stocks.details1.pullout');
 Route::get('pull-details/{id}', 'StockController@pulldetails')->name('stocks.details.pullout');
 Route::put('service-in', 'StockController@servicein')->name('stock.service-in');

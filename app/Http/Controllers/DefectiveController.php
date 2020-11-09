@@ -120,7 +120,7 @@ class DefectiveController extends Controller
             if ($request->status == 'Repaired') {
                 $repaired = Defective::where('id', $request->id)
                     ->where('branch_id', $request->branch)
-                    ->where('status', 'Received')
+                    ->where('status', 'For repair')
                     ->first();
                 $repaired->status = "pending";
                 $repaired->save();

@@ -102,7 +102,7 @@ class BranchController extends Controller
                 ->join('areas', 'areas.id', '=', 'branches.area_id')
                 ->get();
         }else{
-            $branches = Branch::select('branches.*', 'areas.area',)
+            $branches = Branch::select('branches.*', 'areas.area')
                 ->where('branches.id', '!=', auth()->user()->branch->id)
                 ->where('branches.area_id', '=', auth()->user()->area->id)
                 ->join('areas', 'areas.id', '=', 'branches.area_id')

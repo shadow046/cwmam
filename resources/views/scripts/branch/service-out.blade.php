@@ -332,15 +332,19 @@
                 },
                 dataType: 'json',
                 type: 'PUT',
+                async: false,
                 data: {
                     item: item,
                     repdata: repdata,
                     custid : custid
                 },
+                error: function (data,error, errorThrown) {
+                    alert(data.responseText);
+                }
             });
 
-            alert("Inventory updated!!!");
-            window.location.href = 'stocks';
+            //alert("Inventory updated!!!");
+            //window.location.href = 'stocks';
 
         }
     });
