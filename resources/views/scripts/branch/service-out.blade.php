@@ -77,7 +77,6 @@
             return false;
         }
         if (check > 1) {
-            console.log(3);
             window.location.href = 'stocks';
         }
     });

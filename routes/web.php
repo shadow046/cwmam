@@ -40,9 +40,9 @@ Route::get('return-table', 'DefectiveController@table')->name('return.table');
 Route::get('return', 'DefectiveController@index')->name('return.index');
 
 Route::put('loandelete', 'LoanController@destroy')->name('loans.stock.delete');
-Route::put('loanupdate', 'LoanController@stockUpdate')->name('loans.stock.update');
+Route::any('loanupdate', 'LoanController@stockUpdate')->name('loans.stock.update');
 Route::get('loanget', 'LoanController@getitem')->name('loans.getitem');
-Route::put('loanstock', 'LoanController@stock')->name('loans.stock');
+Route::any('loanstock', 'LoanController@stock')->name('loans.stock');
 Route::get('loanitemcode', 'LoanController@getItemCode')->name('loan.get.itemcode');
 Route::put('loansapproved', 'LoanController@update')->name('loans.approved');
 Route::get('loanrequesttable', 'LoanController@tablerequest')->name('loansrequest.table');
@@ -111,6 +111,7 @@ Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('print/{id}', 'HomeController@print')->name('branch.print');
 Route::get('getprint/{id}', 'HomeController@getprint')->name('getprint');
 Route::get('initial/{id}', 'HomeController@initial');
+
 
 
 

@@ -128,11 +128,11 @@ class StockRequestController extends Controller
     {
         $user = auth()->user()->branch->id;
         if (auth()->user()->branch->branch != 'Warehouse') {
-            $stock = StockRequest::where('status', '!=', '2')
+            $stock = StockRequest::wherein('status',  ['0', '1'])
                 ->where('branch_id', $user)
                 ->get();
         }else{
-            $stock = StockRequest::where('status', '!=', '2')
+            $stock = StockRequest::wherein('status',  ['0', '1'])
                 ->get();
         }
         
@@ -147,7 +147,7 @@ class StockRequestController extends Controller
 
             if ($request->status == 0) {
                 return 'PENDING';
-            }else{
+            }else if ($request->status == 1){
                 return 'SCHEDULED';
             }
         })

@@ -84,8 +84,55 @@ class HomeController extends Controller
                 }
             }
         }
+
+        if ($id == 'ini') {
+            $items = Item::all();
+            $branches = Branch::all();
+            foreach ($branches as $branchs) {
+                foreach ($items as $item) {
+                    if ($branchs->id != 1) {
+                        $stock = new Stock;
+                        $stock->category_id = $item->category_id;
+                        $stock->branch_id = $branchs->id;
+                        $stock->items_id = $item->id;
+                        $stock->serial = 'N/A';
+                        $stock->status = 'in';
+                        $stock->save();
+                    }
+                }
+            }
+        }
+
+        if ($id == 'initial') {
+            $items = Item::all();
+            $branches = Branch::all();
+            foreach ($branches as $branchs) {
+                foreach ($items as $item) {
+                    if ($branchs->id != 1) {
+                        $ini = Initial::where('items_id', $item->id)
+                            ->where('branch_id', $branchs->id)
+                            ->first();
+                        $ini->qty = '5';
+                        $ini->save();
+                    }
+                }
+            }
+        }
+
+        if ($id == 'ware') {
+            $items = Item::all();
+                foreach ($items as $item) {
+                    $ware = new Warehouse;
+                    $ware->user_id = auth()->user()->id;
+                    $ware->category_id = $item->category_id;
+                    $ware->items_id = $item->id;
+                    $ware->serial = '-';
+                    $ware->status = 'in';
+                    $ware->save();
+                }
+        }
         
-        dd(Initial::all());
+        dd(Stock::all());
         
     }
 

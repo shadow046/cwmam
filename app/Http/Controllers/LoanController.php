@@ -80,11 +80,11 @@ class LoanController extends Controller
     }
     public function stock(Request $request)
     {
-        $item = Item::where('id', $request->item)->first();
         $stock = Stock::where('id', $request->item)->first();
+        $item = Item::where('id', $stock->items_id)->first();
 
         $update = Stock::where('id', $request->item)->where('branch_id', auth()->user()->branch->id)->first();
-        $update->status = 'loan';
+        $update->status = 'loan'.$request->id;
         $update->id_branch = $request->branch;
         $update->user_id = auth()->user()->id;
         $update->save();
@@ -92,7 +92,7 @@ class LoanController extends Controller
         $add = new Stock;
         $add->category_id = $item->category_id;
         $add->branch_id = $request->branch;
-        $add->items_id = $request->item;
+        $add->items_id = $item->id;
         $add->user_id = auth()->user()->id;
         $add->serial = $stock->serial;
         $add->status = $request->id;
@@ -108,7 +108,9 @@ class LoanController extends Controller
             ->where('status', $request->id)
             ->where('id_branch', $request->branch)
             ->first();
+        //dd($update);
         $item = Item::where('id', $update->items_id)->first();
+        //dd($item);
         $branch = Branch::where('id', $update->id_branch)->first();
         $update->status = 'in';
         $update->user_id = auth()->user()->id;
@@ -122,10 +124,11 @@ class LoanController extends Controller
 
     public function getitem(Request $request)
     {
-        $serial = Stock::where('branch_id', auth()->user()->branch->id)
-            ->where('status', $request->id)
-            ->where('id_branch', $request->branch)
+        $serial = Stock::where('id_branch', auth()->user()->branch->id)
+            ->where('status', 'loan'.$request->id)
+            ->where('branch_id', $request->branch)
             ->first();
+            //dd($serial->serial);
         return response()->json($serial);
     }
 

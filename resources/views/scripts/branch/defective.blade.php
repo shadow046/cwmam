@@ -1,5 +1,7 @@
 <script type="text/javascript">
     var table;
+    var interval = null;
+    
     $(document).ready(function()
     {
         table =
@@ -20,6 +22,10 @@
                 { data: 'status', name:'status'}
             ]
         });
+
+        interval = setInterval(function(){
+            table.draw();
+        }, 30000);
 
         $('.tbsearch').delay().fadeOut('slow'); //hide search
 
@@ -47,7 +53,7 @@
         var trdata = table.row(this).data();
         var id = trdata.id;
         var descop = " ";
-        console.log(trdata);
+        clearInterval(interval);
         $('#branch_id').val(trdata.branchid);
         $('#date').val(trdata.date);
         $('#description').val(convert(trdata.item));
@@ -76,8 +82,6 @@
         var status = 'For receiving';
         var itemid = $('#return_id').val();
 
-        console.log(branch);
-        console.log(id+'id');
         $.ajax({
             url: 'return-update',
             headers: {
@@ -103,6 +107,13 @@
 
     $(document).on('click', '.cancel', function(){
         window.location.href = 'return';
+    });
+
+    $(document).on('click', '.close', function(){
+        table.draw();
+        interval = setInterval(function(){
+            table.draw();
+        }, 30000);
     });
 
 

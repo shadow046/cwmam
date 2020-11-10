@@ -118,6 +118,9 @@
                     item: item,
                     branch: branch
                 },
+                error: function (data,error, errorThrown) {
+                    alert(data.responseText);
+                }
             });
 
             $.ajax({
@@ -135,6 +138,9 @@
                 success:function(data)
                 {
                     window.location.href = 'loans';
+                },
+                error: function (data,error, errorThrown) {
+                    alert(data.responseText);
                 }
             });
         }
@@ -157,6 +163,9 @@
                     id: id,
                     branch: branch
                 },
+                error: function (data,error, errorThrown) {
+                    alert(data.responseText);
+                }
             });
 
             $.ajax({
@@ -174,6 +183,9 @@
                 success:function(data)
                 {
                     window.location.href = 'loans';
+                },
+                error: function (data,error, errorThrown) {
+                    alert(data.responseText);
                 }
             });
         }

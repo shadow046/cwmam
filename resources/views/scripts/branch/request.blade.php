@@ -2,6 +2,7 @@
 <script type="text/javascript">
     var y = 1;
     var interval = null;
+    var table;
     $(document).ready(function()
     {
         var d = new Date();
@@ -12,7 +13,7 @@
         $('#date').val(months[d.getMonth()]+' '+d.getDate()+', ' +d.getFullYear()+' '+hour+':'+String(d.getMinutes()).padStart(2, '0')+ampm);
         $('#sdate').val(months[d.getMonth()]+' '+d.getDate()+', ' +d.getFullYear()+' '+hour+':'+String(d.getMinutes()).padStart(2, '0')+ampm);
 
-        var table =
+        table =
         $('table.requestTable').DataTable({ //user datatables
             "dom": 'lrtip',
             "language": {
@@ -108,7 +109,11 @@
                 reqno : reqno                     
             },
             success: function(){
-                window.location.href = 'request';
+                table.draw();
+                interval = setInterval(function(){
+                    table.draw();
+                }, 30000);
+                $("#requestModal .close").click();
             }
         });
     });
@@ -151,7 +156,11 @@
                 reqno : reqno     
             },
             success: function(){
-                window.location.href = 'request';
+                table.draw();
+                interval = setInterval(function(){
+                    table.draw();
+                }, 30000);
+                $("#requestModal .close").click();
             },
             error: function (data,error, errorThrown) {
                 alert(data.responseText);
@@ -308,7 +317,10 @@
         }
     });
 
-    $(document).on('click', '.cancel', function(){
-        window.location.href = 'request';
+    $(document).on('click', '.close', function(){
+        table.draw();
+        interval = setInterval(function(){
+            table.draw();
+        }, 30000);
     });
 </script>
