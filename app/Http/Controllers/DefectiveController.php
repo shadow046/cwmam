@@ -166,8 +166,15 @@ class DefectiveController extends Controller
                     ->where('branch_id', $request->branch)
                     ->where('status', 'pending')
                     ->first();
+                $stock = new Warehouse;
+                $stock->user_id = auth()->user()->id;
+                $stock->category_id = $pending->category_id;
+                $stock->items_id = $pending->items_id;
+                $stock->serial = '-';
+                $stock->status = 'in';
+                $stock->save();
+
                 $pending->status = "warehouse";
-                $pending->save();
 
                 $item = Item::where('id', $pending->items_id)->first();
                 $cat = Category::where('id', $item->category_id)->first();

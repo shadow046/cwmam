@@ -321,7 +321,6 @@
         var id = trdata.items_id;
         $('table.stockDetails').dataTable().fnDestroy();
         $('#head').text(trdata.category);
-        $('#stockModal').modal();
         stock = 
         $('table.stockDetails').DataTable({ //user datatables
             "dom": 'rt',
@@ -337,5 +336,6 @@
                 { data: 'serial', name:'serial'}
             ]
         });
+        $('#stockModal').modal();
     });
 </script>

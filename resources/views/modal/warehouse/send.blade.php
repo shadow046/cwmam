@@ -51,7 +51,7 @@
                 <div>
                     <h5 class="modal-title w-100 text-center">REQUEST DETAILS</h5>
                 </div>
-                <table class="table sendDetails" style="height: 150px;">
+                <table class="table sendDetails" style="height: 150px;width:100%">
                     <thead class="thead-dark">
                         <th>Item Code</th>
                         <th>Description</th>

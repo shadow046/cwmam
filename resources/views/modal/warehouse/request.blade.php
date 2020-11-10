@@ -58,7 +58,7 @@
                 <h5 class="modal-title w-100 text-center">REQUEST DETAILS</h5>
             </div>
             <div class="modal-body">
-                <table class="table requestDetails">
+                <table class="table display requestDetails" style="width:100%">
                     <thead class="thead-dark">
                         <th>Item Code</th>
                         <th>Description</th>
@@ -66,7 +66,8 @@
                         <th>Purpose</th>
                     </thead>
                 </table>
-                <table class="table schedDetails">
+                <br>
+                <table class="table schedDetails" style="width:100%">
                     <thead class="thead-dark">
                         <th>Item Code</th>
                         <th>Description</th>
@@ -74,13 +75,13 @@
                     </thead>
                 </table>
             </div>
-            @role('Administrator')
+            @if(auth()->user()->hasAnyrole('Administrator', 'Encoder'))
             <div class="modal-footer">
                 <input type="button" class="btn btn-primary mr-auto" id="prcBtn" class="button" value="Proceed">
                 <input type="button" id="printBtn" class="btn btn-primary mr-auto" value="PRINT">
                 <input type="button" class="btn btn-primary" data-dismiss="modal" value="Close">
             </div>
-            @endrole
+            @endif
         </div>
     </div>
 </div>

@@ -37,7 +37,7 @@
     </table>
   </div>
   <div class="d-flex">
-    @if(!auth()->user()->hasrole('Administrator'))
+  @if(auth()->user()->hasAnyRole('Head', 'Tech'))
       <input type="button" id="in_Btn" class="btn btn-xs btn-primary" value="SERVICE IN">&nbsp;
       <input type="button" id="out_Btn" class="btn btn-xs btn-primary" value="SERVICE OUT">&nbsp;
     @endif

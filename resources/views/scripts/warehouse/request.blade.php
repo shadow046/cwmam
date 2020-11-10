@@ -68,7 +68,7 @@
                 $('table.schedDetails').hide();
                 $('table.requestDetails').show();
                 $('table.requestDetails').DataTable({ //user datatables
-                    "dom": 'lrtip',
+                    "dom": 'rt',
                     "language": {
                         "emptyTable": " "
                     },
@@ -90,7 +90,7 @@
                 $('table.requestDetails').hide();
                 $('table.schedDetails').show();
                 $('table.schedDetails').DataTable({ //user datatables
-                    "dom": 'lrtip',
+                    "dom": 'rt',
                     "language": {
                         "emptyTable": " "
                     },
@@ -135,7 +135,7 @@
         }
         $('table.sendDetails').dataTable().fnDestroy();
         $('table.sendDetails').DataTable({ //user datatables
-            "dom": 'lrtip',
+            "dom": 'rt',
             "language": {
                 "emptyTable": " "
             },

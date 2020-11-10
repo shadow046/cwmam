@@ -30,6 +30,10 @@ class HomeController extends Controller
     public function index()
     {
 
+        if (auth()->user()->status == '0') {
+            return redirect('logout');
+        }
+
         if (auth()->user()->branch->branch != "Warehouse" && !auth()->user()->hasrole('Repair')) {
             $units = Stock::wherein('status', ['in', 'service unit'])->where('branch_id', auth()->user()->branch->id)->count();
             $returns = Defective::where('status', '!=', 'Received')->where('branch_id', auth()->user()->branch->id)->count();

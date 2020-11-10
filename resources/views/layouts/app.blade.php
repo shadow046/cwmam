@@ -29,7 +29,7 @@
             @endif
 
             @if(Request::is('request'))
-                @if(auth()->user()->hasrole('Administrator'))
+                @if(auth()->user()->hasAnyrole('Administrator', 'Encoder'))
                     @include('modal.warehouse.request')
                     @include('modal.warehouse.send')
                     @include('modal.warehouse.add')
@@ -40,7 +40,7 @@
             @endif
 
             @if(Request::is('stocks'))
-                @if(auth()->user()->hasrole('Administrator'))
+                @if(auth()->user()->hasAnyrole('Administrator', 'Encoder'))
                     @include('modal.warehouse.add')
                     @include('modal.warehouse.category')
                     @include('modal.warehouse.item')
@@ -92,7 +92,7 @@
             @endif
 
             @if(Request::is('request'))
-                @if(auth()->user()->hasrole('Administrator'))
+                @if(auth()->user()->hasAnyrole('Administrator', 'Encoder'))
                     <script src="{{asset('js/warehouse/request.js')}}"></script>
                 @else
                     <script src="{{asset('js/branch/request.js')}}"></script>
@@ -100,7 +100,7 @@
             @endif
 
             @if(Request::is('stocks'))
-                @if(auth()->user()->hasrole('Administrator'))
+                @if(auth()->user()->hasAnyrole('Administrator', 'Encoder'))
                     <script src="{{asset('js/warehouse/stock.js')}}"></script>
                 @else
                     <script src="{{asset('js/branch/stocks.js')}}"></script>
@@ -126,13 +126,13 @@
             @endif
 
             @if(Request::is('return'))
-                @if(auth()->user()->branch->branch != 'Warehouse')
+                @if(auth()->user()->hasAnyrole('Administrator', 'Encoder'))
+                    <script src="{{asset('js/warehouse/defective.js')}}"></script>
+                @else
                     <script src="{{asset('js/branch/defective.js')}}"></script>
                 @endif
-                @if(auth()->user()->branch->branch == 'Warehouse')
-                    <script src="{{asset('js/warehouse/defective.js')}}"></script>
-                @endif
             @endif
+            
             @if(Request::is('customer'))
                 <script src="{{asset('js/customer.js')}}"></script>
             @endif

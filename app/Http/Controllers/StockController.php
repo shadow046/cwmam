@@ -83,7 +83,9 @@ class StockController extends Controller
             ->where('stocks.status', 'in')
             ->join('items', 'stocks.items_id', '=', 'items.id')
             ->get();
+
         return DataTables::of($serial)->make(true);
+
     }
 
     public function description(Request $request){
@@ -378,6 +380,7 @@ class StockController extends Controller
             $add->category_id = $request->cat;
             $add->items_id = $request->item;
             $add->status = 'in';
+            $add->serial = '-';
             $add->user_id = auth()->user()->id;
             $log = new UserLog;
             $log->activity = "Add $item->item to stocks." ;
