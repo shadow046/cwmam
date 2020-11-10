@@ -16,6 +16,29 @@
                 { data: 'customer', name:'customer',}
             ]
         });
+
+        $('.tbsearch').delay().fadeOut('slow'); //hide search
+            
+
+        $('#search-ic').on("click", function (event) { //clear search box on hide
+            for ( var i=0 ; i<=6 ; i++ ) {
+                
+                $('.fl-'+i).val('').change();
+                customertable
+                .columns(i).search( '' )
+                .draw();
+            }
+            $('.tbsearch').toggle();
+            
+        });
+
+        $('.filter-input').keyup(function() { //search columns
+            customertable.column( $(this).data('column'))
+                .search( $(this).val())
+                .draw();
+        });
+
+
     });
 
     $(document).on("click", "#customerTable tr", function () {

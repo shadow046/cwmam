@@ -44,6 +44,9 @@
                     </div>
                 </form>
                 <div class="modal-footer">
+                    @if(auth()->user()->hasrole('Repair'))
+                        <input type="button" class="btn btn-primary mr-auto" id="unrepair_Btn" value="Unrepairable">
+                    @endif
                     <input type="button" class="btn btn-primary" id="submit_Btn" value="Return">
                 </div>
             </div>  

@@ -214,7 +214,6 @@
             }
         }
         if (check > 1) {
-            alert("Category added!!!");
             window.location.href = 'stocks';
         }
     });
@@ -247,7 +246,6 @@
             }
         }
         if (check > 1) {
-            alert("Item added!!!");
             window.location.href = 'stocks';
         }
     });

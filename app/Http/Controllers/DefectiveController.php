@@ -49,7 +49,7 @@ class DefectiveController extends Controller
             ->join('items', 'defectives.items_id', '=', 'items.id')
             ->join('branches', 'defectives.branch_id', '=', 'branches.id')
             ->get();
-
+        
         if (auth()->user()->branch->branch == 'Warehouse' && !auth()->user()->hasrole('Repair')) {
             $data = $waredef;
         }else if (auth()->user()->branch->branch == 'Warehouse' && auth()->user()->hasrole('Repair')){
@@ -74,6 +74,31 @@ class DefectiveController extends Controller
         })
 
 
+        ->make(true);
+    }
+
+    public function unrepairable()
+    {
+        $repair = Defective::select('branches.branch', 'defectives.category_id', 'branches.id as branchid', 'defectives.updated_at', 'defectives.id as id', 'items.item', 'items.id as itemid', 'defectives.serial', 'defectives.status')
+            ->where('defectives.status', 'unrepairable')
+            ->join('items', 'defectives.items_id', '=', 'items.id')
+            ->join('branches', 'defectives.branch_id', '=', 'branches.id')
+            ->get();
+        
+        //dd($data);
+        return DataTables::of($repair)
+        
+        ->addColumn('date', function (Defective $data){
+            return $data->updated_at->toFormattedDateString().' '.$data->updated_at->toTimeString();
+        })
+
+        ->addColumn('category', function (Defective $data){
+            //dd($data->itemid);
+            $cat = Category::where('id', $data->category_id)->first();
+            //dd($data);
+            return $cat->category;
+        })
+        
         ->make(true);
     }
 
@@ -154,8 +179,26 @@ class DefectiveController extends Controller
 
                 $data = $log->save();
             }
+
+            if ($request->status == 'unrepairable') {
+                $unreapairable = Defective::where('id', $request->id)
+                    ->where('branch_id', $request->branch)
+                    ->where('status', 'For repair')
+                    ->first();
+                $unreapairable->status = "unrepairable";
+                $unreapairable->save();
+
+                $item = Item::where('id', $unreapairable->items_id)->first();
+                $cat = Category::where('id', $item->category_id)->first();
+
+                $log = new UserLog;
+                $log->activity = "Marked $item->item($unreapairable->serial) as unreapairabled." ;
+                $log->user_id = auth()->user()->id;
+                $unreapairable->save();
+
+                $data = $log->save();
+            }
         }
-        
         return response()->json($data);
 
     }

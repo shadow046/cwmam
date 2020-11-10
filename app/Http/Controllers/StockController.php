@@ -373,7 +373,7 @@ class StockController extends Controller
     public function store(Request $request)
     {
         $item = Item::where('id', $request->item)->first();
-        if (auth()->user()->branch->id == '999') {
+        if (auth()->user()->branch->branch == 'Warehouse') {
             $add = new Warehouse;
             $add->category_id = $request->cat;
             $add->items_id = $request->item;

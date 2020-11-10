@@ -148,6 +148,9 @@
             @if(Request::is('log') && auth()->user()->hasrole('Repair'))
                 <script src="{{asset('js/home.js')}}"></script>
             @endif
+            @if(Request::is('unrepair') && auth()->user()->hasrole('Repair'))
+                <script src="{{asset('js/unrepair.js')}}"></script>
+            @endif
 
         </body>
     </html>

@@ -78,7 +78,6 @@
         }
         if (check > 1) {
             console.log(3);
-            alert("Inventory updated!!!");
             window.location.href = 'stocks';
         }
     });
@@ -338,13 +337,16 @@
                     repdata: repdata,
                     custid : custid
                 },
+                success:function(data)
+                {
+                    window.location.href = 'stocks';
+                },
                 error: function (data,error, errorThrown) {
                     alert(data.responseText);
                 }
             });
 
-            //alert("Inventory updated!!!");
-            //window.location.href = 'stocks';
+            
 
         }
     });

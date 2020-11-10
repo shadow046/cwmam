@@ -62,7 +62,7 @@
             $('#submit_Btn').val('Repaired');
             $('#submit_Btn').show();
         }else if (trdata.status == 'pending') {
-            $('#submit_Btn').val('add to stock');
+            $('#submit_Btn').val('Add to stock');
             $('#submit_Btn').show();
         }else{
             $('#submit_Btn').hide();
@@ -113,7 +113,7 @@
                 }
             });
         }
-        if ($('#submit_Btn').val() == 'add to stock'){
+        if ($('#submit_Btn').val() == 'Add to stock'){
             status = 'warehouse'
             $.ajax({
                 url: 'return-update',
@@ -139,5 +139,30 @@
         window.location.href = 'return';
     });
 
+    $(document).on('click', '#unrepair_Btn', function(){
+        var branch = $('#branch_id').val();
+        var id = $('#myid').val();
+        var status = 'unrepairable'
+        $.ajax({
+            url: 'return-update',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            type: 'PUT',
+            data: {
+                id: id,
+                branch: branch,
+                status: status
+            },
+            success:function(data)
+            {
+                window.location.href = 'return';
+            },
+            error: function (data,error, errorThrown) {
+                alert(data.responseText);
+            }
+        });
+    });
 
 </script>

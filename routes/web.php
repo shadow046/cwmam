@@ -19,6 +19,10 @@ Route::post('change-password', 'ChangePasswordController@store')->name('change.p
 Route::get('/', 'HomeController@index')->name('home.index');
 Route::get('/home', 'HomeController@index')->name('home.index');
 Route::get('/log', 'HomeController@log')->name('home.log');
+Route::get('/unrepair', 'HomeController@unrepair')->name('home.unrepair');
+Route::get('/unrepairable', 'DefectiveController@unrepairable')->name('home.unrepairable');
+
+
 
 //Route::get('service_center', 'BranchController@index');
 Route::get('service_units', 'HomeController@service_units');

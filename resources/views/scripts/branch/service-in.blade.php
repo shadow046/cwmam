@@ -189,7 +189,6 @@
         }
         if (check > 1) {
             console.log(3);
-            alert("Inventory updated!!!");
             window.location.href = 'stocks';
         }
     });
@@ -259,7 +258,6 @@
             }
         }
         if (check > 1) {
-            alert("Inventory updated!!!");
             window.location.href = 'stocks';
         }
     });

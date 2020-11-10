@@ -36,7 +36,7 @@ class StockRequestController extends Controller
     }
 
     public function getStock(Request $request){
-        if (auth()->user()->branch->id == '999') {
+        if (auth()->user()->branch->branch == 'Warehouse') {
             $data = Warehouse::select(\DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
                 ->where('status', 'in')
                 ->where('items_id', $request->id)
@@ -54,7 +54,7 @@ class StockRequestController extends Controller
     }
 
     public function getSerials(Request $request){
-        if (auth()->user()->branch->id == '999') {
+        if (auth()->user()->branch->branch == 'Warehouse') {
             $data = Warehouse::select('items_id', 'serial')
                 ->where('status', 'in')
                 ->where('items_id', $request->id)
@@ -127,7 +127,7 @@ class StockRequestController extends Controller
     public function getRequests()
     {
         $user = auth()->user()->branch->id;
-        if ($user != '999') {
+        if (auth()->user()->branch->branch != 'Warehouse') {
             $stock = StockRequest::where('status', '!=', '2')
                 ->where('branch_id', $user)
                 ->get();

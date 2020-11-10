@@ -1,0 +1,3 @@
+var table;
+$(document).ready(function(){table=$("table.unrepairTable").DataTable({dom:"lrtip",language:{emptyTable:" "},processing:!0,serverSide:!0,ajax:"unrepairable",columns:[{data:"date",name:"date"},{data:"branch",name:"branch"},{data:"category",name:"category"},{data:"item",name:"item"},{data:"serial",name:"serial"},{data:"status",name:"status"}]});$(".tbsearch").delay().fadeOut("slow");$("#search-ic").on("click",function(){for(var a=0;5>=a;a++)$(".fl-"+a).val("").change(),table.columns(a).search("").draw();$(".tbsearch").toggle()});
+$(".filter-input").keyup(function(){table.column($(this).data("column")).search($(this).val()).draw()})});

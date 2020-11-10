@@ -108,7 +108,6 @@
                 reqno : reqno                     
             },
             success: function(){
-                alert("Pending Request Deleted!!!");
                 window.location.href = 'request';
             }
         });
@@ -152,7 +151,6 @@
                 reqno : reqno     
             },
             success: function(){
-                alert("Stock added to inventory!!!");
                 window.location.href = 'request';
             },
             error: function (data,error, errorThrown) {
@@ -261,7 +259,6 @@
                             stat: stat                     
                         },
                     });
-                    alert("Request details submitted!!!");
                     window.location.href = 'request';
                 }
             }

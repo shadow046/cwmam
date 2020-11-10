@@ -31,7 +31,6 @@
             }
         }
         if (check > 1) {
-            alert("Inventory updated!!!");
             window.location.href = 'stocks';
         }
     });

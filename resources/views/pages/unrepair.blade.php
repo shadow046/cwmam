@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="container">
+  <div class="table-responsive">
+    <div class="container">
       <div style="display: flex; justify-content: flex-end" class="pt-3">
         <a href="#" id="search-ic"><i class="fa fa-lg fa-search" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       </div>
-  </div>
-  <div class="table-responsive">
-    <table class="table customerbranchTable" id="customerbranchTable">
+    </div>
+    <table class="table unrepairTable" id="unrepairTable">
       <thead class="thead-dark">
         <tr class="tbsearch">
           <td>
@@ -22,23 +22,34 @@
           <td>
             <input type="text" class="form-control filter-input fl-3" data-column="3" />
           </td>
+          <td>
+            <input type="text" class="form-control filter-input fl-4" data-column="4" />
+          </td>
+          <td>
+            <input type="text" class="form-control filter-input fl-4" data-column="5" />
+          </td>
         </tr>
         <tr>
           <th>
-            BRANCH CODE
+            Date
           </th>
           <th>
-            BRANCH NAME
+            Branch
           </th>
           <th>
-            PHONE 
+            Category
           </th>
           <th>
-            STATUS 
+            Item Description
+          </th>
+          <th>
+            Serial
+          </th>
+          <th>
+            Status
           </th>
         </tr>
       </thead>
     </table>
   </div>
-  
 @endsection

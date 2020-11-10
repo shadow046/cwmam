@@ -52,6 +52,12 @@ class HomeController extends Controller
     {
         return view('pages.home');
     }
+
+    public function unrepair()
+    {
+        return view('pages.unrepair');
+    }
+
     public function print($id)
     {
         $request = StockRequest::where('request_no', $id)->first();
