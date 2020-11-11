@@ -35,17 +35,17 @@ class DefectiveController extends Controller
         $defective = Defective::select('defectives.updated_at', 'defectives.category_id', 'branch_id as branchid', 'defectives.id as id', 'items.item', 'items.id as itemid', 'defectives.serial', 'defectives.status')
             ->where('branch_id', auth()->user()->branch->id)
             ->join('items', 'defectives.items_id', '=', 'items.id')
-            ->where('status', '=', 'For return')
+            ->wherein('status', ['For return', 'For receiving'])
             ->get();
             
         $waredef =Defective::select('branches.branch', 'defectives.category_id', 'branches.id as branchid', 'defectives.updated_at', 'defectives.id as id', 'items.item', 'items.id as itemid', 'defectives.serial', 'defectives.status')
-            ->wherein('defectives.status', ['For receiving', 'pending'])
+            ->wherein('defectives.status', ['For receiving', 'Repaired'])
             ->join('items', 'defectives.items_id', '=', 'items.id')
             ->join('branches', 'defectives.branch_id', '=', 'branches.id')
             ->get();
 
         $repair = Defective::select('branches.branch', 'defectives.category_id', 'branches.id as branchid', 'defectives.updated_at', 'defectives.id as id', 'items.item', 'items.id as itemid', 'defectives.serial', 'defectives.status')
-            ->where('defectives.status', 'For repair')
+            ->wherein('defectives.status', ['For repair', 'Repaired'])
             ->join('items', 'defectives.items_id', '=', 'items.id')
             ->join('branches', 'defectives.branch_id', '=', 'branches.id')
             ->get();
@@ -147,7 +147,7 @@ class DefectiveController extends Controller
                     ->where('branch_id', $request->branch)
                     ->where('status', 'For repair')
                     ->first();
-                $repaired->status = "pending";
+                $repaired->status = "Repaired";
                 $repaired->save();
 
                 $item = Item::where('id', $repaired->items_id)->first();
@@ -161,10 +161,10 @@ class DefectiveController extends Controller
                 $data = $log->save();
             }
 
-            if ($request->status == 'pending') {
+            if ($request->status == 'Repaired') {
                 $pending = Defective::where('id', $request->id)
                     ->where('branch_id', $request->branch)
-                    ->where('status', 'pending')
+                    ->where('status', 'Repaired')
                     ->first();
                 $stock = new Warehouse;
                 $stock->user_id = auth()->user()->id;

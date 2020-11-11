@@ -238,16 +238,17 @@ class StockController extends Controller
             $defective->branch_id = auth()->user()->branch->id;
             $defective->user_id = auth()->user()->id;
             $defective->items_id = $stock->items_id;
-            $defective->status = 'in';
+            $defective->status = 'For return';
             $defective->serial = $stock->serial;
+            $defective->category_id = $stock->category_id;
             $defective->save();
             $log = new UserLog;
-            $log->activity = "Service in $item->item(defective) from $customer->customer_branch." ;
+            $log->activity = "Service in $item->item(defective) with serial no. $stock->serial from $customer->customer_branch." ;
             $log->user_id = auth()->user()->id;
             $log->save();
         }else{
             $log = new UserLog;
-            $log->activity = "Service in $item->item(good) from $customer->customer_branch." ;
+            $log->activity = "Service in $item->item(good) with serial no. $stock->serial from $customer->customer_branch." ;
             $log->user_id = auth()->user()->id;
             $log->save();
         }

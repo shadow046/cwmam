@@ -39,6 +39,18 @@
                 @endif
             @endif
 
+            @if(Request::is('customer'))
+                @if(auth()->user()->hasrole('Viewer'))
+                    @include('modal.customer')
+                @endif
+            @endif
+
+            @if(Request::is('customer/*'))
+                @if(auth()->user()->hasrole('Viewer'))
+                    @include('modal.customerbranch')
+                @endif
+            @endif
+
             @if(Request::is('stocks'))
                 @if(auth()->user()->hasAnyrole('Administrator', 'Encoder'))
                     @include('modal.warehouse.add')
@@ -88,7 +100,11 @@
             @endif
 
             @if(Request::is('branch'))
-                <script src="{{asset('js/branch.js')}}"></script>
+                @if(auth()->user()->hasAnyrole('Administrator', 'Encoder'))
+                    <script src="{{asset('js/warehouse/branch.js')}}"></script>
+                @else
+                    <script src="{{asset('js/branch/branch.js')}}"></script>
+                @endif
             @endif
 
             @if(Request::is('request'))
@@ -134,11 +150,14 @@
             @endif
             
             @if(Request::is('customer'))
-                <script src="{{asset('js/customer.js')}}"></script>
+                <!--script src="{{asset('js/customer.js')}}"></script-->
+                @include('scripts.customer')
             @endif
             @if(Request::is('customer/*'))
-                <script src="{{asset('js/customerbranch.js')}}"></script>
+                @include('scripts.customerbranch')
+                <!--script src="{{asset('js/customerbranch.js')}}"></script-->
             @endif
+
             @if(Request::is('/') && !auth()->user()->hasrole('Repair'))
                 <script src="{{asset('js/home.js')}}"></script>
             @endif

@@ -34,6 +34,9 @@ Route::get('customerbranch-list/{id}', 'CustomerController@customerbranchtable')
 Route::get('customer-list', 'CustomerController@customertable')->name('customer.list');
 Route::get('customer/{id}', 'CustomerController@branchindex')->name('customerbranch.index');
 Route::get('customer', 'CustomerController@index')->name('customer.index');
+Route::any('customer_add', 'CustomerController@store')->name('customer.store');
+Route::post('cbranch_add', 'CustomerController@branchadd');
+
 
 Route::any('return-update', 'DefectiveController@update')->name('return.update');
 Route::get('return-table', 'DefectiveController@table')->name('return.table');

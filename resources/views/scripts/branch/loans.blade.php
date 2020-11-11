@@ -5,7 +5,7 @@
     $(document).ready(function()
     {
         table =
-        $('table.loanTable').DataTable({ //user datatables
+        $('table.loanTable').DataTable({ 
             "dom": 'rt',
             processing: true,
             serverSide: true,
@@ -35,12 +35,15 @@
         var id = trdata.id;
         var branch = trdata.branchid;
         var descop = " ";
+        var desc = trdata.item;
+        var desc = desc.replace(/&quot;/g, '\"');
         $('#date').val(trdata.date);
-        $('#description').val(trdata.item);
+        $('#description').val(desc);
         $('#status').val(trdata.status);
         $('#myid').val(trdata.id);
         $('#branch_id').val(trdata.branchid);
         $('#branch').val(trdata.branch);
+        
         if (trdata.stat == 'IN-BOUND') {
             $('#serials').hide();
             $('#received_Btn').hide();
@@ -51,15 +54,15 @@
                 data:{'id':trdata.items_id},
                 success:function(data)
                 {
-                    //codeOp+='<option selected value="select" disabled>select item code</option>';
                     descop+='<option selected value="select" disabled>select description</option>';
                     for(var i=0;i<data.length;i++){
-                        //codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
                         descop+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
                     }
-                    //$("#outitem" + count).find('option').remove().end().append(codeOp);
                     $("#loandesc1").find('option').remove().end().append(descop);
                 },
+                error: function (data,error, errorThrown) {
+                    alert(data.responseText);
+                }
             });
 
             if (trdata.status != 'pending') {
@@ -89,6 +92,9 @@
                     success:function(data)
                     {
                         $('#serial').val(data.serial);
+                    },
+                    error: function (data,error, errorThrown) {
+                        alert(data.responseText);
                     }
                 });
             }else{
@@ -137,7 +143,12 @@
                 },
                 success:function(data)
                 {
-                    window.location.href = 'loans';
+                    interval = setInterval(function(){
+                        table.draw();
+                    }, 30000);
+                    table.draw();
+                    $("#loansModal .close").click();
+
                 },
                 error: function (data,error, errorThrown) {
                     alert(data.responseText);
@@ -182,7 +193,11 @@
                 },
                 success:function(data)
                 {
-                    window.location.href = 'loans';
+                    interval = setInterval(function(){
+                        table.draw();
+                    }, 30000);
+                    table.draw();
+                    $("#loansModal .close").click();
                 },
                 error: function (data,error, errorThrown) {
                     alert(data.responseText);
@@ -207,8 +222,18 @@
                 id: id,
                 status: status
             },
+            success:function(data)
+            {
+                interval = setInterval(function(){
+                    table.draw();
+                }, 30000);
+                table.draw();
+                $("#loansModal .close").click();
+            },
+            error: function (data,error, errorThrown) {
+                alert(data.responseText);
+            }
         });
-        window.location.href = 'loans';
     });
 
     $(document).on('change', '#loandesc1', function(){
@@ -227,6 +252,9 @@
                     }
                     $("#loanserial1").find('option').remove().end().append(serialOp);
                 },
+                error: function (data,error, errorThrown) {
+                    alert(data.responseText);
+                }
             });
     });
 
@@ -244,17 +272,16 @@
             data:{'id':id},
             success:function(data)
             {
-                console.log(data);
-                //codeOp+='<option selected value="select" disabled>select item code</option>';
                 catOp+='<option selected value="select" disabled>select category</option>';
                 for(var i=0;i<data.length;i++){
-                    //codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
                     catOp+='<option value="'+data[i].category_id+'">'+data[i].category.toUpperCase()+'</option>';
                 }
-                //$("#outitem" + count).find('option').remove().end().append(codeOp);
                 $("#loanreqcategory1").find('option').remove().end().append(catOp);
                 $("#loanreqdesc1").find('option').remove().end().append(itemOp);
             },
+            error: function (data,error, errorThrown) {
+                alert(data.responseText);
+            }
         });
 
     });
@@ -272,19 +299,16 @@
             },
             success:function(data)
             {
-                console.log(data);
-                //codeOp+='<option selected value="select" disabled>select item code</option>';
                 itemOp+='<option selected value="select" disabled>select description</option>';
                 for(var i=0;i<data.length;i++){
-                    //codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
                     itemOp+='<option value="'+data[i].items_id+'">'+data[i].item.toUpperCase()+'</option>';
                 }
-                //$("#outitem" + count).find('option').remove().end().append(codeOp);
-                console.log(data[0].items_id);
                 $("#loanreqdesc1").find('option').remove().end().append(itemOp);
             },
+            error: function (data,error, errorThrown) {
+                alert(data.responseText);
+            }
         });
-
     });
 
     $(document).on('click', '#serial_sub_Btn', function(){
@@ -304,10 +328,15 @@
                     branchid: branchid,
                     itemid: itemid
                 },
+                success:function(data)
+                {
+                    window.location.href = 'loans';
+                },
+                error: function (data,error, errorThrown) {
+                    alert(data.responseText);
+                }
             });
-            window.location.href = 'loans';
         }
-
     });
 
     $(document).on('click', '#loan_Btn', function(){

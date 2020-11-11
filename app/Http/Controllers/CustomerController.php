@@ -27,27 +27,78 @@ class CustomerController extends Controller
 
         return DataTables::of($customer)
 
+        ->addColumn('code', function (Customer $customer){
+            
+            return strtoupper($customer->code);
+        })
+
+        ->addColumn('customer', function (Customer $customer){
+            
+            return strtoupper($customer->customer);
+        })
+
         ->make(true);
 
     }
 
     public function branchindex(Request $request, $id)
     {
-        return view('pages.customerbranch');
+        $customer = Customer::find($id);
+        $customer = strtoupper($customer->customer);
+        return view('pages.customerbranch', compact('customer'));
     }
 
     public function customerbranchtable($id)
     {
 
-        $customer = CustomerBranch::where('customer_id', $id);
+        $customer = CustomerBranch::where('customer_id', $id)->get();
 
         return DataTables::of($customer)
 
-        ->addColumn('status', function (CustomerBranch $data){
-            return 'Active';
+        ->addColumn('status', function (CustomerBranch $customer){
+            if ($customer->status == 1) {
+                return 'Active';
+            }else{
+                return 'Inactive';
+            }
+            
         })
 
         ->make(true);
 
+    }
+
+    public function store(Request $request)
+    {
+        if (Customer::where('code', strtolower($request->input('customer_code')))->exists() || Customer::where('customer', strtolower($request->input('customer_name')))->exists()) {
+            $data = '0';
+        }else{
+            $customer = new Customer;
+            $customer->code = strtolower($request->input('customer_code'));
+            $customer->customer = strtolower($request->input('customer_name'));
+            $customer->save();
+            $data = '1';
+        }
+        return response()->json($data);
+
+        
+    }
+
+    public function branchadd(Request $request)
+    {
+        if (CustomerBranch::where('code', strtolower($request->bcode))->exists() || CustomerBranch::where('customer_branch', strtolower($request->bname))->exists()) {
+            $data = '0';
+        }else{
+            $customerbranch = new CustomerBranch;
+            $customerbranch->code = strtolower($request->bcode);
+            $customerbranch->customer_branch = strtolower($request->bname);
+            $customerbranch->customer_id = $request->bid;
+            $customerbranch->address = $request->address;
+            $customerbranch->contact = $request->number;
+            $customerbranch->status = "1";
+            $customerbranch->save();
+            $data = '1';
+        }
+        return response()->json($data);
     }
 }

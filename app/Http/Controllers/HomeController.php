@@ -35,16 +35,17 @@ class HomeController extends Controller
         }
 
         if (auth()->user()->branch->branch != "Warehouse" && !auth()->user()->hasrole('Repair')) {
-            $units = Stock::wherein('status', ['in', 'service unit'])->where('branch_id', auth()->user()->branch->id)->count();
-            $returns = Defective::where('status', '!=', 'Received')->where('branch_id', auth()->user()->branch->id)->count();
+            $units = Stock::where('status', 'in')->where('branch_id', auth()->user()->branch->id)->count();
+            $returns = Defective::wherein('status', ['For return', 'For receiving'])->where('branch_id', auth()->user()->branch->id)->count();
             $stockreq = StockRequest::where('branch_id', auth()->user()->branch->id)
-                ->where('status', '!=', '2')
+                ->wherein('status', ['0', '1'])
                 ->count();
-            return view('pages.home', compact('stockreq', 'units', 'returns'));
+            $sunits = Stock::where('status', 'service-unit')->where('branch_id', auth()->user()->branch->id)->count();
+            return view('pages.home', compact('stockreq', 'units', 'returns', 'sunits'));
         }else if (auth()->user()->hasrole('Repair')){
             return view('pages.warehouse.return');
         }else{
-            $stockreq = StockRequest::where('status', '!=', '2')->count();
+            $stockreq = StockRequest::wherein('status', ['0', '1'])->count();
             $units = Warehouse::where('status', 'in')->count();
             $returns = Defective::where('status', 'For receiving')->count();
             return view('pages.home', compact('stockreq', 'units', 'returns'));

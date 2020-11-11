@@ -7,20 +7,25 @@
                 </li>
                 @if(auth()->user()->hasrole('Repair'))
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('/log') ? 'active' : '' }}" href="{{ url('/log') }}">Activities</a>
+                        <a class="nav-link {{ Request::is('log') ? 'active' : '' }}" href="{{ url('/log') }}">Activities</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('/unrepair') ? 'active' : '' }}" href="{{ url('/unrepair') }}">Unrepairable</a>
+                        <a class="nav-link {{ Request::is('unrepair') ? 'active' : '' }}" href="{{ url('/unrepair') }}">Unrepairable</a>
                     </li>
                 @endif
                 @if(!auth()->user()->hasrole('Repair'))
                     <li class="nav-item">
                         <a class="nav-link {{ Request::is('branch') ? 'active' : '' }}" href="{{ route('branch.index') }}">Service Center</a>
                     </li>
-                    @role('Administrator')
-                    <li class="nav-item">
-                        <a class="nav-link {{ Request::is('customer') ? 'active' : '' }} {{ Request::is('customer/*') ? 'active' : '' }}" href="{{ url('customer') }}">Customer</a>
-                    </li>
+                    @if(auth()->user()->branch->branch != 'Warehouse')
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::is('customer') ? 'active' : '' }} {{ Request::is('customer/*') ? 'active' : '' }}" href="{{ url('customer') }}">Customer</a>
+                        </li>
+                    @endif
+                    @role('Viewer')
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::is('customer') ? 'active' : '' }} {{ Request::is('customer/*') ? 'active' : '' }}" href="{{ url('customer') }}">Customer</a>
+                        </li>
                     @endrole
                     </li>
                     <li class="nav-item">

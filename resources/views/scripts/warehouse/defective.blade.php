@@ -1,5 +1,6 @@
 <script type="text/javascript">
     var table;
+    var interval = null;
     $(document).ready(function()
     {
         table =
@@ -21,6 +22,10 @@
                 { data: 'status', name:'status'}
             ]
         });
+
+        interval = setInterval(function(){
+            table.draw();
+        }, 30000);
 
         $('.tbsearch').delay().fadeOut('slow'); //hide search
 
@@ -49,6 +54,7 @@
         var id = trdata.id;
         var descop = " ";
         console.log(trdata);
+        clearInterval(interval);
         $('#branch_id').val(trdata.branchid);
         $('#date').val(trdata.date);
         $('#description').val(trdata.item);
@@ -61,7 +67,7 @@
         }else if (trdata.status == 'For repair') {
             $('#submit_Btn').val('Repaired');
             $('#submit_Btn').show();
-        }else if (trdata.status == 'pending') {
+        }else if (trdata.status == 'Repaired') {
             $('#submit_Btn').val('Add to stock');
             $('#submit_Btn').show();
         }else{
@@ -90,7 +96,14 @@
                 },
                 success:function(data)
                 {
-                    window.location.href = 'return';
+                    interval = setInterval(function(){
+                        table.draw();
+                    }, 30000);
+                    table.draw();
+                    $('#returnModal .close').click();
+                },
+                error: function (data,error, errorThrown) {
+                    alert(data.responseText);
                 }
             });
         }
@@ -109,7 +122,14 @@
                 },
                 success:function(data)
                 {
-                    window.location.href = 'return';
+                   interval = setInterval(function(){
+                        table.draw();
+                    }, 30000);
+                    table.draw();
+                    $('#returnModal .close').click();
+                },
+                error: function (data,error, errorThrown) {
+                    alert(data.responseText);
                 }
             });
         }
@@ -129,14 +149,24 @@
                 },
                 success:function(data)
                 {
-                    window.location.href = 'return';
+                    interval = setInterval(function(){
+                        table.draw();
+                    }, 30000);
+                    table.draw();
+                    $('#returnModal .close').click();
+                },
+                error: function (data,error, errorThrown) {
+                    alert(data.responseText);
                 }
             });
         }
     });
 
-    $(document).on('click', '.cancel', function(){
-        window.location.href = 'return';
+    $(document).on('click', '.close', function(){
+        interval = setInterval(function(){
+            table.draw();
+        }, 30000);
+        table.draw();
     });
 
     $(document).on('click', '#unrepair_Btn', function(){
@@ -157,7 +187,11 @@
             },
             success:function(data)
             {
-                window.location.href = 'return';
+                interval = setInterval(function(){
+                        table.draw();
+                    }, 30000);
+                    table.draw();
+                    $('#returnModal .close').click();
             },
             error: function (data,error, errorThrown) {
                 alert(data.responseText);

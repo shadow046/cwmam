@@ -5,6 +5,7 @@
       <div style="display: flex; justify-content: flex-end" class="pt-3">
         <a href="#" id="search-ic"><i class="fa fa-lg fa-search" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       </div>
+      <input type="text" hidden id="name" value="{{ $customer }}">
   </div>
   <div class="table-responsive">
     <table class="table customerbranchTable" id="customerbranchTable">
@@ -40,5 +41,7 @@
       </thead>
     </table>
   </div>
-  
+  @role('Viewer')
+    <input type="button" id="branchBtn" class="btn btn-primary" value="Add Customer Branch">
+  @endrole
 @endsection

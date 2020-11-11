@@ -10,12 +10,11 @@
         var hour = String(d.getHours()).padStart(2, '0') % 12 || 12
         var ampm = (String(d.getHours()).padStart(2, '0') < 12 || String(d.getHours()).padStart(2, '0') === 24) ? "AM" : "PM";
         var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-        //$('#requestModal').modal('show');
         $('#date').val(months[d.getMonth()]+' '+d.getDate()+', ' +d.getFullYear()+' '+hour+':'+String(d.getMinutes()).padStart(2, '0')+ampm);
         $('#sdate').val(months[d.getMonth()]+' '+d.getDate()+', ' +d.getFullYear()+' '+hour+':'+String(d.getMinutes()).padStart(2, '0')+ampm);
 
         var table =
-        $('table.requestTable').DataTable({ //user datatables
+        $('table.requestTable').DataTable({ 
             "dom": 'lrtip',
             "language": {
                 "emptyTable": " "
@@ -37,11 +36,10 @@
             table.draw();
         }, 30000);
 
-        $('#requestTable tbody').on('click', 'tr', function () { //show branch details in modal
+        $('#requestTable tbody').on('click', 'tr', function () { 
             clearInterval(interval);
             var trdata = table.row(this).data();
             var dtdata = $('#requestTable tbody tr:eq(0)').data();
-            //$('#requestModal').modal('show');
             if (trdata.status == 'SCHEDULED') {
                 $('#prcBtn').hide();
                 $('.sched').show();
@@ -67,7 +65,7 @@
                 $('#printBtn').hide();
                 $('table.schedDetails').hide();
                 $('table.requestDetails').show();
-                $('table.requestDetails').DataTable({ //user datatables
+                $('table.requestDetails').DataTable({ 
                     "dom": 'rt',
                     "language": {
                         "emptyTable": " "
@@ -89,7 +87,7 @@
                 $('#printBtn').show();
                 $('table.requestDetails').hide();
                 $('table.schedDetails').show();
-                $('table.schedDetails').DataTable({ //user datatables
+                $('table.schedDetails').DataTable({ 
                     "dom": 'rt',
                     "language": {
                         "emptyTable": " "
@@ -134,7 +132,7 @@
             $('#stock'+i).val('');
         }
         $('table.sendDetails').dataTable().fnDestroy();
-        $('table.sendDetails').DataTable({ //user datatables
+        $('table.sendDetails').DataTable({ 
             "dom": 'rt',
             "language": {
                 "emptyTable": " "
@@ -326,7 +324,6 @@
                             },
                             dataType: 'json',
                         });
-                        alert("Branch request updated!!!!");
                         window.location.href = '/print/'+reqno;
                     }
                 }

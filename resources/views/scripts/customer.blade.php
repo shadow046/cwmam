@@ -49,5 +49,59 @@
     
     });
 
+    $('#customerBtn').on("click", function(){
+
+        $('#customer_code').val('');
+        $('#customer_name').val('');
+        $('#subBtn').val('Save');
+        $('#customerModal').modal('show');
+    });
+
+    $('#customerForm').on('submit', function(e){ //user modal update/save button
+        e.preventDefault();
+        subBtn = $('#subBtn').val();
+        if(subBtn == 'Update'){
+            var myid = $('#myid').val();
+            $.ajax({
+                type: "PUT",
+                url: "/user_update/"+myid,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: $('#userForm').serialize(),
+                success: function(datca){
+                    if($.isEmptyObject(data.error)){
+                        $('#userModal').modal('hide');
+                        alert("User data updated");
+                        window.location.reload();
+                    }else{
+                        alert(data.error);
+                    }
+                } 
+            });
+        }
+
+        if(subBtn == 'Save'){
+            $.ajax({
+                type: "POST",
+                url: "customer_add",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: $('#customerForm').serialize(),
+                success: function(data){
+                    if(data > '0'){
+                        window.location.reload();
+                    }else{
+                        alert("Customer already registered");
+                    }
+                },
+                error: function (data,error, errorThrown) {
+                    alert(data.responseText);
+                }
+            });
+        }
+    });
+
 </script>
 

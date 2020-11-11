@@ -5,7 +5,7 @@
   <div class="container pt-5">  
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-3">
+      <div class="col-sm-2">
         <a href="{{ route('stock.index')}}">
           <div class="card bg-card">
             <div class="card-body text-center">
@@ -15,7 +15,7 @@
           </div>
         </a>
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-2">
         <a href="{{ route('stocks.index')}}">
           <div class="card bg-card">
             <div class="card-body text-center">
@@ -25,7 +25,7 @@
           </div>
         </a>
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-2">
         <a href="{{ route('return.index')}}">
           <div class="card bg-card">
             <div class="card-body text-center">
@@ -35,6 +35,18 @@
           </div>
         </a>
       </div>
+      @if(auth()->user()->branch->branch != 'Warehouse');
+      <div class="col-sm-2">
+        <a href="{{ route('stock.service-unit')}}">
+          <div class="card bg-card">
+            <div class="card-body text-center">
+              <p class="card-text">SERVICE UNIT</p>
+              <p class="card-text">{{ $sunits }}</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      @endif
     </div>  
   </div>
 </div>

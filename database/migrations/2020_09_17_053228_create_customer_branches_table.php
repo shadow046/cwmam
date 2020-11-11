@@ -20,6 +20,7 @@ class CreateCustomerBranchesTable extends Migration
             $table->string('customer_branch');
             $table->string('address')->nullable();
             $table->string('contact')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

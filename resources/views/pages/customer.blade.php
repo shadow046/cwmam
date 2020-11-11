@@ -28,5 +28,7 @@
       </thead>
     </table>
   </div>
-  
+  @role('Viewer')
+    <input type="button" id="customerBtn" class="btn btn-primary" value="New Customer">
+  @endrole
 @endsection

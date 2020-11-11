@@ -5,7 +5,7 @@
     $(document).ready(function()
     {
         table =
-        $('table.defectiveTable').DataTable({ //user datatables
+        $('table.defectiveTable').DataTable({ 
             "dom": 'lrtip',
             processing: true,
             serverSide: true,
@@ -97,7 +97,11 @@
             },
             success:function(data)
             {
-                window.location.href = 'return';
+                interval = setInterval(function(){
+                    table.draw();
+                }, 30000);
+                table.draw();
+                $('#returnModal .close').click();
             },
             error: function (data,error, errorThrown) {
                 alert(data.responseText);
