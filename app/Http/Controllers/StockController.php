@@ -26,6 +26,11 @@ class StockController extends Controller
 
     public function index()
     {
+        if (auth()->user()->hasanyrole('Viewer', 'Repair')) {
+            return redirect('/');
+        }
+
+        $title = 'Offices';
         $categories = Category::all();
         $service_units = Stock::where('branch_id', auth()->user()->branch->id)
             ->where('status', 'service unit')
@@ -41,7 +46,7 @@ class StockController extends Controller
         $branches = Branch::where('area_id', auth()->user()->area->id)
             ->where('id', '!=', auth()->user()->branch->id)
             ->get();
-        return view('pages.stocks', compact('categories', 'service_units', 'customers', 'branches'));
+        return view('pages.stocks', compact('categories', 'service_units', 'customers', 'branches', 'title'));
     }
 
     public function category(Request $request){

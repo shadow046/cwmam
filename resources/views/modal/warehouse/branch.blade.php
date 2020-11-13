@@ -55,8 +55,8 @@
                                     </td>
                                 <tr>
                                     <th>DESCRIPTION</th>
-                                    @if (auth()->user()->branch->branch == "Warehouse")
-                                    <th>INITIA STOCK</th>
+                                    @if (auth()->user()->branch->branch == "Warehouse" && !auth()->user()->hasrole('Viewer'))
+                                    <th>INITIAL STOCK</th>
                                     @endif
                                     <th>AVAILABLE</th>
                                     <th>OUT</th>

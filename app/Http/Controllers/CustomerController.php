@@ -17,7 +17,12 @@ class CustomerController extends Controller
     
     public function index()
     {
-        return view('pages.customer');
+        if (auth()->user()->hasanyrole('Repair')) {
+            return redirect('/');
+        }
+
+        $title = 'Customers';
+        return view('pages.customer', compact('title'));
     }
 
     public function customertable()
@@ -43,9 +48,11 @@ class CustomerController extends Controller
 
     public function branchindex(Request $request, $id)
     {
+
         $customer = Customer::find($id);
+        $title = strtoupper($customer->customer).' Branches';
         $customer = strtoupper($customer->customer);
-        return view('pages.customerbranch', compact('customer'));
+        return view('pages.customerbranch', compact('customer', 'title'));
     }
 
     public function customerbranchtable($id)
@@ -63,9 +70,7 @@ class CustomerController extends Controller
             }
             
         })
-
         ->make(true);
-
     }
 
     public function store(Request $request)
@@ -97,6 +102,20 @@ class CustomerController extends Controller
             $customerbranch->contact = $request->number;
             $customerbranch->status = "1";
             $customerbranch->save();
+            $data = '1';
+        }
+        return response()->json($data);
+    }
+
+    public function update(Request $request)
+    {
+        if (Customer::where('code', strtolower($request->input('customer_code')))->where('id', '!=', $request->input('myid'))->exists() || Customer::where('customer', strtolower($request->input('customer_name')))->where('id', '!=', $request->input('myid'))->exists()) {
+            $data = '0';
+        }else{
+            $customer = Customer::where('id', $request->input('myid'))->first();
+            $customer->code = strtolower($request->input('customer_code'));
+            $customer->customer = strtolower($request->input('customer_name'));
+            $customer->save();
             $data = '1';
         }
         return response()->json($data);

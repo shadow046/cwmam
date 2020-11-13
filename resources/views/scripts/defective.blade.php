@@ -1,30 +1,37 @@
 <script type="text/javascript">
+
+var table;
+    var interval = null;
     $(document).ready(function()
     {
-        var table =
-        $('table.activityTable').DataTable({ //user datatables
+        table =
+        $('table.defectiveTable').DataTable({ //user datatables
             "dom": 'lrtip',
             "language": {
-                    "emptyTable": " "
-                },
-            "order": [[ 0, 'desc' ], [ 1, 'desc' ]],
+                "emptyTable": " "
+            },
             processing: true,
-            serverSide: false,
-            ajax: 'activity',
+            serverSide: true,
+            ajax: 'return-table',
+            
             columns: [
                 { data: 'date', name:'date'},
-                { data: 'time', name:'time',},
-                { data: 'username', name:'username'},
-                { data: 'fullname', name:'fullname'},
-                { data: 'userlevel', name:'userlevel'},
-                { data: 'activity', name:'activity',}
+                { data: 'branch', name:'branch'},
+                { data: 'category', name:'category'},
+                { data: 'item', name:'item'},
+                { data: 'serial', name:'serial'},
+                { data: 'status', name:'status'}
             ]
         });
 
+        interval = setInterval(function(){
+            table.draw();
+        }, 30000);
+
         $('.tbsearch').delay().fadeOut('slow'); //hide search
 
-        $('#search-ic').on("click", function (event) { //clear search box on hide
-            for ( var i=2 ; i<=5 ; i++ ) {
+        $('#search-ic').on("click", function () { //clear search box on hide
+            for ( var i=0 ; i<=5 ; i++ ) {
                 
                 $('.fl-'+i).val('').change();
                 table
@@ -40,7 +47,6 @@
                 .search( $(this).val())
                 .draw();
         });
-    });
 
-    
+    });
 </script>

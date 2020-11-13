@@ -22,11 +22,12 @@ class DefectiveController extends Controller
     
     public function index()
     {
+        $title = 'Defective Unit/Parts';
         $users = User::all();
         if (auth()->user()->branch->branch != 'Warehouse') {
-            return view('pages.branch.return', compact('users'));
+            return view('pages.branch.return', compact('users', 'title'));
         }else{
-            return view('pages.warehouse.return', compact('users'));
+            return view('pages.warehouse.return', compact('users', 'title'));
         }
     }
 

@@ -30,5 +30,6 @@
   </div>
   @role('Viewer')
     <input type="button" id="customerBtn" class="btn btn-primary" value="New Customer">
+    <input type="button" id="editBtn" class="btn btn-primary" value="Edit Customer Details">
   @endrole
 @endsection

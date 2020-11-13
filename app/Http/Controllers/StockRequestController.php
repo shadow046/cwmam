@@ -23,11 +23,16 @@ class StockRequestController extends Controller
     
     public function index()
     {
+        if (auth()->user()->hasanyrole('Viewer', 'Repair')) {
+            return redirect('/');
+        }
+        $title = 'Stock Request';
+
         $stocks = Warehouse::select('items_id', 'serial', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
             ->where('status', 'in')
             ->groupBy('items_id')->get();
         $categories = Category::all();
-        return view('pages.stock-request', compact('stocks', 'categories'));
+        return view('pages.stock-request', compact('stocks', 'categories', 'title'));
     }
 
     public function getItemCode(Request $request){

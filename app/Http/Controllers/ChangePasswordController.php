@@ -18,7 +18,8 @@ class ChangePasswordController extends Controller
     
     public function index()
     {
-        return view('changePassword');
+        $title = 'Change password';
+        return view('changePassword', compact('title'));
     }
 
     public function store(Request $request)

@@ -34,18 +34,19 @@ Route::get('customerbranch-list/{id}', 'CustomerController@customerbranchtable')
 Route::get('customer-list', 'CustomerController@customertable')->name('customer.list');
 Route::get('customer/{id}', 'CustomerController@branchindex')->name('customerbranch.index');
 Route::get('customer', 'CustomerController@index')->name('customer.index');
-Route::any('customer_add', 'CustomerController@store')->name('customer.store');
+Route::post('customer_add', 'CustomerController@store')->name('customer.store');
+Route::put('customer_add', 'CustomerController@update')->name('customer.update');
 Route::post('cbranch_add', 'CustomerController@branchadd');
 
 
-Route::any('return-update', 'DefectiveController@update')->name('return.update');
+Route::put('return-update', 'DefectiveController@update')->name('return.update');
 Route::get('return-table', 'DefectiveController@table')->name('return.table');
 Route::get('return', 'DefectiveController@index')->name('return.index');
 
 Route::put('loandelete', 'LoanController@destroy')->name('loans.stock.delete');
-Route::any('loanupdate', 'LoanController@stockUpdate')->name('loans.stock.update');
+Route::put('loanupdate', 'LoanController@stockUpdate')->name('loans.stock.update');
 Route::get('loanget', 'LoanController@getitem')->name('loans.getitem');
-Route::any('loanstock', 'LoanController@stock')->name('loans.stock');
+Route::put('loanstock', 'LoanController@stock')->name('loans.stock');
 Route::get('loanitemcode', 'LoanController@getItemCode')->name('loan.get.itemcode');
 Route::put('loansapproved', 'LoanController@update')->name('loans.approved');
 Route::get('loanrequesttable', 'LoanController@tablerequest')->name('loansrequest.table');
@@ -53,7 +54,7 @@ Route::get('loanstable', 'LoanController@table')->name('loans.table');
 Route::get('loans', 'LoanController@index')->name('loans');
 Route::post('loan', 'StockController@loan')->name('stocks.loan');
 
-Route::any('rep-update', 'StockController@update')->name('stocks.update');
+Route::put('rep-update', 'StockController@update')->name('stocks.update');
 Route::get('pull-details1/{id}', 'StockController@pulldetails1')->name('stocks.details1.pullout');
 Route::get('pull-details/{id}', 'StockController@pulldetails')->name('stocks.details.pullout');
 Route::put('service-in', 'StockController@servicein')->name('stock.service-in');
@@ -82,7 +83,7 @@ Route::get('stocks', 'StockController@index')->name('stocks.index');
 
 Route::POST('storerreceived', 'StockRequestController@received')->name('stock.received.request');
 Route::get('gen', 'StockRequestController@generateBarcodeNumber')->name('stock.gen');
-Route::any('update', 'StockRequestController@update')->name('stock.update');
+Route::put('update', 'StockRequestController@update')->name('stock.update');
 Route::post('storerequest', 'StockRequestController@store')->name('stock.store.request');
 Route::delete('remove', 'StockRequestController@dest')->name('stock.remove');
 Route::get('getstock', 'StockRequestController@getStock')->name('stock.get');

@@ -1,6 +1,7 @@
 @if((new \Jenssegers\Agent\Agent())->isDesktop()) 
     <!doctype html>
     <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+        
         <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,9 +12,10 @@
             <link rel="stylesheet" type="text/css" href="{{ url('/css/style.css') }}" />
             <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-            <title>SERVICE CENTER STOCK INVENTORY MONITORING</title>
+            <title>{{ $title }}</title>
             @include('inc.style')
         </head>
+        
         <body>
             @include('inc.header')
             @include('inc.navbar')
@@ -144,7 +146,11 @@
             @if(Request::is('return'))
                 @if(auth()->user()->hasAnyrole('Administrator', 'Encoder'))
                     <script src="{{asset('js/warehouse/defective.js')}}"></script>
-                @else
+                @endif
+                @if(auth()->user()->hasrole('Viewer'))
+                    <script src="{{asset('js/defective.js')}}"></script>
+                @endif
+                @if (!auth()->user()->hasAnyrole('Administrator', 'Encoder', 'Viewer'))
                     <script src="{{asset('js/branch/defective.js')}}"></script>
                 @endif
             @endif

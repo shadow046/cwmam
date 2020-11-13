@@ -23,9 +23,14 @@ class BranchController extends Controller
 
     public function index()
     {
+        if (auth()->user()->hasanyrole('Repair')) {
+            return redirect('/');
+        }
+
         $branch = Branch::all()->sortBy('branch');
         $areas = Area::all();
-        return view('pages.branch', compact('branch', 'areas'));
+        $title = 'Offices';
+        return view('pages.branch', compact('branch', 'areas', 'title'));
     }
 
     public function showModal()

@@ -23,12 +23,12 @@ class LoanController extends Controller
         if (auth()->user()->hasrole('Administrator')) {
             return redirect('/');
         }
-
+        $title = 'Loans';
         $branches = Branch::where('area_id', auth()->user()->area->id)
             ->where('id', '!=', auth()->user()->branch->id)
             ->get();
 
-        return view('pages.loan', compact('branches'));
+        return view('pages.loan', compact('branches', 'title'));
     }
 
     public function getItemCode(Request $request)

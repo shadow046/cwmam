@@ -28,14 +28,14 @@ class UserController extends Controller
         $users = User::all();
         $areas = Area::all();
         $roles = Role::all();
+        $title = 'Users';
         if (!auth()->user()->hasanyrole('Administrator|Head')) {
             return redirect('/');
         }
         if (auth()->user()->hasrole('Head')) {
             $areas = Area::where('id', auth()->user()->area->id)->get();
         }
-
-        return view('pages.user', compact('users', 'areas','roles'));
+        return view('pages.user', compact('users', 'areas','roles', 'title'));
     }
 
     public function getUsers()

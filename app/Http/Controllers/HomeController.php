@@ -29,7 +29,7 @@ class HomeController extends Controller
 
     public function index()
     {
-
+        $title = 'Home';
         if (auth()->user()->status == '0') {
             return redirect('logout');
         }
@@ -41,14 +41,14 @@ class HomeController extends Controller
                 ->wherein('status', ['0', '1'])
                 ->count();
             $sunits = Stock::where('status', 'service-unit')->where('branch_id', auth()->user()->branch->id)->count();
-            return view('pages.home', compact('stockreq', 'units', 'returns', 'sunits'));
+            return view('pages.home', compact('stockreq', 'units', 'returns', 'sunits', 'title'));
         }else if (auth()->user()->hasrole('Repair')){
-            return view('pages.warehouse.return');
+            return view('pages.warehouse.return', compact('title'));
         }else{
             $stockreq = StockRequest::wherein('status', ['0', '1'])->count();
             $units = Warehouse::where('status', 'in')->count();
             $returns = Defective::where('status', 'For receiving')->count();
-            return view('pages.home', compact('stockreq', 'units', 'returns'));
+            return view('pages.home', compact('stockreq', 'units', 'returns', 'title'));
         }
 
     }
@@ -140,7 +140,7 @@ class HomeController extends Controller
     public function activity()
     {
         
-        if (auth()->user()->hasAnyRole('Administrator')) {
+        if (auth()->user()->hasAnyRole('Administrator', 'Viewer')) {
             $act = UserLog::all();
         }
 
@@ -153,7 +153,7 @@ class HomeController extends Controller
             $act = UserLog::wherein('user_id', $myuser)->orderBy('id', 'DESC')->get();
         }
 
-        if (!auth()->user()->hasAnyRole('Head', 'Administrator')) {
+        if (!auth()->user()->hasAnyRole('Head', 'Administrator', 'Viewer')) {
             $act = UserLog::where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
         }
         
