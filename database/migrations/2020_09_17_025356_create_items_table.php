@@ -17,6 +17,7 @@ class CreateItemsTable extends Migration
             $table->bigIncrements('id');
             $table->string('category_id')->nullable();
             $table->string('item');
+            $table->string('status');
             $table->timestamps();
         });
     }
