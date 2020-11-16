@@ -30,14 +30,14 @@ class StockController extends Controller
             return redirect('/');
         }
 
-        $title = 'Offices';
+        $title = 'Stocks';
         $categories = Category::all();
         $service_units = Stock::where('branch_id', auth()->user()->branch->id)
-            ->where('status', 'service unit')
+            ->where('stocks.status', 'service unit')
             ->join('categories', 'stocks.category_id', '=', 'categories.id')
             ->get();
         $customers = Stock::where('branch_id', auth()->user()->branch->id)
-            ->where('status', 'service unit')
+            ->where('stocks.status', 'service unit')
             ->join('customer_branches', 'stocks.customer_branches_id', '=', 'customer_branches.id')
             ->join('categories', 'stocks.category_id', '=', 'categories.id')
             ->join('customers', 'customer_branches.customer_id', '=', 'customers.id')
