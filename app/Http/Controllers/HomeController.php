@@ -67,7 +67,8 @@ class HomeController extends Controller
     {
         $request = StockRequest::where('request_no', $id)->first();
         //dd($request);
-        return view('pages.warehouse.print', compact('request'));
+        $title = 'Print Preview';
+        return view('pages.warehouse.print', compact('request', $title));
     }
 
     public function initial($id)
