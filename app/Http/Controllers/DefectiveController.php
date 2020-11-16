@@ -8,6 +8,7 @@ use App\User;
 use App\Defective;
 use App\Branch;
 use App\Item;
+use App\Warehouse;
 use App\Category;
 use App\UserLog;
 use DB;
@@ -40,7 +41,7 @@ class DefectiveController extends Controller
             ->get();
             
         $waredef =Defective::select('branches.branch', 'defectives.category_id', 'branches.id as branchid', 'defectives.updated_at', 'defectives.id as id', 'items.item', 'items.id as itemid', 'defectives.serial', 'defectives.status')
-            ->wherein('defectives.status', ['For receiving', 'Repaired'])
+            ->wherein('defectives.status', ['For receiving', 'Repaired', 'For Repair'])
             ->join('items', 'defectives.items_id', '=', 'items.id')
             ->join('branches', 'defectives.branch_id', '=', 'branches.id')
             ->get();

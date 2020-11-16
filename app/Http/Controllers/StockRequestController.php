@@ -40,6 +40,15 @@ class StockRequestController extends Controller
         return response()->json($data);
     }
 
+    public function getCatReq(Request $request){
+        $catreqs = RequestedItem::select('categories.category', 'categories.id')
+            ->where('request_no', $request->reqno)
+            ->join('items', 'items.id', '=', 'requested_items.items_id')
+            ->join('categories', 'categories.id', '=', 'items.category_id')
+            ->get();
+        return response()->json($catreqs);
+    }
+
     public function getStock(Request $request){
         if (auth()->user()->branch->branch == 'Warehouse') {
             $data = Warehouse::select(\DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))

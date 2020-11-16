@@ -64,9 +64,9 @@
         if (trdata.status == 'For receiving') {
             $('#submit_Btn').val('Received');
             $('#submit_Btn').show();
-        }else if (trdata.status == 'For repair') {
-            $('#submit_Btn').val('Repaired');
-            $('#submit_Btn').show();
+        }else if (trdata.status == 'For repair' && $('#level').val() == 'Repair') {
+                $('#submit_Btn').val('Repaired');
+                $('#submit_Btn').show();
         }else if (trdata.status == 'Repaired') {
             $('#submit_Btn').val('Add to stock');
             $('#submit_Btn').show();

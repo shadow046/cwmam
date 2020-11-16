@@ -16,7 +16,7 @@
             @if(Request::is('login'))
                 <title>Login</title>
             @else
-                <title>{{ $title }}</title>
+                <title>{{$title}}</title>
             @endif
             @include('inc.style')
             <link rel="icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
@@ -26,6 +26,9 @@
         <body>
             @include('inc.header')
             @include('inc.navbar')
+            @if(!Auth::guest())
+                <input type="text" hidden id="level" value={{ auth()->user()->roles->first()->name }}>
+            @endif
             <div class="py-2">
             @yield('content')
             </div>

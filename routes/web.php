@@ -83,6 +83,7 @@ Route::get('stocks', 'StockController@index')->name('stocks.index');
 
 Route::POST('storerreceived', 'StockRequestController@received')->name('stock.received.request');
 Route::get('gen', 'StockRequestController@generateBarcodeNumber')->name('stock.gen');
+Route::get('getcatreq', 'StockRequestController@getCatReq')->name('stock.getcatreq');
 Route::put('update', 'StockRequestController@update')->name('stock.update');
 Route::post('storerequest', 'StockRequestController@store')->name('stock.store.request');
 Route::delete('remove', 'StockRequestController@dest')->name('stock.remove');

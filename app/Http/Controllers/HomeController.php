@@ -29,7 +29,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $title = 'Home';
+        $title = 'Dashboard';
         if (auth()->user()->status == '0') {
             return redirect('logout');
         }
@@ -40,7 +40,7 @@ class HomeController extends Controller
             $stockreq = StockRequest::where('branch_id', auth()->user()->branch->id)
                 ->wherein('status', ['0', '1'])
                 ->count();
-            $sunits = Stock::where('status', 'service-unit')->where('branch_id', auth()->user()->branch->id)->count();
+            $sunits = Stock::where('status', 'service unit')->where('branch_id', auth()->user()->branch->id)->count();
             return view('pages.home', compact('stockreq', 'units', 'returns', 'sunits', 'title'));
         }else if (auth()->user()->hasrole('Repair')){
             return view('pages.warehouse.return', compact('title'));
@@ -70,7 +70,7 @@ class HomeController extends Controller
         $request = StockRequest::where('request_no', $id)->first();
         //dd($request);
         $title = 'Print Preview';
-        return view('pages.warehouse.print', compact('request', $title));
+        return view('pages.warehouse.print', compact('request', 'title'));
     }
 
     public function initial($id)

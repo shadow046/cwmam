@@ -51,7 +51,7 @@ class StockController extends Controller
 
     public function category(Request $request){
         $cat = Stock::where('branch_id', auth()->user()->branch->id)
-            ->where('status', 'service unit')
+            ->where('stocks.status', 'service unit')
             ->where('customer_branches_id', $request->id)
             ->join('customer_branches', 'stocks.customer_branches_id', '=', 'customer_branches.id')
             ->join('categories', 'stocks.category_id', '=', 'categories.id')
@@ -95,7 +95,7 @@ class StockController extends Controller
 
     public function description(Request $request){
         $desc = Stock::where('branch_id', auth()->user()->branch->id)
-            ->where('status', 'service unit')
+            ->where('stocks.status', 'service unit')
             ->where('customer_branches_id', $request->customerid)
             ->where('stocks.category_id', $request->categoryid)
             ->join('customer_branches', 'stocks.customer_branches_id', '=', 'customer_branches.id')
@@ -109,7 +109,7 @@ class StockController extends Controller
     public function serial(Request $request){
         $serial = Stock::select('stocks.serial', 'stocks.id')
             ->where('branch_id', auth()->user()->branch->id)
-            ->where('status', 'service unit')
+            ->where('stocks.status', 'service unit')
             ->where('customer_branches_id', $request->customerid)
             ->where('stocks.category_id', $request->categoryid)
             ->where('stocks.items_id', $request->descid)
@@ -216,7 +216,7 @@ class StockController extends Controller
     public function viewStocks(Request $request)
     {
         $stock = Stock::select('categories.category', 'stocks.items_id as items_id', 'items.item as description', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as quantity'))
-            ->where('status', 'in')
+            ->where('stocks.status', 'in')
             ->where('branch_id', auth()->user()->branch->id)
             ->join('categories', 'stocks.category_id', '=', 'categories.id')
             ->join('items', 'stocks.items_id', '=', 'items.id')
@@ -278,7 +278,7 @@ class StockController extends Controller
         $pullouts = Pullout::select('categories.category', 'items.item', 'pullouts.category_id', 'pullouts.created_at', 'pullouts.id', 'pullouts.items_id', 'pullouts.serial')
                 ->where('branch_id', auth()->user()->branch->id)
                 ->where('customer_branch_id', $id)
-                ->where('status', 'pullout')
+                ->where('pullouts.status', 'pullout')
                 ->join('categories', 'pullouts.category_id', '=', 'categories.id')
                 ->join('items', 'pullouts.items_id', '=', 'items.id')
                 ->get();

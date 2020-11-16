@@ -118,7 +118,9 @@
         $('#sbranch').val($('#branch').val());
         $('#sname').val($('#name').val());
         $('#sendModal').modal('show');
+        var reqno = $('#sreqno').val();
         var x = 1;
+        var catop = " ";
         for(var i=1;i<=y;i++){
             if (i != 1) {
                 $('#row'+i).hide();
@@ -149,6 +151,30 @@
                 { data: 'quantity', name:'quantity'},
                 { data: 'purpose', name:'purpose'}
             ]
+        });
+
+        $.ajax({
+            url: 'getcatreq',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            type: 'get',
+            async:false,
+            data: {
+                reqno: reqno,
+            },
+            success:function(data)
+            {
+                catop+='<option selected value="select" disabled>select category</option>';
+                for(var i=0;i<data.length;i++){
+                    catop+='<option value="'+data[i].id+'">'+data[i].category+'</option>';
+                }
+                $("#category1").find('option').remove().end().append(catop);
+            },
+            error: function (data,error, errorThrown) {
+                alert(data.responseText);
+            }
         });
     });
     

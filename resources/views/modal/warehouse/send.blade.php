@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body mod" style="max-height:300px;overflow-y: auto;">
+            <div class="modal-body mod" style="max-height:400px;overflow-y: auto;">
                 <form id="sendForm">
                     {{ csrf_field() }}
                 <div class="row no-margin">
@@ -69,9 +69,7 @@
                     <div class="col-md-2 form-group">
                         <select id="category1" class="form-control category" row_count="1">
                             <option selected disabled>select category</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ strtoupper($category->category) }}</option>
-                            @endforeach
+                            
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
