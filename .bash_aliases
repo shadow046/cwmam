@@ -1,0 +1,6 @@
+alias art="php artisan"
+alias pa="php artisan"
+alias pat="php artisan tinker"
+alias gacp="git add . && git commit -m 'updates' && git push origin master"
+alias gp="git push"
+alias pac="pa cache:clear &&  pa route:clear &&  pa config:clear &&  pa view:clear"
