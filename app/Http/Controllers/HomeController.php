@@ -55,12 +55,14 @@ class HomeController extends Controller
 
     public function log()
     {
-        return view('pages.home');
+        $title = 'Activities';
+        return view('pages.home', compact('title'));
     }
 
     public function unrepair()
     {
-        return view('pages.unrepair');
+        $title = 'Unrepairable items';
+        return view('pages.unrepair', compact('title'));
     }
 
     public function print($id)

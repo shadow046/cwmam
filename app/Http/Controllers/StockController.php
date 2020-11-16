@@ -123,10 +123,11 @@ class StockController extends Controller
 
     public function service()
     {
+        $title = "Service Unit";
         if (auth()->user()->hasrole('Administrator')) {
             return redirect('/');
         }
-        return view('pages.service-unit');
+        return view('pages.service-unit', compact('title'));
     }
 
     public function serviceUnit()
