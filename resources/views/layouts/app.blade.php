@@ -12,7 +12,11 @@
             <link rel="stylesheet" type="text/css" href="{{ url('/css/style.css') }}" />
             <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-            <title>{{ $title }}</title>
+            @if(Request::is('login'))
+                <title>Login</title>
+            @else
+                <title>{{ $title }}</title>
+            @endif
             @include('inc.style')
         </head>
         
