@@ -166,7 +166,7 @@ class HomeController extends Controller
         
         ->addColumn('date', function (UserLog $request){
 
-            return $request->updated_at->toFormattedDateString();
+            return $request->updated_at->toFormattedDateString(). ' '.$request->updated_at->toTimeString();
 
         })
 
@@ -182,7 +182,7 @@ class HomeController extends Controller
 
         ->addColumn('fullname', function (UserLog $request){
             $username = User::where('id', $request->user_id)->first();
-            return $username->name;
+            return $username->name. ' '. $username->lastname;
         })
 
         ->addColumn('userlevel', function (UserLog $request){

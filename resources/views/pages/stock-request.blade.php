@@ -15,7 +15,7 @@
           <th>
             REQUESTED BY
           </th>
-          @if(auth()->user()->hasAnyrole('Administrator', 'Encoder'))
+          @if(auth()->user()->hasAnyrole('Administrator', 'Encoder', 'Viewer'))
             <th>
               BRANCH NAME
             </th>

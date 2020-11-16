@@ -8,8 +8,7 @@
             @auth
             <meta name="csrf-token" content="{{ csrf_token() }}">
             @endauth
-            <link rel="icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
-            <link rel="shortcut icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
+            
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
             <link rel="stylesheet" type="text/css" href="{{ url('/css/style.css') }}" />
             <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
@@ -20,6 +19,8 @@
                 <title>{{ $title }}</title>
             @endif
             @include('inc.style')
+            <link rel="icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
+            <link rel="shortcut icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
         </head>
         
         <body>
@@ -118,7 +119,11 @@
             @if(Request::is('request'))
                 @if(auth()->user()->hasAnyrole('Administrator', 'Encoder'))
                     <script src="{{asset('js/warehouse/request.js')}}"></script>
-                @else
+                @endif
+                @if(auth()->user()->hasrole('Viewer'))
+                    @include('scripts.request')
+                @endif
+                @if(!auth()->user()->hasAnyrole('Administrator', 'Encoder', 'Viewer'))
                     <script src="{{asset('js/branch/request.js')}}"></script>
                 @endif
             @endif

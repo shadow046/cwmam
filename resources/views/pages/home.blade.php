@@ -78,28 +78,16 @@
           <td>
             <input type="text" class="form-control filter-input fl-3" data-column="3" />
           </td>
-          <td>
-            <input type="text" class="form-control filter-input fl-4" data-column="4" />
-          </td>
-          <td>
-            <input type="text" class="form-control filter-input fl-5" data-column="5" />
-          </td>
         </tr>
         <tr>
           <th>
-            DATE
+            DATE & TIME
           </th>
           <th>
-            TIME
+            EMAIL
           </th>
           <th>
-            USER NAME
-          </th>
-          <th>
-            FULL NAME
-          </th>
-          <th>
-            USER LEVEL
+            FULLNAME &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </th>
           <th>
             ACTIVITY  

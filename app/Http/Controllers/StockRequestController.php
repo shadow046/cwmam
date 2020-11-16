@@ -23,7 +23,7 @@ class StockRequestController extends Controller
     
     public function index()
     {
-        if (auth()->user()->hasanyrole('Viewer', 'Repair')) {
+        if (auth()->user()->hasanyrole('Repair')) {
             return redirect('/');
         }
         $title = 'Stock Request';
@@ -132,9 +132,12 @@ class StockRequestController extends Controller
     public function getRequests()
     {
         $user = auth()->user()->branch->id;
-        if (auth()->user()->branch->branch != 'Warehouse') {
+        if (auth()->user()->branch->branch != 'Warehouse'){
             $stock = StockRequest::wherein('status',  ['0', '1'])
                 ->where('branch_id', $user)
+                ->get();
+        }else if(auth()->user()->hasRole('Viewer')){
+            $stock = StockRequest::wherein('status',  ['0', '1'])
                 ->get();
         }else{
             $stock = StockRequest::wherein('status',  ['0', '1'])

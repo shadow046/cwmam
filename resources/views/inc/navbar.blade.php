@@ -27,10 +27,10 @@
                             <a class="nav-link {{ Request::is('customer') ? 'active' : '' }} {{ Request::is('customer/*') ? 'active' : '' }}" href="{{ url('customer') }}">Customer</a>
                         </li>
                     @endrole
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('request') ? 'active' : '' }}" href="{{ route('stock.index') }}">Stock Request</a>
+                    </li>
                     @if(!auth()->user()->hasrole('Viewer'))
-                        <li class="nav-item">
-                            <a class="nav-link {{ Request::is('request') ? 'active' : '' }}" href="{{ route('stock.index') }}">Stock Request</a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link {{ Request::is('stocks') ? 'active' : '' }}" href="{{ route('stocks.index') }}">Stock</a>
                         </li>
