@@ -1,4 +1,4 @@
-<div id="loanModal" class="modal fade" >
+<div id="loanModal" class="modal fade">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -12,7 +12,7 @@
                     <div class="col-md-6 form-group row">
                         <label class="col-md-5 col-form-label text-md-right">Date:</label>
                         <div class="col-md-7">
-                        <input type="text" style="color: black" class="form-control form-control-sm " id="loandate" value="{{ Carbon\Carbon::now()->toDayDateTimeString() }}" disabled>
+                            <input type="text" style="color: black" class="form-control form-control-sm " id="loandate" value="{{ Carbon\Carbon::now()->toDayDateTimeString() }}" disabled>
                         </div>
                     </div>
                     <div class="col-md-6 form-group row">
@@ -29,9 +29,9 @@
                             <select style="color: black" class="form-control form-control-sm " id="loanbranch">
                                 <option selected disabled>select branch</option>
                                 @foreach ($branches as $branch)
-                                    @if ($branch->branch != "Warehouse")
-                                        <option value="{{ $branch->id }}">{{ $branch->branch }}</option>
-                                    @endif
+                                @if ($branch->branch != "Warehouse")
+                                <option value="{{ $branch->id }}">{{ $branch->branch }}</option>
+                                @endif
                                 @endforeach
                             </select>
                             <input type="text" id="branch-id" value="" hidden>
@@ -39,7 +39,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="modal-header">
                 <h6 class="modal-title w-100 text-center">ITEM DETAILS</h6>
             </div>

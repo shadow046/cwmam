@@ -27,7 +27,15 @@
             },
             processing: true,
             serverSide: false,
-            ajax: 'branches',
+            ajax: {
+                url: 'branches',
+                error: function(data, error, errorThrown) {
+                    if(data.status == 401) {
+                        // session timed out | not authenticated
+                        window.location.href = '/login';
+                    }
+                }
+            },
             columns: [
                 { data: 'branch', name:'branch', "width": "14%" },
                 { data: 'area', name:'area', "width": "14%"},

@@ -1,4 +1,4 @@
-<div id="updateModal" class="modal fade" >
+<div id="updateModal" class="modal fade">
     <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
             <div class="modal-header">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 use Closure;
+use Auth;
 class CheckMiddleware
 {
     /**
@@ -16,10 +17,10 @@ class CheckMiddleware
     {
         $agent = new \Jenssegers\Agent\Agent;
         $result = $agent->isDesktop();
-        if ($result) {
-            return $next($request);
-        } else {
+        if (!$result) {
             return abort('404');
         }
+        
+        return $next($request);
     }
 }

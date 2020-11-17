@@ -1,4 +1,4 @@
-<div id="customerbranchModal" class="modal fade" >
+<div id="customerbranchModal" class="modal fade">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -40,7 +40,7 @@
                         <input type="button" id="saveBtn" class="btn btn-primary" value="Save">
                     </div>
                 </form>
-            </div>  
+            </div>
         </div>
     </div>
 </div>

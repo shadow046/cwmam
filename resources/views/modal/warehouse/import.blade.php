@@ -1,10 +1,10 @@
-<div id="importModal" class="modal fade" >
+<div id="importModal" class="modal fade">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title w-100 text-center">IMPORT STOCK FORM</h6>
                 <button class="close" data-dismiss="modal" aria-label="Close" hidden>
-                    
+
                 </button>
             </div>
             <div class="modal-body" id="catfield">
@@ -18,11 +18,10 @@
                         </div>
                     </form>
                 </div>
-            </div><hr>
+            </div>
+            <hr>
             <div class="modal-footer">
-                <input type="button" class="btn btn-primary cancel" value="Cancel">            
-            </form>
-                
+                <input type="button" class="btn btn-primary cancel" value="Cancel">
             </div>
         </div>
     </div>

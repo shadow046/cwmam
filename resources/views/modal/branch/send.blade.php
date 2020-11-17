@@ -8,8 +8,6 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="sendForm">
-                    {{ csrf_field() }}
                 <div class="row no-margin">
                     <div class="col-md-6 form-group row">
                         <label for="bname" class="col-md-5 col-form-label text-md-right">Date requested:</label>
@@ -42,7 +40,7 @@
                         <select id="category1" class="form-control category" row_count="1" style="color: black;">
                             <option selected disabled>select category</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->category }}</option>
+                            <option value="{{ $category->id }}">{{ $category->category }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -71,12 +69,11 @@
                         <input type="button" class="add_item btn btn-xs btn-primary" btn_id="1" value="Add Item">
                     </div>
                 </div>
-            </div><hr>
+            </div>
+            <hr>
             <div class="modal-footer">
-            <input type="button" class="btn btn-primary cancel" value="Cancel">
-            <input type="button" class="btn btn-primary send_sub_Btn" id="send_sub_Btn" class="button" value="Submit">
-            </form>
-                
+                <input type="button" class="btn btn-primary cancel" value="Cancel">
+                <input type="button" class="btn btn-primary send_sub_Btn" id="send_sub_Btn" class="button" value="Submit">
             </div>
         </div>
     </div>

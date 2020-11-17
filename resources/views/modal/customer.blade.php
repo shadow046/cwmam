@@ -1,4 +1,4 @@
-<div id="customerModal" class="modal fade" >
+<div id="customerModal" class="modal fade">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -28,7 +28,7 @@
                         <input type="submit" id="subBtn" class="btn btn-primary" value="Save">
                     </div>
                 </form>
-            </div>  
+            </div>
         </div>
     </div>
 </div>

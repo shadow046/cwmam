@@ -1,4 +1,4 @@
-<div id="pulloutModal" class="modal fade" >
+<div id="pulloutModal" class="modal fade">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -12,7 +12,7 @@
                     <div class="col-md-6 form-group row">
                         <label class="col-md-5 col-form-label text-md-right">Date:</label>
                         <div class="col-md-7">
-                        <input type="text" style="color: black" class="form-control form-control-sm " id="pdate" value="{{ Carbon\Carbon::now()->toDayDateTimeString() }}" disabled>
+                            <input type="text" style="color: black" class="form-control form-control-sm " id="pdate" value="{{ Carbon\Carbon::now()->toDayDateTimeString() }}" disabled>
                         </div>
                     </div>
                     <div class="col-md-6 form-group row">
@@ -43,7 +43,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="modal-header">
                 <h6 class="modal-title w-100 text-center">ITEM DETAILS</h6>
             </div>
@@ -63,7 +62,7 @@
                         <select id="poutcategory1" class="form-control poutcategory" row_count="1" style="color: black;">
                             <option selected disabled>select category</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->category }}</option>
+                            <option value="{{ $category->id }}">{{ $category->category }}</option>
                             @endforeach
                         </select>
                     </div>

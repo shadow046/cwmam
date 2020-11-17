@@ -1,4 +1,4 @@
-<div id="replaceModal" class="modal fade" >
+<div id="replaceModal" class="modal fade">
     <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -13,7 +13,7 @@
                         <select id="goodcustomer1" class="form-control goodcustomer" row_count="1">
                             <option selected disabled>select customer</option>
                             @foreach ($customers as $customer)
-                                <option value="{{ $customer->customer_branches_id }}">{{ strtoupper($customer->customer_branch) }}</option>
+                            <option value="{{ $customer->customer_branches_id }}">{{ strtoupper($customer->customer_branch) }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -36,13 +36,11 @@
                         <input type="button" class="good_add_item btn btn-xs btn-primary" btn_id="1" value="Add Item">
                     </div>
                 </div>
-            </div><hr>
+            </div>
+            <hr>
             <div class="modal-footer">
-            <input type="button" class="btn btn-primary cancel" value="Cancel">
-            <input type="button" class="btn btn-primary good_sub_Btn" id="good_sub_Btn" class="button" value="Submit">
-            
-            </form>
-                
+                <input type="button" class="btn btn-primary cancel" value="Cancel">
+                <input type="button" class="btn btn-primary good_sub_Btn" id="good_sub_Btn" class="button" value="Submit">
             </div>
         </div>
     </div>

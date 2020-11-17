@@ -1,4 +1,4 @@
-<div id="replacementTableModal" class="modal fade" >
+<div id="replacementTableModal" class="modal fade">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -15,7 +15,7 @@
                     <div class="col-md-6 form-group row">
                         <label class="col-md-5 col-form-label text-md-right">Date:</label>
                         <div class="col-md-7">
-                        <input type="text" style="color: black" class="form-control form-control-sm " id="replacedate" value="{{ Carbon\Carbon::now()->toDayDateTimeString() }}" disabled>
+                            <input type="text" style="color: black" class="form-control form-control-sm " id="replacedate" value="{{ Carbon\Carbon::now()->toDayDateTimeString() }}" disabled>
                         </div>
                     </div>
                     <div class="col-md-6 form-group row">

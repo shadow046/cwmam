@@ -11,6 +11,7 @@
             
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
             <link rel="stylesheet" type="text/css" href="{{ url('/css/style.css') }}" />
+            <link rel="stylesheet" type="text/css" href="{{ url('/css/styles.css') }}" />
             <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
             @if(Request::is('login'))
@@ -18,7 +19,6 @@
             @else
                 <title>{{$title}}</title>
             @endif
-            @include('inc.style')
             <link rel="icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
             <link rel="shortcut icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
         </head>
@@ -106,6 +106,7 @@
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.js"></script>
             <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+            <script src="{{asset('js/session.js')}}"></script>
             
             @if(Request::is('user'))
                 <script src="{{asset('js/warehouse/user.js')}}"></script>

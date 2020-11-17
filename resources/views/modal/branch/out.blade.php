@@ -1,4 +1,4 @@
-<div id="service-unitModal" class="modal fade" >
+<div id="service-unitModal" class="modal fade">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -12,7 +12,7 @@
                     <div class="col-md-6 form-group row">
                         <label class="col-md-5 col-form-label text-md-right">Date:</label>
                         <div class="col-md-7">
-                        <input type="text" style="color: black" class="form-control form-control-sm " id="date" value="{{ Carbon\Carbon::now()->toDayDateTimeString() }}" disabled>
+                            <input type="text" style="color: black" class="form-control form-control-sm " id="date" value="{{ Carbon\Carbon::now()->toDayDateTimeString() }}" disabled>
                         </div>
                     </div>
                     <div class="col-md-6 form-group row">
@@ -43,7 +43,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="modal-header">
                 <h6 class="modal-title w-100 text-center">ITEM DETAILS</h6>
             </div>
@@ -63,7 +62,7 @@
                         <select id="outcategory1" class="form-control outcategory" row_count="1" style="color: black;">
                             <option selected disabled>select category</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->category }}</option>
+                            <option value="{{ $category->id }}">{{ $category->category }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -77,7 +76,6 @@
                             <option selected disabled>select serial</option>
                         </select>
                     </div>
-                    
                     <div class="col-md-1 form-group">
                         <input type="number" class="form-control" min="0" name="outstock1" id="outstock1" placeholder="0" style="color:black; width: 6em" disabled>
                     </div>

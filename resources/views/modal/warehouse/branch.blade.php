@@ -1,4 +1,4 @@
-<div id="branchModal" class="modal fade" >
+<div id="branchModal" class="modal fade">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,7 +10,6 @@
             <div class="modal-body">
                 <form id="branchForm">
                     {{ csrf_field() }}
-                    
                     <input type="hidden" name="myid" id="myid">
                     <div class="row no-margin">
                         <div class="col-md-3 form-group">
@@ -20,7 +19,7 @@
                             <select name="area" id="area" class="form-control form-control-sm area @error('area') is-invalid @enderror" style="color: black;" disabled>
                                 <option selected disabled>select area</option>
                                 @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}">{{ $area->area}}</option>
+                                <option value="{{ $area->id }}">{{ $area->area}}</option>
                                 @endforeach
                             </select>
                         </div>

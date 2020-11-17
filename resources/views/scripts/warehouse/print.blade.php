@@ -15,7 +15,15 @@
             processing: true,
             serverSide: true,
             async: false,
-            ajax: "/getprint/"+reqno,
+            ajax: { 
+                url: "/getprint/"+reqno,
+                error: function(data, error, errorThrown) {
+                    if(data.status == 401) {
+                        // session timed out | not authenticated
+                        window.location.href = '/login';
+                    }
+                }
+            },
             columns: [
                 { data: 'items_id', name:'items_id'},
                 { data: 'item', name:'item'},

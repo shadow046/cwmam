@@ -1,55 +1,78 @@
 <script type="text/javascript">
     var table;
     var interval = null;
-    $(document).ready(function()
-    {
+    $(document).ready(function() {
         table =
-        $('table.defectiveTable').DataTable({ //user datatables
-            "dom": 'lrtip',
-            "language": {
-                "emptyTable": " "
-            },
-            processing: true,
-            serverSide: true,
-            ajax: 'return-table',
-            
-            columns: [
-                { data: 'date', name:'date'},
-                { data: 'branch', name:'branch'},
-                { data: 'category', name:'category'},
-                { data: 'item', name:'item'},
-                { data: 'serial', name:'serial'},
-                { data: 'status', name:'status'}
-            ]
-        });
+            $('table.defectiveTable').DataTable({ //user datatables
+                "dom": 'lrtip',
+                "language": {
+                    "emptyTable": " "
+                },
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: 'return-table',
+                    error: function(data, error, errorThrown) {
+                        if(data.status == 401) {
+                            // session timed out | not authenticated
+                            window.location.href = '/login';
+                        }
+                    }
+                },
+                columns: [{
+                        data: 'date',
+                        name: 'date'
+                    },
+                    {
+                        data: 'branch',
+                        name: 'branch'
+                    },
+                    {
+                        data: 'category',
+                        name: 'category'
+                    },
+                    {
+                        data: 'item',
+                        name: 'item'
+                    },
+                    {
+                        data: 'serial',
+                        name: 'serial'
+                    },
+                    {
+                        data: 'status',
+                        name: 'status'
+                    }
+                ],
+            });
 
-        interval = setInterval(function(){
+        interval = setInterval(function() {
             table.draw();
         }, 30000);
 
         $('.tbsearch').delay().fadeOut('slow'); //hide search
 
-        $('#search-ic').on("click", function () { //clear search box on hide
-            for ( var i=0 ; i<=5 ; i++ ) {
-                
-                $('.fl-'+i).val('').change();
+        $('#search-ic').on("click", function() { //clear search box on hide
+            for (var i = 0; i <= 5; i++) {
+
+                $('.fl-' + i).val('').change();
                 table
-                .columns(i).search( '' )
-                .draw();
+                    .columns(i).search('')
+                    .draw();
             }
             $('.tbsearch').toggle();
-            
+
         });
 
         $('.filter-input').keyup(function() { //search columns
-            table.column( $(this).data('column'))
-                .search( $(this).val())
+            table.column($(this).data('column'))
+                .search($(this).val())
                 .draw();
         });
 
     });
 
-    $(document).on("click", "#defectiveTable tr", function () {
+    $(document).on("click", "#defectiveTable tr", function() {
         var trdata = table.row(this).data();
         var id = trdata.id;
         var descop = " ";
@@ -64,24 +87,27 @@
         if (trdata.status == 'For receiving') {
             $('#submit_Btn').val('Received');
             $('#submit_Btn').show();
-        }else if (trdata.status == 'For repair' && $('#level').val() == 'Repair') {
-                $('#submit_Btn').val('Repaired');
-                $('#submit_Btn').show();
-        }else if (trdata.status == 'Repaired') {
+        } else if (trdata.status == 'For repair' && $('#level').val() == 'Repair') {
+            $('#submit_Btn').val('Repaired');
+            $('#submit_Btn').show();
+        } else if (trdata.status == 'Repaired') {
             $('#submit_Btn').val('Add to stock');
             $('#submit_Btn').show();
-        }else{
+        } else {
             $('#submit_Btn').hide();
         }
 
-        $('#returnModal').modal({backdrop: 'static', keyboard: false});
+        $('#returnModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
     });
 
-    $(document).on('click', '#submit_Btn', function(){
+    $(document).on('click', '#submit_Btn', function() {
         var branch = $('#branch_id').val();
         var id = $('#myid').val();
-        var status = $('#submit_Btn').val()
-        if ($('#submit_Btn').val() == 'Received'){
+        var status = $('#submit_Btn').val();
+        if ($('#submit_Btn').val() == 'Received') {
             $.ajax({
                 url: 'return-update',
                 headers: {
@@ -94,20 +120,19 @@
                     branch: branch,
                     status: status
                 },
-                success:function(data)
-                {
-                    interval = setInterval(function(){
+                success: function(data) {
+                    interval = setInterval(function() {
                         table.draw();
                     }, 30000);
                     table.draw();
                     $('#returnModal .close').click();
                 },
-                error: function (data,error, errorThrown) {
+                error: function(data, error, errorThrown) {
                     alert(data.responseText);
                 }
             });
         }
-        if ($('#submit_Btn').val() == 'Repaired'){
+        if ($('#submit_Btn').val() == 'Repaired') {
             $.ajax({
                 url: 'return-update',
                 headers: {
@@ -120,21 +145,20 @@
                     branch: branch,
                     status: status
                 },
-                success:function(data)
-                {
-                   interval = setInterval(function(){
+                success: function(data) {
+                    interval = setInterval(function() {
                         table.draw();
                     }, 30000);
                     table.draw();
                     $('#returnModal .close').click();
                 },
-                error: function (data,error, errorThrown) {
+                error: function(data, error, errorThrown) {
                     alert(data.responseText);
                 }
             });
         }
-        if ($('#submit_Btn').val() == 'Add to stock'){
-            status = 'warehouse'
+        if ($('#submit_Btn').val() == 'Add to stock') {
+            status = 'warehouse';
             $.ajax({
                 url: 'return-update',
                 headers: {
@@ -147,32 +171,31 @@
                     branch: branch,
                     status: status
                 },
-                success:function(data)
-                {
-                    interval = setInterval(function(){
+                success: function(data) {
+                    interval = setInterval(function() {
                         table.draw();
                     }, 30000);
                     table.draw();
                     $('#returnModal .close').click();
                 },
-                error: function (data,error, errorThrown) {
+                error: function(data, error, errorThrown) {
                     alert(data.responseText);
                 }
             });
         }
     });
 
-    $(document).on('click', '.close', function(){
-        interval = setInterval(function(){
+    $(document).on('click', '.close', function() {
+        interval = setInterval(function() {
             table.draw();
         }, 30000);
         table.draw();
     });
 
-    $(document).on('click', '#unrepair_Btn', function(){
+    $(document).on('click', '#unrepair_Btn', function() {
         var branch = $('#branch_id').val();
         var id = $('#myid').val();
-        var status = 'unrepairable'
+        var status = 'unrepairable';
         $.ajax({
             url: 'return-update',
             headers: {
@@ -185,15 +208,14 @@
                 branch: branch,
                 status: status
             },
-            success:function(data)
-            {
-                interval = setInterval(function(){
-                        table.draw();
-                    }, 30000);
+            success: function(data) {
+                interval = setInterval(function() {
                     table.draw();
-                    $('#returnModal .close').click();
+                }, 30000);
+                table.draw();
+                $('#returnModal .close').click();
             },
-            error: function (data,error, errorThrown) {
+            error: function(data, error, errorThrown) {
                 alert(data.responseText);
             }
         });

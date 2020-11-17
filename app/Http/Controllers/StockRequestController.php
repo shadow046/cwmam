@@ -126,11 +126,11 @@ class StockRequestController extends Controller
 
         ->addColumn('purpose', function (RequestedItem $RequestedItem){
 
-            if ($RequestedItem->purpose == "1") {
+            if ($RequestedItem->purpose == "3") {
                 return 'STOCK';
             }elseif ($RequestedItem->purpose == "2") {
                 return 'REPLACEMENT';
-            }else{
+            }elseif ($RequestedItem->purpose == "1") {
                 return 'SERVICE UNIT';
             }
 

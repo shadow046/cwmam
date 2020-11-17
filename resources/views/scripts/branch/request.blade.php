@@ -323,4 +323,8 @@
             table.draw();
         }, 30000);
     });
+
+    $(document).on('click', '.cancel', function(){
+        window.location.href = 'request';
+    });
 </script>

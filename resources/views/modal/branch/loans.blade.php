@@ -1,4 +1,4 @@
-<div id="loansModal" class="modal fade" >
+<div id="loansModal" class="modal fade">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,7 +8,6 @@
                 </button>
             </div>
             <div class="modal-body mod">
-                
                 <form id="requestForm">
                     {{ csrf_field() }}
                     <input type="hidden" id="myid">
@@ -26,21 +25,18 @@
                             <input id="branch" type="text" class="form-control" name="branch" disabled>
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Item Description') }}</label>
                         <div class="col-md-6">
                             <input id="description" type="text" class="form-control" name="description" disabled>
                         </div>
                     </div>
-
                     <div class="form-group row" id="serials">
                         <label for="serial" class="col-md-4 col-form-label text-md-right">{{ __('Serial') }}</label>
                         <div class="col-md-6">
                             <input id="serial" type="text" class="form-control" name="serial" disabled>
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <label for="status" class="col-md-4 col-form-label text-md-right">{{ __('Status') }}</label>
                         <div class="col-md-6">
@@ -66,7 +62,7 @@
                     <input type="button" class="btn btn-primary" id="received_Btn" value="Received">
                     <input type="button" class="btn btn-primary" id="del_Btn" value="Delete request">
                 </div>
-            </div>  
+            </div>
         </div>
     </div>
 </div>

@@ -6,7 +6,7 @@
     <div class="col-md-6 form-group row">
         <label class="col-md-5 col-form-label text-md-right">Date requested:</label>
         <div class="col-md-7">
-        <input type="text" class="form-control form-control-sm " id="date" value="{{ $request->created_at->toDayDateTimeString()}}" disabled>
+            <input type="text" class="form-control form-control-sm " id="date" value="{{ $request->created_at->toDayDateTimeString()}}" disabled>
         </div>
     </div>
     <div class="col-md-6 form-group row">

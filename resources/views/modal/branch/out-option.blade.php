@@ -1,4 +1,4 @@
-<div id="outOptionModal" class="modal fade" >
+<div id="outOptionModal" class="modal fade">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,15 +9,14 @@
             </div>
             <div class="modal-body">
                 <div class="row justify-content-center">
-                        <div class="col-md-4 form-group">
-                            <input type="button" class="btn btn-primary service-unit" value="SERVICE UNIT"> 
-                        </div>
-                        <div class="col-md-4 form-group">
-                            <input type="button" class="btn btn-primary replacement" value="REPLACEMENT">            
-                        </div>
+                    <div class="col-md-4 form-group">
+                        <input type="button" class="btn btn-primary service-unit" value="SERVICE UNIT">
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <input type="button" class="btn btn-primary replacement" value="REPLACEMENT">
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
