@@ -125,6 +125,7 @@ class DefectiveController extends Controller
             $log->save();
             
             $data = $updates->save();
+            return response()->json($data);
 
         }else{
             if ($request->status == 'Received') {
@@ -142,6 +143,8 @@ class DefectiveController extends Controller
                 $update->status = "For repair";
                 $update->user_id = auth()->user()->id;
                 $data = $update->save();
+                return response()->json($data);
+
             }
 
             if ($request->status == 'Repaired') {
@@ -161,9 +164,11 @@ class DefectiveController extends Controller
                 $repaired->save();
 
                 $data = $log->save();
+                return response()->json($data);
+
             }
 
-            if ($request->status == 'Repaired') {
+            if ($request->status == 'warehouse') {
                 $pending = Defective::where('id', $request->id)
                     ->where('branch_id', $request->branch)
                     ->where('status', 'Repaired')
@@ -187,6 +192,8 @@ class DefectiveController extends Controller
                 $pending->save();
 
                 $data = $log->save();
+                return response()->json($data);
+
             }
 
             if ($request->status == 'unrepairable') {
@@ -206,9 +213,10 @@ class DefectiveController extends Controller
                 $unreapairable->save();
 
                 $data = $log->save();
+                return response()->json($data);
             }
         }
-        return response()->json($data);
+       
 
     }
 }

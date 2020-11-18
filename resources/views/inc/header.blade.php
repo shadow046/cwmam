@@ -5,7 +5,7 @@
     <div class="p-2 ml-auto align-self-end d-flex" id="branchid" branchid="{{ auth()->user()->branch->id}}">
         <a href="{{route('change.password')}}">
             <div class="p-2 ml-auto" style="text-align: right;">
-                    <p style="color: #0d1a80">{{ auth()->user()->name}}</p>
+                    <p style="color: #0d1a80">{{ auth()->user()->name}}  {{ auth()->user()->lastname}}</p>
                     <p style="color: #0d1a80">{{ auth()->user()->branch->branch}}</p>
                     <p style="color: #0d1a80">{{Carbon\Carbon::now()->toDayDateTimeString()}}</p>
             </div>
