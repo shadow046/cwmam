@@ -1,5 +1,6 @@
 <script type="text/javascript">
     var table;
+    var interval = null;
     $(document).ready(function()
     {
         table =
@@ -10,8 +11,15 @@
             },
             processing: true,
             serverSide: true,
-            ajax: 'unrepairable',
-            
+            ajax: {
+                url: 'unrepairable',
+            error: function(data, error, errorThrown) {
+                    if(data.status == 401) {
+                        // session timed out | not authenticated
+                        window.location.href = '/login';
+                    }
+                }
+            },
             columns: [
                 { data: 'date', name:'date'},
                 { data: 'branch', name:'branch'},
@@ -21,6 +29,9 @@
                 { data: 'status', name:'status'}
             ]
         });
+        interval = setInterval(function() {
+            table.draw();
+        }, 30000);
 
         $('.tbsearch').delay().fadeOut('slow'); //hide search
 

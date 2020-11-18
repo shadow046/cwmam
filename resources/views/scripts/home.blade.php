@@ -1,9 +1,9 @@
 <script type="text/javascript">
-    var table;
-    var interval = null;
+    
     $(document).ready(function()
     {
-        table =
+        var interval = null;
+        var table =
         $('table.activityTable').DataTable({ //user datatables
             "dom": 'lrtip',
             "language": {
@@ -11,7 +11,7 @@
                 },
             "order": [[ 0, 'desc' ], [ 1, 'desc' ]],
             processing: true,
-            serverSide: false,
+            serverSide: true,
             ajax: {
                 url: 'activity',
                 error: function(data, error, errorThrown) {

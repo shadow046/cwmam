@@ -20,7 +20,15 @@
             },
             processing: true,
             serverSide: true,
-            ajax: 'requests',
+            ajax: {
+                url: 'requests',
+                error: function(data, error, errorThrown) {
+                    if(data.status == 401) {
+                        // session timed out | not authenticated
+                        window.location.href = '/login';
+                    }
+                }
+            },
             columns: [
                 { data: 'created_at', name:'date', "width": "14%" },
                 { data: 'request_no', name:'request_no', "width": "14%"},

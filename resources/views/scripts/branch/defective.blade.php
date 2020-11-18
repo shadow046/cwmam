@@ -12,8 +12,15 @@
             "language": {
                     "emptyTable": " "
                 },
-            ajax: 'return-table',
-            
+            ajax: {
+                url: 'return-table',
+                error: function(data, error, errorThrown) {
+                    if(data.status == 401) {
+                        // session timed out | not authenticated
+                        window.location.href = '/login';
+                    }
+                }
+            },
             columns: [
                 { data: 'date', name:'date'},
                 { data: 'category', name:'category'},

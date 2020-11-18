@@ -26,7 +26,7 @@
                 "emptyTable": " "
             },
             processing: true,
-            serverSide: false,
+            serverSide: true,
             ajax: {
                 url: 'branches',
                 error: function(data, error, errorThrown) {
