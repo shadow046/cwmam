@@ -14,7 +14,7 @@
                     "emptyTable": " "
                 },
             processing: true,
-            serverSide: false,
+            serverSide: true,
             ajax: "/customerbranch-list/"+id,
             columns: [
                 { data: 'code', name:'code'},
@@ -47,23 +47,48 @@
         $('#branchBtn').val('ADD \"'+$('#name').val()+'\" BRANCH')
     });
 
+    $(document).on("click", "#customerbranchTable tr", function () {
+        
+        var trdata = table.row(this).data();
+        var id = trdata.id;
+        $('#saveBtn').val('Update');
+        $('#myid').val(id);
+        $('#branch_code').val(trdata.code);
+        $('#branch_name').val(trdata.customer_branch);
+        $('#address').val(trdata.address);
+        $('#number').val(trdata.contact);
+        $('.status').show();
+        if(trdata.status == "Active"){
+            $('#status').val('1');
+        }else{
+            $('#status').val('0');
+        }
+        $('#customerbranchModal').modal('show');
+        
+    });
+
     $('#branchBtn').on("click", function(){
 
-        $('#customer_code').val('');
-        $('#customer_name').val('');
+        $('#saveBtn').val('Save');
+        $('#branch_code').val('');
+        $('#branch_name').val('');
+        $('#number').val('');
+        $('#address').val('');
         $('#subBtn').val('Save');
         $('#myid').val(bID);
+        $('.status').hide();
         $('#customerbranchModal').modal('show');
     });
 
     $(document).on('click', '#saveBtn', function(e){ 
         e.preventDefault();
-        subBtn = $('#saveBtn').val();
-        bcode = $('#branch_code').val();
-        bname = $('#branch_name').val();
-        number = $('#number').val();
-        address = $('#address').val();
-        bid = bID;
+        var subBtn = $('#saveBtn').val();
+        var bcode = $('#branch_code').val();
+        var bname = $('#branch_name').val();
+        var number = $('#number').val();
+        var address = $('#address').val();
+        var bid = bID;
+        var id = $('#myid').val();
         if(subBtn == 'Save'){
             $.ajax({
                 type: "POST",
@@ -80,7 +105,39 @@
                 },
                 success: function(data){
                     if(data > '0'){
-                        window.location.reload();
+                        table.draw();
+                        $('#customerbranchModal .close').click();
+                    }else{
+                        alert("Branch already registered");
+                    }
+                },
+                error: function (data,error, errorThrown) {
+                    alert(data.responseText);
+                }
+            });
+        }
+
+        if(subBtn == 'Update'){
+            var status = $('#status').val();
+            $.ajax({
+                type: "Put",
+                url: "../cbranch_update",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    bcode: bcode,
+                    bname: bname,
+                    number: number,
+                    address: address,
+                    status: status,
+                    id: id,
+                    bid: bid
+                },
+                success: function(data){
+                    if(data > '0'){
+                        table.draw();
+                        $('#customerbranchModal .close').click();
                     }else{
                         alert("Branch already registered");
                     }

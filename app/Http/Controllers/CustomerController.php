@@ -85,13 +85,12 @@ class CustomerController extends Controller
             $data = '1';
         }
         return response()->json($data);
-
         
     }
 
     public function branchadd(Request $request)
     {
-        if (CustomerBranch::where('code', strtolower($request->bcode))->exists() || CustomerBranch::where('customer_branch', strtolower($request->bname))->exists()) {
+        if (CustomerBranch::where('code', strtolower($request->bcode))->where('customer_id', $request->bid)->exists() || CustomerBranch::where('customer_branch', strtolower($request->bname))->where('customer_id', $request->bid)->exists()) {
             $data = '0';
         }else{
             $customerbranch = new CustomerBranch;
@@ -101,6 +100,23 @@ class CustomerController extends Controller
             $customerbranch->address = $request->address;
             $customerbranch->contact = $request->number;
             $customerbranch->status = "1";
+            $customerbranch->save();
+            $data = '1';
+        }
+        return response()->json($data);
+    }
+
+    public function branchupdate(Request $request)
+    {
+        if (CustomerBranch::where('code', strtolower($request->bcode))->where('customer_id', $request->bid)->where('id', '!=', $request->id)->exists() || CustomerBranch::where('customer_branch', strtolower($request->bname))->where('customer_id', $request->bid)->where('id', '!=', $request->id)->exists()) {
+            $data = '0';
+        }else{
+            $customerbranch = CustomerBranch::where('id', $request->id)->first();
+            $customerbranch->code = strtolower($request->bcode);
+            $customerbranch->customer_branch = strtolower($request->bname);
+            $customerbranch->address = $request->address;
+            $customerbranch->contact = $request->number;
+            $customerbranch->status = $request->status;
             $customerbranch->save();
             $data = '1';
         }

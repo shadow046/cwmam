@@ -9,7 +9,7 @@
                     "emptyTable": " "
                 },
             processing: true,
-            serverSide: false,
+            serverSide: true,
             ajax: 'customer-list',
             columns: [
                 { data: 'code', name:'code'},
@@ -86,7 +86,8 @@
                 data: $('#customerForm').serialize(),
                 success: function(data){
                     if(data > '0'){
-                        window.location.reload();
+                        customertable.draw();
+                        $('#customerModal .close').click();
                     }else{
                         alert("Customer already registered");
                     }
@@ -107,7 +108,8 @@
                 data: $('#customerForm').serialize(),
                 success: function(data){
                     if(data > '0'){
-                        window.location.reload();
+                        customertable.draw();
+                        $('#customerModal .close').click();
                     }else{
                         alert("Customer already registered");
                     }

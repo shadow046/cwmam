@@ -114,8 +114,13 @@
             @if(Request::is('branch'))
                 @if(auth()->user()->hasAnyrole('Administrator', 'Encoder'))
                     <script src="{{asset('js/warehouse/branch.js')}}"></script>
-                @else
+                @endif
+                @if (!auth()->user()->hasAnyrole('Administrator', 'Encoder', 'Viewer'))
                     <script src="{{asset('js/branch/branch.js')}}"></script>
+                @endif
+                @if (auth()->user()->hasrole('Viewer'))
+                    @include('scripts.branch')
+                    <!--script src="{{asset('js/branch.js')}}"></script-->
                 @endif
             @endif
 

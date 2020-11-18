@@ -149,11 +149,11 @@ class BranchController extends Controller
 
             $branch = new Branch;
 
-            $branch->branch = $request->input('branch_name');
-            $branch->email = $request->input('email');
+            $branch->branch = ucwords(strtolower($request->input('branch_name')));
+            $branch->email = strtolower($request->input('email'));
             $branch->address = $request->input('address');
             $branch->area_id = $request->input('area');
-            $branch->head = $request->input('contact_person');
+            $branch->head = ucwords(strtolower($request->input('contact_person')));
             $branch->phone = $request->input('mobile');
             $branch->status = $request->input('status');
             $branch->save();
@@ -184,7 +184,7 @@ class BranchController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'branch_name' => ['required', 'string', 'min:5', 'max:255'],
+            'branch_name' => ['required', 'string', 'min:4', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'address' => ['required', 'string', 'min:10', 'max:255'],
             'area' => ['required', 'string', 'min:1', 'max:255'],
@@ -197,11 +197,11 @@ class BranchController extends Controller
 
             $branch = Branch::find($id);
 
-            $branch->branch = $request->input('branch_name');
+            $branch->branch = ucwords(strtolower($request->input('branch_name')));
             $branch->email = $request->input('email');
             $branch->address = $request->input('address');
             $branch->area_id = $request->input('area');
-            $branch->head = $request->input('contact_person');
+            $branch->head = ucwords(strtolower($request->input('contact_person')));
             $branch->phone = $request->input('mobile');
             $branch->status = $request->input('status');
 

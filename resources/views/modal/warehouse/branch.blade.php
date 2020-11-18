@@ -54,7 +54,7 @@
                                     </td>
                                 <tr>
                                     <th>DESCRIPTION</th>
-                                    @if (auth()->user()->branch->branch == "Warehouse" && !auth()->user()->hasrole('Viewer'))
+                                    @if (auth()->user()->hasanyrole('Viewer', 'Administrator'))
                                     <th>INITIAL STOCK</th>
                                     @endif
                                     <th>AVAILABLE</th>
@@ -63,7 +63,7 @@
                             </thead>
                         </table>
                     </div>
-                    @role('Administrator')
+                    @role('Viewer')
                     <div class="modal-footer">
                         <input type="button" id="editBtn" class="btn btn-primary" value="Edit">
                         <input type="submit" id="saveBtn" class="btn btn-primary" value="Save">

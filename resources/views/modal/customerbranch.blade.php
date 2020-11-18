@@ -36,6 +36,16 @@
                             <input id="address" type="text" class="form-control" name="address" style="color: black;">
                         </div>
                     </div>
+                    <div class="form-group row status">
+                        <label for="status" class="col-md-4 col-form-label text-md-right">{{ __('Status:') }}</label>
+                        <div class="col-md-6">
+                            <select name="status" id="status" class="form-control status" style="color: black;">
+                                <option selected disabled>select status</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="modal-footer">
                         <input type="button" id="saveBtn" class="btn btn-primary" value="Save">
                     </div>

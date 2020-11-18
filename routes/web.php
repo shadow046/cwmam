@@ -37,6 +37,8 @@ Route::get('customer', 'CustomerController@index')->name('customer.index');
 Route::post('customer_add', 'CustomerController@store')->name('customer.store');
 Route::put('customer_add', 'CustomerController@update')->name('customer.update');
 Route::post('cbranch_add', 'CustomerController@branchadd');
+Route::put('cbranch_update', 'CustomerController@branchupdate');
+
 
 
 Route::put('return-update', 'DefectiveController@update')->name('return.update');
