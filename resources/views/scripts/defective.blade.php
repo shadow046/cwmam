@@ -1,6 +1,6 @@
 <script type="text/javascript">
 
-var table;
+    var table;
     var interval = null;
     $(document).ready(function()
     {

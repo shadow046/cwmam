@@ -106,7 +106,6 @@
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.js"></script>
             <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-            <script src="{{asset('js/session.js')}}"></script>
             
             @if(Request::is('user'))
                 <script src="{{asset('js/warehouse/user.js')}}"></script>

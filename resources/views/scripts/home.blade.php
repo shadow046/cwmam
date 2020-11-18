@@ -1,7 +1,9 @@
 <script type="text/javascript">
+    var table;
+    var interval = null;
     $(document).ready(function()
     {
-        var table =
+        table =
         $('table.activityTable').DataTable({ //user datatables
             "dom": 'lrtip',
             "language": {
@@ -10,7 +12,15 @@
             "order": [[ 0, 'desc' ], [ 1, 'desc' ]],
             processing: true,
             serverSide: false,
-            ajax: 'activity',
+            ajax: {
+                url: 'activity',
+                error: function(data, error, errorThrown) {
+                    if(data.status == 401) {
+                        // session timed out | not authenticated
+                        window.location.href = '/login';
+                    }
+                }
+            },
             columns: [
                 { data: 'date', name:'date'},
                 { data: 'username', name:'username'},
@@ -18,6 +28,10 @@
                 { data: 'activity', name:'activity',}
             ]
         });
+
+        interval = setInterval(function(){
+            table.draw();
+        }, 30000);
 
         $('.tbsearch').delay().fadeOut('slow'); //hide search
 
