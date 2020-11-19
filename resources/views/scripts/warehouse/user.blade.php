@@ -182,7 +182,7 @@
             }
         });
 
-        $('.tbsearch').delay().fadeOut('slow'); //hide search
+         //hide search
             
         $('#filter').popover({ //filter columns popover
             html: true,

@@ -62,6 +62,10 @@
         background-color: #0d1a80;
     }
 
+    .bg-card-red {
+        background-color: red;
+    }
+
     .modal-header {
         padding:9px 15px;
         border-bottom:1px solid #eee;

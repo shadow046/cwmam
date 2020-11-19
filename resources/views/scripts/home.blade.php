@@ -33,7 +33,7 @@
             table.draw();
         }, 30000);
 
-        $('.tbsearch').delay().fadeOut('slow'); //hide search
+         //hide search
 
         $('#search-ic').on("click", function (event) { //clear search box on hide
             for ( var i=2 ; i<=5 ; i++ ) {

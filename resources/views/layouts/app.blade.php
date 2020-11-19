@@ -8,7 +8,9 @@
             @auth
             <meta name="csrf-token" content="{{ csrf_token() }}">
             @endauth
-            
+            @if(auth()->user()->branch->branch != "Warehouse" && Request::is('/'))
+            <meta http-equiv="refresh" content="20">
+            @endif
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
             <link rel="stylesheet" type="text/css" href="{{ url('/css/style.css') }}" />
             <link rel="stylesheet" type="text/css" href="{{ url('/css/styles.css') }}" />
@@ -175,12 +177,12 @@
             @endif
             
             @if(Request::is('customer'))
-                <!--script src="{{asset('js/customer.js')}}"></script-->
-                @include('scripts.customer')
+                <script src="{{asset('js/customer.js')}}"></script>
+                <!--@include('scripts.customer')-->
             @endif
             @if(Request::is('customer/*'))
-                @include('scripts.customerbranch')
-                <!--script src="{{asset('js/customerbranch.js')}}"></script-->
+                <!--@include('scripts.customerbranch')-->
+                <script src="{{asset('js/customerbranch.js')}}"></script>
             @endif
 
             @if(Request::is('/') && !auth()->user()->hasrole('Repair'))

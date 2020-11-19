@@ -172,8 +172,6 @@
             }
         });
 
-        $('.tbsearch').delay().fadeOut('slow'); //hide search
-            
         $('#filter').popover({ //filter columns popover
             html: true,
             sanitize: false,

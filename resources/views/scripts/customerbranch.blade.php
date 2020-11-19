@@ -24,7 +24,7 @@
             ]
         });
 
-        $('.tbsearch').delay().fadeOut('slow'); //hide search
+         //hide search
             
 
         $('#search-ic').on("click", function (event) { //clear search box on hide

@@ -50,7 +50,7 @@
             table.draw();
         }, 30000);
 
-        $('.tbsearch').delay().fadeOut('slow'); //hide search
+         //hide search
 
         $('#search-ic').on("click", function() { //clear search box on hide
             for (var i = 0; i <= 5; i++) {

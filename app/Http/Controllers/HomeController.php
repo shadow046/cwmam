@@ -9,6 +9,7 @@ use Yajra\DataTables\Facades\DataTables;
 use App\User;
 use App\Branch;
 use App\Item;
+use App\Loan;
 use App\Initial;
 use App\Warehouse;
 use App\StockRequest;
@@ -41,7 +42,8 @@ class HomeController extends Controller
                 ->wherein('status', ['0', '1'])
                 ->count();
             $sunits = Stock::where('status', 'service unit')->where('branch_id', auth()->user()->branch->id)->count();
-            return view('pages.home', compact('stockreq', 'units', 'returns', 'sunits', 'title'));
+            $loans = Loan::where('status', 'pending')->where('to_branch_id', auth()->user()->branch->id)->count();
+            return view('pages.home', compact('stockreq', 'units', 'returns', 'sunits', 'title', 'loans'));
         }else if (auth()->user()->hasrole('Repair')){
             return view('pages.warehouse.return', compact('title'));
         }else{

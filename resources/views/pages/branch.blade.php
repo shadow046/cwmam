@@ -10,7 +10,7 @@
     </div>
     <table class="table branchTable" id="branchTable">
         <thead class="thead-dark">
-            <tr class="tbsearch">
+            <tr class="tbsearch" style="display:none">
                 <td>
                     <input type="text" class="form-control filter-input fl-0" data-column="0" />
                 </td>

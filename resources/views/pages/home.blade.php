@@ -47,6 +47,16 @@
                     </div>
                 </a>
             </div>
+            <div class="col-sm-2">
+                <a href="{{ url('loans') }}">
+                    <div class="card @if($loans > 0)bg-card-red @else bg-card @endif">
+                        <div class="card-body text-center">
+                            <p class="card-text">Loan Request</p>
+                            <p class="card-text">{{ $loans }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
             @endif
         </div>
     </div>
@@ -65,7 +75,7 @@
     </div>
     <table class="table activityTable" id="activityTable">
         <thead class="thead-dark">
-            <tr class="tbsearch">
+            <tr class="tbsearch" style="display:none">
                 <td>
                     <input hidden type="text" class="form-control filter-input fl-0" data-column="0" />
                 </td>
