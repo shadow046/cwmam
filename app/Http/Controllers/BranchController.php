@@ -101,12 +101,16 @@ class BranchController extends Controller
 
     public function getBranches()
     {
-        if (auth()->user()->roles->first()->name == 'Administrator') {
+        if (auth()->user()->hasrole('Administrator')) {
             $branches = Branch::select('branches.*', 'areas.area')
                 ->where('branches.id', '!=', auth()->user()->branch->id)
                 ->join('areas', 'areas.id', '=', 'branches.area_id')
                 ->get();
-        }else{
+        }else if (auth()->user()->hasrole('Viewer')){
+            $branches = Branch::select('*', 'areas.area')
+                ->join('areas', 'areas.id', '=', 'branches.area_id')
+                ->get();
+        }else if (!auth()->user()->hasanyrole('Viewer', 'Administrator')){
             $branches = Branch::select('branches.*', 'areas.area')
                 ->where('branches.id', '!=', auth()->user()->branch->id)
                 ->where('branches.area_id', '=', auth()->user()->area->id)

@@ -144,7 +144,9 @@ class HomeController extends Controller
     {
         
         if (auth()->user()->hasAnyRole('Administrator', 'Viewer')) {
-            $act = UserLog::all();
+            $act = UserLog::select('user_logs.*', 'users.email')
+                ->join('users', 'users.id', '=', 'user_logs.user_id')
+                ->get();
         }
 
         if (auth()->user()->roles->first()->name == 'Head') {
@@ -210,5 +212,4 @@ class HomeController extends Controller
 
         return DataTables::of($prepared)->make(true);
     }
-
 }

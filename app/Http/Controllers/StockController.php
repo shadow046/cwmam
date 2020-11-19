@@ -352,7 +352,7 @@ class StockController extends Controller
         $loan->items_id = $request->itemid;
         $loan->status = 'pending';
         $log = new UserLog;
-        $log->activity = "Request $item->item from $branch->branch." ;
+        $log->activity = "Request $item->item to $branch->branch." ;
         $log->user_id = auth()->user()->id;
         $log->save();
         $data = $loan->save();
