@@ -51,16 +51,15 @@
         <div class="flex-center position-ref full-height">
             @if((new \Jenssegers\Agent\Agent())->isDesktop())
                 <div class="code">
-                    <p>You're using a web browser we don't support.</p>
-                    <p>Please use <a href="https://support.google.com/chrome/answer/95346">Chrome</a> Browser.</p>
+                    <p>The system currently works only on Google Chrome. Download it <a href="https://support.google.com/chrome/answer/95346">here</a>. </p>
+                    <p>We will keep you posted once it works on other browsers. Thank you.</p>
                     <a href="https://support.google.com/chrome/answer/95346"><img src="{{asset('chrome.png')}}" height="100"></a>
                 </div>
             @endif
             @if(!(new \Jenssegers\Agent\Agent())->isDesktop())
                 <div class="code">
-                    <p>You're using a web browser we don't support.</p>
-                    <p>Please use <a href="https://support.google.com/chrome/answer/95346">Chrome1</a> Browser.</p>
-                    <a href="https://support.google.com/chrome/answer/95346"><img src="{{asset('chrome.png')}}" height="100"></a>
+                    <p>({{(new \Jenssegers\Agent\Agent())->device()}}) browser not supported.</p>
+                    <p>Please use your computer to access this page.</p>
                 </div>
             @endif
         </div>

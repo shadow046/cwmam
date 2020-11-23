@@ -15,12 +15,6 @@ class CheckMiddleware
 
     public function handle($request, Closure $next)
     {
-        $agent = new \Jenssegers\Agent\Agent;
-        $result = $agent->isDesktop();
-        if (!$result) {
-            return abort('404');
-        }
-        
         return $next($request);
     }
 }
