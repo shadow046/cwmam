@@ -1,4 +1,3 @@
-@if((new \Jenssegers\Agent\Agent())->isDesktop()) 
     <!doctype html>
     <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
         
@@ -202,6 +201,4 @@
 
         </body>
     </html>
-@else
-    @include('errors.404')
-@endif
+

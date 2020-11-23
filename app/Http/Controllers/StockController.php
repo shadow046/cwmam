@@ -183,7 +183,6 @@ class StockController extends Controller
 
     public function autocompleteClient(Request $request)
     {
-
         $client = Customer::where("customer", "LIKE", "%{$request->id}%")
             ->limit(10)
             ->get();

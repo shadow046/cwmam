@@ -30,7 +30,9 @@ class HomeController extends Controller
 
     public function index()
     {
+        
         $title = 'Dashboard';
+
         if (auth()->user()->status == '0') {
             return redirect('logout');
         }
