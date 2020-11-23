@@ -1,5 +1,5 @@
 <div>
-    <p>&nbsp;&nbsp;</p>
+    <p>&nbsp;</p>
     <table>
         <tbody>
             <tr style="height:14pt">
