@@ -56,7 +56,14 @@
                                 <option selected disabled>select roles</option>
                                 @role('Administrator')
                                 @foreach ($roles as $role)
-                                <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                    @if (auth()->user()->hasrole('Head'))
+                                        @if(!$role->name == "Encoder" && auth()->user()->hasrole('Head'))
+                                        <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                        @endif
+                                    @endif
+                                    @if (!auth()->user()->hasrole('Head'))
+                                        <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                    @endif
                                 @endforeach
                                 @endrole
                                 @role('Head')

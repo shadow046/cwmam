@@ -12,7 +12,9 @@ use App\Warehouse;
 use App\Category;
 use App\Item;
 use App\Stock;
+use App\Branch;
 use App\UserLog;
+use Mail;
 use Auth;
 class StockRequestController extends Controller
 {
@@ -206,6 +208,19 @@ class StockRequestController extends Controller
             $log->activity = "Create Stock Request no. $request->reqno";
             $log->user_id = auth()->user()->id;
             $log->save();
+            
+            $reqitem = RequestedItem::select('items.item', 'quantity')
+                ->where('request_no', $request->reqno)
+                ->join('items', 'items.id', '=', 'requested_items.items_id')
+                ->get();
+            
+            Mail::send('mail', ['reqitem' => $reqitem, 'reqno' => $request->reqno, 'branch'=>auth()->user()->branch->branch],function( $message) { //email body
+                $message->to('gerard.mallari@gmail.com', 'Gerald Mallari')->subject //email and receivers name
+                    (auth()->user()->branch->branch); //subject
+                $message->from(auth()->user()->email, 'NO REPLY'); //email and senders name
+                $message->cc(['jerome.lopez.ge2018@gmail.com', 'emorej046@gmail.com']); //others receivers email
+            });
+
             $data = $reqno->save();
 
         }
@@ -220,7 +235,6 @@ class StockRequestController extends Controller
         }
         return response()->json($data);
     }
-
 
     public function received(Request $request)
     {
@@ -254,6 +268,23 @@ class StockRequestController extends Controller
             //dd($reqno);
             $reqno->status = $request->status;
             $reqno->schedule = $request->datesched;
+
+            $prepitem = PreparedItem::select('items.item', 'serial', 'branch_id')
+                ->where('request_no', $request->reqno)
+                ->join('items', 'items.id', '=', 'prepared_items.items_id')
+                ->get();
+            $reqbranch = PreparedItem::select('branch_id')
+                ->where('request_no', $request->reqno)
+                ->first();
+
+            $branch = Branch::select('branch','email', 'head')->where('id', $reqbranch->branch_id)->first();
+            Mail::send('sched', ['prepitem' => $prepitem, 'sched'=>$request->datesched,'reqno' => $request->reqno,'branch' =>$branch],function( $message) use ($branch){ //email body
+                $message->to($branch->email, $branch->head)->subject //email and receivers name
+                    (auth()->user()->branch->branch); //subject
+                $message->from('ideaservmailer@gmail.com', 'NO REPLY - Warehouse'); //email and senders name
+                $message->cc(['emorej046@gmail.com', 'gerard.mallari@gmail.com']); //others receivers email
+            });
+
             $data = $reqno->save();
         }else{
             $reqbranch= StockRequest::where('request_no', $request->reqno)->where('branch_id', $request->branchid)->first();
@@ -275,6 +306,8 @@ class StockRequestController extends Controller
             $prep->serial = $request->serial;
             $prep->branch_id = $reqbranch->branch_id;
             $prep->save();
+
+            
             $log = new UserLog;
             $log->activity = "Schedule $scheditem->item on $request->datesched with Request no. $request->reqno ";
             $log->user_id = auth()->user()->id;

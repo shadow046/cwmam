@@ -10,6 +10,8 @@ use App\Item;
 use App\Branch;
 use App\Stock;
 use App\UserLog;
+use App\User;
+use Mail;
 class LoanController extends Controller
 {
 
@@ -97,6 +99,24 @@ class LoanController extends Controller
         $add->serial = $stock->serial;
         $add->status = $request->id;
         $add->id_branch = auth()->user()->branch->id;
+
+        $branch = Branch::where('id', $request->branch)->first();
+        $emails = User::select('email')
+            ->where('branch_id', $request->branch)
+            ->get();
+        $allemails = array();
+        $allemails[] = 'jerome.lopez.ge2018@gmail.com';
+        $allemails[] = 'glennroldanabad@yahoo.com';
+        foreach ($emails as $email) {
+            $allemails[]=$email->email;
+        }
+        $allemails = array_diff($allemails, array($branch->email));
+        Mail::send('approved', ['reqitem'=>$item->item, 'serial'=>$stock->serial, 'branch'=>$branch],function( $message) use ($allemails, $branch){ //email body
+            $message->to($branch->email, $branch->head)->subject //email and receivers name
+                (auth()->user()->branch->branch); //subject
+            $message->from('ideaservmailer@gmail.com', 'NO REPLY - '.auth()->user()->branch->branch); //email and senders name
+            $message->cc($allemails); //others receivers email
+        });
         $data = $add->save();
 
         return response()->json($data);

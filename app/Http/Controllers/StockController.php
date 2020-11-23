@@ -13,6 +13,8 @@ use App\Customer;
 use App\Pullout;
 use App\Loan;
 use App\Branch;
+use App\User;
+use Mail;
 use App\Defective;
 use App\UserLog;
 use DB;
@@ -351,6 +353,23 @@ class StockController extends Controller
         $loan->to_branch_id = $request->branchid;
         $loan->items_id = $request->itemid;
         $loan->status = 'pending';
+        $emails = User::select('email')
+            ->where('branch_id', $request->branchid)
+            ->get();
+        $allemails = array();
+        $allemails[] = 'jerome.lopez.ge2018@gmail.com';
+        $allemails[] = 'glennroldanabad@yahoo.com';
+        foreach ($emails as $email) {
+            $allemails[]=$email->email;
+        }
+        $allemails = array_diff($allemails, array($branch->email));
+
+        Mail::send('loan', ['reqitem'=>$item->item, 'branch'=>$branch],function( $message) use ($allemails, $branch){ //email body
+            $message->to($branch->email, $branch->head)->subject //email and receivers name
+                (auth()->user()->branch->branch); //subject
+            $message->from('ideaservmailer@gmail.com', 'NO REPLY - '.auth()->user()->branch->branch); //email and senders name
+            $message->cc($allemails); //others receivers email
+        });
         $log = new UserLog;
         $log->activity = "Request $item->item to $branch->branch." ;
         $log->user_id = auth()->user()->id;
