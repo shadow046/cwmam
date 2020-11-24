@@ -110,10 +110,10 @@
             },
             success: function(){
                 table.draw();
-                interval = setInterval(function(){
-                    table.draw();
-                }, 30000);
                 $("#requestModal .close").click();
+            },
+            error: function (data,error, errorThrown) {
+                alert(data.responseText);
             }
         });
     });
@@ -267,8 +267,13 @@
                             reqno : reqno,  
                             stat: stat                     
                         },
+                        success: function(){
+                            window.location.href = 'request';
+                        },
+                        error: function (data,error, errorThrown) {
+                            alert(data.responseText);
+                        }
                     });
-                    window.location.href = 'request';
                 }
             }
     });

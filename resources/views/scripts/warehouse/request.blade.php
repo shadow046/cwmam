@@ -39,12 +39,7 @@
             ]
         });
 
-        interval = setInterval(function(){
-            table.draw();
-        }, 30000);
-
         $('#requestTable tbody').on('click', 'tr', function () { 
-            clearInterval(interval);
             var trdata = table.row(this).data();
             var dtdata = $('#requestTable tbody tr:eq(0)').data();
             if (trdata.status == 'SCHEDULED') {

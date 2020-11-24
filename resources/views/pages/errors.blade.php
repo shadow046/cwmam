@@ -5,11 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Server Error</title>
-
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
         <!-- Styles -->
         <style>
             html, body {
@@ -53,13 +51,14 @@
                 <div class="code">
                     <p>The system currently works only on Google Chrome. Download it <a href="https://support.google.com/chrome/answer/95346">here</a>. </p>
                     <p>We will keep you posted once it works on other browsers. Thank you.</p>
-                    <a href="https://support.google.com/chrome/answer/95346"><img src="{{asset('chrome.png')}}" height="100"></a>
+                    <a href="https://support.google.com/chrome/answer/95346"><img src="{{asset('idsi.png')}}" height="100"></a>
                 </div>
             @endif
             @if(!(new \Jenssegers\Agent\Agent())->isDesktop())
                 <div class="code">
-                    <p>({{(new \Jenssegers\Agent\Agent())->device()}}) browser not supported.</p>
+                    <p>({{(new \Jenssegers\Agent\Agent())->isAndroidOS() ? 'Android':(new \Jenssegers\Agent\Agent())->device()}}) browser is not supported.</p>
                     <p>Please use your computer to access this page.</p>
+                    <img src="{{asset('idsi.png')}}" height="100">
                 </div>
             @endif
         </div>

@@ -13,6 +13,7 @@ use App\Category;
 use App\Item;
 use App\Stock;
 use App\Branch;
+use App\User;
 use App\UserLog;
 use Mail;
 use Auth;
@@ -208,20 +209,32 @@ class StockRequestController extends Controller
             $log->activity = "Create Stock Request no. $request->reqno";
             $log->user_id = auth()->user()->id;
             $log->save();
-            
+            $reqno->save();
             $reqitem = RequestedItem::select('items.item', 'quantity')
                 ->where('request_no', $request->reqno)
                 ->join('items', 'items.id', '=', 'requested_items.items_id')
                 ->get();
             
-            Mail::send('mail', ['reqitem' => $reqitem, 'reqno' => $request->reqno, 'branch'=>auth()->user()->branch->branch],function( $message) { //email body
+            $cc = User::select('email')
+                ->where('branch_id', '1')
+                ->join('model_has_roles', 'model_id', '=', 'users.id')
+                ->where('role_id', '6')
+                ->get();
+            $allemails = array();
+            $allemails[] = 'jerome.lopez.ge2018@gmail.com';
+            $allemails[] = 'glennroldanabad@yahoo.com';
+            foreach ($cc as $email) {
+                $allemails[]=$email->email;
+            }
+
+            Mail::send('mail', ['reqitem' => $reqitem, 'reqno' => $request->reqno, 'branch'=>auth()->user()->branch->branch],function( $message) use ($allemails){ //email body
                 $message->to('gerard.mallari@gmail.com', 'Gerald Mallari')->subject //email and receivers name
                     (auth()->user()->branch->branch); //subject
-                $message->from(auth()->user()->email, 'NO REPLY'); //email and senders name
-                $message->cc(['jerome.lopez.ge2018@gmail.com', 'emorej046@gmail.com']); //others receivers email
+                $message->from('ideaservmailer@gmail.com', 'NO REPLY'); //email and senders name
+                $message->cc($allemails); //others receivers email
             });
 
-            $data = $reqno->save();
+            $data = "true";
 
         }
 
@@ -245,7 +258,6 @@ class StockRequestController extends Controller
             ->where('request_no', $request->reqno)
             ->get();
         foreach ($preparedItems as $preparedItem) {
-            
             $items = Item::where('id', $preparedItem->itemid)->first();
             //dd($items);
             $stock = new Stock;
@@ -268,7 +280,7 @@ class StockRequestController extends Controller
             //dd($reqno);
             $reqno->status = $request->status;
             $reqno->schedule = $request->datesched;
-
+            $reqno->save();
             $prepitem = PreparedItem::select('items.item', 'serial', 'branch_id')
                 ->where('request_no', $request->reqno)
                 ->join('items', 'items.id', '=', 'prepared_items.items_id')
@@ -285,7 +297,7 @@ class StockRequestController extends Controller
                 $message->cc(['emorej046@gmail.com', 'gerard.mallari@gmail.com']); //others receivers email
             });
 
-            $data = $reqno->save();
+            $data = "true";
         }else{
             $reqbranch= StockRequest::where('request_no', $request->reqno)->where('branch_id', $request->branchid)->first();
             $item = Warehouse::where('status', 'in')
@@ -320,7 +332,7 @@ class StockRequestController extends Controller
 
     public function dest(Request $request)
     {
-        $delete = StockRequest::where('request_no', $request->reqno)->first();
+        $delete = StockRequest::where('request_no', $request->reqno)->where('status', '0')->first();
         $delete->status = 3;
         $log = new UserLog;
         $log->activity = "Delete request no. $request->reqno" ;

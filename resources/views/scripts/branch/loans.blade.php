@@ -30,14 +30,11 @@
             ]
         });
 
-        interval = setInterval(function(){
-            table.draw();
-        }, 30000);
+        
 
     });
 
     $(document).on("click", "#loanTable tr", function () {
-        clearInterval(interval);
         var trdata = table.row(this).data();
         var id = trdata.id;
         var branch = trdata.branchid;
@@ -150,9 +147,6 @@
                 },
                 success:function(data)
                 {
-                    interval = setInterval(function(){
-                        table.draw();
-                    }, 30000);
                     table.draw();
                     $("#loansModal .close").click();
 
@@ -200,9 +194,6 @@
                 },
                 success:function(data)
                 {
-                    interval = setInterval(function(){
-                        table.draw();
-                    }, 30000);
                     table.draw();
                     $("#loansModal .close").click();
                 },
@@ -231,9 +222,7 @@
             },
             success:function(data)
             {
-                interval = setInterval(function(){
-                    table.draw();
-                }, 30000);
+                
                 table.draw();
                 $("#loansModal .close").click();
             },
@@ -347,7 +336,6 @@
     });
 
     $(document).on('click', '#loan_Btn', function(){
-        clearInterval(interval);
         $('#loanModal').modal({backdrop: 'static', keyboard: false});
     });
 

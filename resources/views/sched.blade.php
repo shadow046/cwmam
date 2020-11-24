@@ -1,5 +1,5 @@
 <div>
-    <p>&nbsp;</p>
+    <p style="color:blue;"><b>This is a system-generated email. Please do not reply.</b></p>
     <table>
         <tbody>
             <tr style="height:14pt">
