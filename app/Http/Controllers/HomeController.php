@@ -71,6 +71,7 @@ class HomeController extends Controller
 
     public function print($id)
     {
+        sleep(2);
         $request = StockRequest::where('request_no', $id)->first();
         //dd($request);
         $title = 'Print Preview';
