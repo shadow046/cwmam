@@ -9,6 +9,7 @@ use App\Area;
 use App\Stock;
 use App\Initial;
 use App\Item;
+use App\Warehouse;
 use Auth;
 use DB;
 use Validator;
@@ -79,26 +80,38 @@ class BranchController extends Controller
             })
 
             ->addColumn('stock_out', function (Item $item){
-                $stock_out = Stock::where('status', 'service unit')
-                    ->where('branch_id', $item->branch_id)
-                    ->where('items_id', $item->items_id)
-                    ->count();
+                
+                if (auth()->user()->branch->id == 1 && $item->branch_id == 1) {
+                    $stock_out = 0;
+                }else{
+                    $stock_out = Stock::where('status', 'service unit')
+                        ->where('branch_id', $item->branch_id)
+                        ->where('items_id', $item->items_id)
+                        ->count();
+                }
                 return $stock_out;
             })
 
             ->addColumn('available', function (Item $item){
-                $avail = Stock::select('status')
+                
+                if (auth()->user()->branch->id == 1 && $item->branch_id == 1) {
+                    $avail = Warehouse::select('status')
+                    ->where('status', 'in')
+                    ->where('items_id', $item->items_id)
+                    ->count();
+                }else{
+                    $avail = Stock::select('status')
                     ->where('status', 'in')
                     ->where('branch_id', $item->branch_id)
                     ->where('items_id', $item->items_id)
                     ->count();
+                }
+                
                 return $avail;
             })
 
         ->make(true);
-        
     }
-
     public function getBranches()
     {
         if (auth()->user()->hasrole('Administrator')) {
@@ -107,7 +120,7 @@ class BranchController extends Controller
                 ->join('areas', 'areas.id', '=', 'branches.area_id')
                 ->get();
         }else if (auth()->user()->hasrole('Viewer')){
-            $branches = Branch::select('*', 'areas.area')
+            $branches = Branch::select('branches.*', 'areas.area')
                 ->join('areas', 'areas.id', '=', 'branches.area_id')
                 ->get();
         }else if (!auth()->user()->hasanyrole('Viewer', 'Administrator')){

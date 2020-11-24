@@ -49,7 +49,7 @@
             @endif
         </ul>
         <ul class="nav">
-            @hasanyrole('Administrator|Head')
+            @hasanyrole('Administrator|Head|Viewer')
             <li class="nav-item mr-1">
                 <a class="nav-link {{ Request::is('user') ? 'active' : '' }}" href="{{ url('user') }}">Users</a>
             </li>

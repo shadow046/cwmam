@@ -29,7 +29,7 @@ class UserController extends Controller
         $areas = Area::all();
         $roles = Role::all();
         $title = 'Users';
-        if (!auth()->user()->hasanyrole('Administrator|Head')) {
+        if (!auth()->user()->hasanyrole('Administrator|Head|Viewer')) {
             return redirect('/');
         }
         if (auth()->user()->hasrole('Head')) {
@@ -40,12 +40,18 @@ class UserController extends Controller
 
     public function getUsers()
     {
-        if (!auth()->user()->hasrole('Administrator')) {
+        if (auth()->user()->hasrole('Administrator')) {
+            $users = User::where('id', '!=', auth()->user()->id)->get();
+        }else if(auth()->user()->hasrole('Viewer')){
+            $users = User::select('users.*')
+                ->where('id', '!=', auth()->user()->id)
+                ->join('model_has_roles', 'model_id', '=', 'users.id')
+                ->where('role_id', '!=', '1')
+                ->get();
+        }else{
             $users = User::where('id', '!=', auth()->user()->id)
                 ->where('branch_id', auth()->user()->branch->id)
                 ->get();
-        }else{
-            $users = User::where('id', '!=', auth()->user()->id)->get();
         }
         //dd($user);
         return DataTables::of($users)
