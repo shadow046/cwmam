@@ -96,15 +96,15 @@ class BranchController extends Controller
                 
                 if (auth()->user()->branch->id == 1 && $item->branch_id == 1) {
                     $avail = Warehouse::select('status')
-                    ->where('status', 'in')
-                    ->where('items_id', $item->items_id)
-                    ->count();
+                        ->where('status', 'in')
+                        ->where('items_id', $item->items_id)
+                        ->count();
                 }else{
                     $avail = Stock::select('status')
-                    ->where('status', 'in')
-                    ->where('branch_id', $item->branch_id)
-                    ->where('items_id', $item->items_id)
-                    ->count();
+                        ->where('status', 'in')
+                        ->where('branch_id', $item->branch_id)
+                        ->where('items_id', $item->items_id)
+                        ->count();
                 }
                 
                 return $avail;

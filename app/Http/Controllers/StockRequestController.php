@@ -222,7 +222,7 @@ class StockRequestController extends Controller
                 ->get();
             $allemails = array();
             $allemails[] = 'jerome.lopez.ge2018@gmail.com';
-            $allemails[] = 'glennroldanabad@yahoo.com';
+            $allemails[] = 'mlherradura@ideaserv.com.ph';
             foreach ($cc as $email) {
                 $allemails[]=$email->email;
             }
@@ -294,7 +294,7 @@ class StockRequestController extends Controller
                 $message->to($branch->email, $branch->head)->subject //email and receivers name
                     (auth()->user()->branch->branch); //subject
                 $message->from('ideaservmailer@gmail.com', 'NO REPLY - Warehouse'); //email and senders name
-                $message->cc(['emorej046@gmail.com', 'gerard.mallari@gmail.com']); //others receivers email
+                $message->cc(['emorej046@gmail.com', 'gerard.mallari@gmail.com', 'mlherradura@ideaserv.com.ph']); //others receivers email
             });
 
             $data = "true";
@@ -306,12 +306,12 @@ class StockRequestController extends Controller
             $item->status = 'sent';
             $item->request_no = $request->reqno;
             $item->branch_id = $reqbranch->branch_id;
-            $item->schedule = $request->datesched;;
+            $item->schedule = $request->datesched;
             $item->user_id = auth()->user()->id;
             $item->save();
 
             $scheditem = Item::where('id', $request->item)->first();
-
+            $sched = StockRequest::where('request_no', $request->reqno)->first();
             $prep = new PreparedItem;
             $prep->items_id = $request->item;
             $prep->request_no = $request->reqno;
@@ -321,9 +321,8 @@ class StockRequestController extends Controller
 
             
             $log = new UserLog;
-            $log->activity = "Schedule $scheditem->item on $request->datesched with Request no. $request->reqno ";
+            $log->activity = "Schedule $scheditem->item on $sched->schedule with Request no. $request->reqno ";
             $log->user_id = auth()->user()->id;
-            $log->save();
             $data = $log->save();
             
         }
