@@ -13,6 +13,7 @@ var r = 1;
         var table =
         $('table.requestTable').DataTable({ 
             "dom": 'lrtip',
+            "pageLength": 50,
             "language": {
                 "emptyTable": " "
             },
