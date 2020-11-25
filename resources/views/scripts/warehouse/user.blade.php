@@ -79,7 +79,6 @@
             $('#role').val(trdata.role);
             $('#status').val(dtdata.dataStatus);
             $('#subBtn').val('Update');
-
         });
         
         $('#addBtn').on('click', function(e){ //show user/branch modal
