@@ -3,7 +3,6 @@ var r = 1;
     var interval = null;
     $(document).ready(function()
     {
-        
         var d = new Date();
         var hour = String(d.getHours()).padStart(2, '0') % 12 || 12
         var ampm = (String(d.getHours()).padStart(2, '0') < 12 || String(d.getHours()).padStart(2, '0') === 24) ? "AM" : "PM";
