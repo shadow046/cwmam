@@ -9,8 +9,8 @@ var table;
             processing: true,
             serverSide: true,
             "language": {
-                    "emptyTable": " "
-                },
+                "emptyTable": "No item/s for return"
+            },
             ajax: {
                 url: 'return-table',
                 error: function(data, error, errorThrown) {
