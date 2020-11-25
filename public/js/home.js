@@ -1,2 +1,53 @@
-$(document).ready(function(){var b=$("table.activityTable").DataTable({dom:"lrtip",language:{emptyTable:" "},order:[[0,"desc"],[1,"desc"]],processing:!0,serverSide:!0,ajax:{url:"activity",error:function(a,c,d){401==a.status&&(window.location.href="/login")}},columns:[{data:"date",name:"date"},{data:"username",name:"username"},{data:"fullname",name:"fullname"},{data:"activity",name:"activity"}]});setInterval(function(){b.draw()},3E4);$("#search-ic").on("click",
-function(a){for(a=2;5>=a;a++)$(".fl-"+a).val("").change(),b.columns(a).search("").draw();$(".tbsearch").toggle()});$(".filter-input").keyup(function(){b.column($(this).data("column")).search($(this).val()).draw()})});
+$(document).ready(function()
+    {
+        var interval = null;
+        var table =
+        $('table.activityTable').DataTable({ //user datatables
+            "dom": 'lrtip',
+            "language": {
+                    "emptyTable": " "
+                },
+            "order": [[ 0, 'desc' ], [ 1, 'desc' ]],
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: 'activity',
+                error: function(data, error, errorThrown) {
+                    if(data.status == 401) {
+                        // session timed out | not authenticated
+                        window.location.href = '/login';
+                    }
+                }
+            },
+            columns: [
+                { data: 'date', name:'date'},
+                { data: 'username', name:'username'},
+                { data: 'fullname', name:'fullname'},
+                { data: 'activity', name:'activity',}
+            ]
+        });
+
+        interval = setInterval(function(){
+            table.draw();
+        }, 30000);
+
+         //hide search
+
+        $('#search-ic').on("click", function (event) { //clear search box on hide
+            for ( var i=2 ; i<=5 ; i++ ) {
+                
+                $('.fl-'+i).val('').change();
+                table
+                .columns(i).search( '' )
+                .draw();
+            }
+            $('.tbsearch').toggle();
+            
+        });
+
+        $('.filter-input').keyup(function() { //search columns
+            table.column( $(this).data('column'))
+                .search( $(this).val())
+                .draw();
+        });
+    });

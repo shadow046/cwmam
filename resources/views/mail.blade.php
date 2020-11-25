@@ -17,7 +17,7 @@
             </tr>
             <tr style="height:14pt">
                 <td width="165" style="width:143;border-top:none;border:solid #d9d9d9 1.0pt;background:white;">
-                    <p>Requested Items</p>
+                    <p>Requested item/s</p>
                 </td>
                 <td width="542" style="width:546pt;border-top:none;border:solid #d9d9d9 1.0pt;background:white;">
                     <p>

@@ -16,12 +16,12 @@
         "spatie/laravel-activitylog": "^3.14",
         "spatie/laravel-permission": "^3.16",
         "yajra/laravel-datatables-html": "^4.30",
-        "yajra/laravel-datatables-oracle": "~9.0"
+        "yajra/laravel-datatables-oracle": "~9.0",
+        "mrclay/minify": "~3.0.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
         "filp/whoops": "^2.0",
-        "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^3.0",
         "phpunit/phpunit": "^7.5"

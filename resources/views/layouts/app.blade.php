@@ -111,92 +111,89 @@
             <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
             
             @if(Request::is('user'))
-                <script src="{{asset('js/warehouse/user.js')}}"></script>
+                <script src="{{asset('min/?f=js/warehouse/user.js')}}"></script>
             @endif
 
             @if(Request::is('branch'))
                 @if(auth()->user()->hasAnyrole('Administrator', 'Encoder'))
-                    <script src="{{asset('js/warehouse/branch.js')}}"></script>
+                    <script src="{{asset('min/?f=js/warehouse/branch.js')}}"></script>
                 @endif
                 @if (!auth()->user()->hasAnyrole('Administrator', 'Encoder', 'Viewer'))
-                    <script src="{{asset('js/branch/branch.js')}}"></script>
+                    <script src="{{asset('min/?f=js/branch/branch.js')}}"></script>
                 @endif
                 @if (auth()->user()->hasrole('Viewer'))
-                    @include('scripts.branch')
-                    <!--script src="{{asset('js/branch.js')}}"></script-->
+                    <script src="{{asset('min/?f=js/branch.js')}}"></script>
                 @endif
             @endif
 
             @if(Request::is('request'))
                 @if(auth()->user()->hasAnyrole('Administrator', 'Encoder'))
-                    <script src="{{asset('js/warehouse/request.js')}}"></script>
+                    <script src="{{asset('min/?f=js/warehouse/request.js')}}"></script>
                 @endif
                 @if(auth()->user()->hasrole('Viewer'))
-                    @include('scripts.request')
+                    <script src="{{asset('min/?f=js/request.js')}}"></script>
                 @endif
                 @if(!auth()->user()->hasAnyrole('Administrator', 'Encoder', 'Viewer'))
-                    <script src="{{asset('js/branch/request.js')}}"></script>
+                    <script src="{{asset('min/?f=js/branch/request.js')}}"></script>
                 @endif
             @endif
 
             @if(Request::is('stocks'))
                 @if(auth()->user()->hasAnyrole('Administrator', 'Encoder'))
-                    <script src="{{asset('js/warehouse/stock.js')}}"></script>
+                    <script src="{{asset('min/?f=js/warehouse/stock.js')}}"></script>
                 @else
-                    <script src="{{asset('js/branch/stocks.js')}}"></script>
-                    <script src="{{asset('js/branch/service-in.js')}}"></script>
-                    <script src="{{asset('js/branch/service-out.js')}}"></script>
+                    <script src="{{asset('min/?f=js/branch/stocks.js')}}"></script>
+                    <script src="{{asset('min/?f=js/branch/service-in.js')}}"></script>
+                    <script src="{{asset('min/?f=js/branch/service-out.js')}}"></script>
                 @endif
                 @if(auth()->user()->hasrole('Head'))
-                    <script src="{{asset('js/branch/addstock.js')}}"></script>
+                    <script src="{{asset('min/?f=js/branch/addstock.js')}}"></script>
                 @endif
 
             @endif
 
             @if(Request::is('service-unit'))
-                <script src="{{asset('js/branch/service-unit.js')}}"></script>
+                <script src="{{asset('min/?f=js/branch/service-unit.js')}}"></script>
             @endif
 
             @if(Request::is('print/*'))
-                <script src="{{asset('js/warehouse/print.js')}}"></script>
+                <script src="{{asset('min/?f=js/warehouse/print.js')}}"></script>
             @endif
 
             @if(Request::is('loans'))
-                <script src="{{asset('js/branch/loans.js')}}"></script>
+                <script src="{{asset('min/?f=js/branch/loans.js')}}"></script>
             @endif
 
             @if(Request::is('return'))
                 @if(auth()->user()->hasAnyrole('Administrator', 'Encoder'))
-                    <script src="{{asset('js/warehouse/defective.js')}}"></script>
+                    <script src="{{asset('min/?f=js/warehouse/defective.js')}}"></script>
                 @endif
                 @if(auth()->user()->hasrole('Viewer'))
-                    <script src="{{asset('js/defective.js')}}"></script>
+                    <script src="{{asset('min/?f=js/defective.js')}}"></script>
                 @endif
                 @if (!auth()->user()->hasAnyrole('Administrator', 'Encoder', 'Viewer'))
-                    <script src="{{asset('js/branch/defective.js')}}"></script>
+                    <script src="{{asset('min/?f=js/branch/defective.js')}}"></script>
                 @endif
             @endif
             
             @if(Request::is('customer'))
-                <script src="{{asset('js/customer.js')}}"></script>
-                <!--@include('scripts.customer')-->
+                <script src="{{asset('min/?f=js/customer.js')}}"></script>
             @endif
             @if(Request::is('customer/*'))
-                <!--@include('scripts.customerbranch')-->
-                <script src="{{asset('js/customerbranch.js')}}"></script>
+                <script src="{{asset('min/?f=js/customerbranch.js')}}"></script>
             @endif
 
             @if(Request::is('/') && !auth()->user()->hasrole('Repair'))
-                <script src="{{asset('js/home.js')}}"></script>
+                <script src="{{asset('min/?f=js/home.js')}}"></script>
             @endif
             @if (Request::is('/') && auth()->user()->hasrole('Repair'))
-                <script src="{{asset('js/warehouse/defective.js')}}"></script>
+                <script src="{{asset('min/?f=js/warehouse/defective.js')}}"></script>
             @endif
             @if(Request::is('log') && auth()->user()->hasrole('Repair'))
-                <script src="{{asset('js/home.js')}}"></script>
+                <script src="{{asset('min/?f=js/home.js')}}"></script>
             @endif
             @if(Request::is('unrepair') && auth()->user()->hasrole('Repair'))
-                <script src="{{asset('js/unrepair.js')}}"></script>
+                <script src="{{asset('min/?f=js/unrepair.js')}}"></script>
             @endif
 
         </body>

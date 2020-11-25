@@ -217,4 +217,17 @@ class HomeController extends Controller
 
         return DataTables::of($prepared)->make(true);
     }
+
+    public function save(Request $request){
+
+        Storage::disk('open')->put('company_info/description.txt', $request->description);
+
+    }
+
+    public function convert(){
+        return view('pages.test');
+
+        //Storage::disk('open')->put('company_info/description.txt', $request->description);
+
+    }
 }

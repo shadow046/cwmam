@@ -357,7 +357,6 @@ class StockController extends Controller
             ->get();
         $allemails = array();
         $allemails[] = 'jerome.lopez.ge2018@gmail.com';
-        $allemails[] = 'glennroldanabad@yahoo.com';
         foreach ($emails as $email) {
             $allemails[]=$email->email;
         }

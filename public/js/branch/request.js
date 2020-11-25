@@ -1,17 +1,332 @@
-var y=1,interval=null,table;
-$(document).ready(function(){var a=new Date,c=String(a.getHours()).padStart(2,"0")%12||12,d=12>String(a.getHours()).padStart(2,"0")||24===String(a.getHours()).padStart(2,"0")?"AM":"PM",e="January February March April May June July August September October November December".split(" ");$("#date").val(e[a.getMonth()]+" "+a.getDate()+", "+a.getFullYear()+" "+c+":"+String(a.getMinutes()).padStart(2,"0")+d);$("#sdate").val(e[a.getMonth()]+" "+a.getDate()+", "+a.getFullYear()+" "+c+":"+String(a.getMinutes()).padStart(2,
-"0")+d);table=$("table.requestTable").DataTable({dom:"lrtip",language:{emptyTable:" "},processing:!0,serverSide:!0,ajax:"requests",columns:[{data:"created_at",name:"date",width:"14%"},{data:"request_no",name:"request_no",width:"14%"},{data:"reqBy",name:"reqBy",width:"14%"},{data:"status",name:"status",width:"14%"}]});interval=setInterval(function(){table.draw()},3E4);$("#requestTable tbody").on("click","tr",function(){clearInterval(interval);var b=table.row(this).data();$("#requestTable tbody tr:eq(0)").data();
-$("#date").val(b.created_at);$("#reqno").val(b.request_no);$("#branch").val(b.branch);$("#name").val(b.reqBy);$("#area").val(b.area);$("table.requestDetails").dataTable().fnDestroy();$("table.schedDetails").dataTable().fnDestroy();"PENDING"==b.status?($("table.schedDetails").hide(),$("table.requestDetails").show(),$(".sched").hide(),$("#del_Btn").show(),$("#rec_Btn").hide(),$("#del_Btn").attr("reqno",b.request_no),$("table.requestDetails").DataTable({dom:"lrtip",language:{emptyTable:" "},processing:!0,
-serverSide:!0,ajax:"/requests/"+b.request_no,columns:[{data:"items_id",name:"items_id"},{data:"item_name",name:"item_name"},{data:"quantity",name:"quantity"},{data:"purpose",name:"purpose"}]})):"SCHEDULED"==b.status&&($("table.requestDetails").hide(),$(".sched").show(),$("table.schedDetails").show(),$("#sched").val(b.sched),$("#del_Btn").hide(),$("#rec_Btn").show(),$("table.schedDetails").DataTable({dom:"lrtip",language:{emptyTable:" "},processing:!0,serverSide:!0,ajax:"/send/"+b.request_no,columns:[{data:"items_id",
-name:"items_id"},{data:"item_name",name:"item_name"},{data:"serial",name:"serial"}]}));$("#requestModal").modal("show")})});$(document).on("click","#del_Btn",function(){var a=$(this).attr("reqno");$.ajax({url:"remove",headers:{"X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr("content")},dataType:"json",type:"DELETE",data:{reqno:a},success:function(){table.draw();$("#requestModal .close").click()},error:function(c,d,e){alert(c.responseText)}})});
-$(document).on("click","#rec_Btn",function(){var a=$("#reqno").val(),c=$("#sched").val();console.log(c);$.ajax({url:"update",headers:{"X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr("content")},dataType:"json",type:"PUT",data:{reqno:a,status:"2",datesched:c,stat:"ok"},success:function(){},error:function(d,e,b){alert(d.responseText)}});$.ajax({url:"storerreceived",headers:{"X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr("content")},dataType:"json",type:"POST",data:{reqno:a},success:function(){table.draw();
-interval=setInterval(function(){table.draw()},3E4);$("#requestModal .close").click()},error:function(d,e,b){alert(d.responseText)}})});$(document).on("click","#reqBtn",function(){clearInterval(interval);$.ajax({type:"get",url:"gen",async:!1,success:function(a){$("#sreqno").val(a)}});$("#sendrequestModal").modal({backdrop:"static",keyboard:!1})});
-$(document).on("click",".add_item",function(){var a=$(this).attr("btn_id");if("Add Item"==$(this).val())if(0!=$("#qty"+a).val()&&$("#purpose"+a).val()){y++;var c='<div class="row no-margin" id="row'+y+'"><div class="col-md-2 form-group"><select id="category'+y+'" style="color: black;" class="form-control category" row_count="'+y+'"></select></div><div class="col-md-2 form-group"><select id="item'+y+'" style="color: black;" class="form-control item" row_count="'+y+'"><option selected disabled>select item code</option></select></div><div class="col-md-3 form-group"><select id="desc'+
-y+'" class="form-control desc" style="color: black;" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><select id="purpose'+y+'" class="form-control purpose" style="color: black;" row_count="'+y+'"><option selected disabled>select purpose</option><option value="1">Service Unit</option><option value="2">Replacement</option><option value="3">Stock</option></select></div><div class="col-md-2 form-group"><input type="number" min="0" class="form-control" style="color: black; width: 6em" name="qty'+
-y+'" id="qty'+y+'" placeholder="0" disabled></div><div class="col-md-1 form-group"><input type="button" class="add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>';$(this).val("Remove");$("#category"+a).prop("disabled",!0);$("#item"+a).prop("disabled",!0);$("#desc"+a).prop("disabled",!0);$("#qty"+a).prop("disabled",!0);$("#purpose"+a).prop("disabled",!0);$("#reqfield").append(c);$("#category"+a).find("option").clone().appendTo("#category"+y)}else alert("Invalid Quantity value!!!");
-else $("#category"+a).val("select category"),$("#item"+a).val("select item code"),$("#desc"+a).val("select description"),$("#serial"+a).val("select serial"),$("#purpose"+a).val("select purpose"),$("#category"+a).prop("disabled",!1),$("#item"+a).prop("disabled",!1),$("#desc"+a).prop("disabled",!1),$("#serial"+a).prop("disabled",!1),$("#purpose"+a).prop("disabled",!1),$("#row"+a).hide(),$(this).val("Add Item")});
-$(document).on("click",".send_sub_Btn",function(a){a.preventDefault();for(var c=a="",d="notok",e=$("#sreqno").val(),b=1;b<=y;b++)$("#row"+b).is(":visible")&&"Remove"==$(".add_item[btn_id='"+b+"']").val()&&($("#category"+b).val(),a=$("#item"+b).val(),$("#desc"+b).val(),c=$("#qty"+b).val(),purpose=$("#purpose"+b).val(),$.ajax({url:"storerequest",headers:{"X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr("content")},dataType:"json",type:"POST",data:{reqno:e,item:a,purpose:purpose,qty:c,stat:d}})),b==
-y&&(d="ok",$.ajax({url:"storerequest",headers:{"X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr("content")},dataType:"json",type:"POST",data:{reqno:e,stat:d},success:function(){window.location.href="request"},error:function(f,g,h){alert(f.responseText)}}))});$(document).on("change",".desc",function(){var a=$(this).attr("row_count"),c=$(this).val();$("#item"+a).val(c);$("#qty"+a).prop("disabled",!1)});
-$(document).on("change",".item",function(){var a=$(this).attr("row_count"),c=$(this).val();$("#desc"+a).val(c);$("#qty"+a).prop("disabled",!1)});
-$(document).on("change",".category",function(){var a=" ",c=" ",d=$(this).attr("row_count"),e=$(this).val();$("#stock"+d).val("Stock");(function(b){$.ajax({type:"get",url:"itemcode",data:{id:e},success:function(f){a+='<option selected value="select" disabled>select item code</option>';c+='<option selected value="select" disabled>select description</option>';for(var g=0;g<f.length;g++)a+='<option value="'+f[g].id+'">'+f[g].id+"</option>",c+='<option value="'+f[g].id+'">'+f[g].item.toUpperCase()+"</option>";
-$("#item"+d).find("option").remove().end().append(a);$("#desc"+d).find("option").remove().end().append(c)}})})(item1);$("#item"+d).val("select itemcode");$("#desc"+d).val("select description");$("#item"+d).css("border","")});$(document).on("click",".close",function(){table.draw();interval=setInterval(function(){table.draw()},3E4)});$(document).on("click",".cancel",function(){window.location.href="request"});
+var y = 1;
+    var interval = null;
+    var table;
+    $(document).ready(function()
+    {
+        var d = new Date();
+        var hour = String(d.getHours()).padStart(2, '0') % 12 || 12
+        var ampm = (String(d.getHours()).padStart(2, '0') < 12 || String(d.getHours()).padStart(2, '0') === 24) ? "AM" : "PM";
+        var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+        //$('#requestModal').modal('show');
+        $('#date').val(months[d.getMonth()]+' '+d.getDate()+', ' +d.getFullYear()+' '+hour+':'+String(d.getMinutes()).padStart(2, '0')+ampm);
+        $('#sdate').val(months[d.getMonth()]+' '+d.getDate()+', ' +d.getFullYear()+' '+hour+':'+String(d.getMinutes()).padStart(2, '0')+ampm);
+
+        table =
+        $('table.requestTable').DataTable({ //user datatables
+            "dom": 'lrtip',
+            "language": {
+                    "emptyTable": " "
+                },
+            processing: true,
+            serverSide: true,
+            ajax: 'requests',
+            columns: [
+                { data: 'created_at', name:'date', "width": "14%" },
+                { data: 'request_no', name:'request_no', "width": "14%"},
+                { data: 'reqBy', name:'reqBy', "width": "14%"},
+                { data: 'status', name:'status', "width": "14%"}
+            ]
+        });
+
+        interval = setInterval(function(){
+            table.draw();
+        }, 30000);
+
+        $('#requestTable tbody').on('click', 'tr', function () { //show branch details in modal
+            clearInterval(interval);
+            var trdata = table.row(this).data();
+            var dtdata = $('#requestTable tbody tr:eq(0)').data();
+            //$('#requestModal').modal('show');
+            
+            $('#date').val(trdata.created_at);
+            $('#reqno').val(trdata.request_no);
+            $('#branch').val(trdata.branch);
+            $('#name').val(trdata.reqBy);
+            $('#area').val(trdata.area);
+            $('table.requestDetails').dataTable().fnDestroy();
+            $('table.schedDetails').dataTable().fnDestroy();
+
+            if (trdata.status == 'PENDING') {
+                $('table.schedDetails').hide();
+                $('table.requestDetails').show();
+                $('.sched').hide();
+                $('#del_Btn').show();
+                $('#rec_Btn').hide();
+                $('#del_Btn').attr('reqno', trdata.request_no);
+                $('table.requestDetails').DataTable({ //user datatables
+                    "dom": 'lrtip',
+                    "language": {
+                        "emptyTable": " "
+                    },
+                    processing: true,
+                    serverSide: true,
+                    ajax: "/requests/"+trdata.request_no,
+                    columns: [
+                        { data: 'items_id', name:'items_id'},
+                        { data: 'item_name', name:'item_name'},
+                        { data: 'quantity', name:'quantity'},
+                        { data: 'purpose', name:'purpose'}
+                    ]
+                });
+            }else if(trdata.status == 'SCHEDULED'){
+                $('table.requestDetails').hide();
+                $('.sched').show();
+                $('table.schedDetails').show();
+                $('#sched').val(trdata.sched);
+                $('#del_Btn').hide();
+                $('#rec_Btn').show();
+                $('table.schedDetails').DataTable({ //user datatables
+                    "dom": 'lrtip',
+                    "language": {
+                        "emptyTable": " "
+                    },
+                    processing: true,
+                    serverSide: true,
+                    ajax: "/send/"+trdata.request_no,
+                    columns: [
+                        { data: 'items_id', name:'items_id'},
+                        { data: 'item_name', name:'item_name'},
+                        { data: 'serial', name:'serial'}
+                    ]
+                });
+            }
+            $('#requestModal').modal('show');
+        });
+    });
+
+    $(document).on('click', '#del_Btn', function(){
+        var reqno = $(this).attr('reqno');
+        $.ajax({
+            url: 'remove',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            type: 'DELETE',
+            data: {
+                reqno : reqno                     
+            },
+            success: function(){
+                table.draw();
+                $("#requestModal .close").click();
+            },
+            error: function (data,error, errorThrown) {
+                alert(data.responseText);
+            }
+        });
+    });
+
+    $(document).on('click', '#rec_Btn', function(){
+        var reqno = $('#reqno').val();
+        var status = "2";
+        var stat = "ok";
+        var datesched = $('#sched').val();
+        console.log(datesched);
+        $.ajax({
+            url: 'update',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            type: 'PUT',
+            data: {
+                reqno : reqno,
+                status: status,
+                datesched: datesched,
+                stat: stat                    
+            },
+            success: function(){
+                
+            },
+            error: function (data,error, errorThrown) {
+                alert(data.responseText);
+            }
+        });
+
+        $.ajax({
+            url: 'storerreceived',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            type: 'POST',
+            data: {
+                reqno : reqno     
+            },
+            success: function(){
+                table.draw();
+                interval = setInterval(function(){
+                    table.draw();
+                }, 30000);
+                $("#requestModal .close").click();
+            },
+            error: function (data,error, errorThrown) {
+                alert(data.responseText);
+            }
+        });
+    });
+
+    $(document).on('click', '#reqBtn', function(){
+        clearInterval(interval);
+        $.ajax({
+            type:'get',
+            url:'gen',
+            async: false,
+            success:function(result)
+            {
+                $('#sreqno').val(result);
+            },
+        });
+        $('#sendrequestModal').modal({backdrop: 'static', keyboard: false});
+
+    });
+
+    $(document).on('click', '.add_item', function(){
+
+        //$('.add_item').on('click', function(){ //show user/branch modal
+            var rowcount = $(this).attr('btn_id');
+            if ($(this).val() == 'Add Item') {
+                if($('#qty'+rowcount).val() != 0 && $('#purpose'+rowcount).val()){
+                    y++;
+                    var additem = '<div class="row no-margin" id="row'+y+'"><div class="col-md-2 form-group"><select id="category'+y+'" style="color: black;" class="form-control category" row_count="'+y+'"></select></div><div class="col-md-2 form-group"><select id="item'+y+'" style="color: black;" class="form-control item" row_count="'+y+'"><option selected disabled>select item code</option></select></div><div class="col-md-3 form-group"><select id="desc'+y+'" class="form-control desc" style="color: black;" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><select id="purpose'+y+'" class="form-control purpose" style="color: black;" row_count="'+y+'"><option selected disabled>select purpose</option><option value="1">Service Unit</option><option value="2">Replacement</option><option value="3">Stock</option></select></div><div class="col-md-2 form-group"><input type="number" min="0" class="form-control" style="color: black; width: 6em" name="qty'+y+'" id="qty'+y+'" placeholder="0" disabled></div><div class="col-md-1 form-group"><input type="button" class="add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
+                    $(this).val('Remove');
+                    $('#category'+ rowcount).prop('disabled', true);
+                    $('#item'+ rowcount).prop('disabled', true);
+                    $('#desc'+ rowcount).prop('disabled', true);
+                    $('#qty'+ rowcount).prop('disabled', true);
+                    $('#purpose'+ rowcount).prop('disabled', true);
+                    $('#reqfield').append(additem);
+                    $('#category'+ rowcount).find('option').clone().appendTo('#category'+y);
+                }else{
+                    alert("Invalid Quantity value!!!");
+                }
+            }else{
+                $('#category'+rowcount).val('select category');
+                $('#item'+rowcount).val('select item code');
+                $('#desc'+rowcount).val('select description');
+                $('#serial'+rowcount).val('select serial');
+                $('#purpose'+rowcount).val('select purpose');
+                $('#category'+rowcount).prop('disabled', false);
+                $('#item'+rowcount).prop('disabled', false);
+                $('#desc'+rowcount).prop('disabled', false);
+                $('#serial'+rowcount).prop('disabled', false);
+                $('#purpose'+ rowcount).prop('disabled', false);
+                $('#row'+rowcount).hide();
+                $(this).val('Add Item');
+            }
+            
+        //});
+
+    });
+
+    $(document).on('click', '.send_sub_Btn', function(e){
+            e.preventDefault();
+            var cat = "";
+            var item = "";
+            var desc = "";
+            var qty = "";
+            var stat = "notok";
+            var reqno = $('#sreqno').val();
+            for(var q=1;q<=y;q++){
+                if ($('#row'+q).is(":visible")) {
+                    if ($('.add_item[btn_id=\''+q+'\']').val() == 'Remove') {
+                        cat = $('#category'+q).val();
+                        item = $('#item'+q).val();
+                        desc = $('#desc'+q).val();
+                        qty = $('#qty'+q).val();
+                        purpose = $('#purpose'+q).val();
+                        $.ajax({
+                            url: 'storerequest',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            dataType: 'json',
+                            type: 'POST',
+                            data: {
+                                reqno : reqno,
+                                item: item,
+                                purpose: purpose,
+                                qty: qty,
+                                stat: stat                           
+                            },
+                        });
+                    }
+                }
+                if (q == y) {
+                    stat = "ok";
+                    $.ajax({
+                        url: 'storerequest',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        dataType: 'json',
+                        type: 'POST',
+                        data: {
+                            reqno : reqno,  
+                            stat: stat                     
+                        },
+                        success: function(){
+                            window.location.href = 'request';
+                        },
+                        error: function (data,error, errorThrown) {
+                            alert(data.responseText);
+                        }
+                    });
+                }
+            }
+    });
+
+    $(document).on('change', '.desc', function(){
+        var count = $(this).attr('row_count');
+        var id = $(this).val();
+        $('#item' + count).val(id);
+        $('#qty'+count).prop('disabled', false);
+    });
+
+    $(document).on('change', '.item', function(){
+        var count = $(this).attr('row_count');
+        var id = $(this).val();
+        $('#desc' + count).val(id);
+        $('#qty'+count).prop('disabled', false);
+    });
+
+    $(document).on('change', '.category', function(){
+        var codeOp = " ";
+        var descOp = " ";
+        var count = $(this).attr('row_count');
+        var id = $(this).val();
+        $('#stock' + count).val('Stock');
+        selectItem(item1);
+        $('#item' + count).val('select itemcode');
+        $('#desc' + count).val('select description');
+        $('#item' + count).css("border", "");
+        function selectItem(item1) {
+            $.ajax({
+                type:'get',
+                url:'itemcode',
+                data:{'id':id},
+                success:function(data)
+                {
+                    codeOp+='<option selected value="select" disabled>select item code</option>';
+                    descOp+='<option selected value="select" disabled>select description</option>';
+                    for(var i=0;i<data.length;i++){
+                        codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
+                        descOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
+                    }
+                    $("#item" + count).find('option').remove().end().append(codeOp);
+                    $("#desc" + count).find('option').remove().end().append(descOp);
+                },
+            });
+        }
+    });
+
+    $(document).on('click', '.close', function(){
+        table.draw();
+        interval = setInterval(function(){
+            table.draw();
+        }, 30000);
+    });
+
+    $(document).on('click', '.cancel', function(){
+        window.location.href = 'request';
+    });

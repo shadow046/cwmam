@@ -1,9 +1,231 @@
-$(document).on("click",function(c){$('[data-toggle="popover"]').each(function(){!$(this).is(c.target)&&0===$(this).has(c.target).length&&0===$(".popover").has(c.target).length&&$(this).data("bs.popover")&&((($(this).popover("hide").data("bs.popover")||{}).inState||{}).click=!1)})});
-$(document).ready(function(){var c=$("#userTable").DataTable({dom:"lrtip",processing:!0,serverSide:!0,language:{emptyTable:"No registered user to this branch"},ajax:"users",columns:[{data:"fname",name:"fname"},{data:"email",name:"email"},{data:"area",name:"area"},{data:"branch",name:"branch"},{data:"role",name:"role"},{data:"status",name:"status"}]});$("#userTable tbody").on("click","tr",function(){var a=$("#userTable tbody tr:eq(0)").data(),b=c.row(this).data(),e=b.area_id,d=" ";$("#myid").val(b.id);
-$("#first_name").prop("disabled",!1);$("#last_name").prop("disabled",!1);$("#email").prop("disabled",!1);$("#password").prop("disabled",!0);$("#password_confirmation").prop("disabled",!0);$("#divpass1").hide();$("#divpass2").hide();$("#role").prop("disabled",!1);$("#area").prop("disabled",!1);$("#branch").prop("disabled",!1);$("#status").prop("disabled",!1);$("#userModal").modal("show");$.ajax({type:"get",url:"getBranchName",data:{id:e},async:!1,success:function(f){console.log(f);d+="<option selected disabled>select branch</option>";
-for(var g=0;g<f.length;g++)d+='<option value="'+f[g].id+'">'+f[g].branch+"</option>";$("#branch").find("option").remove().end().append(d);$("#branch").val(b.branch_id)}});$("#first_name").val(b.name);$("#last_name").val(b.lastname);$("#email").val(b.email);$("#area").val(e);$("#role").val(b.role);$("#status").val(a.dataStatus);$("#subBtn").val("Update")});$("#addBtn").on("click",function(a){a.preventDefault();$("#subBtn").val("Save");$("#divpass1").show();$("#divpass2").show();$("#userModal").modal("show");
-$("#first_name").val("");$("#last_name").val("");$("#email").val("");$("#password").val("");$("#password_confirmation").val("");2==$("#myrole").val()&&$("#role").val("Tech");$("#area").val("select area");$("#branch").val("select branch");$("#status").val("1");$("#first_name").prop("disabled",!1);$("#last_name").prop("disabled",!1);$("#email").prop("disabled",!1);$("#password").prop("disabled",!1);$("#password_confirmation").prop("disabled",!1);$("#role").prop("disabled",!1);$("#area").prop("disabled",
-!1);$("#branch").prop("disabled",!1);$("#status").prop("disabled",!1)});$(".area").change(function(){var a=$(this).val(),b=" ";$.ajax({type:"get",url:"getBranchName",data:{id:a},success:function(e){b+="<option selected disabled>select branch</option>";for(var d=0;d<e.length;d++)b+='<option value="'+e[d].id+'">'+e[d].branch+"</option>";$("#branch").find("option").remove().end().append(b);1==e.length?$("#branch").val("1"):$("#branch").val("select branch")}})});$("#userForm").on("submit",function(a){a.preventDefault();
-subBtn=$("#subBtn").val();"Update"==subBtn&&(a=$("#myid").val(),$.ajax({type:"PUT",url:"/user_update/"+a,headers:{"X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr("content")},data:$("#userForm").serialize(),success:function(b){$.isEmptyObject(b.error)?($("#userModal").modal("hide"),alert("User data updated"),window.location.reload()):alert(b.error)}}));"Save"==subBtn&&$.ajax({type:"POST",url:"user_add",headers:{"X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr("content")},data:$("#userForm").serialize(),
-success:function(b){$.isEmptyObject(b.error)?($("#userModal").modal("hide"),alert("User data saved"),window.location.reload()):alert(b.error)}})});$("#filter").popover({html:!0,sanitize:!1,title:"Filter Columns &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"});$("#filter").on("click",function(a){for(a=1;5>=a;a++)c.column(a).visible()?$("#filter-"+a).prop("checked",!0):$("#filter-"+a).prop("checked",!1)});$("body").on("click",".userColumnCb",function(){var a=c.column($(this).attr("data-column")),
-b=$(this).attr("data-column");a.visible(!a.visible());$(".fl-"+b).val("");c.columns(b).search("").draw()});$("#search-ic").on("click",function(a){for(a=0;5>=a;a++)$(".fl-"+a).val("").change(),c.columns(a).search("").draw();$(".tbsearch").toggle()});$(".filter-input").keyup(function(){c.column($(this).data("column")).search($(this).val()).draw()})});
+$(document).on('click', function (e) //hide popover on click outside
+    {
+        $('[data-toggle="popover"]').each(function () {
+            //the 'is' for buttons that trigger popups
+            //the 'has' for icons within a button that triggers a popup
+            if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                if ($(this).data('bs.popover')) {
+                    (($(this).popover('hide').data('bs.popover') || {}).inState || {}).click = false  // fix for BS 3.3.6
+                }
+            }
+        });
+    });
+
+    $(document).ready(function()
+    {
+        //var selected = [];
+        var table = 
+        $('#userTable').DataTable({ //user datatables
+            "dom": 'lrtip',
+            processing: true,
+            serverSide: true,
+            "language": {
+                "emptyTable": "No registered user to this branch"
+            },
+            ajax: 'users',
+            columns: [
+                { data: 'fname', name:'fname' },
+                { data: 'email', name:'email' },
+                { data: 'area', name:'area' },
+                { data: 'branch', name:'branch' },
+                { data: 'role', name:'role' },
+                { data: 'status', name:'status' }
+            ]
+        });
+
+        $('#userTable tbody').on('click', 'tr', function () { //show user details in modal
+            var dtdata = $('#userTable tbody tr:eq(0)').data();
+            var trdata = table.row(this).data();
+            var area = trdata.area_id;
+            var op=" ";
+            $('#myid').val(trdata.id);
+            $('#first_name').prop('disabled', false);
+            $('#last_name').prop('disabled', false);
+            $('#email').prop('disabled', false);
+            $('#password').prop('disabled', true);
+            $('#password_confirmation').prop('disabled', true);
+            $("#divpass1").hide();
+            $("#divpass2").hide();
+            $('#role').prop('disabled', false);
+            $('#area').prop('disabled', false);
+            $('#branch').prop('disabled', false);
+            $('#status').prop('disabled', false);
+            $('#userModal').modal('show');
+            $.ajax({
+                type:'get',
+                url:'getBranchName',
+                data:{'id':area},
+                async: false,
+                success:function(data)
+                {
+                    //console.log('success');
+                    console.log(data);
+                    //console.log(data.length);
+                    op+='<option selected disabled>select branch</option>';
+                    for(var i=0;i<data.length;i++){
+                        op+='<option value="'+data[i].id+'">'+data[i].branch+'</option>';
+                    }
+                    $('#branch').find('option').remove().end().append(op);
+                    $('#branch').val(trdata.branch_id);
+                },
+            });
+            $('#first_name').val(trdata.name);
+            $('#last_name').val(trdata.lastname);
+            $('#email').val(trdata.email);
+            $('#area').val(area);
+            $('#role').val(trdata.role);
+            $('#status').val(dtdata.dataStatus);
+            $('#subBtn').val('Update');
+
+        });
+        
+        $('#addBtn').on('click', function(e){ //show user/branch modal
+            e.preventDefault();
+            $('#subBtn').val('Save');
+            
+                $("#divpass1").show();
+                $("#divpass2").show();
+                $('#userModal').modal('show');
+                $('#first_name').val('');
+                $('#last_name').val('');
+                $('#email').val('');
+                $('#password').val('');
+                $('#password_confirmation').val('');
+                if ($('#myrole').val() == 2) {
+                    $('#role').val('Tech');   
+                }
+                $('#area').val('select area');
+                $('#branch').val('select branch');
+                $('#status').val('1');
+                $('#first_name').prop('disabled', false);
+                $('#last_name').prop('disabled', false);
+                $('#email').prop('disabled', false);
+                $('#password').prop('disabled', false);
+                $('#password_confirmation').prop('disabled', false);
+                $('#role').prop('disabled', false);
+                $('#area').prop('disabled', false);
+                $('#branch').prop('disabled', false);
+                $('#status').prop('disabled', false);
+        });
+
+        $('.area').change(function(){ //get branches of this area
+            var area = $(this).val();
+            var op=" ";
+            
+            $.ajax({
+                type:'get',
+                url:'getBranchName',
+                data:{'id':area},
+                success:function(data)
+                {
+                    //console.log('success');
+                    //console.log(data);
+                    //console.log(data.length);
+                    op+='<option selected disabled>select branch</option>';
+                    for(var i=0;i<data.length;i++){
+                        op+='<option value="'+data[i].id+'">'+data[i].branch+'</option>';
+                    }
+                    $('#branch').find('option').remove().end().append(op);
+                    if (data.length == 1) {
+                        $('#branch').val('1');
+                    }else{
+                        $('#branch').val('select branch');
+                    }
+                },
+            });
+        });
+
+        $('#userForm').on('submit', function(e){ //user modal update/save button
+            e.preventDefault();
+            subBtn = $('#subBtn').val();
+            if(subBtn == 'Update'){
+                var myid = $('#myid').val();
+                $.ajax({
+                    type: "PUT",
+                    url: "/user_update/"+myid,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: $('#userForm').serialize(),
+                    success: function(data){
+                        if($.isEmptyObject(data.error)){
+                            $('#userModal').modal('hide');
+                            alert("User data updated");
+                            window.location.reload();
+                        }else{
+                            alert(data.error);
+                        }
+                    } 
+                });
+            }
+            if(subBtn == 'Save'){
+                $.ajax({
+                    type: "POST",
+                    url: "user_add",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: $('#userForm').serialize(),
+                    success: function(data){
+                        if($.isEmptyObject(data.error)){
+                            $('#userModal').modal('hide');
+                            alert("User data saved");
+                            window.location.reload();
+                        }else{
+                            alert(data.error);
+                        }
+                    }
+                });
+            }
+        });
+
+         //hide search
+            
+        $('#filter').popover({ //filter columns popover
+            html: true,
+            sanitize: false,
+            title: 'Filter Columns &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+        });
+
+        $('#filter').on("click", function (event) { //check for visible columns
+            for ( var i=1 ; i<=5 ; i++ ) {
+                if (table.column( i ).visible()){
+                    $('#filter-'+i).prop('checked', true);
+                }
+                else {
+                    $('#filter-'+i).prop('checked', false);
+                }
+            }
+        });
+
+        $('body').on('click', '.userColumnCb', function(){ //show/hide columns
+            // Get the column API object
+            var column = table.column( $(this).attr('data-column') );
+            var colnum = $(this).attr('data-column');
+            // Toggle the visibility
+            column.visible( ! column.visible() );
+            $('.fl-'+colnum).val('');//clear columns on hide
+            table
+                .columns(colnum).search( '' )
+                .draw();
+        });
+
+        $('#search-ic').on("click", function (event) { //clear search box on hide
+            for ( var i=0 ; i<=5 ; i++ ) {
+                
+                $('.fl-'+i).val('').change();
+                table
+                .columns(i).search( '' )
+                .draw();
+            }
+            $('.tbsearch').toggle();
+            
+        });
+
+        $('.filter-input').keyup(function() { //search columns
+            table.column( $(this).data('column'))
+                .search( $(this).val())
+                .draw();
+        });
+
+    });

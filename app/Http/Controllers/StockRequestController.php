@@ -210,6 +210,7 @@ class StockRequestController extends Controller
             $log->user_id = auth()->user()->id;
             $log->save();
             $reqno->save();
+            sleep(2);
             $reqitem = RequestedItem::select('items.item', 'quantity')
                 ->where('request_no', $request->reqno)
                 ->join('items', 'items.id', '=', 'requested_items.items_id')
@@ -222,7 +223,6 @@ class StockRequestController extends Controller
                 ->get();
             $allemails = array();
             $allemails[] = 'jerome.lopez.ge2018@gmail.com';
-            $allemails[] = 'mlherradura@ideaserv.com.ph';
             foreach ($cc as $email) {
                 $allemails[]=$email->email;
             }
@@ -276,11 +276,13 @@ class StockRequestController extends Controller
     public function update(Request $request)
     {
         if ($request->stat == 'ok') {
+
             $reqno = StockRequest::where('request_no', $request->reqno)->first();
             //dd($reqno);
             $reqno->status = $request->status;
             $reqno->schedule = $request->datesched;
             $reqno->save();
+            sleep(2);
             $prepitem = PreparedItem::select('items.item', 'serial', 'branch_id')
                 ->where('request_no', $request->reqno)
                 ->join('items', 'items.id', '=', 'prepared_items.items_id')
@@ -294,7 +296,7 @@ class StockRequestController extends Controller
                 $message->to($branch->email, $branch->head)->subject //email and receivers name
                     (auth()->user()->branch->branch); //subject
                 $message->from('ideaservmailer@gmail.com', 'NO REPLY - Warehouse'); //email and senders name
-                $message->cc(['emorej046@gmail.com', 'gerard.mallari@gmail.com', 'mlherradura@ideaserv.com.ph']); //others receivers email
+                $message->cc(['emorej046@gmail.com', 'gerard.mallari@gmail.com']); //others receivers email
             });
 
             $data = "true";
@@ -318,8 +320,7 @@ class StockRequestController extends Controller
             $prep->serial = $request->serial;
             $prep->branch_id = $reqbranch->branch_id;
             $prep->save();
-
-            
+            sleep(1);
             $log = new UserLog;
             $log->activity = "Schedule $scheditem->item on $sched->schedule with Request no. $request->reqno ";
             $log->user_id = auth()->user()->id;

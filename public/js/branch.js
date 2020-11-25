@@ -1,9 +1,227 @@
-var stockTable,table;$(document).on("click",function(a){$('[data-toggle="popover"]').each(function(){!$(this).is(a.target)&&0===$(this).has(a.target).length&&0===$(".popover").has(a.target).length&&$(this).data("bs.popover")&&((($(this).popover("hide").data("bs.popover")||{}).inState||{}).click=!1)})});
-$(document).ready(function(){$("#saveBtn").hide();table=$("table.branchTable").DataTable({dom:"lrtip",language:{emptyTable:" "},processing:!0,serverSide:!0,ajax:{url:"branches",error:function(a,b,c){401==a.status&&(window.location.href="/login")}},columns:[{data:"branch",name:"branch",width:"14%"},{data:"area",name:"area",width:"14%"},{data:"head",name:"head",width:"14%"},{data:"phone",name:"phone",width:"14%"},{data:"email",name:"email",width:"14%"},{data:"status",name:"status",width:"14%"},{data:"address",
-name:"address",width:"14%"}]});$("#branchTable tbody").on("click","tr",function(){var a=$("#branchTable tbody tr:eq(0)").data(),b=table.row(this).data(),c=b.id;console.log(b.id);$("table.branchDetails").dataTable().fnDestroy();$("#table").show();stockTable=$("table.branchDetails").DataTable({dom:"lrtip",language:{emptyTable:" "},processing:!0,serverSide:!0,ajax:"/stocks/"+c,columns:[{data:"item",name:"item",width:"17%"},{data:"initial",name:"initial",width:"17%"},{data:"available",name:"available",
-width:"14%"},{data:"stock_out",name:"stock_out",width:"14%"}]});$("#branch_name").prop("disabled",!0);$("#address").prop("disabled",!0);$("#area").prop("disabled",!0);$("#contact_person").prop("disabled",!0);$("#mobile").prop("disabled",!0);$("#email").prop("disabled",!0);$("#status").prop("disabled",!0);$("#myid").val(b.id);$("#branch_name").val(b.branch);$("#address").val(b.address);$("#area").val(b.area_id);$("#contact_person").val(b.head);$("#mobile").val(b.phone);$("#email").val(b.email);$("#status").val(a.dataStatus);
-$("#myid").val(b.id);$("#editBtn").val("Edit");$("#editBtn").show();$("#saveBtn").hide();$("#branchModal").modal("show")});$("#addBtn").on("click",function(a){a.preventDefault();$("#branchModal").modal("show");$("#branch_name").val("");$("#address").val("");$("#area").val("select area");$("#contact_person").val("");$("#mobile").val("");$("#email").val("");$("#status").val("select status");$("#branch_name").prop("disabled",!1);$("#address").prop("disabled",!1);$("#area").prop("disabled",!1);$("#contact_person").prop("disabled",
-!1);$("#mobile").prop("disabled",!1);$("#email").prop("disabled",!1);$("#status").prop("disabled",!1);$("#editBtn").val("Save");$("#editBtn").hide();$("#saveBtn").show();$("#table").hide()});$("#editBtn").on("click",function(){$("#branch_name").prop("disabled",!1);$("#address").prop("disabled",!1);$("#area").prop("disabled",!1);$("#contact_person").prop("disabled",!1);$("#mobile").prop("disabled",!1);$("#email").prop("disabled",!1);$("#status").prop("disabled",!1);$("#editBtn").hide();$("#saveBtn").show()});
-$("#branchForm").on("submit",function(a){a.preventDefault();editBtn=$("#editBtn").val();"Edit"==editBtn&&(a=$("#myid").val(),$.ajax({type:"PUT",url:"/branch_update/"+a,headers:{"X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr("content")},data:$("#branchForm").serialize(),success:function(b){$.isEmptyObject(b.error)?($("#branchModal .close").click(),table.draw()):alert(b.error)}}));"Save"==editBtn&&$.ajax({type:"POST",url:"branch_add",headers:{"X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr("content")},
-data:$("#branchForm").serialize(),success:function(b){$.isEmptyObject(b.error)?($("#branchModal .close").click(),table.draw()):alert(b.error)}})});$("#filter").popover({html:!0,sanitize:!1,title:"Filter Columns &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"});$("#filter").on("click",function(a){for(a=1;6>=a;a++)table.column(a).visible()?$("#filter-"+a).prop("checked",!0):$("#filter-"+a).prop("checked",!1)});$("body").on("click",".branchColumnCb",function(){var a=
-table.column($(this).attr("data-column")),b=$(this).attr("data-column");$(".fl-"+b).val("");table.columns(b).search("").draw();a.visible(!a.visible())});$("#search-ic").on("click",function(a){for(a=0;6>=a;a++)$(".fl-"+a).val("").change(),table.columns(a).search("").draw();$(".tbsearch").toggle()});$(".filter-input").keyup(function(){table.column($(this).data("column")).search($(this).val()).draw()});$(".mfilter-input").keyup(function(){stockTable.column($(this).data("column")).search($(this).val()).draw()})});
+var stockTable;
+    var table;
+    $(document).on('click', function (e) //hide popover on click outside
+    {
+        $('[data-toggle="popover"]').each(function () {
+            //the 'is' for buttons that trigger popups
+            //the 'has' for icons within a button that triggers a popup
+            if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                if ($(this).data('bs.popover')) {
+                    (($(this).popover('hide').data('bs.popover') || {}).inState || {}).click = false  // fix for BS 3.3.6
+                }
+            }
+        });
+    });
+
+    $(document).ready(function()
+    {
+        //var selected = [];
+        $('#saveBtn').hide();
+
+        table =
+        $('table.branchTable').DataTable({ //user datatables
+            "dom": 'lrtip',
+            "language": {
+                "emptyTable": " "
+            },
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: 'branches',
+                error: function(data, error, errorThrown) {
+                    if(data.status == 401) {
+                        // session timed out | not authenticated
+                        window.location.href = '/login';
+                    }
+                }
+            },
+            columns: [
+                { data: 'branch', name:'branch', "width": "14%" },
+                { data: 'area', name:'area', "width": "14%"},
+                { data: 'head', name:'head', "width": "14%"},
+                { data: 'phone', name:'phone',"width": "14%"},
+                { data: 'email', name:'email',"width": "14%"},
+                { data: 'status', name:'status', "width": "14%"},
+                { data: 'address', name:'address', "width": "14%"}
+            ]
+        });
+
+        $('#branchTable tbody').on('click', 'tr', function () { //show branch details in modal
+            var dtdata = $('#branchTable tbody tr:eq(0)').data();
+            var trdata = table.row(this).data();
+            var id = trdata.id;
+            console.log(trdata.id);
+            $('table.branchDetails').dataTable().fnDestroy();
+            $('#table').show();
+            stockTable =
+            $('table.branchDetails').DataTable({ //user datatables
+                "dom": 'lrtip',
+                "language": {
+                    "emptyTable": " "
+                },
+                processing: true,
+                serverSide: true,
+                ajax: "/stocks/"+id,
+                
+                columns: [
+                    { data: 'item', name:'item', "width": "17%"},
+                    { data: 'initial', name:'initial', "width": "17%"},
+                    { data: 'available', name:'available', "width": "14%"},
+                    { data: 'stock_out', name:'stock_out', "width": "14%"}
+                ]
+            });
+            $('#branch_name').prop('disabled', true);
+            $('#address').prop('disabled', true);
+            $('#area').prop('disabled', true);
+            $('#contact_person').prop('disabled', true);
+            $('#mobile').prop('disabled', true);
+            $('#email').prop('disabled', true);
+            $('#status').prop('disabled', true);
+            $('#myid').val(trdata.id);
+            $('#branch_name').val(trdata.branch);
+            $('#address').val(trdata.address);
+            $('#area').val(trdata.area_id);
+            $('#contact_person').val(trdata.head);
+            $('#mobile').val(trdata.phone);
+            $('#email').val(trdata.email);
+            $('#status').val(dtdata.dataStatus);
+            $('#myid').val(trdata.id);
+            $('#editBtn').val('Edit');
+            $('#editBtn').show();
+            $('#saveBtn').hide();
+            $('#branchModal').modal('show');
+        });
+
+        $('#addBtn').on('click', function(e){ //show user/branch modal
+            e.preventDefault();
+            $('#branchModal').modal('show');
+            $('#branch_name').val('');
+            $('#address').val('');
+            $('#area').val('select area');
+            $('#contact_person').val('');
+            $('#mobile').val('');
+            $('#email').val('');
+            $('#status').val('select status');
+            $('#branch_name').prop('disabled', false);
+            $('#address').prop('disabled', false);
+            $('#area').prop('disabled', false);
+            $('#contact_person').prop('disabled', false);
+            $('#mobile').prop('disabled', false);
+            $('#email').prop('disabled', false);
+            $('#status').prop('disabled', false);
+            $('#editBtn').val('Save');
+            $('#editBtn').hide();
+            $('#saveBtn').show();
+            $('#table').hide();
+            
+        });
+
+        $('#editBtn').on('click', function(){
+            $('#branch_name').prop('disabled', false);
+            $('#address').prop('disabled', false);
+            $('#area').prop('disabled', false);
+            $('#contact_person').prop('disabled', false);
+            $('#mobile').prop('disabled', false);
+            $('#email').prop('disabled', false);
+            $('#status').prop('disabled', false);
+            $('#editBtn').hide();
+            $('#saveBtn').show();
+        });
+
+        $('#branchForm').on('submit', function(e){ //branch modal update/save button
+            e.preventDefault();
+            editBtn = $('#editBtn').val();;
+            if(editBtn == 'Edit'){
+                var myid = $('#myid').val();
+                $.ajax({
+                    type: "PUT",
+                    url: "/branch_update/"+myid,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: $('#branchForm').serialize(),
+                    success: function(data){
+                        if($.isEmptyObject(data.error)){
+                            $('#branchModal .close').click();
+                            table.draw();
+                        }else{
+                            alert(data.error);
+                        }
+                    } 
+                });
+            }
+            if(editBtn == 'Save'){
+                $.ajax({
+                    type: "POST",
+                    url: "branch_add",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: $('#branchForm').serialize(),
+                    success: function(data){
+                        if($.isEmptyObject(data.error)){
+                            $('#branchModal .close').click();
+                            table.draw();
+                        }else{
+                            alert(data.error);
+                        }
+                    }
+                });
+            }
+        });
+
+        $('#filter').popover({ //filter columns popover
+            html: true,
+            sanitize: false,
+            title: 'Filter Columns &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+        });
+
+        $('#filter').on("click", function (event) { //check for visible columns
+            for ( var i=1 ; i<=6 ; i++ ) {
+                if (table.column( i ).visible()){
+                    $('#filter-'+i).prop('checked', true);
+                }
+                else {
+                    $('#filter-'+i).prop('checked', false);
+                }
+            }
+        });
+
+        $('body').on('click', '.branchColumnCb', function(){ //show/hide columns
+            // Get the column API object
+            var column = table.column( $(this).attr('data-column') );
+            var colnum = $(this).attr('data-column');
+            $('.fl-'+colnum).val('');//clear columns on hide
+            table
+                .columns(colnum).search( '' )
+                .draw();
+            // Toggle the visibility
+            column.visible( ! column.visible() );
+            
+        });
+
+        $('#search-ic').on("click", function (event) { //clear search box on hide
+            for ( var i=0 ; i<=6 ; i++ ) {
+                
+                $('.fl-'+i).val('').change();
+                table
+                .columns(i).search( '' )
+                .draw();
+            }
+            $('.tbsearch').toggle();
+            
+        });
+
+        $('.filter-input').keyup(function() { //search columns
+            table.column( $(this).data('column'))
+                .search( $(this).val())
+                .draw();
+        });
+
+        $('.mfilter-input').keyup(function() { //search columns
+            stockTable.column($(this).data('column'))
+                .search($(this).val())
+                .draw();
+        });
+
+    });
