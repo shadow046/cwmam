@@ -13,6 +13,8 @@ var y = 1;
             "language": {
                 "emptyTable": " "
             },
+            "pageLength": 20,
+            "order": [[ 2, "asc" ]],
             processing: true,
             serverSide: true,
             ajax: 'viewStock',

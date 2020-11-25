@@ -48,10 +48,11 @@ var stockTable;
                 "language": {
                     "emptyTable": " "
                 },
+                "pageLength": 15,
+                "order": [[ 1, "asc" ]],
                 processing: true,
                 serverSide: true,
                 ajax: "/stocks/"+id,
-                
                 columns: [
                     { data: 'item', name:'item', "width": "17%"},
                     { data: 'available', name:'available', "width": "14%"},

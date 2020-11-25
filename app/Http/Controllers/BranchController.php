@@ -125,7 +125,7 @@ class BranchController extends Controller
                 ->get();
         }else if (!auth()->user()->hasanyrole('Viewer', 'Administrator')){
             $branches = Branch::select('branches.*', 'areas.area')
-                ->where('branches.id', '!=', auth()->user()->branch->id)
+                ->whereNotin('branches.id', [auth()->user()->branch->id, '1'])
                 ->where('branches.area_id', '=', auth()->user()->area->id)
                 ->join('areas', 'areas.id', '=', 'branches.area_id')
                 ->get();

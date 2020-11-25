@@ -59,6 +59,8 @@ var stockTable;
                 "language": {
                     "emptyTable": " "
                 },
+                "pageLength": 15,
+                "order": [[ 1, "asc" ]],
                 processing: true,
                 serverSide: true,
                 ajax: "/stocks/"+id,
