@@ -208,7 +208,7 @@ class StockRequestController extends Controller
             $log = new UserLog;
             $log->activity = "Create Stock Request no. $request->reqno";
             $log->user_id = auth()->user()->id;
-            $log->save();
+            
             $reqno->save();
             sleep(2);
             $reqitem = RequestedItem::select('items.item', 'quantity')
@@ -234,7 +234,7 @@ class StockRequestController extends Controller
                 $message->cc($allemails); //others receivers email
             });
 
-            $data = "true";
+            $data = $log->save();
 
         }
 
