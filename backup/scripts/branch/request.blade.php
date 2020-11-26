@@ -9,12 +9,11 @@
         var hour = String(d.getHours()).padStart(2, '0') % 12 || 12
         var ampm = (String(d.getHours()).padStart(2, '0') < 12 || String(d.getHours()).padStart(2, '0') === 24) ? "AM" : "PM";
         var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-        //$('#requestModal').modal('show');
         $('#date').val(months[d.getMonth()]+' '+d.getDate()+', ' +d.getFullYear()+' '+hour+':'+String(d.getMinutes()).padStart(2, '0')+ampm);
         $('#sdate').val(months[d.getMonth()]+' '+d.getDate()+', ' +d.getFullYear()+' '+hour+':'+String(d.getMinutes()).padStart(2, '0')+ampm);
 
         table =
-        $('table.requestTable').DataTable({ //user datatables
+        $('table.requestTable').DataTable({ 
             "dom": 'lrtip',
             "language": {
                     "emptyTable": " "
@@ -34,12 +33,10 @@
             table.draw();
         }, 30000);
 
-        $('#requestTable tbody').on('click', 'tr', function () { //show branch details in modal
+        $('#requestTable tbody').on('click', 'tr', function () { 
             clearInterval(interval);
             var trdata = table.row(this).data();
             var dtdata = $('#requestTable tbody tr:eq(0)').data();
-            //$('#requestModal').modal('show');
-            
             $('#date').val(trdata.created_at);
             $('#reqno').val(trdata.request_no);
             $('#branch').val(trdata.branch);
@@ -55,7 +52,7 @@
                 $('#del_Btn').show();
                 $('#rec_Btn').hide();
                 $('#del_Btn').attr('reqno', trdata.request_no);
-                $('table.requestDetails').DataTable({ //user datatables
+                $('table.requestDetails').DataTable({ 
                     "dom": 'lrtip',
                     "language": {
                         "emptyTable": " "
@@ -77,7 +74,7 @@
                 $('#sched').val(trdata.sched);
                 $('#del_Btn').hide();
                 $('#rec_Btn').show();
-                $('table.schedDetails').DataTable({ //user datatables
+                $('table.schedDetails').DataTable({ 
                     "dom": 'lrtip',
                     "language": {
                         "emptyTable": " "
@@ -185,40 +182,36 @@
 
     $(document).on('click', '.add_item', function(){
 
-        //$('.add_item').on('click', function(){ //show user/branch modal
-            var rowcount = $(this).attr('btn_id');
-            if ($(this).val() == 'Add Item') {
-                if($('#qty'+rowcount).val() != 0 && $('#purpose'+rowcount).val()){
-                    y++;
-                    var additem = '<div class="row no-margin" id="row'+y+'"><div class="col-md-2 form-group"><select id="category'+y+'" style="color: black;" class="form-control category" row_count="'+y+'"></select></div><div class="col-md-2 form-group"><select id="item'+y+'" style="color: black;" class="form-control item" row_count="'+y+'"><option selected disabled>select item code</option></select></div><div class="col-md-3 form-group"><select id="desc'+y+'" class="form-control desc" style="color: black;" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><select id="purpose'+y+'" class="form-control purpose" style="color: black;" row_count="'+y+'"><option selected disabled>select purpose</option><option value="1">Service Unit</option><option value="2">Replacement</option><option value="3">Stock</option></select></div><div class="col-md-2 form-group"><input type="number" min="0" class="form-control" style="color: black; width: 6em" name="qty'+y+'" id="qty'+y+'" placeholder="0" disabled></div><div class="col-md-1 form-group"><input type="button" class="add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
-                    $(this).val('Remove');
-                    $('#category'+ rowcount).prop('disabled', true);
-                    $('#item'+ rowcount).prop('disabled', true);
-                    $('#desc'+ rowcount).prop('disabled', true);
-                    $('#qty'+ rowcount).prop('disabled', true);
-                    $('#purpose'+ rowcount).prop('disabled', true);
-                    $('#reqfield').append(additem);
-                    $('#category'+ rowcount).find('option').clone().appendTo('#category'+y);
-                }else{
-                    alert("Invalid Quantity value!!!");
-                }
+        var rowcount = $(this).attr('btn_id');
+        if ($(this).val() == 'Add Item') {
+            if($('#qty'+rowcount).val() != 0 && $('#purpose'+rowcount).val()){
+                y++;
+                var additem = '<div class="row no-margin" id="row'+y+'"><div class="col-md-2 form-group"><select id="category'+y+'" style="color: black;" class="form-control category" row_count="'+y+'"></select></div><div class="col-md-2 form-group"><select id="item'+y+'" style="color: black;" class="form-control item" row_count="'+y+'"><option selected disabled>select item code</option></select></div><div class="col-md-3 form-group"><select id="desc'+y+'" class="form-control desc" style="color: black;" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><select id="purpose'+y+'" class="form-control purpose" style="color: black;" row_count="'+y+'"><option selected disabled>select purpose</option><option value="1">Service Unit</option><option value="2">Replacement</option><option value="3">Stock</option></select></div><div class="col-md-2 form-group"><input type="number" min="0" class="form-control" style="color: black; width: 6em" name="qty'+y+'" id="qty'+y+'" placeholder="0" disabled></div><div class="col-md-1 form-group"><input type="button" class="add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
+                $(this).val('Remove');
+                $('#category'+ rowcount).prop('disabled', true);
+                $('#item'+ rowcount).prop('disabled', true);
+                $('#desc'+ rowcount).prop('disabled', true);
+                $('#qty'+ rowcount).prop('disabled', true);
+                $('#purpose'+ rowcount).prop('disabled', true);
+                $('#reqfield').append(additem);
+                $('#category'+ rowcount).find('option').clone().appendTo('#category'+y);
             }else{
-                $('#category'+rowcount).val('select category');
-                $('#item'+rowcount).val('select item code');
-                $('#desc'+rowcount).val('select description');
-                $('#serial'+rowcount).val('select serial');
-                $('#purpose'+rowcount).val('select purpose');
-                $('#category'+rowcount).prop('disabled', false);
-                $('#item'+rowcount).prop('disabled', false);
-                $('#desc'+rowcount).prop('disabled', false);
-                $('#serial'+rowcount).prop('disabled', false);
-                $('#purpose'+ rowcount).prop('disabled', false);
-                $('#row'+rowcount).hide();
-                $(this).val('Add Item');
+                alert("Invalid Quantity value!!!");
             }
-            
-        //});
-
+        }else{
+            $('#category'+rowcount).val('select category');
+            $('#item'+rowcount).val('select item code');
+            $('#desc'+rowcount).val('select description');
+            $('#serial'+rowcount).val('select serial');
+            $('#purpose'+rowcount).val('select purpose');
+            $('#category'+rowcount).prop('disabled', false);
+            $('#item'+rowcount).prop('disabled', false);
+            $('#desc'+rowcount).prop('disabled', false);
+            $('#serial'+rowcount).prop('disabled', false);
+            $('#purpose'+ rowcount).prop('disabled', false);
+            $('#row'+rowcount).hide();
+            $(this).val('Add Item');
+        }
     });
 
     $(document).on('click', '.send_sub_Btn', function(e){

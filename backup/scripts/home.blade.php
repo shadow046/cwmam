@@ -4,7 +4,7 @@
     {
         var interval = null;
         var table =
-        $('table.activityTable').DataTable({ //user datatables
+        $('table.activityTable').DataTable({ 
             "dom": 'lrtip',
             "language": {
                     "emptyTable": " "
@@ -16,7 +16,6 @@
                 url: 'activity',
                 error: function(data, error, errorThrown) {
                     if(data.status == 401) {
-                        // session timed out | not authenticated
                         window.location.href = '/login';
                     }
                 }
@@ -33,9 +32,8 @@
             table.draw();
         }, 30000);
 
-         //hide search
 
-        $('#search-ic').on("click", function (event) { //clear search box on hide
+        $('#search-ic').on("click", function (event) { 
             for ( var i=2 ; i<=5 ; i++ ) {
                 
                 $('.fl-'+i).val('').change();
@@ -47,7 +45,7 @@
             
         });
 
-        $('.filter-input').keyup(function() { //search columns
+        $('.filter-input').keyup(function() { 
             table.column( $(this).data('column'))
                 .search( $(this).val())
                 .draw();

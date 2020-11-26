@@ -144,7 +144,6 @@
     });
 
     $(document).on('change', '.outcategory', function(){
-        //var codeOp = " ";
         var descOp = " ";
         var count = $(this).attr('row_count');
         var id = $(this).val();
@@ -157,13 +156,10 @@
                 data:{'id':id},
                 success:function(data)
                 {
-                    //codeOp+='<option selected value="select" disabled>select item code</option>';
                     descOp+='<option selected value="select" disabled>select description</option>';
                     for(var i=0;i<data.length;i++){
-                        //codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
                         descOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
                     }
-                    //$("#outitem" + count).find('option').remove().end().append(codeOp);
                     $("#outdesc" + count).find('option').remove().end().append(descOp);
                 },
             });
@@ -223,7 +219,7 @@
             $("#replacementModal .closes").click();
             $('table.replacementDetails').dataTable().fnDestroy();
             replaceTable =
-            $('table.replacementDetails').DataTable({ //user datatables
+            $('table.replacementDetails').DataTable({ 
                 "dom": 'lrtip',
                 "language": {
                     "emptyTable": " "
@@ -286,13 +282,10 @@
             data:{'id':catid},
             success:function(data)
             {
-                //codeOp+='<option selected value="select" disabled>select item code</option>';
                 repOp+='<option selected value="select" disabled>select description</option>';
                 for(var i=0;i<data.length;i++){
-                    //codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
                     repOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
                 }
-                //$("#outitem" + count).find('option').remove().end().append(codeOp);
                 $("#repdesc1").find('option').remove().end().append(repOp);
             },
         });

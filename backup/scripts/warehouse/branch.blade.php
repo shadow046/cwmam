@@ -2,14 +2,12 @@
 <script type="text/javascript">
     var stockTable;
     var table;
-    $(document).on('click', function (e) //hide popover on click outside
+    $(document).on('click', function (e) 
     {
         $('[data-toggle="popover"]').each(function () {
-            //the 'is' for buttons that trigger popups
-            //the 'has' for icons within a button that triggers a popup
             if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
                 if ($(this).data('bs.popover')) {
-                    (($(this).popover('hide').data('bs.popover') || {}).inState || {}).click = false  // fix for BS 3.3.6
+                    (($(this).popover('hide').data('bs.popover') || {}).inState || {}).click = false  
                 }
             }
         });
@@ -17,11 +15,10 @@
 
     $(document).ready(function()
     {
-        //var selected = [];
         $('#saveBtn').hide();
 
         table =
-        $('table.branchTable').DataTable({ //user datatables
+        $('table.branchTable').DataTable({ 
             "dom": 'lrtip',
             "language": {
                 "emptyTable": " "
@@ -32,7 +29,6 @@
                 url: 'branches',
                 error: function(data, error, errorThrown) {
                     if(data.status == 401) {
-                        // session timed out | not authenticated
                         window.location.href = '/login';
                     }
                 }
@@ -48,7 +44,7 @@
             ]
         });
 
-        $('#branchTable tbody').on('click', 'tr', function () { //show branch details in modal
+        $('#branchTable tbody').on('click', 'tr', function () { 
             var dtdata = $('#branchTable tbody tr:eq(0)').data();
             var trdata = table.row(this).data();
             var id = trdata.id;
@@ -56,7 +52,7 @@
             $('table.branchDetails').dataTable().fnDestroy();
             $('#table').show();
             stockTable =
-            $('table.branchDetails').DataTable({ //user datatables
+            $('table.branchDetails').DataTable({ 
                 "dom": 'lrtip',
                 "language": {
                     "emptyTable": " "
@@ -94,7 +90,7 @@
             $('#branchModal').modal('show');
         });
 
-        $('#addBtn').on('click', function(e){ //show user/branch modal
+        $('#addBtn').on('click', function(e){ 
             e.preventDefault();
             $('#branchModal').modal('show');
             $('#branch_name').val('');
@@ -130,7 +126,7 @@
             $('#saveBtn').show();
         });
 
-        $('#branchForm').on('submit', function(e){ //branch modal update/save button
+        $('#branchForm').on('submit', function(e){ 
             e.preventDefault();
             editBtn = $('#editBtn').val();;
             if(editBtn == 'Edit'){
@@ -172,15 +168,13 @@
             }
         });
 
-         //hide search
-            
-        $('#filter').popover({ //filter columns popover
+        $('#filter').popover({ 
             html: true,
             sanitize: false,
             title: 'Filter Columns &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
         });
 
-        $('#filter').on("click", function (event) { //check for visible columns
+        $('#filter').on("click", function (event) { 
             for ( var i=1 ; i<=6 ; i++ ) {
                 if (table.column( i ).visible()){
                     $('#filter-'+i).prop('checked', true);
@@ -191,20 +185,18 @@
             }
         });
 
-        $('body').on('click', '.branchColumnCb', function(){ //show/hide columns
-            // Get the column API object
+        $('body').on('click', '.branchColumnCb', function(){ 
             var column = table.column( $(this).attr('data-column') );
             var colnum = $(this).attr('data-column');
-            $('.fl-'+colnum).val('');//clear columns on hide
+            $('.fl-'+colnum).val('');
             table
                 .columns(colnum).search( '' )
                 .draw();
-            // Toggle the visibility
             column.visible( ! column.visible() );
             
         });
 
-        $('#search-ic').on("click", function (event) { //clear search box on hide
+        $('#search-ic').on("click", function (event) { 
             for ( var i=0 ; i<=6 ; i++ ) {
                 
                 $('.fl-'+i).val('').change();
@@ -216,13 +208,13 @@
             
         });
 
-        $('.filter-input').keyup(function() { //search columns
+        $('.filter-input').keyup(function() { 
             table.column( $(this).data('column'))
                 .search( $(this).val())
                 .draw();
         });
 
-        $('.mfilter-input').keyup(function() { //search columns
+        $('.mfilter-input').keyup(function() { 
             stockTable.column($(this).data('column'))
                 .search($(this).val())
                 .draw();
@@ -262,7 +254,7 @@
             {
                 $('table.branchDetails').dataTable().fnDestroy();
                 stockTable =
-                $('table.branchDetails').DataTable({ //user datatables
+                $('table.branchDetails').DataTable({ 
                     "dom": 'lrtip',
                     "language": {
                         "emptyTable": " ",

@@ -73,7 +73,6 @@ class HomeController extends Controller
     {
         sleep(2);
         $request = StockRequest::where('request_no', $id)->first();
-        //dd($request);
         $title = 'Print Preview';
         return view('pages.warehouse.print', compact('request', 'title'));
     }
@@ -168,7 +167,6 @@ class HomeController extends Controller
         }
         
         
-        //dd($act);
         return DataTables::of($act)
         
         ->addColumn('date', function (UserLog $request){
@@ -226,8 +224,5 @@ class HomeController extends Controller
 
     public function convert(){
         return view('pages.test');
-
-        //Storage::disk('open')->put('company_info/description.txt', $request->description);
-
     }
 }

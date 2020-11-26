@@ -5,7 +5,7 @@
     $(document).ready(function()
     {
         table =
-        $('table.defectiveTable').DataTable({ //user datatables
+        $('table.defectiveTable').DataTable({ 
             "dom": 'lrtip',
             "language": {
                 "emptyTable": " "
@@ -28,9 +28,7 @@
             table.draw();
         }, 30000);
 
-         //hide search
-
-        $('#search-ic').on("click", function () { //clear search box on hide
+        $('#search-ic').on("click", function () { 
             for ( var i=0 ; i<=5 ; i++ ) {
                 
                 $('.fl-'+i).val('').change();
@@ -42,7 +40,7 @@
             
         });
 
-        $('.filter-input').keyup(function() { //search columns
+        $('.filter-input').keyup(function() { 
             table.column( $(this).data('column'))
                 .search( $(this).val())
                 .draw();
