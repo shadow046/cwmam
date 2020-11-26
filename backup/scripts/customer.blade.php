@@ -3,7 +3,7 @@
     $(document).ready(function()
     {
         customertable =
-        $('table.customerTable').DataTable({ //user datatables
+        $('table.customerTable').DataTable({ 
             "dom": 'lrtip',
             "language": {
                     "emptyTable": " "
@@ -17,10 +17,7 @@
             ]
         });
 
-         //hide search
-            
-
-        $('#search-ic').on("click", function (event) { //clear search box on hide
+        $('#search-ic').on("click", function (event) { 
             for ( var i=0 ; i<=6 ; i++ ) {
                 
                 $('.fl-'+i).val('').change();
@@ -32,7 +29,7 @@
             
         });
 
-        $('.filter-input').keyup(function() { //search columns
+        $('.filter-input').keyup(function() { 
             customertable.column( $(this).data('column'))
                 .search( $(this).val())
                 .draw();
@@ -72,7 +69,7 @@
     });
 
 
-    $('#customerForm').on('submit', function(e){ //user modal update/save button
+    $('#customerForm').on('submit', function(e){ 
         e.preventDefault();
         subBtn = $('#subBtn').val();
         if(subBtn == 'Update'){

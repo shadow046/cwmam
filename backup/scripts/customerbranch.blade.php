@@ -8,7 +8,7 @@
         var id = url.substring(url.lastIndexOf('/') + 1);
         bID = id;
         table =
-        $('table.customerbranchTable').DataTable({ //user datatables
+        $('table.customerbranchTable').DataTable({ 
             "dom": 'lrtip',
             "language": {
                     "emptyTable": " "
