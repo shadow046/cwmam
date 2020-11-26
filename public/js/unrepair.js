@@ -8,6 +8,7 @@ var table;
             "language": {
                 "emptyTable": " "
             },
+            "order": [[ 0, "desc", ]],
             processing: true,
             serverSide: true,
             ajax: {

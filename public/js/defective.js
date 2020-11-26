@@ -11,7 +11,7 @@ var table;
             processing: true,
             serverSide: true,
             ajax: 'return-table',
-            
+            "order": [[ 0, "desc", ]],
             columns: [
                 { data: 'date', name:'date'},
                 { data: 'branch', name:'branch'},

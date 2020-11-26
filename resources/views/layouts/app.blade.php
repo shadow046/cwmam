@@ -198,7 +198,7 @@
             @if(Request::is('log') && auth()->user()->hasrole('Repair'))
                 <script src="{{asset('min/?f=js/home.js')}}"></script>
             @endif
-            @if(Request::is('unrepair') && auth()->user()->hasrole('Repair'))
+            @if(Request::is('unrepair') && auth()->user()->hasanyrole('Repair', 'Viewer'))
                 <script src="{{asset('min/?f=js/unrepair.js')}}"></script>
             @endif
 

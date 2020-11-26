@@ -38,6 +38,11 @@
             <li class="nav-item">
                 <a class="nav-link {{ Request::is('return') ? 'active' : '' }}" href="{{ route('return.index') }}">Return</a>
             </li>
+            @role('Viewer')
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('unrepair') ? 'active' : '' }}" href="{{ url('/unrepair') }}">Unrepairable</a>
+            </li>
+            @endrole
             @if(auth()->user()->branch->branch != 'Warehouse')
             <li class="nav-item">
                 <a class="nav-link {{ Request::is('service-unit') ? 'active' : '' }}" href="{{ route('stock.service-unit') }}">Service unit-(out)</a>
