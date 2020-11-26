@@ -48,7 +48,12 @@
                     @include('modal.warehouse.request')
                     @include('modal.warehouse.send')
                     @include('modal.warehouse.add')
-                @else
+                    @include('modal.warehouse.resched')
+                @endif
+                @if(auth()->user()->hasAnyrole('Viewer'))
+                    @include('modal.warehouse.request')
+                @endif
+                @if(!auth()->user()->hasAnyrole('Administrator', 'Encoder', 'Viewer'))
                     @include('modal.branch.request')
                     @include('modal.branch.send')
                 @endif

@@ -16,6 +16,7 @@ var r = 1;
             "language": {
                 "emptyTable": " "
             },
+            "order": [[ 5, "desc", ]],
             processing: true,
             serverSide: true,
             ajax: 'requests',
@@ -29,7 +30,40 @@ var r = 1;
             ]
         });
 
-        interval = setInterval(function(){
-            table.draw();
-        }, 30000);
+        $('#requestTable tbody').on('click', 'tr', function () {
+            var trdata = table.row(this).data();
+            var trsched = new Date(trdata.sched);
+            $('#sched').val(months[trsched.getMonth()]+' '+trsched.getDate()+', ' +trsched.getFullYear());
+            $('#date').val(trdata.created_at);
+            $('#reqno').val(trdata.request_no);
+            $('#branch').val(trdata.branch);
+            $('#name').val(trdata.reqBy);
+            $('#area').val(trdata.area);
+            $('#reqbranch').val(trdata.branch_id);
+            $('table.requestDetails').dataTable().fnDestroy();
+            $('table.schedDetails').dataTable().fnDestroy();
+            $('#printBtn').show();
+            $('table.requestDetails').hide();
+            $('#unresolveBtn').hide();
+            $('table.schedDetails').show();
+            $('table.schedDetails').DataTable({ 
+                "dom": 'rt',
+                "language": {
+                    "emptyTable": " "
+                },
+                processing: true,
+                serverSide: true,
+                ajax: "/send/"+trdata.request_no,
+                columnDefs: [
+                    {"className": "dt-center", "targets": "_all"}
+                ],
+                columns: [
+                    { data: 'items_id', name:'items_id'},
+                    { data: 'item_name', name:'item_name'},
+                    { data: 'serial', name:'serial'}
+                ]
+            });
+            $('#requestModal').modal('show');
+
+        });
     });

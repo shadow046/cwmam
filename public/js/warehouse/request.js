@@ -48,11 +48,23 @@ var r = 1;
                 $('#printBtn').show();
                 var trsched = new Date(trdata.sched);
                 $('#sched').val(months[trsched.getMonth()]+' '+trsched.getDate()+', ' +trsched.getFullYear());
+            }else if (trdata.status == 'RESCHEDULED') {
+                    $('#prcBtn').hide();
+                    $('.sched').show();
+                    $('#printBtn').show();
+                    var trsched = new Date(trdata.sched);
+                    $('#sched').val(months[trsched.getMonth()]+' '+trsched.getDate()+', ' +trsched.getFullYear());
             }else if(trdata.status == 'PENDING'){
                 $('#prcBtn').show();
                 $('.sched').hide();
                 $('#sched').val('');
                 $('#printBtn').hide();
+            }else if(trdata.status == 'INCOMPLETE'){
+                $('#prcBtn').hide();
+                $('.sched').show();
+                $('#printBtn').show();
+                var trsched = new Date(trdata.sched);
+                $('#sched').val(months[trsched.getMonth()]+' '+trsched.getDate()+', ' +trsched.getFullYear());
             }
             $('#date').val(trdata.created_at);
             $('#reqno').val(trdata.request_no);
@@ -66,6 +78,7 @@ var r = 1;
             if (trdata.status == 'PENDING') {
                 $('#printBtn').hide();
                 $('table.schedDetails').hide();
+                $('#unresolveBtn').hide();
                 $('table.requestDetails').show();
                 $('table.requestDetails').DataTable({ 
                     "dom": 'rt',
@@ -87,6 +100,52 @@ var r = 1;
                 });
             }else if(trdata.status == 'SCHEDULED'){
                 $('#printBtn').show();
+                $('table.requestDetails').hide();
+                $('#unresolveBtn').hide();
+                $('table.schedDetails').show();
+                $('table.schedDetails').DataTable({ 
+                    "dom": 'rt',
+                    "language": {
+                        "emptyTable": " "
+                    },
+                    processing: true,
+                    serverSide: true,
+                    ajax: "/send/"+trdata.request_no,
+                    columnDefs: [
+                        {"className": "dt-center", "targets": "_all"}
+                    ],
+                    columns: [
+                        { data: 'items_id', name:'items_id'},
+                        { data: 'item_name', name:'item_name'},
+                        { data: 'serial', name:'serial'}
+                    ]
+                });
+            }else if(trdata.status == 'RESCHEDULED'){
+                $('#printBtn').show();
+                $('table.requestDetails').hide();
+                $('#unresolveBtn').hide();
+                $('table.schedDetails').show();
+                $('table.schedDetails').DataTable({ 
+                    "dom": 'rt',
+                    "language": {
+                        "emptyTable": " "
+                    },
+                    processing: true,
+                    serverSide: true,
+                    ajax: "/send/"+trdata.request_no,
+                    columnDefs: [
+                        {"className": "dt-center", "targets": "_all"}
+                    ],
+                    columns: [
+                        { data: 'items_id', name:'items_id'},
+                        { data: 'item_name', name:'item_name'},
+                        { data: 'serial', name:'serial'}
+                    ]
+                });
+            }else if(trdata.status == 'INCOMPLETE'){
+                $('#printBtn').show();
+                $('#printBtn').val("RESOLVE");
+                $('#unresolveBtn').show();
                 $('table.requestDetails').hide();
                 $('table.schedDetails').show();
                 $('table.schedDetails').DataTable({ 
@@ -524,5 +583,64 @@ var r = 1;
     });
 
     $(document).on('click', '#printBtn', function(){
-        window.location.href = '/print/'+$('#reqno').val();
+        if ($('#printBtn').val() == "PRINT") {
+            window.location.href = '/print/'+$('#reqno').val();
+        }else if($('#printBtn').val() == "RESOLVE"){
+            $('#reschedModal').modal('show');
+        }
+    });
+
+    $(document).on('click', '#unresolveBtn', function(){
+        var status = "6";
+        var reqno = $('#reqno').val();
+        var stat = "resched";
+        $.ajax({
+            url: 'update',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'PUT',
+            data: { 
+                reqno: reqno,
+                stat: stat,
+                status: status
+            },
+            dataType: 'json',
+            success:function()
+            {
+                window.location.href = '/print/'+$('#reqno').val();
+            },
+            error: function (data) {
+                alert(data.responseText);
+            }
+        });
+    });
+
+    $(document).on('click', '#resched_btn', function(){
+        var datesched = $('#resched').val();
+        var reqno = $('#reqno').val();
+        var stat = "resched";
+        var status = "5";
+        $.ajax({
+            url: 'update',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'PUT',
+            data: { 
+                reqno: reqno,
+                datesched: datesched,
+                stat: stat,
+                status: status
+            },
+            dataType: 'json',
+            success:function()
+            {
+                window.location.href = '/print/'+$('#reqno').val();
+            },
+            error: function (data) {
+                alert(data.responseText);
+            }
+        });
+        
     });

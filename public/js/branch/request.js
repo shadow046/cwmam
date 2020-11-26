@@ -98,6 +98,62 @@ var y = 1;
                         style: 'multi'
                     }
                 });
+            }else if(trdata.status == 'INCOMPLETE'){
+                $('table.requestDetails').hide();
+                $('.sched').show();
+                $('table.schedDetails').show();
+                $('#sched').val(trdata.sched);
+                $('#del_Btn').hide();
+                $('#rec_Btn').show();
+                $('#msg').show();
+                $('#rec_Btn').prop('disabled', true);
+                schedtable = 
+                $('table.schedDetails').DataTable({ //user datatables
+                    "dom": 'lrtp',
+                    "language": {
+                        "emptyTable": " "
+                    },
+                    processing: true,
+                    serverSide: true,
+                    ajax: "/send/"+trdata.request_no,
+                    
+                    columns: [
+                        { data: 'items_id', name:'items_id'},
+                        { data: 'item_name', name:'item_name'},
+                        { data: 'serial', name:'serial'}
+                    ],
+                    select: {
+                        style: 'multi'
+                    }
+                });
+            }else if(trdata.status == 'RESCHEDULED'){
+                $('table.requestDetails').hide();
+                $('.sched').show();
+                $('table.schedDetails').show();
+                $('#sched').val(trdata.sched);
+                $('#del_Btn').hide();
+                $('#rec_Btn').show();
+                $('#msg').show();
+                $('#rec_Btn').prop('disabled', true);
+                schedtable = 
+                $('table.schedDetails').DataTable({ //user datatables
+                    "dom": 'lrtp',
+                    "language": {
+                        "emptyTable": " "
+                    },
+                    processing: true,
+                    serverSide: true,
+                    ajax: "/send/"+trdata.request_no,
+                    
+                    columns: [
+                        { data: 'items_id', name:'items_id'},
+                        { data: 'item_name', name:'item_name'},
+                        { data: 'serial', name:'serial'}
+                    ],
+                    select: {
+                        style: 'multi'
+                    }
+                });
             }
             $('#requestModal').modal('show');
         });
@@ -147,9 +203,11 @@ var y = 1;
 
     $(document).on('click', '#rec_Btn', function(){
         var reqno = $('#reqno').val();
-        var status = "2";
-        var stat = "ok";
-        var datesched = $('#sched').val();
+        if(trdata.status == "SCHEDULE"){
+            var status = "2";
+        }else if(trdata.status == "RESCHEDULE"){
+            var status = "6";
+        }
         var datas = schedtable.rows( { selected: true } ).data();
         var id = [];
         if(datas.length > 0){
@@ -166,7 +224,8 @@ var y = 1;
                 async: false,
                 data: {
                     reqno : reqno,
-                    id: id
+                    id: id,
+                    status: status
                 },
                 success: function(data){
                     table.draw();

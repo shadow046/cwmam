@@ -145,14 +145,14 @@ class StockRequestController extends Controller
     {
         $user = auth()->user()->branch->id;
         if (auth()->user()->branch->branch != 'Warehouse'){
-            $stock = StockRequest::wherein('status',  ['0', '1'])
+            $stock = StockRequest::wherein('status',  ['0', '1', '4', '5'])
                 ->where('branch_id', $user)
                 ->get();
         }else if(auth()->user()->hasRole('Viewer')){
-            $stock = StockRequest::wherein('status',  ['0', '1'])
+            $stock = StockRequest::wherein('status',  ['0', '1', '4', '5', '6'])
                 ->get();
         }else{
-            $stock = StockRequest::wherein('status',  ['0', '1'])
+            $stock = StockRequest::wherein('status',  ['0', '1', '4', '5'])
                 ->get();
         }
         
@@ -169,6 +169,12 @@ class StockRequestController extends Controller
                 return 'PENDING';
             }else if ($request->status == 1){
                 return 'SCHEDULED';
+            }else if ($request->status == 4){
+                return 'INCOMPLETE';
+            }else if ($request->status == 5){
+                return 'RESCHEDULED';
+            }else if ($request->status == 6){
+                return 'UNRESOLVED';
             }
         })
 
@@ -280,10 +286,12 @@ class StockRequestController extends Controller
             ->where('request_no', $request->reqno)
             ->first();
         if ($preparedItem) {
+            $reqno = StockRequest::where('request_no', $request->reqno)->first();
+            $reqno->status = 4;
+            $reqno->save();
             $data = '1';
         }else{
             $reqno = StockRequest::where('request_no', $request->reqno)->first();
-            //dd($reqno);
             $reqno->status = 2;
             $reqno->save();
         }
@@ -317,6 +325,18 @@ class StockRequestController extends Controller
             });
 
             $data = "true";
+        }else if($request->stat == 'resched'){
+            if ($request->status == '5') {
+                $reqno = StockRequest::where('request_no', $request->reqno)->first();
+                $reqno->status = $request->status;
+                $reqno->schedule = $request->datesched;
+                $data = $reqno->save();
+            }else if($request->status == '6') {
+                $reqno = StockRequest::where('request_no', $request->reqno)->first();
+                $reqno->status = $request->status;
+                $data = $reqno->save();
+            }
+            
         }else{
             $reqbranch= StockRequest::where('request_no', $request->reqno)->where('branch_id', $request->branchid)->first();
             $item = Warehouse::where('status', 'in')
@@ -342,7 +362,6 @@ class StockRequestController extends Controller
             $log->activity = "Schedule $scheditem->item on $sched->schedule with Request no. $request->reqno ";
             $log->user_id = auth()->user()->id;
             $data = $log->save();
-            
         }
         return response()->json($data);
     }

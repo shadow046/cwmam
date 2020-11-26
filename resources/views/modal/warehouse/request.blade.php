@@ -3,9 +3,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title w-100 text-center">STOCK REQUEST</h6>
-                <button class="close cancel" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                @if (auth()->user()->hasAnyrole('Viewer'))
+                    <button class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                @endif
+                @if (!auth()->user()->hasAnyrole('Viewer'))
+                    <button class="close cancel" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                @endif
                 <button hidden class="closes" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -79,6 +86,7 @@
             <div class="modal-footer">
                 <input type="button" class="btn btn-primary mr-auto" id="prcBtn" class="button" value="Proceed">
                 <input type="button" id="printBtn" class="btn btn-primary mr-auto" value="PRINT">
+                <input type="button" id="unresolveBtn" class="btn btn-primary mr-auto" value="UNRESOLVE">
                 <input type="button" class="btn btn-primary" data-dismiss="modal" value="Close">
             </div>
             @endif
