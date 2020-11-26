@@ -17,6 +17,7 @@ var r = 1;
             "language": {
                 "emptyTable": " "
             },
+            "order": [[ 5, "asc", ]],
             processing: true,
             serverSide: true,
             ajax: {

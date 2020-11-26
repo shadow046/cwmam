@@ -64,7 +64,7 @@
                     </thead>
                 </table>
                 <br>
-                <table class="table schedDetails" style="width:100%">
+                <table class="table schedDetails" id="schedDetails" style="width:100%">
                     <thead class="thead-dark">
                         <th>Item Code</th>
                         <th>Description</th>
@@ -73,6 +73,7 @@
                 </table>
             </div>
             <div class="modal-footer">
+                <span id="msg">Please select an item to receive.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <input type="button" class="btn btn-primary del_Btn" id="del_Btn" reqno="0" class="button" value="Delete">
                 <input type="button" class="btn btn-primary rec_Btn" id="rec_Btn" class="button" value="Received">
             </div>

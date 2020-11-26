@@ -16,8 +16,8 @@ var y = 1;
         $('table.requestTable').DataTable({ //user datatables
             "dom": 'lrtip',
             "language": {
-                    "emptyTable": " "
-                },
+                "emptyTable": " "
+            },
             processing: true,
             serverSide: true,
             ajax: 'requests',
@@ -52,6 +52,7 @@ var y = 1;
                 $('table.requestDetails').show();
                 $('.sched').hide();
                 $('#del_Btn').show();
+                $('#msg').hide();
                 $('#rec_Btn').hide();
                 $('#del_Btn').attr('reqno', trdata.request_no);
                 $('table.requestDetails').DataTable({ //user datatables
@@ -76,9 +77,11 @@ var y = 1;
                 $('#sched').val(trdata.sched);
                 $('#del_Btn').hide();
                 $('#rec_Btn').show();
+                $('#msg').show();
+                $('#rec_Btn').prop('disabled', true);
                 schedtable = 
                 $('table.schedDetails').DataTable({ //user datatables
-                    "dom": 'lrtip',
+                    "dom": 'lrtp',
                     "language": {
                         "emptyTable": " "
                     },
@@ -98,8 +101,28 @@ var y = 1;
             }
             $('#requestModal').modal('show');
         });
-    });
 
+        $('table.schedDetails').DataTable().on('select', function () {
+            var rowselected = schedtable.rows( { selected: true } ).data();
+            if(rowselected.length > 0){
+                $('#rec_Btn').prop('disabled', false);
+            }else{
+                $('#rec_Btn').prop('disabled', true);
+
+            }
+        });
+        $('table.schedDetails').DataTable().on('deselect', function () {
+            var rowselected = schedtable.rows( { selected: true } ).data();
+            if(rowselected.length > 0){
+                $('#rec_Btn').prop('disabled', false);
+            }else{
+                $('#rec_Btn').prop('disabled', true);
+
+            }
+        });
+        
+    });
+    
     $(document).on('click', '#del_Btn', function(){
         var reqno = $(this).attr('reqno');
         $.ajax({
