@@ -4,7 +4,7 @@
     {
         var branchid = $('#branchid').attr('branchid');
         var table =
-        $('table.sUnitTable').DataTable({ //user datatables
+        $('table.sUnitTable').DataTable({ 
             "dom": 'lrtip',
             "language": {
                 "emptyTable": " "

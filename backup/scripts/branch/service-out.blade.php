@@ -255,7 +255,7 @@
         $('#replaceselectcustomer').val($('#replacementcustomer').val());
         $('#replaceselectclient').val($('#replacementclient').val());
         var replace1Table =
-        $('table.replacement1Details').DataTable({ //user datatables
+        $('table.replacement1Details').DataTable({ 
             "dom": 'rt',
             "language": {
                 "emptyTable": " "
@@ -292,7 +292,6 @@
     });
 
     $(document).on('change', '#repdesc1', function(){
-        //var codeOp = " ";
         var id = $(this).val();
         var serialOp = " ";
         $.ajax({
@@ -358,7 +357,6 @@
                 },
                 success:function(data)
                 {
-                    //console.log(data);
                     op+=' ';
                     for(var i=0;i<data.length;i++){
                         op+='<option data-value="'+data[i].customer_id+'" value="'+data[i].customer.toUpperCase()+'"></option>'; 
@@ -374,7 +372,6 @@
     $(document).on('keyup', '#replacementcustomer', function(){
         var id = $(this).val();
         var op = " ";
-        //$('#replacementcustomer-id').val('');
         if ($('#replacementclient-id').val()) {
             var client = $('#replacementclient-id').val();
         }else{
@@ -393,7 +390,6 @@
                 },
                 success:function(data)
                 {
-                    //console.log(data);
                     op+=' ';
                     for(var i=0;i<data.length;i++){
                         op+='<option data-value="'+data[i].customer_branch_id+'" value="'+data[i].customer_branch.toUpperCase()+'"></option>';

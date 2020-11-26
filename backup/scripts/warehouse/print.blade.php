@@ -3,7 +3,7 @@
     {
         var reqno = $('#reqno').val();
         var table =
-        $('table.itemDetails').DataTable({ //user datatables
+        $('table.itemDetails').DataTable({ 
             "drawCallback": function( settings ) {
                 $("#printBtn").click();
             },
@@ -18,8 +18,7 @@
             ajax: { 
                 url: "/getprint/"+reqno,
                 error: function(data, error, errorThrown) {
-                    if(data.status == 401) {
-                        // session timed out | not authenticated
+                    if(data.status == 401) t | not authenticated
                         window.location.href = '/login';
                     }
                 }

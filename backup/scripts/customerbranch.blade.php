@@ -24,10 +24,7 @@
             ]
         });
 
-         //hide search
-            
-
-        $('#search-ic').on("click", function (event) { //clear search box on hide
+        $('#search-ic').on("click", function (event) { 
             for ( var i=0 ; i<=3 ; i++ ) {
                 
                 $('.fl-'+i).val('').change();
@@ -39,7 +36,7 @@
             
         });
 
-        $('.filter-input').keyup(function() { //search columns
+        $('.filter-input').keyup(function() { 
             table.column( $(this).data('column'))
                 .search( $(this).val())
                 .draw();

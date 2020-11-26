@@ -59,9 +59,7 @@ class DefectiveController extends Controller
         }else{
             $data = $defective;
         }
-        
 
-        //dd($data);
         return DataTables::of($data)
         
         ->addColumn('date', function (Defective $data){
@@ -69,9 +67,7 @@ class DefectiveController extends Controller
         })
 
         ->addColumn('category', function (Defective $data){
-            //dd($data->itemid);
             $cat = Category::where('id', $data->category_id)->first();
-            //dd($data);
             return $cat->category;
         })
 
@@ -87,7 +83,6 @@ class DefectiveController extends Controller
             ->join('branches', 'defectives.branch_id', '=', 'branches.id')
             ->get();
         
-        //dd($data);
         return DataTables::of($repair)
         
         ->addColumn('date', function (Defective $data){
@@ -95,9 +90,7 @@ class DefectiveController extends Controller
         })
 
         ->addColumn('category', function (Defective $data){
-            //dd($data->itemid);
             $cat = Category::where('id', $data->category_id)->first();
-            //dd($data);
             return $cat->category;
         })
         

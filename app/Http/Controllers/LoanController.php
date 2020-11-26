@@ -110,11 +110,11 @@ class LoanController extends Controller
             $allemails[]=$email->email;
         }
         $allemails = array_diff($allemails, array($branch->email));
-        Mail::send('approved', ['reqitem'=>$item->item, 'serial'=>$stock->serial, 'branch'=>$branch],function( $message) use ($allemails, $branch){ //email body
-            $message->to($branch->email, $branch->head)->subject //email and receivers name
-                (auth()->user()->branch->branch); //subject
-            $message->from('ideaservmailer@gmail.com', 'NO REPLY - '.auth()->user()->branch->branch); //email and senders name
-            $message->cc($allemails); //others receivers email
+        Mail::send('approved', ['reqitem'=>$item->item, 'serial'=>$stock->serial, 'branch'=>$branch],function( $message) use ($allemails, $branch){ 
+            $message->to($branch->email, $branch->head)->subject 
+                (auth()->user()->branch->branch); 
+            $message->from('ideaservmailer@gmail.com', 'NO REPLY - '.auth()->user()->branch->branch); 
+            $message->cc($allemails); 
         });
         $data = $add->save();
 
@@ -127,9 +127,7 @@ class LoanController extends Controller
             ->where('status', $request->id)
             ->where('id_branch', $request->branch)
             ->first();
-        //dd($update);
         $item = Item::where('id', $update->items_id)->first();
-        //dd($item);
         $branch = Branch::where('id', $update->id_branch)->first();
         $update->status = 'in';
         $update->user_id = auth()->user()->id;
@@ -147,7 +145,6 @@ class LoanController extends Controller
             ->where('status', 'loan'.$request->id)
             ->where('branch_id', $request->branch)
             ->first();
-            //dd($serial->serial);
         return response()->json($serial);
     }
 

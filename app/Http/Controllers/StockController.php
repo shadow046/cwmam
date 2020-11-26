@@ -362,11 +362,11 @@ class StockController extends Controller
         }
         $allemails = array_diff($allemails, array($branch->email));
 
-        Mail::send('loan', ['reqitem'=>$item->item, 'branch'=>$branch],function( $message) use ($allemails, $branch){ //email body
-            $message->to($branch->email, $branch->head)->subject //email and receivers name
-                (auth()->user()->branch->branch); //subject
-            $message->from('ideaservmailer@gmail.com', 'NO REPLY - '.auth()->user()->branch->branch); //email and senders name
-            $message->cc($allemails); //others receivers email
+        Mail::send('loan', ['reqitem'=>$item->item, 'branch'=>$branch],function( $message) use ($allemails, $branch){ 
+            $message->to($branch->email, $branch->head)->subject 
+                (auth()->user()->branch->branch); 
+            $message->from('ideaservmailer@gmail.com', 'NO REPLY - '.auth()->user()->branch->branch); 
+            $message->cc($allemails); 
         });
         $log = new UserLog;
         $log->activity = "Request $item->item to $branch->branch." ;
@@ -522,7 +522,6 @@ class StockController extends Controller
         $update->save();
         $pullout = Pullout::where('id', $request->repdata)->first();
         $item = Item::where('id', $pullout->items_id)->first();
-        //dd($item->category_id);
         $defective = new Defective;
         $defective->branch_id = auth()->user()->branch->id;
         $defective->user_id = auth()->user()->branch->id;

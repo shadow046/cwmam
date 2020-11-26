@@ -9,7 +9,7 @@
     {
         branchid = $('#branchid').attr('branchid');
         table =
-        $('table.stockTable').DataTable({ //user datatables
+        $('table.stockTable').DataTable({ 
             "dom": 'lrtip',
             "language": {
                 "emptyTable": " "
@@ -24,9 +24,7 @@
             ]
         });
 
-         //hide search
-
-        $('#search-ic').on("click", function () { //clear search box on hide
+        $('#search-ic').on("click", function () { 
             for ( var i=0 ; i<=6 ; i++ ) {
                 
                 $('.fl-'+i).val('').change();
@@ -38,7 +36,7 @@
             
         });
 
-        $('.filter-input').keyup(function() { //search columns
+        $('.filter-input').keyup(function() { 
             table.column( $(this).data('column'))
                 .search( $(this).val())
                 .draw();
@@ -269,7 +267,6 @@
                 },
                 success:function(data)
                 {
-                    //console.log(data);
                     op+=' ';
                     for(var i=0;i<data.length;i++){
                         op+='<option data-value="'+data[i].id+'" value="'+data[i].customer.toUpperCase()+'"></option>';
@@ -302,7 +299,6 @@
                 },
                 success:function(data)
                 {
-                    //console.log(data);
                     op+=' ';
                     for(var i=0;i<data.length;i++){
                         op+='<option data-value="'+data[i].id+'" value="'+data[i].customer_branch.toUpperCase()+'"></option>';
@@ -322,7 +318,7 @@
         $('table.stockDetails').dataTable().fnDestroy();
         $('#head').text(trdata.category);
         stock = 
-        $('table.stockDetails').DataTable({ //user datatables
+        $('table.stockDetails').DataTable({ 
             "dom": 'rt',
             "language": {
                 "emptyTable": "No Stock Available for this Item"
