@@ -251,25 +251,42 @@ class StockRequestController extends Controller
 
     public function received(Request $request)
     {
-        $preparedItems = PreparedItem::select('prepared_items.items_id as itemid', 'prepared_items.serial as serial')
-            ->join('items', 'prepared_items.items_id', '=', 'items.id')
-            //->join('categories', 'items.category_id', '=', 'categories.id')
-            ->where('branch_id', auth()->user()->branch->id)
-            ->where('request_no', $request->reqno)
-            ->get();
-        foreach ($preparedItems as $preparedItem) {
-            $items = Item::where('id', $preparedItem->itemid)->first();
+        $data = '0';
+        foreach ($request->id as $del) {
+            $preparedItems = PreparedItem::select('prepared_items.items_id as itemid', 'prepared_items.serial as serial')
+                ->join('items', 'prepared_items.items_id', '=', 'items.id')
+                //->join('categories', 'items.category_id', '=', 'categories.id')
+                ->where('branch_id', auth()->user()->branch->id)
+                ->where('request_no', $request->reqno)
+                ->where('prepared_items.id', $del)
+                ->first();
+            $prepared = PreparedItem::where('branch_id', auth()->user()->branch->id)
+                ->where('request_no', $request->reqno)
+                ->where('prepared_items.id', $del)
+                ->first();
+            $items = Item::where('id', $preparedItems->itemid)->first();
             //dd($items);
             $stock = new Stock;
             $stock->category_id = $items->category_id;
             $stock->branch_id = auth()->user()->branch->id;
-            $stock->items_id = $preparedItem->itemid;
+            $stock->items_id = $preparedItems->itemid;
             $stock->user_id = auth()->user()->id;
-            $stock->serial = $preparedItem->serial;
+            $stock->serial = $preparedItems->serial;
             $stock->status = 'in';
-            $data = $stock->save();
+            $stock->save();
+            $prepared->delete();
         }
-            
+        $preparedItem = PreparedItem::where('branch_id', auth()->user()->branch->id)
+            ->where('request_no', $request->reqno)
+            ->first();
+        if ($preparedItem) {
+            $data = '1';
+        }else{
+            $reqno = StockRequest::where('request_no', $request->reqno)->first();
+            //dd($reqno);
+            $reqno->status = 2;
+            $reqno->save();
+        }
         return response()->json($data);
     }
 

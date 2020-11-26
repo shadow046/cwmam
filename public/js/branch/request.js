@@ -1,6 +1,7 @@
 var y = 1;
     var interval = null;
     var table;
+    var schedtable;
     $(document).ready(function()
     {
         var d = new Date();
@@ -75,6 +76,7 @@ var y = 1;
                 $('#sched').val(trdata.sched);
                 $('#del_Btn').hide();
                 $('#rec_Btn').show();
+                schedtable = 
                 $('table.schedDetails').DataTable({ //user datatables
                     "dom": 'lrtip',
                     "language": {
@@ -83,11 +85,15 @@ var y = 1;
                     processing: true,
                     serverSide: true,
                     ajax: "/send/"+trdata.request_no,
+                    
                     columns: [
                         { data: 'items_id', name:'items_id'},
                         { data: 'item_name', name:'item_name'},
                         { data: 'serial', name:'serial'}
-                    ]
+                    ],
+                    select: {
+                        style: 'multi'
+                    }
                 });
             }
             $('#requestModal').modal('show');
@@ -121,49 +127,33 @@ var y = 1;
         var status = "2";
         var stat = "ok";
         var datesched = $('#sched').val();
-        console.log(datesched);
-        $.ajax({
-            url: 'update',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            dataType: 'json',
-            type: 'PUT',
-            data: {
-                reqno : reqno,
-                status: status,
-                datesched: datesched,
-                stat: stat                    
-            },
-            success: function(){
-                
-            },
-            error: function (data,error, errorThrown) {
-                alert(data.responseText);
-            }
-        });
-
-        $.ajax({
-            url: 'storerreceived',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            dataType: 'json',
-            type: 'POST',
-            data: {
-                reqno : reqno     
-            },
-            success: function(){
-                table.draw();
-                interval = setInterval(function(){
+        var datas = schedtable.rows( { selected: true } ).data();
+        var id = [];
+        if(datas.length > 0){
+            for(var i=0;i<datas.length;i++){
+                id.push(datas[i].id);
+            }    
+            $.ajax({
+                url: 'storerreceived',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                type: 'POST',
+                async: false,
+                data: {
+                    reqno : reqno,
+                    id: id
+                },
+                success: function(data){
                     table.draw();
-                }, 30000);
-                $("#requestModal .close").click();
-            },
-            error: function (data,error, errorThrown) {
-                alert(data.responseText);
-            }
-        });
+                    $("#requestModal .close").click();
+                },
+                error: function (data,error, errorThrown) {
+                    alert(data.responseText);
+                }
+            });
+        }
     });
 
     $(document).on('click', '#reqBtn', function(){
