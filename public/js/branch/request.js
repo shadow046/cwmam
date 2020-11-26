@@ -2,6 +2,7 @@ var y = 1;
     var interval = null;
     var table;
     var schedtable;
+    var dtdata;
     $(document).ready(function()
     {
         var d = new Date();
@@ -36,7 +37,7 @@ var y = 1;
         $('#requestTable tbody').on('click', 'tr', function () { //show branch details in modal
             clearInterval(interval);
             var trdata = table.row(this).data();
-            var dtdata = $('#requestTable tbody tr:eq(0)').data();
+            dtdata = table.row(this).data();;
             //$('#requestModal').modal('show');
             
             $('#date').val(trdata.created_at);
@@ -203,9 +204,9 @@ var y = 1;
 
     $(document).on('click', '#rec_Btn', function(){
         var reqno = $('#reqno').val();
-        if(trdata.status == "SCHEDULE"){
+        if(dtdata.status == "SCHEDULE"){
             var status = "2";
-        }else if(trdata.status == "RESCHEDULE"){
+        }else if(dtdata.status == "RESCHEDULE"){
             var status = "6";
         }
         var datas = schedtable.rows( { selected: true } ).data();
@@ -258,17 +259,25 @@ var y = 1;
         //$('.add_item').on('click', function(){ //show user/branch modal
             var rowcount = $(this).attr('btn_id');
             if ($(this).val() == 'Add Item') {
-                if($('#qty'+rowcount).val() != 0 && $('#purpose'+rowcount).val()){
-                    y++;
-                    var additem = '<div class="row no-margin" id="row'+y+'"><div class="col-md-2 form-group"><select id="category'+y+'" style="color: black;" class="form-control category" row_count="'+y+'"></select></div><div class="col-md-2 form-group"><select id="item'+y+'" style="color: black;" class="form-control item" row_count="'+y+'"><option selected disabled>select item code</option></select></div><div class="col-md-3 form-group"><select id="desc'+y+'" class="form-control desc" style="color: black;" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><select id="purpose'+y+'" class="form-control purpose" style="color: black;" row_count="'+y+'"><option selected disabled>select purpose</option><option value="1">Service Unit</option><option value="2">Replacement</option><option value="3">Stock</option></select></div><div class="col-md-2 form-group"><input type="number" min="0" class="form-control" style="color: black; width: 6em" name="qty'+y+'" id="qty'+y+'" placeholder="0" disabled></div><div class="col-md-1 form-group"><input type="button" class="add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
-                    $(this).val('Remove');
-                    $('#category'+ rowcount).prop('disabled', true);
-                    $('#item'+ rowcount).prop('disabled', true);
-                    $('#desc'+ rowcount).prop('disabled', true);
-                    $('#qty'+ rowcount).prop('disabled', true);
-                    $('#purpose'+ rowcount).prop('disabled', true);
-                    $('#reqfield').append(additem);
-                    $('#category'+ rowcount).find('option').clone().appendTo('#category'+y);
+                if($('#qty'+rowcount).val() != 0){
+                    if($('#purpose'+rowcount).val()){
+                        if($('#item'+rowcount).val()){
+                            y++;
+                            var additem = '<div class="row no-margin" id="row'+y+'"><div class="col-md-2 form-group"><select id="category'+y+'" style="color: black;" class="form-control category" row_count="'+y+'"></select></div><div class="col-md-2 form-group"><select id="item'+y+'" style="color: black;" class="form-control item" row_count="'+y+'"><option selected disabled>select item code</option></select></div><div class="col-md-3 form-group"><select id="desc'+y+'" class="form-control desc" style="color: black;" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><select id="purpose'+y+'" class="form-control purpose" style="color: black;" row_count="'+y+'"><option selected disabled>select purpose</option><option value="1">Service Unit</option><option value="2">Replacement</option><option value="3">Stock</option></select></div><div class="col-md-2 form-group"><input type="number" min="0" class="form-control" style="color: black; width: 6em" name="qty'+y+'" id="qty'+y+'" placeholder="0" disabled></div><div class="col-md-1 form-group"><input type="button" class="add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
+                            $(this).val('Remove');
+                            $('#category'+ rowcount).prop('disabled', true);
+                            $('#item'+ rowcount).prop('disabled', true);
+                            $('#desc'+ rowcount).prop('disabled', true);
+                            $('#qty'+ rowcount).prop('disabled', true);
+                            $('#purpose'+ rowcount).prop('disabled', true);
+                            $('#reqfield').append(additem);
+                            $('#category'+ rowcount).find('option').clone().appendTo('#category'+y);
+                        }else{
+                            alert("Please Select Item!!!");
+                        }
+                    }else{
+                        alert("Please Select Purpose!!!");
+                    }
                 }else{
                     alert("Invalid Quantity value!!!");
                 }
