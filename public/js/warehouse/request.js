@@ -59,19 +59,22 @@ var r = 1;
                 $('#prcBtn').hide();
                 $('.sched').show();
                 $('#printBtn').show();
+                $('#save_Btn').hide();
                 var trsched = new Date(trdata.sched);
                 $('#sched').val(months[trsched.getMonth()]+' '+trsched.getDate()+', ' +trsched.getFullYear());
             }else if (trdata.status == 'RESCHEDULED') {
-                    $('#prcBtn').hide();
-                    $('.sched').show();
-                    $('#printBtn').show();
-                    var trsched = new Date(trdata.sched);
-                    $('#sched').val(months[trsched.getMonth()]+' '+trsched.getDate()+', ' +trsched.getFullYear());
+                $('#prcBtn').hide();
+                $('.sched').show();
+                $('#printBtn').show();
+                $('#save_Btn').hide();
+                var trsched = new Date(trdata.sched);
+                $('#sched').val(months[trsched.getMonth()]+' '+trsched.getDate()+', ' +trsched.getFullYear());
             }else if(trdata.status == 'PENDING'){
                 $('#prcBtn').show();
                 $('.sched').hide();
                 $('#sched').val('');
                 $('#printBtn').hide();
+                $('#save_Btn').show();
             }else if(trdata.status == 'INCOMPLETE'){
                 $('#prcBtn').hide();
                 $('.sched').show();
@@ -237,6 +240,51 @@ var r = 1;
         $('#sbranch').val($('#branch').val());
         $('#sname').val($('#name').val());
         $('#sendModal').modal('show');
+        $.ajax({
+            url: 'prepitem',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            type: 'get',
+            async:false,
+            data: {
+                reqno: reqno,
+            },
+            success:function(data)
+            {
+                if (data == 1) {
+                    $('#preptable').show();
+                    $('#prepitem').show();
+                    $('table.prepDetails').dataTable().fnDestroy();
+                    $('table.prepDetails').DataTable({ 
+                        "dom": 'rtp',
+                        "language": {
+                            "emptyTable": " "
+                        },
+                        processing: true,
+                        serverSide: true,
+                        ajax: "/requests/"+$('#sreqno').val(),
+                        columnDefs: [
+                            {"className": "dt-body-center", "targets": "_all"}
+                        ],
+                        columns: [
+                            { data: 'items_id', name:'items_id'},
+                            { data: 'item_name', name:'item_name'},
+                            { data: 'quantity', name:'quantity'},
+                            { data: 'purpose', name:'purpose'}
+                        ]
+                    });
+                }else{
+                    $('#preptable').hide();
+                    $('#prepitem').hide();
+                }
+            },
+            error: function (data,error, errorThrown) {
+                alert(data.responseText);
+            }
+        });
+        
         var reqno = $('#sreqno').val();
         var x = 1;
         var catop = " ";
@@ -255,7 +303,7 @@ var r = 1;
         }
         $('table.sendDetails').dataTable().fnDestroy();
         $('table.sendDetails').DataTable({ 
-            "dom": 'rt',
+            "dom": 'rtp',
             "language": {
                 "emptyTable": " "
             },
@@ -417,12 +465,9 @@ var r = 1;
     });
     
 
-    $(document).on('click', '.sub_Btn', function(e){
-        e.preventDefault();
+    $(document).on('click', '.sub_Btn', function(){
         var cat = "";
         var item = "";
-        var desc = "";
-        var qty = "";
         var stat = "notok";
         var reqno = $('#sreqno').val();
         var check = 1;
@@ -480,7 +525,56 @@ var r = 1;
         }
     });
 
+    $(document).on('click', '#save_Btn', function(){
+        if (y == 1) {
+            alert('Add Item/s');
+            return false;
+        }
+        var cat = "";
+        var item = "";
+        var reqno = $('#sreqno').val();
+        var check = 1;
+        for(var q=1;q<=y;q++){
+            if ($('#row'+q).is(":visible")) {
+                if ($('.add_item[btn_id=\''+q+'\']').val() == 'Remove') {
+                    check++;
+                    cat = $('#category'+q).val();
+                    item = $('#item'+q).val();
+                    desc = $('#desc'+q).val();
+                    serial = $('#serial'+q).val();
+                    branchid = $('#reqbranch').val();
+                    $.ajax({
+                        url: 'update',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        dataType: 'json',
+                        type: 'PUT',
+                        async: false,
+                        data: {
+                            item: item,
+                            serial: serial,
+                            reqno: reqno,
+                            branchid: branchid
+                        },
+                        error: function (data) {
+                            alert(data.responseText);
+                            return false;
+                        }
+                    });
+                }
+            }
+        }
+        if (q == y) {
+            if (check > 1) {
+                window.location.href = '/request';
+            }
+        }
+    });
+
+
     $(document).on('change', '.desc', function(){
+        
         var count = $(this).attr('row_count');
         var id = $(this).val();
         var stockCount = 0;
@@ -501,7 +595,7 @@ var r = 1;
             }
         }
 
-        function selectItem(stock1) {
+        function selectItem() {
             $.ajax({
                 type:'get',
                 url:'getstock',
