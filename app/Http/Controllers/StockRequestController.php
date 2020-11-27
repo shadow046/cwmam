@@ -255,6 +255,21 @@ class StockRequestController extends Controller
         return response()->json($data);
     }
 
+    public function prepitem(Request $request)
+    {
+        $preparedItem = PreparedItem::where('branch_id', auth()->user()->branch->id)
+            ->where('request_no', $request->reqno)
+            ->first();
+
+        if ($preparedItem) {
+            $data = '1';
+        }else{
+            $data = '0';
+        }
+
+        return response()->json($data);
+
+    }
     public function received(Request $request)
     {
         $data = '0';

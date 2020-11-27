@@ -59,6 +59,18 @@
                             <th>Purpose</th>
                         </thead>
                     </table>
+                    <div id="prepitem">
+                        <h5 class="modal-title w-100 text-center">PREPARED ITEMS</h5>
+                    </div>
+                    <div id="preptable">
+                        <table class="table prepDetails" id="prepDetails" style="width:100%">
+                            <thead class="thead-dark">
+                                <th>Item Code</th>
+                                <th>Description</th>
+                                <th>Serial</th>
+                            </thead>
+                        </table>
+                    </div>
             </div>
 
             <div class="modal-header">
@@ -95,6 +107,7 @@
             </div>
             <hr>
             <div class="modal-footer">
+                <input type="button" class="btn btn-primary save_Btn mr-auto" id="save_Btn" class="button" value="Save">
                 <input type="button" class="btn btn-primary cancel" value="Cancel">
                 <input type="button" class="btn btn-primary sub_Btn" id="sub_Btn" class="button" value="Submit">
             </div>
