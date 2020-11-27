@@ -9,10 +9,10 @@
             <div class="modal-body">
                 <div class="row no-margin">
                     <div class="col-md-8 form-group">
-                        <input type="text" id="resched" class="form-control" >
+                        <input type="text" id="resched" class="form-control" readonly="readonly">
                     </div>
                     <div class="col-md-1 form-group">
-                        <input type="button" id="resched_btn" class="btn btn-xs btn-primary" value="SAVE">
+                        <input type="button" id="resched_btn" class="btn btn-xs btn-primary" value="SAVE" >
                     </div>
                 </div>
             </div>

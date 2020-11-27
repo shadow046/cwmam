@@ -13,15 +13,15 @@
                     <div class="row no-margin">
                         <input type="text" hidden id="reqbranch">
                         <div class="col-md-6 form-group row">
-                            <label for="bname" class="col-md-5 col-form-label text-md-right">Date requested:</label>
+                            <label for="bname" style="color: black" class="col-md-5 col-form-label text-md-right">Date requested:</label>
                             <div class="col-md-7">
-                                <input type="text" class="form-control form-control-sm " name="date" id="sdate" disabled>
+                                <input type="text" style="color: black" class="form-control form-control-sm " name="date" id="sdate" disabled>
                             </div>
                         </div>
                         <div class="col-md-6 form-group row">
                             <label for="reqno" class="col-md-4 col-form-label text-md-right">Request no.:</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control form-control-sm " name="reqno" id="sreqno" placeholder="1-001" disabled>
+                                <input type="text" style="color: black" class="form-control form-control-sm " name="reqno" id="sreqno" placeholder="1-001" disabled>
                             </div>
                         </div>
                     </div>
@@ -29,13 +29,13 @@
                         <div class="col-md-6 form-group row">
                             <label for="branch" class="col-md-5 col-form-label text-md-right">Branch name:</label>
                             <div class="col-md-7">
-                                <input type="text" class="form-control form-control-sm " name="branch" id="sbranch" value="{{ auth()->user()->branch->branch }}" disabled>
+                                <input type="text" style="color: black" class="form-control form-control-sm " name="branch" id="sbranch" value="{{ auth()->user()->branch->branch }}" disabled>
                             </div>
                         </div>
                         <div class="col-md-6 form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">Requested by:</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control form-control-sm " name="name" id="sname" value="{{ auth()->user()->name }}" disabled>
+                                <input type="text" style="color: black" class="form-control form-control-sm " name="name" id="sname" value="{{ auth()->user()->name }}" disabled>
                             </div>
                         </div>
 
@@ -44,7 +44,7 @@
                         <div class="col-md-6 form-group row">
                             <label class="col-md-5 col-form-label text-md-right">Date schedule:</label>
                             <div class="col-md-7">
-                                <input type="text" class="form-control form-control-sm datepicker" name="datesched" id="datesched" readonly="readonly" autocomplete="off">
+                                <input type="text" style="color: black" class="form-control form-control-sm datepicker" name="datesched" id="datesched" readonly="readonly" autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -67,26 +67,26 @@
             <div class="modal-body" id="reqfield">
                 <div class="row no-margin" id="row1">
                     <div class="col-md-2 form-group">
-                        <select id="category1" class="form-control category" row_count="1">
+                        <select id="category1" style="color: black" class="form-control category" row_count="1">
                             <option selected disabled>select category</option>
 
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
-                        <select id="item1" class="form-control item" row_count="1">
+                        <select id="item1" style="color: black" class="form-control item" row_count="1">
                             <option selected disabled>select item code</option>
                         </select>
                     </div>
                     <div class="col-md-3 form-group">
-                        <select id="desc1" class="form-control desc" row_count="1">
+                        <select id="desc1" style="color: black" class="form-control desc" row_count="1">
                             <option selected disabled>select description</option>
                         </select>
                     </div>
                     <div class="col-md-2 form-group">
-                        <input type="text" class="form-control serial" row_count="1" name="serial1" id="serial1" placeholder="input serial">
+                        <input type="text" style="color: black" class="form-control serial" row_count="1" name="serial1" id="serial1" placeholder="input serial">
                     </div>
                     <div class="col-md-2 form-group">
-                        <input type="number" class="form-control" row_count="1" name="stock1" id="stock1" placeholder="0" style="width: 6em" disabled>
+                        <input type="number" style="color: black" class="form-control" row_count="1" name="stock1" id="stock1" placeholder="0" style="width: 6em" disabled>
                     </div>
                     <div class="col-md-1 form-group">
                         <input type="button" class="add_item btn btn-xs btn-primary" btn_id="1" value="Add Item">

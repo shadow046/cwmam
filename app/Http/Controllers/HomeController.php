@@ -49,7 +49,7 @@ class HomeController extends Controller
         }else if (auth()->user()->hasrole('Repair')){
             return view('pages.warehouse.return', compact('title'));
         }else{
-            $stockreq = StockRequest::wherein('status', ['0', '1'])->count();
+            $stockreq = StockRequest::wherein('status', ['0', '1', '4', '5'])->count();
             $units = Warehouse::where('status', 'in')->count();
             $returns = Defective::where('status', 'For receiving')->count();
             return view('pages.home', compact('stockreq', 'units', 'returns', 'title'));
