@@ -118,10 +118,6 @@
             <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
             <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
             <script type="text/javascript" src="{{asset('js/moment.min.js')}}"></script>
-<<<<<<< HEAD
-=======
-
->>>>>>> 4a9f1592e02e78c37bfb4897410f7b99c7aa02ab
             
             @if(Request::is('user'))
                 <script src="{{asset('min/?f=js/warehouse/user.js')}}"></script>
