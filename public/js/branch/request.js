@@ -201,10 +201,10 @@ var y = 1;
 
     $(document).on('click', '#rec_Btn', function(){
         var reqno = $('#reqno').val();
-        if(dtdata.status == "SCHEDULE"){
+        if(dtdata.status == "SCHEDULED"){
             var status = "2";
-        }else if(dtdata.status == "RESCHEDULE"){
-            var status = "6";
+        }else if(dtdata.status == "RESCHEDULED"){
+            var status = "7";
         }
         var datas = schedtable.rows( { selected: true } ).data();
         var id = [];

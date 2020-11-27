@@ -290,7 +290,7 @@ class StockRequestController extends Controller
             $data = '1';
         }else{
             $reqno = StockRequest::where('request_no', $request->reqno)->first();
-            $reqno->status = 2;
+            $reqno->status = $request->status;
             $reqno->save();
         }
         return response()->json($data);

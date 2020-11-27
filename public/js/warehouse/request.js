@@ -3,6 +3,20 @@ var r = 1;
     var interval = null;
     $(document).ready(function()
     {
+        $("#datesched").datepicker({
+            format: 'MM/DD/YYYY',
+            minViewMode: 1,
+            autoclose: true,
+            maxDate: new Date(new Date().getFullYear(), new Date().getMonth()+1, '31'),
+            minDate: 0
+        });
+        $("#resched").datepicker({
+            format: 'MM/DD/YYYY',
+            minViewMode: 1,
+            autoclose: true,
+            maxDate: new Date(new Date().getFullYear(), new Date().getMonth()+1, '31'),
+            minDate: 0
+        });
         var d = new Date();
         var hour = String(d.getHours()).padStart(2, '0') % 12 || 12
         var ampm = (String(d.getHours()).padStart(2, '0') < 12 || String(d.getHours()).padStart(2, '0') === 24) ? "AM" : "PM";
@@ -168,6 +182,51 @@ var r = 1;
             
             $('#requestModal').modal('show');
         });
+
+        
+    });
+    
+    
+    $(document).on('change', '#datesched', function(){
+        var seldate = new Date($('#datesched').val());
+        var dd = String(seldate.getDate()).padStart(2, '0');
+        var mm = String(seldate.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = seldate.getFullYear();
+        seldate = mm + '/' + dd + '/' + yyyy;
+        var today = new Date();
+        var datval = moment(seldate, 'MM/DD/YYYY', true).isValid();
+        seldate = seldate.split("/");
+        var newdate = new Date(seldate[2], seldate[0], seldate[1]);
+        console.log(seldate);
+        if (datval) {
+            console.log(datval);
+            if(newdate < today) {
+                alert('Invalid Date!!!!');
+            }
+        }else{
+            alert('Invalid Date!!!!');
+        }
+    });
+
+    $(document).on('change', '#resched', function(){
+        var seldate = new Date($('#resched').val());
+        var dd = String(seldate.getDate()).padStart(2, '0');
+        var mm = String(seldate.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = seldate.getFullYear();
+        seldate = mm + '/' + dd + '/' + yyyy;
+        var today = new Date();
+        var datval = moment(seldate, 'MM/DD/YYYY', true).isValid();
+        seldate = seldate.split("/");
+        var newdate = new Date(seldate[2], seldate[0], seldate[1]);
+        console.log(seldate);
+        if (datval) {
+            console.log(datval);
+            if(newdate < today) {
+                alert('Invalid Date!!!!');
+            }
+        }else{
+            alert('Invalid Date!!!!');
+        }
     });
 
     $(document).on('click', '#prcBtn', function(){
@@ -181,6 +240,7 @@ var r = 1;
         var reqno = $('#sreqno').val();
         var x = 1;
         var catop = " ";
+        
         for(var i=1;i<=y;i++){
             if (i != 1) {
                 $('#row'+i).hide();
@@ -355,6 +415,7 @@ var r = 1;
             }
         }
     });
+    
 
     $(document).on('click', '.sub_Btn', function(e){
         e.preventDefault();

@@ -17,6 +17,7 @@
             <link rel="stylesheet" type="text/css" href="{{ url('/css/styles.css') }}" />
             <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="Stylesheet" type="text/css" />
             @auth
                 <title>{{$title}}</title>
             @else
@@ -24,6 +25,7 @@
             @endauth
             <link rel="icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
             <link rel="shortcut icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
+            
         </head>
         
         <body>
@@ -115,6 +117,8 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.js"></script>
             <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
             <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
+            <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+            <script type="text/javascript" src="https://momentjs.com/downloads/moment.min.js"></script>
             
             @if(Request::is('user'))
                 <script src="{{asset('min/?f=js/warehouse/user.js')}}"></script>
