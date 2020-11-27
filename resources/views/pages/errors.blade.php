@@ -3,8 +3,9 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Server Error</title>
+        <link rel="icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
+        <link rel="shortcut icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
+        <title>I love You Maricar!!!</title>
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -56,9 +57,8 @@
             @endif
             @if(!(new \Jenssegers\Agent\Agent())->isDesktop())
                 <div class="code">
-                    <p>({{(new \Jenssegers\Agent\Agent())->isAndroidOS() ? 'Android':(new \Jenssegers\Agent\Agent())->device()}}) browser is not supported.</p>
-                    <p>Please use your computer to access this page.</p>
-                    <img src="{{asset('idsi.png')}}" height="100">
+                    <p style="font-size: 75%;">{{(new \Jenssegers\Agent\Agent())->isMobile() ? 'Mobile':(new \Jenssegers\Agent\Agent())->device()}} browser is not supported.</p>
+                    <p style="font-size: 75%;">Use or download Google Chrome on your desktop to access this site.</p>
                 </div>
             @endif
         </div>

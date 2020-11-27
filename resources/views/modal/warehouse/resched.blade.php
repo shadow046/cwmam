@@ -9,15 +9,14 @@
             <div class="modal-body">
                 <div class="row no-margin">
                     <div class="col-md-8 form-group">
-                        <input type="text" id="resched" class="form-control" readonly="readonly">
+                        <input type="text" id="resched" class="form-control" readonly="readonly" placeholder="Select a date">
                     </div>
-                    <div class="col-md-1 form-group">
-                        <input type="button" id="resched_btn" class="btn btn-xs btn-primary" value="SAVE" >
-                    </div>
+                    
                 </div>
             </div>
             <hr>
             <div class="modal-footer">
+                <input type="button" id="resched_btn" class="btn btn-xs btn-primary" value="Submit" >
                 <input type="button" class="btn btn-primary" data-dismiss="modal" value="Cancel">
             </div>
         </div>

@@ -44,7 +44,7 @@
                         <div class="col-md-6 form-group row">
                             <label class="col-md-5 col-form-label text-md-right">Date schedule:</label>
                             <div class="col-md-7">
-                                <input type="text" style="color: black" class="form-control form-control-sm datepicker" name="datesched" id="datesched" readonly="readonly" autocomplete="off">
+                                <input type="text" style="color: black" class="form-control form-control-sm datepicker" name="datesched" id="datesched" readonly="readonlyy" autocomplete="off">
                             </div>
                         </div>
                     </div>

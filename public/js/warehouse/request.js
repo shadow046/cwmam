@@ -4,14 +4,14 @@ var r = 1;
     $(document).ready(function()
     {
         $("#datesched").datepicker({
-            format: 'MM/DD/YYYY',
+            format: 'YYYY-MM-DD',
             minViewMode: 1,
             autoclose: true,
             maxDate: new Date(new Date().getFullYear(), new Date().getMonth()+1, '31'),
             minDate: 0
         });
         $("#resched").datepicker({
-            format: 'MM/DD/YYYY',
+            format: 'YYYY-MM-DD',
             minViewMode: 1,
             autoclose: true,
             maxDate: new Date(new Date().getFullYear(), new Date().getMonth()+1, '31'),
@@ -192,10 +192,10 @@ var r = 1;
         var dd = String(seldate.getDate()).padStart(2, '0');
         var mm = String(seldate.getMonth() + 1).padStart(2, '0'); //January is 0!
         var yyyy = seldate.getFullYear();
-        seldate = mm + '/' + dd + '/' + yyyy;
+        seldate = yyyy + '-' + mm + '-' + dd;
         var today = new Date();
-        var datval = moment(seldate, 'MM/DD/YYYY', true).isValid();
-        seldate = seldate.split("/");
+        var datval = moment(seldate, 'YYYY-MM-DD', true).isValid();
+        seldate = seldate.split("-");
         var newdate = new Date(seldate[2], seldate[0], seldate[1]);
         console.log(seldate);
         if (datval) {
@@ -213,10 +213,10 @@ var r = 1;
         var dd = String(seldate.getDate()).padStart(2, '0');
         var mm = String(seldate.getMonth() + 1).padStart(2, '0'); //January is 0!
         var yyyy = seldate.getFullYear();
-        seldate = mm + '/' + dd + '/' + yyyy;
+        seldate = yyyy + '-' + mm + '-' + dd;
         var today = new Date();
-        var datval = moment(seldate, 'MM/DD/YYYY', true).isValid();
-        seldate = seldate.split("/");
+        var datval = moment(seldate, 'YYYY-MM-DD', true).isValid();
+        seldate = seldate.split("-");
         var newdate = new Date(seldate[2], seldate[0], seldate[1]);
         console.log(seldate);
         if (datval) {

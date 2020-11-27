@@ -201,6 +201,7 @@ var y = 1;
 
     $(document).on('click', '#rec_Btn', function(){
         var reqno = $('#reqno').val();
+        var sched = $('#sched').val();
         if(dtdata.status == "SCHEDULED"){
             var status = "2";
         }else if(dtdata.status == "RESCHEDULED"){
@@ -223,7 +224,8 @@ var y = 1;
                 data: {
                     reqno : reqno,
                     id: id,
-                    status: status
+                    status: status,
+                    sched: sched
                 },
                 success: function(data){
                     table.draw();
