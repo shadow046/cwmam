@@ -5,7 +5,7 @@ var r = 1;
     $(document).ready(function()
     {
         var table =
-        $('table.stockTable').DataTable({ //user datatables
+        $('table.stockTable').DataTable({ 
             "dom": 'lrtip',
             "language": {
                 "emptyTable": " "
@@ -23,9 +23,7 @@ var r = 1;
             ]
         });
 
-         //hide search
-
-        $('#search-ic').on("click", function (event) { //clear search box on hide
+        $('#search-ic').on("click", function (event) { 
             for ( var i=0 ; i<=6 ; i++ ) {
                 
                 $('.fl-'+i).val('').change();
@@ -37,7 +35,7 @@ var r = 1;
             
         });
 
-        $('.filter-input').keyup(function() { //search columns
+        $('.filter-input').keyup(function() { 
             table.column( $(this).data('column'))
                 .search( $(this).val())
                 .draw();

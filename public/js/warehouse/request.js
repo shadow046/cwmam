@@ -24,7 +24,6 @@ var r = 1;
                 url: 'requests',
                 error: function(data, error, errorThrown) {
                     if(data.status == 401) {
-                        // session timed out | not authenticated
                         window.location.href = '/login';
                     }
                 }
@@ -243,7 +242,7 @@ var r = 1;
         var rowcount = $(this).attr('btn_id');
         if ($(this).val() == 'Add Item') {
             var x = 0;
-            if($('#category'+ rowcount).val() && $('#item'+ rowcount).val() && $('#desc'+ rowcount).val() && $('#serial'+ rowcount).val()) {
+            if($('#category'+ rowcount).val() && $('#desc'+ rowcount).val() && $('#serial'+ rowcount).val()) {
                 var id = $('#item'+ rowcount).val();
                 var stockCount = 0;
                 selectBranch(stock1);

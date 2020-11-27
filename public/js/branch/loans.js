@@ -15,7 +15,6 @@ var table;
                 url: 'loanstable',
                 error: function(data, error, errorThrown) {
                     if(data.status == 401) {
-                        // session timed out | not authenticated
                         window.location.href = '/login';
                     }
                 }

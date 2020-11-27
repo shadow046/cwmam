@@ -1,11 +1,9 @@
-$(document).on('click', function (e) //hide popover on click outside
+$(document).on('click', function (e) 
     {
         $('[data-toggle="popover"]').each(function () {
-            //the 'is' for buttons that trigger popups
-            //the 'has' for icons within a button that triggers a popup
             if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
                 if ($(this).data('bs.popover')) {
-                    (($(this).popover('hide').data('bs.popover') || {}).inState || {}).click = false  // fix for BS 3.3.6
+                    (($(this).popover('hide').data('bs.popover') || {}).inState || {}).click = false  
                 }
             }
         });
@@ -13,9 +11,8 @@ $(document).on('click', function (e) //hide popover on click outside
 
     $(document).ready(function()
     {
-        //var selected = [];
         var table = 
-        $('#userTable').DataTable({ //user datatables
+        $('#userTable').DataTable({ 
             "dom": 'lrtip',
             processing: true,
             serverSide: true,
@@ -33,7 +30,7 @@ $(document).on('click', function (e) //hide popover on click outside
             ]
         });
 
-        $('#userTable tbody').on('click', 'tr', function () { //show user details in modal
+        $('#userTable tbody').on('click', 'tr', function () { 
             var dtdata = $('#userTable tbody tr:eq(0)').data();
             var trdata = table.row(this).data();
             var area = trdata.area_id;
@@ -58,9 +55,7 @@ $(document).on('click', function (e) //hide popover on click outside
                 async: false,
                 success:function(data)
                 {
-                    //console.log('success');
                     console.log(data);
-                    //console.log(data.length);
                     op+='<option selected disabled>select branch</option>';
                     for(var i=0;i<data.length;i++){
                         op+='<option value="'+data[i].id+'">'+data[i].branch+'</option>';
@@ -79,7 +74,7 @@ $(document).on('click', function (e) //hide popover on click outside
 
         });
         
-        $('#addBtn').on('click', function(e){ //show user/branch modal
+        $('#addBtn').on('click', function(e){ 
             e.preventDefault();
             $('#subBtn').val('Save');
             
@@ -108,7 +103,7 @@ $(document).on('click', function (e) //hide popover on click outside
                 $('#status').prop('disabled', false);
         });
 
-        $('.area').change(function(){ //get branches of this area
+        $('.area').change(function(){ 
             var area = $(this).val();
             var op=" ";
             
@@ -118,9 +113,6 @@ $(document).on('click', function (e) //hide popover on click outside
                 data:{'id':area},
                 success:function(data)
                 {
-                    //console.log('success');
-                    //console.log(data);
-                    //console.log(data.length);
                     op+='<option selected disabled>select branch</option>';
                     for(var i=0;i<data.length;i++){
                         op+='<option value="'+data[i].id+'">'+data[i].branch+'</option>';
@@ -135,7 +127,7 @@ $(document).on('click', function (e) //hide popover on click outside
             });
         });
 
-        $('#userForm').on('submit', function(e){ //user modal update/save button
+        $('#userForm').on('submit', function(e){ 
             e.preventDefault();
             subBtn = $('#subBtn').val();
             if(subBtn == 'Update'){
@@ -179,15 +171,13 @@ $(document).on('click', function (e) //hide popover on click outside
             }
         });
 
-         //hide search
-            
-        $('#filter').popover({ //filter columns popover
+        $('#filter').popover({ 
             html: true,
             sanitize: false,
             title: 'Filter Columns &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
         });
 
-        $('#filter').on("click", function (event) { //check for visible columns
+        $('#filter').on("click", function (event) { 
             for ( var i=1 ; i<=5 ; i++ ) {
                 if (table.column( i ).visible()){
                     $('#filter-'+i).prop('checked', true);
@@ -198,19 +188,16 @@ $(document).on('click', function (e) //hide popover on click outside
             }
         });
 
-        $('body').on('click', '.userColumnCb', function(){ //show/hide columns
-            // Get the column API object
             var column = table.column( $(this).attr('data-column') );
             var colnum = $(this).attr('data-column');
-            // Toggle the visibility
             column.visible( ! column.visible() );
-            $('.fl-'+colnum).val('');//clear columns on hide
+            $('.fl-'+colnum).val('');
             table
                 .columns(colnum).search( '' )
                 .draw();
         });
 
-        $('#search-ic').on("click", function (event) { //clear search box on hide
+        $('#search-ic').on("click", function (event) { 
             for ( var i=0 ; i<=5 ; i++ ) {
                 
                 $('.fl-'+i).val('').change();
@@ -222,7 +209,7 @@ $(document).on('click', function (e) //hide popover on click outside
             
         });
 
-        $('.filter-input').keyup(function() { //search columns
+        $('.filter-input').keyup(function() { 
             table.column( $(this).data('column'))
                 .search( $(this).val())
                 .draw();

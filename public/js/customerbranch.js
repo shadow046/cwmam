@@ -6,7 +6,7 @@ var table;
         var id = url.substring(url.lastIndexOf('/') + 1);
         bID = id;
         table =
-        $('table.customerbranchTable').DataTable({ //user datatables
+        $('table.customerbranchTable').DataTable({ 
             "dom": 'lrtip',
             "language": {
                     "emptyTable": " "
@@ -22,10 +22,7 @@ var table;
             ]
         });
 
-         //hide search
-            
-
-        $('#search-ic').on("click", function (event) { //clear search box on hide
+        $('#search-ic').on("click", function (event) { 
             for ( var i=0 ; i<=3 ; i++ ) {
                 
                 $('.fl-'+i).val('').change();
@@ -37,7 +34,7 @@ var table;
             
         });
 
-        $('.filter-input').keyup(function() { //search columns
+        $('.filter-input').keyup(function() { 
             table.column( $(this).data('column'))
                 .search( $(this).val())
                 .draw();

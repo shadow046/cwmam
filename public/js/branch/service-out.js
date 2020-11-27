@@ -143,7 +143,6 @@ var replaceTable;
     });
 
     $(document).on('change', '.outcategory', function(){
-        //var codeOp = " ";
         var descOp = " ";
         var count = $(this).attr('row_count');
         var id = $(this).val();
@@ -156,13 +155,10 @@ var replaceTable;
                 data:{'id':id},
                 success:function(data)
                 {
-                    //codeOp+='<option selected value="select" disabled>select item code</option>';
                     descOp+='<option selected value="select" disabled>select description</option>';
                     for(var i=0;i<data.length;i++){
-                        //codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
                         descOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
                     }
-                    //$("#outitem" + count).find('option').remove().end().append(codeOp);
                     $("#outdesc" + count).find('option').remove().end().append(descOp);
                 },
             });
@@ -222,7 +218,7 @@ var replaceTable;
             $("#replacementModal .closes").click();
             $('table.replacementDetails').dataTable().fnDestroy();
             replaceTable =
-            $('table.replacementDetails').DataTable({ //user datatables
+            $('table.replacementDetails').DataTable({ 
                 "dom": 'lrtip',
                 "language": {
                     "emptyTable": " "
@@ -258,7 +254,7 @@ var replaceTable;
         $('#replaceselectcustomer').val($('#replacementcustomer').val());
         $('#replaceselectclient').val($('#replacementclient').val());
         var replace1Table =
-        $('table.replacement1Details').DataTable({ //user datatables
+        $('table.replacement1Details').DataTable({ 
             "dom": 'rt',
             "language": {
                 "emptyTable": " "
@@ -285,20 +281,16 @@ var replaceTable;
             data:{'id':catid},
             success:function(data)
             {
-                //codeOp+='<option selected value="select" disabled>select item code</option>';
                 repOp+='<option selected value="select" disabled>select description</option>';
                 for(var i=0;i<data.length;i++){
-                    //codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
                     repOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
                 }
-                //$("#outitem" + count).find('option').remove().end().append(codeOp);
                 $("#repdesc1").find('option').remove().end().append(repOp);
             },
         });
     });
 
     $(document).on('change', '#repdesc1', function(){
-        //var codeOp = " ";
         var id = $(this).val();
         var serialOp = " ";
         $.ajax({
@@ -364,7 +356,6 @@ var replaceTable;
                 },
                 success:function(data)
                 {
-                    //console.log(data);
                     op+=' ';
                     for(var i=0;i<data.length;i++){
                         op+='<option data-value="'+data[i].customer_id+'" value="'+data[i].customer.toUpperCase()+'"></option>'; 
@@ -380,7 +371,6 @@ var replaceTable;
     $(document).on('keyup', '#replacementcustomer', function(){
         var id = $(this).val();
         var op = " ";
-        //$('#replacementcustomer-id').val('');
         if ($('#replacementclient-id').val()) {
             var client = $('#replacementclient-id').val();
         }else{
@@ -399,7 +389,6 @@ var replaceTable;
                 },
                 success:function(data)
                 {
-                    //console.log(data);
                     op+=' ';
                     for(var i=0;i<data.length;i++){
                         op+='<option data-value="'+data[i].customer_branch_id+'" value="'+data[i].customer_branch.toUpperCase()+'"></option>';
