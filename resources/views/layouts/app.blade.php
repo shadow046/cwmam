@@ -121,7 +121,7 @@
             <script type="text/javascript" src="https://momentjs.com/downloads/moment.min.js"></script>
             
             @if(Request::is('user'))
-                <script src="{{asset('/js/warehouse/user.js')}}"></script>
+                <script src="{{asset('min/?f=js/warehouse/user.js')}}"></script>
             @endif
 
             @if(Request::is('branch'))

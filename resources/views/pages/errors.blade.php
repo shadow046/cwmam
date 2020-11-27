@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
         <link rel="shortcut icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
-        <title>I love You Maricar!!!</title>
+        <title>Server Error</title>
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">

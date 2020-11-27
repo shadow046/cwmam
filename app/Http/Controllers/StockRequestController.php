@@ -216,7 +216,7 @@ class StockRequestController extends Controller
             $log->user_id = auth()->user()->id;
             
             $reqno->save();
-            sleep(2);
+            sleep(1);
             $reqitem = RequestedItem::select('items.item', 'quantity')
                 ->where('request_no', $request->reqno)
                 ->join('items', 'items.id', '=', 'requested_items.items_id')
