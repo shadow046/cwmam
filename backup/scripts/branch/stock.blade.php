@@ -118,31 +118,24 @@
 
     $(document).on('click', '.add_cat', function(){
         var rowcount = $(this).attr('btn_id');
-        console.log('1');
         if ($(this).val() == 'Add') {
-            console.log('2');
             if($('#cat'+ rowcount).val()){
                 y++;
                 var additem = '<div class="row no-margin" id="catrow'+y+'"><div class="col-md-8 form-group"><input type="text" id="cat'+y+'" class="form-control serial" row_count="'+y+'" placeholder="Category"></div><div class="col-md-1 form-group"><input type="button" class="add_cat btn btn-xs btn-primary" btn_id="'+y+'" value="Add"></div></div>'
                 $(this).val('Remove');
                 $('#cat'+ rowcount).prop('disabled', true);
-                console.log('3');
-                console.log('test'+y);
             }
             if (c < 10 ) {
                 $('#catfield').append(additem);
                 $('#cat'+ rowcount).find('option').clone().appendTo('#cat'+y);
                 c++;
-                console.log('4');
             }
         }else{
-            console.log('5');
             if (c == 10) {
                 y++;
                 var additem = '<div class="row no-margin" id="catrow'+y+'"><div class="col-md-8 form-group"><input type="text" id="cat'+y+'" class="form-control serial" row_count="'+y+'" placeholder="Category"></div><div class="col-md-1 form-group"><input type="button" class="add_cat btn btn-xs btn-primary" btn_id="'+y+'" value="Add"></div></div>'
                 $('#catfield').append(additem);
                 $('#cat'+ rowcount).find('option').clone().appendTo('#cat'+y);
-                console.log('6');
                 c++;
             }
             $('#cat'+rowcount).val('');
@@ -154,31 +147,25 @@
 
     $(document).on('click', '.add_item-desc', function(){
         var rowcount = $(this).attr('btn_id');
-        console.log('1');
         if ($(this).val() == 'Add') {
-            console.log('2');
             if($('#item-desc'+ rowcount).val() && $('#itemcat'+ rowcount).val()){
                 y++;
                 var additem = '<div class="row no-margin" id="itemrow'+y+'"><div class="col-md-4 form-group"><select id="itemcat'+y+'" class="form-control item-category" row_count="'+y+'"></select></div><div class="col-md-4"><input type="text" id="item-desc'+y+'" class="form-control" row_count="'+y+'" placeholder="Item Description"></div><div class="col-md-1 form-group"><input type="button" class="add_item-desc btn btn-xs btn-primary" btn_id="'+y+'" value="Add"></div></div>'
                 $(this).val('Remove');
                 $('#item-desc'+ rowcount).prop('disabled', true);
                 $('#itemcat'+ rowcount).prop('disabled', true);
-                console.log('3');
             }
             if (b < 10 ) {
                 $('#itemfield').append(additem);
                 $('#itemcat'+ rowcount).find('option').clone().appendTo('#itemcat'+y);
                 b++;
-                console.log('4');
             }
         }else{
-            console.log('5');
             if (b == 10) {
                 y++;
                 var additem = '<div class="row no-margin" id="itemrow'+y+'"><div class="col-md-4 form-group"><select id="itemcat'+y+'" class="form-control item-category" row_count="'+y+'"></select></div><div class="col-md-4"><input type="text" id="item-desc'+y+'" class="form-control" row_count="'+y+'" placeholder="Item Description"></div><div class="col-md-1 form-group"><input type="button" class="add_item-desc btn btn-xs btn-primary" btn_id="'+y+'" value="Add"></div></div>'
                 $('#itemfield').append(additem);
                 $('#itemcat'+ rowcount).find('option').clone().appendTo('#itemcat'+y);
-                console.log('6');
                 b++;
             }
             $('#itemcat'+rowcount).val('');
@@ -219,10 +206,8 @@
     $(document).on('click', '#sub_item_Btn', function(){
         var cat = "";
         var check = 1;
-        console.log(y);
         for(var q=1;q<=y;q++){
             if ($('#itemrow'+q).is(":visible")) {
-                console.log(y);
                 if ($('.add_item-desc[btn_id=\''+q+'\']').val() == 'Remove') {
                     check++;
                     $('#sub_item_Btn').prop('disabled', true);

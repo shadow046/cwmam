@@ -73,7 +73,6 @@
         var trdata = table.row(this).data();
         var id = trdata.id;
         var descop = " ";
-        console.log(trdata);
         clearInterval(interval);
         $('#branch_id').val(trdata.branchid);
         $('#date').val(trdata.date);

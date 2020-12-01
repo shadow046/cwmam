@@ -119,31 +119,24 @@ var y = 1;
 
     $(document).on('click', '.add_cat', function(){
         var rowcount = $(this).attr('btn_id');
-        console.log('1');
         if ($(this).val() == 'Add') {
-            console.log('2');
             if($('#cat'+ rowcount).val()){
                 y++;
                 var additem = '<div class="row no-margin" id="catrow'+y+'"><div class="col-md-8 form-group"><input type="text" id="cat'+y+'" class="form-control serial" row_count="'+y+'" placeholder="Category"></div><div class="col-md-1 form-group"><input type="button" class="add_cat btn btn-xs btn-primary" btn_id="'+y+'" value="Add"></div></div>'
                 $(this).val('Remove');
                 $('#cat'+ rowcount).prop('disabled', true);
-                console.log('3');
-                console.log('test'+y);
             }
             if (c < 10 ) {
                 $('#catfield').append(additem);
                 $('#cat'+ rowcount).find('option').clone().appendTo('#cat'+y);
                 c++;
-                console.log('4');
             }
         }else{
-            console.log('5');
             if (c == 10) {
                 y++;
                 var additem = '<div class="row no-margin" id="catrow'+y+'"><div class="col-md-8 form-group"><input type="text" id="cat'+y+'" class="form-control serial" row_count="'+y+'" placeholder="Category"></div><div class="col-md-1 form-group"><input type="button" class="add_cat btn btn-xs btn-primary" btn_id="'+y+'" value="Add"></div></div>'
                 $('#catfield').append(additem);
                 $('#cat'+ rowcount).find('option').clone().appendTo('#cat'+y);
-                console.log('6');
                 c++;
             }
             $('#cat'+rowcount).val('');
@@ -155,31 +148,25 @@ var y = 1;
 
     $(document).on('click', '.add_item-desc', function(){
         var rowcount = $(this).attr('btn_id');
-        console.log('1');
         if ($(this).val() == 'Add') {
-            console.log('2');
             if($('#item-desc'+ rowcount).val() && $('#itemcat'+ rowcount).val()){
                 y++;
                 var additem = '<div class="row no-margin" id="itemrow'+y+'"><div class="col-md-4 form-group"><select id="itemcat'+y+'" class="form-control item-category" row_count="'+y+'"></select></div><div class="col-md-4"><input type="text" id="item-desc'+y+'" class="form-control" row_count="'+y+'" placeholder="Item Description"></div><div class="col-md-1 form-group"><input type="button" class="add_item-desc btn btn-xs btn-primary" btn_id="'+y+'" value="Add"></div></div>'
                 $(this).val('Remove');
                 $('#item-desc'+ rowcount).prop('disabled', true);
                 $('#itemcat'+ rowcount).prop('disabled', true);
-                console.log('3');
             }
             if (b < 10 ) {
                 $('#itemfield').append(additem);
                 $('#itemcat'+ rowcount).find('option').clone().appendTo('#itemcat'+y);
                 b++;
-                console.log('4');
             }
         }else{
-            console.log('5');
             if (b == 10) {
                 y++;
                 var additem = '<div class="row no-margin" id="itemrow'+y+'"><div class="col-md-4 form-group"><select id="itemcat'+y+'" class="form-control item-category" row_count="'+y+'"></select></div><div class="col-md-4"><input type="text" id="item-desc'+y+'" class="form-control" row_count="'+y+'" placeholder="Item Description"></div><div class="col-md-1 form-group"><input type="button" class="add_item-desc btn btn-xs btn-primary" btn_id="'+y+'" value="Add"></div></div>'
                 $('#itemfield').append(additem);
                 $('#itemcat'+ rowcount).find('option').clone().appendTo('#itemcat'+y);
-                console.log('6');
                 b++;
             }
             $('#itemcat'+rowcount).val('');
@@ -220,10 +207,8 @@ var y = 1;
     $(document).on('click', '#sub_item_Btn', function(){
         var cat = "";
         var check = 1;
-        console.log(y);
         for(var q=1;q<=y;q++){
             if ($('#itemrow'+q).is(":visible")) {
-                console.log(y);
                 if ($('.add_item-desc[btn_id=\''+q+'\']').val() == 'Remove') {
                     check++;
                     $('#sub_item_Btn').prop('disabled', true);
@@ -258,26 +243,23 @@ var y = 1;
         var op = " ";
         $('#customer').val('');
         $("#customer-name").find('option').remove();
-        selectClient(client);
-        function selectClient(client) {
-            $.ajax({
-                type:'get',
-                url:'client-autocomplete',
-                data:{
-                    'id':id
-                },
-                success:function(data)
-                {
-                    op+=' ';
-                    for(var i=0;i<data.length;i++){
-                        op+='<option data-value="'+data[i].id+'" value="'+data[i].customer.toUpperCase()+'"></option>';
-                    }
-                    $("#client-name").find('option').remove().end().append(op);
-                    
-                    $('#client-id').val($('#client-name [value="'+$('#client').val()+'"]').data('value'));
-                },
-            });
-        }
+        $.ajax({
+            type:'get',
+            url:'client-autocomplete',
+            data:{
+                'id':id
+            },
+            success:function(data)
+            {
+                op+=' ';
+                for(var i=0;i<data.length;i++){
+                    op+='<option data-value="'+data[i].id+'" value="'+data[i].customer.toUpperCase()+'"></option>';
+                }
+                $("#client-name").find('option').remove().end().append(op);
+                
+                $('#client-id').val($('#client-name [value="'+$('#client').val()+'"]').data('value'));
+            },
+        });
     });
 
     $(document).on('keyup', '#customer', function(){
@@ -289,31 +271,27 @@ var y = 1;
             alert("Incomplete Client Name!");
             return false;
         }
-        selectCustomer(customer);
-        function selectCustomer(customer) {
-            $.ajax({
-                type:'get',
-                url:'customer-autocomplete',
-                data:{
-                    'id':id,
-                    'client':client
-                },
-                success:function(data)
-                {
-                    op+=' ';
-                    for(var i=0;i<data.length;i++){
-                        op+='<option data-value="'+data[i].id+'" value="'+data[i].customer_branch.toUpperCase()+'"></option>';
-                    }
-                    $("#customer-name").find('option').remove().end().append(op);
-                    $('#customer-id').val($('#customer-name [value="'+$('#customer').val()+'"]').data('value'));
-                },
-            });
-        }
+        $.ajax({
+            type:'get',
+            url:'customer-autocomplete',
+            data:{
+                'id':id,
+                'client':client
+            },
+            success:function(data)
+            {
+                op+=' ';
+                for(var i=0;i<data.length;i++){
+                    op+='<option data-value="'+data[i].id+'" value="'+data[i].customer_branch.toUpperCase()+'"></option>';
+                }
+                $("#customer-name").find('option').remove().end().append(op);
+                $('#customer-id').val($('#customer-name [value="'+$('#customer').val()+'"]').data('value'));
+            },
+        });
     });
 
 
     $(document).on("click", "#stockTable tr", function () {
-        var dtdata = $('#stockTable tbody tr:eq(0)').data();
         var trdata = table.row(this).data();
         var id = trdata.items_id;
         $('table.stockDetails').dataTable().fnDestroy();

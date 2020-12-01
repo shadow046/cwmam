@@ -20,49 +20,45 @@ $(document).on('change', '.goodcategory', function(){
     var count = $(this).attr('row_count');
     var customerid = $('#goodcustomer'+ count).val();
     var categoryid = $(this).val();
-    selectCategory(goodcategory1);
+    $.ajax({
+        type:'get',
+        url:'description',
+        async: false,
+        data:{
+            'customerid':customerid,
+            'categoryid':categoryid,
+        },
+        success:function(data)
+        {
+            catOp+='<option selected value="select" disabled>select description</option>';
+            for(var i=0;i<data.length;i++){
+                catOp+='<option value="'+data[i].items_id+'">'+data[i].item.toUpperCase()+'</option>';
+            }
+            $("#gooddesc" + count).find('option').remove().end().append(catOp);
+        },
+    });
     $('#gooddesc' + count).val('select description');
-    function selectCategory(goodcategory1) {
-        $.ajax({
-            type:'get',
-            url:'description',
-            data:{
-                'customerid':customerid,
-                'categoryid':categoryid,
-            },
-            success:function(data)
-            {
-                catOp+='<option selected value="select" disabled>select description</option>';
-                for(var i=0;i<data.length;i++){
-                    catOp+='<option value="'+data[i].items_id+'">'+data[i].item.toUpperCase()+'</option>';
-                }
-                $("#gooddesc" + count).find('option').remove().end().append(catOp);
-            },
-        });
-    }
 });
 
 $(document).on('change', '.goodcustomer', function(){
     var custOp = " ";
     var count = $(this).attr('row_count');
     var id = $(this).val();
-    selectCustomer(goodcustomer1);
+    $.ajax({
+        type:'get',
+        url:'category',
+        data:{'id':id},
+        async: false,
+        success:function(data)
+        {
+            custOp+='<option selected value="select" disabled>select category</option>';
+            for(var i=0;i<data.length;i++){
+                custOp+='<option value="'+data[i].category_id+'">'+data[i].category.toUpperCase()+'</option>';
+            }
+            $("#goodcategory" + count).find('option').remove().end().append(custOp);
+        },
+    });
     $('#goodcategory' + count).val('select category');
-    function selectCustomer(goodcustomer1) {
-        $.ajax({
-            type:'get',
-            url:'category',
-            data:{'id':id},
-            success:function(data)
-            {
-                custOp+='<option selected value="select" disabled>select category</option>';
-                for(var i=0;i<data.length;i++){
-                    custOp+='<option value="'+data[i].category_id+'">'+data[i].category.toUpperCase()+'</option>';
-                }
-                $("#goodcategory" + count).find('option').remove().end().append(custOp);
-            },
-        });
-    }
 });
 
 $(document).on('change', '.gooddesc', function(){
@@ -71,27 +67,25 @@ $(document).on('change', '.gooddesc', function(){
     var customerid = $('#goodcustomer'+ count).val();
     var categoryid = $('#goodcategory'+ count).val();
     var descid = $(this).val();
-    selectdesc(gooddesc1);
+    $.ajax({
+        type:'get',
+        url:'serial',
+        async: false,
+        data:{
+            'customerid':customerid,
+            'categoryid':categoryid,
+            'descid':descid
+        },
+        success:function(data)
+        {
+            serialOp+='<option selected value="select" disabled>select serial</option>';
+            for(var i=0;i<data.length;i++){
+                serialOp+='<option value="'+data[i].id+'">'+data[i].serial.toUpperCase()+'</option>';
+            }
+            $("#goodserial" + count).find('option').remove().end().append(serialOp);
+        },
+    });
     $('#goodserial' + count).val('select serial');
-    function selectdesc(gooddesc1) {
-        $.ajax({
-            type:'get',
-            url:'serial',
-            data:{
-                'customerid':customerid,
-                'categoryid':categoryid,
-                'descid':descid
-            },
-            success:function(data)
-            {
-                serialOp+='<option selected value="select" disabled>select serial</option>';
-                for(var i=0;i<data.length;i++){
-                    serialOp+='<option value="'+data[i].id+'">'+data[i].serial.toUpperCase()+'</option>';
-                }
-                $("#goodserial" + count).find('option').remove().end().append(serialOp);
-            },
-        });
-    }
 });
 
 $(document).on('click', '.pout_add_item', function(){
@@ -160,11 +154,11 @@ $(document).on('click', '.pout_sub_Btn', function(){
                             customer: customer,
                             client: client
                         },
-                        success:function(data)
+                        success:function()
                         {
                             check++;
                         },
-                        error: function (data,error, errorThrown) {
+                        error: function (data) {
                             alert(data.responseText);
                         }
                     });
@@ -233,11 +227,11 @@ $(document).on('click', '#good_sub_Btn', function(){
                         cat: cat,
                         status : status
                     },
-                    success:function(data)
+                    success:function()
                     {
                         check++;
                     },
-                    error: function (data,error, errorThrown) {
+                    error: function (data) {
                         alert(data.responseText);
                     }
                 });
@@ -284,26 +278,23 @@ $(document).on('keyup', '#pcustomer', function(){
         alert("Incomplete Client Name!");
         return false;
     }
-    selectCustomer(pcustomer);
-    function selectCustomer(pcustomer) {
-        $.ajax({
-            type:'get',
-            url:'customer-autocomplete',
-            data:{
-                'id':id,
-                'client':client
-            },
-            success:function(data)
-            {
-                op+=' ';
-                for(var i=0;i<data.length;i++){
-                    op+='<option data-value="'+data[i].id+'" value="'+data[i].customer_branch.toUpperCase()+'"></option>';
-                }
-                $("#pcustomer-name").find('option').remove().end().append(op);
-                $('#pcustomer-id').val($('#pcustomer-name [value="'+$('#pcustomer').val()+'"]').data('value'));
-            },
-        });
-    }
+    $.ajax({
+        type:'get',
+        url:'customer-autocomplete',
+        data:{
+            'id':id,
+            'client':client
+        },
+        success:function(data)
+        {
+            op+=' ';
+            for(var i=0;i<data.length;i++){
+                op+='<option data-value="'+data[i].id+'" value="'+data[i].customer_branch.toUpperCase()+'"></option>';
+            }
+            $("#pcustomer-name").find('option').remove().end().append(op);
+            $('#pcustomer-id').val($('#pcustomer-name [value="'+$('#pcustomer').val()+'"]').data('value'));
+        },
+    });
 });
 
 $(document).on('change', '.poutdesc', function(){
@@ -315,21 +306,19 @@ $(document).on('change', '.poutcategory', function(){
     var descOp = " ";
     var count = $(this).attr('row_count');
     var id = $(this).val();
-    selectDesc(poutdesc1);
+    $.ajax({
+        type:'get',
+        url:'itemcode',
+        data:{'id':id},
+        async: false,
+        success:function(data)
+        {
+            descOp+='<option selected value="select" disabled>select description</option>';
+            for(var i=0;i<data.length;i++){
+                descOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
+            }
+            $("#poutdesc" + count).find('option').remove().end().append(descOp);
+        },
+    });
     $('#poutdesc' + count).val('select description');
-    function selectDesc(poutdesc1) {
-        $.ajax({
-            type:'get',
-            url:'itemcode',
-            data:{'id':id},
-            success:function(data)
-            {
-                descOp+='<option selected value="select" disabled>select description</option>';
-                for(var i=0;i<data.length;i++){
-                    descOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
-                }
-                $("#poutdesc" + count).find('option').remove().end().append(descOp);
-            },
-        });
-    }
 });

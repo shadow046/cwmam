@@ -35,16 +35,12 @@ var replaceTable;
     $(document).on('click', '.out_sub_Btn', function(){
         var cat = "";
         var item = "";
-        var desc = "";
-        var qty = "";
         var check = 1;
         if ($('#customer-id').val() != "") {
-            console.log(1);
             for(var q=1;q<=y;q++){
                 if ($('#outrow'+q).is(":visible")) {
                     if ($('.out_add_item[btn_id=\''+q+'\']').val() == 'Remove') {
                         check++;
-                        console.log(2);
                         $('.out_sub_Btn').prop('disabled', true)
                         cat = $('#outcategory'+q).val();
                         item = $('#outdesc'+q).val();
@@ -92,77 +88,70 @@ var replaceTable;
                 }
             }
         }
-        selectStock(outstock1);
+        $.ajax({
+            type:'get',
+            url:'getstock',
+            data:{'id':id},
+            async: false,
+            success:function(data)
+            {
+                if (data != "") {
+                    $('#outstock' + count).val(data[0].stock - stockCount);
+                    $('#outstock' + count).css('color', 'black');
+                    $('#outstock' + count).css("border", "");
+                    if ($('#outstock' + count).val() <= 0) {
+                        $('#outstock' + count).css('color', 'red');
+                        $('#outstock' + count).css("border", "5px solid red");
+                    }
+                }else{
+                    $('#outstock' + count).val('0');
+                    $('#outstock' + count).css('color', 'red');
+                    $('#outstock' + count).css("border", "5px solid red");
+                }
+            },
+        });
+
+        $.ajax({
+            type:'get',
+            url:'getserials',
+            data:{'id':id},
+            async: false,
+            success:function(data)
+            {
+                serialOp+='<option selected value="select" disabled>select serial</option>';
+                for(var i=0;i<data.length;i++){
+                    serialOp+='<option value="'+data[i].serial+'">'+data[i].serial+'</option>';
+                }
+                $("#outserial" + count).find('option').remove().end().append(serialOp);
+            },
+        });
         for(var i=1;i<=y;i++){
             if ($('#outdesc'+i).val() == $(this).val()) {
                 rmserial = $('#outserial'+i).val();
                 $("#outserial"+count+" option[value=\'"+rmserial+"\']").remove();
             }
         }
-
-        function selectStock(outstock1) {
-            $.ajax({
-                type:'get',
-                url:'getstock',
-                data:{'id':id},
-                async: false,
-                success:function(data)
-                {
-                    if (data != "") {
-                        $('#outstock' + count).val(data[0].stock - stockCount);
-                        $('#outstock' + count).css('color', 'black');
-                        $('#outstock' + count).css("border", "");
-                        if ($('#outstock' + count).val() <= 0) {
-                            $('#outstock' + count).css('color', 'red');
-                            $('#outstock' + count).css("border", "5px solid red");
-                        }
-                    }else{
-                        $('#outstock' + count).val('0');
-                        $('#outstock' + count).css('color', 'red');
-                        $('#outstock' + count).css("border", "5px solid red");
-                    }
-                },
-            });
-
-            $.ajax({
-                type:'get',
-                url:'getserials',
-                data:{'id':id},
-                async: false,
-                success:function(data)
-                {
-                    serialOp+='<option selected value="select" disabled>select serial</option>';
-                    for(var i=0;i<data.length;i++){
-                        serialOp+='<option value="'+data[i].serial+'">'+data[i].serial+'</option>';
-                    }
-                    $("#outserial" + count).find('option').remove().end().append(serialOp);
-                },
-            });
-        }
-
     });
 
     $(document).on('change', '.outcategory', function(){
         var descOp = " ";
         var count = $(this).attr('row_count');
         var id = $(this).val();
-        selectDesc(outdesc1);
+        $.ajax({
+            type:'get',
+            url:'itemcode',
+            data:{'id':id},
+            async: false,
+            success:function(data)
+            {
+                descOp+='<option selected value="select" disabled>select description</option>';
+                for(var i=0;i<data.length;i++){
+                    descOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
+                }
+                $("#outdesc" + count).find('option').remove().end().append(descOp);
+            },
+        });
         $('#outdesc' + count).val('select description');
-        function selectDesc(outdesc1) {
-            $.ajax({
-                type:'get',
-                url:'itemcode',
-                data:{'id':id},
-                success:function(data)
-                {
-                    descOp+='<option selected value="select" disabled>select description</option>';
-                    for(var i=0;i<data.length;i++){
-                        descOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
-                    }
-                    $("#outdesc" + count).find('option').remove().end().append(descOp);
-                },
-            });
-        }
     });
 
     $(document).on('change', '.outitem', function(){
@@ -243,17 +232,14 @@ var replaceTable;
     });
 
     $(document).on("click", "#replacementDetails tr", function () {
-        var dtdata = $('#replacementDetails tbody tr:eq(0)').data();
         var trdata = replaceTable.row(this).data();
         var catid = trdata.category_id;
         var id = trdata.id;
         repdata = trdata.id;
         var repOp = " ";
-        console.log(trdata.id);
         $("#replacementTableModal .closes").click();
         $('#replaceselectcustomer').val($('#replacementcustomer').val());
         $('#replaceselectclient').val($('#replacementclient').val());
-        var replace1Table =
         $('table.replacement1Details').DataTable({ 
             "dom": 'rt',
             "language": {
@@ -327,11 +313,11 @@ var replaceTable;
                     repdata: repdata,
                     custid : custid
                 },
-                success:function(data)
+                success:function()
                 {
                     window.location.href = 'stocks';
                 },
-                error: function (data,error, errorThrown) {
+                error: function (data) {
                     alert(data.responseText);
                 }
             });
@@ -346,26 +332,23 @@ var replaceTable;
         var op = " ";
         $('#replacementcustomer').val('');
         $("#replacementcustomer-name").find('option').remove();
-        selectClient(replacementclient);
-        function selectClient(replacementclient) {
-            $.ajax({
-                type:'get',
-                url:'pclient-autocomplete',
-                data:{
-                    'id':id
-                },
-                success:function(data)
-                {
-                    op+=' ';
-                    for(var i=0;i<data.length;i++){
-                        op+='<option data-value="'+data[i].customer_id+'" value="'+data[i].customer.toUpperCase()+'"></option>'; 
-                    }
-                    $("#replacementclient-name").find('option').remove().end().append(op);
-                    
-                    $('#replacementclient-id').val($('#replacementclient-name [value="'+$('#replacementclient').val()+'"]').data('value'));
-                },
-            });
-        }
+        $.ajax({
+            type:'get',
+            url:'pclient-autocomplete',
+            data:{
+                'id':id
+            },
+            success:function(data)
+            {
+                op+=' ';
+                for(var i=0;i<data.length;i++){
+                    op+='<option data-value="'+data[i].customer_id+'" value="'+data[i].customer.toUpperCase()+'"></option>'; 
+                }
+                $("#replacementclient-name").find('option').remove().end().append(op);
+                
+                $('#replacementclient-id').val($('#replacementclient-name [value="'+$('#replacementclient').val()+'"]').data('value'));
+            },
+        });
     });
 
     $(document).on('keyup', '#replacementcustomer', function(){
@@ -377,26 +360,23 @@ var replaceTable;
             alert("Incomplete Client Name!");
             return false;
         }
-        selectCustomer(replacementcustomer);
-        function selectCustomer(replacementcustomer) {
-            $.ajax({
-                type:'get',
-                url:'pcustomer-autocomplete',
-                async: false,
-                data:{
-                    'id':id,
-                    'client':client
-                },
-                success:function(data)
-                {
-                    op+=' ';
-                    for(var i=0;i<data.length;i++){
-                        op+='<option data-value="'+data[i].customer_branch_id+'" value="'+data[i].customer_branch.toUpperCase()+'"></option>';
-                    }
-                    $("#replacementcustomer-name").find('option').remove().end().append(op);
-                    $('#replacementcustomer-id').val($('#replacementcustomer-name [value="'+$('#replacementcustomer').val()+'"]').data('value'));
-                },
-            });
-        }
+        $.ajax({
+            type:'get',
+            url:'pcustomer-autocomplete',
+            async: false,
+            data:{
+                'id':id,
+                'client':client
+            },
+            success:function(data)
+            {
+                op+=' ';
+                for(var i=0;i<data.length;i++){
+                    op+='<option data-value="'+data[i].customer_branch_id+'" value="'+data[i].customer_branch.toUpperCase()+'"></option>';
+                }
+                $("#replacementcustomer-name").find('option').remove().end().append(op);
+                $('#replacementcustomer-id').val($('#replacementcustomer-name [value="'+$('#replacementcustomer').val()+'"]').data('value'));
+            },
+        });
         
     });

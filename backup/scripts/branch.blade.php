@@ -48,7 +48,6 @@
             var dtdata = $('#branchTable tbody tr:eq(0)').data();
             var trdata = table.row(this).data();
             var id = trdata.id;
-            console.log(trdata.id);
             $('table.branchDetails').dataTable().fnDestroy();
             $('#table').show();
             stockTable =

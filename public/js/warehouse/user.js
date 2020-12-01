@@ -55,7 +55,6 @@ $(document).on('click', function (e)
                 async: false,
                 success:function(data)
                 {
-                    console.log(data);
                     op+='<option selected disabled>select branch</option>';
                     for(var i=0;i<data.length;i++){
                         op+='<option value="'+data[i].id+'">'+data[i].branch+'</option>';

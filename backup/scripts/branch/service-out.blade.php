@@ -40,12 +40,10 @@
         var qty = "";
         var check = 1;
         if ($('#customer-id').val() != "") {
-            console.log(1);
             for(var q=1;q<=y;q++){
                 if ($('#outrow'+q).is(":visible")) {
                     if ($('.out_add_item[btn_id=\''+q+'\']').val() == 'Remove') {
                         check++;
-                        console.log(2);
                         $('.out_sub_Btn').prop('disabled', true)
                         cat = $('#outcategory'+q).val();
                         item = $('#outdesc'+q).val();
@@ -250,7 +248,6 @@
         var id = trdata.id;
         repdata = trdata.id;
         var repOp = " ";
-        console.log(trdata.id);
         $("#replacementTableModal .closes").click();
         $('#replaceselectcustomer').val($('#replacementcustomer').val());
         $('#replaceselectclient').val($('#replacementclient').val());

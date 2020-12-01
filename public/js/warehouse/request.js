@@ -189,9 +189,7 @@ $(document).on('change', '#datesched', function(){
     var datval = moment(seldate, 'YYYY-MM-DD', true).isValid();
     seldate = seldate.split("-");
     var newdate = new Date(seldate[2], seldate[0], seldate[1]);
-    console.log(seldate);
     if (datval) {
-        console.log(datval);
         if(newdate < today) {
             alert('Invalid Date!');
         }
@@ -210,9 +208,7 @@ $(document).on('change', '#resched', function(){
     var datval = moment(seldate, 'YYYY-MM-DD', true).isValid();
     seldate = seldate.split("-");
     var newdate = new Date(seldate[2], seldate[0], seldate[1]);
-    console.log(seldate);
     if (datval) {
-        console.log(datval);
         if(newdate < today) {
             alert('Invalid Date!');
         }
@@ -273,9 +269,7 @@ $(document).on('click', '#prcBtn', function(){
         },
         success:function(data)
         {
-            console.log('sucess');
             if (data == 1) {
-                console.log('data');
                 $('#prepitem').show();
                 $('#preptable').show();
                 $('table.prepDetails').DataTable({ 
@@ -294,7 +288,6 @@ $(document).on('click', '#prcBtn', function(){
                 });
 
             }else{
-                console.log('else');
                 $('#preptable').hide();
                 $('#prepitem').hide();
             }
@@ -537,12 +530,9 @@ $(document).on('click', '#save_Btn', function(){
     var check = 1;
     var q;
     for(q=1;q<=y;q++){
-        console.log('test'+q);
         if ($('#row'+q).is(":visible")) {
-            console.log('t'+q);
             if ($('.add_item[btn_id=\''+q+'\']').val() == 'Remove') {
                 check++;
-                console.log('te'+q);
                 cat = $('#category'+q).val();
                 item = $('#item'+q).val();
                 desc = $('#desc'+q).val();
@@ -564,7 +554,6 @@ $(document).on('click', '#save_Btn', function(){
                     },
                     success:function()
                     {
-                        console.log('s'+q);
                     },
                     error: function (data) {
                         alert(data.responseText);
@@ -574,7 +563,6 @@ $(document).on('click', '#save_Btn', function(){
             }
         }
         if (q == y) {
-            console.log('se'+q);
             if (check > 1) {
                 window.location.href = '/request';
             }

@@ -120,7 +120,6 @@
         var status = "2";
         var stat = "ok";
         var datesched = $('#sched').val();
-        console.log(datesched);
         $.ajax({
             url: 'update',
             headers: {
