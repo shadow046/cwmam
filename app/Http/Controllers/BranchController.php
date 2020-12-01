@@ -136,7 +136,9 @@ class BranchController extends Controller
             'data-id' => '{{$id}}',
             'data-status' => '{{ $status }}',
         ])
-       
+        ->addColumn('address', function (Branch $branch){
+            return ucwords(strtolower($branch->address));
+        })
         ->addColumn('status', function (Branch $branch){
 
             if ($branch->status == 1) {

@@ -139,6 +139,16 @@ class StockRequestController extends Controller
             return strtoupper($RequestedItem->items->item);
         })
 
+        ->addColumn('stock', function (RequestedItem $RequestedItem){
+            $data = Warehouse::select(\DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
+                ->where('status', 'in')
+                ->where('items_id',$RequestedItem->items->id)
+                ->groupBy('items_id')
+                ->first();
+            
+            return strtoupper($data->stock);
+        })
+
         ->addColumn('purpose', function (RequestedItem $RequestedItem){
 
             if ($RequestedItem->purpose == "3") {

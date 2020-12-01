@@ -83,13 +83,19 @@
                     <input hidden type="text" class="form-control filter-input fl-1" data-column="1" />
                 </td>
                 <td>
-                    <input type="text" class="form-control filter-input fl-2" data-column="2" />
+                    <input type="text" hidden class="form-control filter-input fl-2" data-column="2" />
                 </td>
                 <td>
                     <input type="text" class="form-control filter-input fl-3" data-column="3" />
                 </td>
+                <td>
+                    <input type="text" class="form-control filter-input fl-3" data-column="4" />
+                </td>
             </tr>
             <tr>
+                <th>
+                    ID
+                </th>
                 <th>
                     DATE & TIME
                 </th>

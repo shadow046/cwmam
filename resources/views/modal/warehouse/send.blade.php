@@ -56,6 +56,7 @@
                             <th>Description</th>
                             <th>Qty</th>
                             <th>Purpose</th>
+                            <th>Stock Available</th>
                         </thead>
                     </table>
                     <div id="prepitem">

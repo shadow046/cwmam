@@ -7,7 +7,8 @@ $(document).ready(function()
         "language": {
                 "emptyTable": " "
             },
-        "order": [ 0, 'asc' ],
+        "pageLength": 25,
+        "order": [ 0, 'desc' ],
         processing: true,
         serverSide: true,
         ajax: {
@@ -18,11 +19,17 @@ $(document).ready(function()
                 }
             }
         },
+        "columnDefs": [
+        {
+            "targets": [ 0 ],
+            "visible": false
+        }],
         columns: [
+            { data: 'id', name:'id'},
             { data: 'date', name:'date'},
             { data: 'username', name:'username'},
             { data: 'fullname', name:'fullname'},
-            { data: 'activity', name:'activity',}
+            { data: 'activity', name:'activity'}
         ]
     });
 
@@ -31,7 +38,7 @@ $(document).ready(function()
     }, 30000);
 
     $('#search-ic').on("click", function () { 
-        for ( var i=2 ; i<=5 ; i++ ) {
+        for ( var i=3 ; i<=5 ; i++ ) {
             
             $('.fl-'+i).val('').change();
             table

@@ -109,7 +109,8 @@ $(document).ready(function()
                     { data: 'items_id', name:'items_id'},
                     { data: 'item_name', name:'item_name'},
                     { data: 'quantity', name:'quantity'},
-                    { data: 'purpose', name:'purpose'}
+                    { data: 'purpose', name:'purpose'},
+                    { data: 'stock', name:'stock'}
                 ]
             });
         }else if(trdata.status == 'SCHEDULED'){
@@ -251,7 +252,8 @@ $(document).on('click', '#prcBtn', function(){
             { data: 'items_id', name:'items_id'},
             { data: 'item_name', name:'item_name'},
             { data: 'quantity', name:'quantity'},
-            { data: 'purpose', name:'purpose'}
+            { data: 'purpose', name:'purpose'},
+            { data: 'stock', name:'stock'}
         ]
     });
     $('table.prepDetails').dataTable().fnDestroy();

@@ -374,7 +374,6 @@ $(document).on('change', '.category', function(){
         type:'get',
         url:'itemcode',
         data:{'id':id},
-        async: false,
         success:function(data)
         {
             codeOp+='<option selected value="select" disabled>select item code</option>';
@@ -387,9 +386,11 @@ $(document).on('change', '.category', function(){
             $("#desc" + count).find('option').remove().end().append(descOp);
         },
     });
-    $('#item' + count).val('select itemcode');
+    
+    $('#item' + count).val('select item code');
     $('#desc' + count).val('select description');
     $('#item' + count).css("border", "");
+    
 });
 
 $(document).on('click', '.close', function(){
