@@ -36,27 +36,25 @@ $(document).on('change', '.category', function(){
     var descOp = " ";
     var count = $(this).attr('row_count');
     var id = $(this).val();
-    selectItem(item1);
+    
+    $.ajax({
+        type:'get',
+        url:'itemcode',
+        data:{'id':id},
+        success:function(data)
+        {
+            codeOp+='<option selected value="select" disabled>select item code</option>';
+            descOp+='<option selected value="select" disabled>select description</option>';
+            for(var i=0;i<data.length;i++){
+                codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
+                descOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
+            }
+            $("#item" + count).find('option').remove().end().append(codeOp);
+            $("#desc" + count).find('option').remove().end().append(descOp);
+        },
+    });
     $('#item' + count).val('select itemcode');
     $('#desc' + count).val('select description');
-    function selectItem(item1) {
-        $.ajax({
-            type:'get',
-            url:'itemcode',
-            data:{'id':id},
-            success:function(data)
-            {
-                codeOp+='<option selected value="select" disabled>select item code</option>';
-                descOp+='<option selected value="select" disabled>select description</option>';
-                for(var i=0;i<data.length;i++){
-                    codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
-                    descOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
-                }
-                $("#item" + count).find('option').remove().end().append(codeOp);
-                $("#desc" + count).find('option').remove().end().append(descOp);
-            },
-        });
-    }
 });
 
 $(document).on('change', '.item', function(){

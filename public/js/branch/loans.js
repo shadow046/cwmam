@@ -143,7 +143,7 @@ var table;
                     status: status
 
                 },
-                success:function(data)
+                success:function()
                 {
                     table.draw();
                     $("#loansModal .close").click();
@@ -190,7 +190,7 @@ var table;
                     status: status
 
                 },
-                success:function(data)
+                success:function()
                 {
                     table.draw();
                     $("#loansModal .close").click();

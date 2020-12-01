@@ -295,39 +295,20 @@ var y = 1;
     });
 
     $(document).on('click', '.send_sub_Btn', function(){
-            var cat = "";
-            var item = "";
-            var desc = "";
-            var qty = "";
-            var stat = "notok";
-            var reqno = $('#sreqno').val();
-            for(var q=1;q<=y;q++){
-                if ($('#row'+q).is(":visible")) {
-                    if ($('.add_item[btn_id=\''+q+'\']').val() == 'Remove') {
-                        cat = $('#category'+q).val();
-                        item = $('#item'+q).val();
-                        desc = $('#desc'+q).val();
-                        qty = $('#qty'+q).val();
-                        purpose = $('#purpose'+q).val();
-                        $.ajax({
-                            url: 'storerequest',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            dataType: 'json',
-                            type: 'POST',
-                            data: {
-                                reqno : reqno,
-                                item: item,
-                                purpose: purpose,
-                                qty: qty,
-                                stat: stat                           
-                            },
-                        });
-                    }
-                }
-                if (q == y) {
-                    stat = "ok";
+        var cat = "";
+        var item = "";
+        var desc = "";
+        var qty = "";
+        var stat = "notok";
+        var reqno = $('#sreqno').val();
+        for(var q=1;q<=y;q++){
+            if ($('#row'+q).is(":visible")) {
+                if ($('.add_item[btn_id=\''+q+'\']').val() == 'Remove') {
+                    cat = $('#category'+q).val();
+                    item = $('#item'+q).val();
+                    desc = $('#desc'+q).val();
+                    qty = $('#qty'+q).val();
+                    purpose = $('#purpose'+q).val();
                     $.ajax({
                         url: 'storerequest',
                         headers: {
@@ -336,18 +317,37 @@ var y = 1;
                         dataType: 'json',
                         type: 'POST',
                         data: {
-                            reqno : reqno,  
-                            stat: stat                     
+                            reqno : reqno,
+                            item: item,
+                            purpose: purpose,
+                            qty: qty,
+                            stat: stat                           
                         },
-                        success: function(){
-                            window.location.href = 'request';
-                        },
-                        error: function (data) {
-                            alert(data.responseText);
-                        }
                     });
                 }
             }
+            if (q == y) {
+                stat = "ok";
+                $.ajax({
+                    url: 'storerequest',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    dataType: 'json',
+                    type: 'POST',
+                    data: {
+                        reqno : reqno,  
+                        stat: stat                     
+                    },
+                    success: function(){
+                        window.location.href = 'request';
+                    },
+                    error: function (data) {
+                        alert(data.responseText);
+                    }
+                });
+            }
+        }
     });
 
     $(document).on('change', '.desc', function(){

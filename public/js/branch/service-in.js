@@ -248,25 +248,23 @@ $(document).on('keyup', '#pclient', function(){
     var op = " ";
     $('#pcustomer').val('');
     $("#pcustomer-name").find('option').remove();
-    selectClient(pclient);
-    function selectClient(pclient) {
-        $.ajax({
-            type:'get',
-            url:'client-autocomplete',
-            data:{
-                'id':id
-            },
-            success:function(data)
-            {
-                op+=' ';
-                for(var i=0;i<data.length;i++){
-                    op+='<option data-value="'+data[i].id+'" value="'+data[i].customer.toUpperCase()+'"></option>';
-                }
-                $("#pclient-name").find('option').remove().end().append(op);
-                $('#pclient-id').val($('#pclient-name [value="'+$('#pclient').val()+'"]').data('value'));
-            },
-        });
-    }
+    $.ajax({
+        type:'get',
+        url:'client-autocomplete',
+        async: false,
+        data:{
+            'id':id
+        },
+        success:function(data)
+        {
+            op+=' ';
+            for(var i=0;i<data.length;i++){
+                op+='<option data-value="'+data[i].id+'" value="'+data[i].customer.toUpperCase()+'"></option>';
+            }
+            $("#pclient-name").find('option').remove().end().append(op);
+            $('#pclient-id').val($('#pclient-name [value="'+$('#pclient').val()+'"]').data('value'));
+        },
+    });
 });
 
 $(document).on('keyup', '#pcustomer', function(){
