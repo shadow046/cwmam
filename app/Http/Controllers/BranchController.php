@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
 use App\Branch;
 use App\Area;
 use App\Stock;
@@ -135,9 +136,7 @@ class BranchController extends Controller
             'data-id' => '{{$id}}',
             'data-status' => '{{ $status }}',
         ])
-        ->addColumn('area', function (Branch $branch){
-            return $branch->area;
-        })
+       
         ->addColumn('status', function (Branch $branch){
 
             if ($branch->status == 1) {

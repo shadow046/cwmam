@@ -70,9 +70,6 @@ var table;
 
     $(document).on("click", "#defectiveTable tr", function() {
         var trdata = table.row(this).data();
-        var id = trdata.id;
-        var descop = " ";
-        console.log(trdata);
         clearInterval(interval);
         $('#branch_id').val(trdata.branchid);
         $('#date').val(trdata.date);
@@ -123,7 +120,7 @@ var table;
                     table.draw();
                     $('#returnModal .close').click();
                 },
-                error: function(data, error, errorThrown) {
+                error: function(data) {
                     alert(data.responseText);
                 }
             });
@@ -148,7 +145,7 @@ var table;
                     table.draw();
                     $('#returnModal .close').click();
                 },
-                error: function(data, error, errorThrown) {
+                error: function(data) {
                     alert(data.responseText);
                 }
             });
@@ -167,14 +164,14 @@ var table;
                     branch: branch,
                     status: status
                 },
-                success: function(data) {
+                success: function() {
                     interval = setInterval(function() {
                         table.draw();
                     }, 30000);
                     table.draw();
                     $('#returnModal .close').click();
                 },
-                error: function(data, error, errorThrown) {
+                error: function(data) {
                     alert(data.responseText);
                 }
             });
@@ -211,7 +208,7 @@ var table;
                 table.draw();
                 $('#returnModal .close').click();
             },
-            error: function(data, error, errorThrown) {
+            error: function(data) {
                 alert(data.responseText);
             }
         });

@@ -38,7 +38,7 @@ $(document).ready(function()
         serverSide: true,
         ajax: {
             url: 'requests',
-            error: function(data, error, errorThrown) {
+            error: function(data) {
                 if(data.status == 401) {
                     window.location.href = '/login';
                 }
@@ -230,7 +230,6 @@ $(document).on('click', '#prcBtn', function(){
     $('#sname').val($('#name').val());
     $('#sendModal').modal('show');
     var catop = " ";
-    
     for(var i=1;i<=y;i++){
         if (i != 1) {
             $('#row'+i).hide();
@@ -300,7 +299,7 @@ $(document).on('click', '#prcBtn', function(){
                 $('#prepitem').hide();
             }
         },
-        error: function (data,error, errorThrown) {
+        error: function (data) {
             alert(data.responseText);
         }
     });
@@ -324,7 +323,7 @@ $(document).on('click', '#prcBtn', function(){
             }
             $("#category1").find('option').remove().end().append(catop);
         },
-        error: function (data,error, errorThrown) {
+        error: function (data) {
             alert(data.responseText);
         }
     });
@@ -432,30 +431,27 @@ $(document).on('click', '.add_item', function(){
         $('#serial'+rowcount).prop('disabled', false);
         $('#row'+rowcount).hide();
         $(this).val('Add Item');
-        selectItem(stock1);
         r--;
-        function selectItem(stock1) {
-            $.ajax({
-                type:'get',
-                url:'getstock',
-                data:{'id':id},
-                async: false,
-                success:function(data)
-                {
-                    if (data != "") {
-                        for(var i=1;i<=y;i++){
-                            if (i != rowcount) {
-                                if ($('#item'+i).val() == id) {
-                                    $('#stock'+i).val(data[0].stock - istock);
-                                    istock++;
-                                }
+        $.ajax({
+            type:'get',
+            url:'getstock',
+            data:{'id':id},
+            async: false,
+            success:function(data)
+            {
+                if (data != "") {
+                    for(var i=1;i<=y;i++){
+                        if (i != rowcount) {
+                            if ($('#item'+i).val() == id) {
+                                $('#stock'+i).val(data[0].stock - istock);
+                                istock++;
                             }
                         }
                     }
-                    
-                },
-            });
-        }
+                }
+                
+            },
+        });
     }
 });
 
@@ -536,7 +532,6 @@ $(document).on('click', '#save_Btn', function(){
         alert('Add Item/s');
         return false;
     }
-    var cat = "";
     var item = "";
     var reqno = $('#sreqno').val();
     var check = 1;
@@ -603,52 +598,48 @@ $(document).on('change', '.desc', function(){
             }
         }
     }
-    selectItem(stock1);
+    $.ajax({
+        type:'get',
+        url:'getstock',
+        data:{'id':id},
+        async: false,
+        success:function(data)
+        {
+            if (data != "") {
+                $('#stock' + count).val(data[0].stock - stockCount);
+                $('#stock' + count).css('color', 'black');
+                $('#stock' + count).css("border", "");
+                if ($('#stock' + count).val() <= 0) {
+                    $('#stock' + count).css('color', 'red');
+                    $('#stock' + count).css("border", "5px solid red");
+                }
+            }else{
+                $('#stock' + count).val('0');
+                $('#stock' + count).css('color', 'red');
+                $('#stock' + count).css("border", "5px solid red");
+            }
+        },
+    });
+
+    $.ajax({
+        type:'get',
+        url:'getserials',
+        data:{'id':id},
+        async: false,
+        success:function(data)
+        {
+            serialOp+='<option selected value="select" disabled>select serial</option>';
+            for(var i=0;i<data.length;i++){
+                serialOp+='<option value="'+data[i].serial+'">'+data[i].serial+'</option>';
+            }
+            $("#serial" + count).find('option').remove().end().append(serialOp);
+        },
+    });
     for(var i=1;i<=y;i++){
         if ($('#desc'+i).val() == $(this).val()) {
             rmserial = $('#serial'+i).val();
             $("#serial"+count+" option[value=\'"+rmserial+"\']").remove();
         }
-    }
-
-    function selectItem() {
-        $.ajax({
-            type:'get',
-            url:'getstock',
-            data:{'id':id},
-            async: false,
-            success:function(data)
-            {
-                if (data != "") {
-                    $('#stock' + count).val(data[0].stock - stockCount);
-                    $('#stock' + count).css('color', 'black');
-                    $('#stock' + count).css("border", "");
-                    if ($('#stock' + count).val() <= 0) {
-                        $('#stock' + count).css('color', 'red');
-                        $('#stock' + count).css("border", "5px solid red");
-                    }
-                }else{
-                    $('#stock' + count).val('0');
-                    $('#stock' + count).css('color', 'red');
-                    $('#stock' + count).css("border", "5px solid red");
-                }
-            },
-        });
-
-        $.ajax({
-            type:'get',
-            url:'getserials',
-            data:{'id':id},
-            async: false,
-            success:function(data)
-            {
-                serialOp+='<option selected value="select" disabled>select serial</option>';
-                for(var i=0;i<data.length;i++){
-                    serialOp+='<option value="'+data[i].serial+'">'+data[i].serial+'</option>';
-                }
-                $("#serial" + count).find('option').remove().end().append(serialOp);
-            },
-        });
     }
 });
 
@@ -658,7 +649,6 @@ $(document).on('change', '.item', function(){
     var stockCount = 0;
     var serialOp = " ";
     var rmserial = "";
-    var istock = 0;
     $('#desc' + count).val(id);
     for(var i=1;i<=y;i++){
         if (i != count ) {
@@ -667,53 +657,51 @@ $(document).on('change', '.item', function(){
             }
         }
     }
-    selectItem(stock1);
+
+    $.ajax({
+        type:'get',
+        url:'getstock',
+        data:{'id':id},
+        async: false,
+        success:function(data)
+        {
+            if (data != "") {
+                $('#stock' + count).val(data[0].stock - stockCount);
+                $('#stock' + count).css('color', 'black');
+                $('#stock' + count).css("border", "");
+                if (($('#stock' + count).val() < 0) || ($('#stock' + count).val() == 0)) {
+                    $('#stock' + count).css('color', 'red');
+                    $('#stock' + count).css("border", "5px solid red");
+                }
+            }else{
+                $('#stock' + count).val('0');
+                $('#stock' + count).css('color', 'red');
+                $('#stock' + count).css("border", "5px solid red");
+            }
+            
+        },
+    });
+
+    $.ajax({
+        type:'get',
+        url:'getserials',
+        data:{'id':id},
+        async: false,
+        success:function(data)
+        {
+            serialOp+='<option selected value="select" disabled>select serial</option>';
+            for(var i=0;i<data.length;i++){
+                serialOp+='<option value="'+data[i].serial+'">'+data[i].serial+'</option>';
+            }
+            $("#serial" + count).find('option').remove().end().append(serialOp);
+        },
+    });
+
     for(var i=1;i<=y;i++){
         if ($('#item'+i).val() == $(this).val()) {
             rmserial = $('#serial'+i).val();
             $("#serial"+count+" option[value=\'"+rmserial+"\']").remove();
         }
-    }
-
-    function selectItem(stock1) {
-        $.ajax({
-            type:'get',
-            url:'getstock',
-            data:{'id':id},
-            async: false,
-            success:function(data)
-            {
-                if (data != "") {
-                    $('#stock' + count).val(data[0].stock - stockCount);
-                    $('#stock' + count).css('color', 'black');
-                    $('#stock' + count).css("border", "");
-                    if (($('#stock' + count).val() < 0) || ($('#stock' + count).val() == 0)) {
-                        $('#stock' + count).css('color', 'red');
-                        $('#stock' + count).css("border", "5px solid red");
-                    }
-                }else{
-                    $('#stock' + count).val('0');
-                    $('#stock' + count).css('color', 'red');
-                    $('#stock' + count).css("border", "5px solid red");
-                }
-                
-            },
-        });
-
-        $.ajax({
-            type:'get',
-            url:'getserials',
-            data:{'id':id},
-            async: false,
-            success:function(data)
-            {
-                serialOp+='<option selected value="select" disabled>select serial</option>';
-                for(var i=0;i<data.length;i++){
-                    serialOp+='<option value="'+data[i].serial+'">'+data[i].serial+'</option>';
-                }
-                $("#serial" + count).find('option').remove().end().append(serialOp);
-            },
-        });
     }
 });
 
@@ -723,29 +711,28 @@ $(document).on('change', '.category', function(){
     var count = $(this).attr('row_count');
     var id = $(this).val();
     $('#stock' + count).val('0');
-    selectItem(item1);
+    
+    $.ajax({
+        type:'get',
+        url:'itemcode',
+        data:{'id':id},
+        async: false,
+        success:function(data)
+        {
+            codeOp+='<option selected value="select" disabled>select item code</option>';
+            descOp+='<option selected value="select" disabled>select description</option>';
+            for(var i=0;i<data.length;i++){
+                codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
+                descOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
+            }
+            $("#item" + count).find('option').remove().end().append(codeOp);
+            $("#desc" + count).find('option').remove().end().append(descOp);
+        },
+    });
     $('#item' + count).val('select itemcode');
     $('#desc' + count).val('select description');
     $('#stock' + count).css("border", "");
     $('#item' + count).css("border", "");
-    function selectItem(item1) {
-        $.ajax({
-            type:'get',
-            url:'itemcode',
-            data:{'id':id},
-            success:function(data)
-            {
-                codeOp+='<option selected value="select" disabled>select item code</option>';
-                descOp+='<option selected value="select" disabled>select description</option>';
-                for(var i=0;i<data.length;i++){
-                    codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
-                    descOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
-                }
-                $("#item" + count).find('option').remove().end().append(codeOp);
-                $("#desc" + count).find('option').remove().end().append(descOp);
-            },
-        });
-    }
 });
 
 $(document).on('click', '.cancel', function(){

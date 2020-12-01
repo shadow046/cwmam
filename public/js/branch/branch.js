@@ -79,8 +79,7 @@ var stockTable;
             $('#branchModal').modal('show');
         });
 
-        $('#addBtn').on('click', function(e){ 
-            e.preventDefault();
+        $('#addBtn').on('click', function(){ 
             $('#branchModal').modal('show');
             $('#branch_name').val('');
             $('#address').val('');
@@ -100,7 +99,6 @@ var stockTable;
             $('#editBtn').hide();
             $('#saveBtn').show();
             $('#table').hide();
-            
         });
 
         $('#editBtn').on('click', function(){
@@ -165,7 +163,7 @@ var stockTable;
             title: 'Filter Columns &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
         });
 
-        $('#filter').on("click", function (event) { 
+        $('#filter').on("click", function () { 
             for ( var i=1 ; i<=6 ; i++ ) {
                 if (table.column( i ).visible()){
                     $('#filter-'+i).prop('checked', true);
@@ -187,7 +185,7 @@ var stockTable;
             
         });
 
-        $('#search-ic').on("click", function (event) { 
+        $('#search-ic').on("click", function () { 
             for ( var i=0 ; i<=6 ; i++ ) {
                 
                 $('.fl-'+i).val('').change();
@@ -240,7 +238,7 @@ var stockTable;
                 branchid: branchid,
                 qty: qty
             },
-            success:function(data)
+            success:function()
             {
                 $('table.branchDetails').dataTable().fnDestroy();
                 stockTable =

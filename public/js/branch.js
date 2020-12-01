@@ -25,7 +25,7 @@ var stockTable;
             serverSide: true,
             ajax: {
                 url: 'branches',
-                error: function(data, error, errorThrown) {
+                error: function(data) {
                     if(data.status == 401) {
                         window.location.href = '/login';
                     }
@@ -172,7 +172,7 @@ var stockTable;
             title: 'Filter Columns &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
         });
 
-        $('#filter').on("click", function (event) { 
+        $('#filter').on("click", function () { 
             for ( var i=1 ; i<=6 ; i++ ) {
                 if (table.column( i ).visible()){
                     $('#filter-'+i).prop('checked', true);
@@ -194,7 +194,7 @@ var stockTable;
             
         });
 
-        $('#search-ic').on("click", function (event) { 
+        $('#search-ic').on("click", function () { 
             for ( var i=0 ; i<=6 ; i++ ) {
                 
                 $('.fl-'+i).val('').change();

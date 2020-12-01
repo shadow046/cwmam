@@ -191,7 +191,6 @@ $(document).on('click', function (e)
         $('body').on('click', '.userColumnCb', function(){ 
             var column = table.column( $(this).attr('data-column') );
             var colnum = $(this).attr('data-column');
-            // Toggle the visibility
             column.visible( ! column.visible() );
             $('.fl-'+colnum).val('');
             table

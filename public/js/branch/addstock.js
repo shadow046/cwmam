@@ -1,8 +1,6 @@
 $(document).on('click', '.sub_Btn', function(){
     var cat = "";
     var item = "";
-    var desc = "";
-    var qty = "";
     var check = 1;
     for(var q=1;q<=y;q++){
         if ($('#row'+q).is(":visible")) {

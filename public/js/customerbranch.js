@@ -75,8 +75,7 @@ var table;
         $('#customerbranchModal').modal('show');
     });
 
-    $(document).on('click', '#saveBtn', function(e){ 
-        e.preventDefault();
+    $(document).on('click', '#saveBtn', function(){ 
         var subBtn = $('#saveBtn').val();
         var bcode = $('#branch_code').val();
         var bname = $('#branch_name').val();
@@ -106,7 +105,7 @@ var table;
                         alert("Branch already registered");
                     }
                 },
-                error: function (data,error, errorThrown) {
+                error: function (data) {
                     alert(data.responseText);
                 }
             });
@@ -137,7 +136,7 @@ var table;
                         alert("Branch already registered");
                     }
                 },
-                error: function (data,error, errorThrown) {
+                error: function (data) {
                     alert(data.responseText);
                 }
             });

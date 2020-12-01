@@ -13,7 +13,7 @@ var table;
             serverSide: true,
             ajax: {
                 url: 'unrepairable',
-            error: function(data, error, errorThrown) {
+            error: function(data) {
                     if(data.status == 401) {
                         window.location.href = '/login';
                     }

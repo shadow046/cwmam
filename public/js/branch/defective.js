@@ -13,7 +13,7 @@ var table;
             },
             ajax: {
                 url: 'return-table',
-                error: function(data, error, errorThrown) {
+                error: function(data) {
                     if(data.status == 401) {
                         window.location.href = '/login';
                     }
@@ -54,8 +54,6 @@ var table;
 
     $(document).on("click", "#defectiveTable tr", function () {
         var trdata = table.row(this).data();
-        var id = trdata.id;
-        var descop = " ";
         clearInterval(interval);
         $('#branch_id').val(trdata.branchid);
         $('#date').val(trdata.date);
@@ -98,7 +96,7 @@ var table;
                 status: status,
                 itemid: itemid
             },
-            success:function(data)
+            success:function()
             {
                 interval = setInterval(function(){
                     table.draw();
@@ -106,7 +104,7 @@ var table;
                 table.draw();
                 $('#returnModal .close').click();
             },
-            error: function (data,error, errorThrown) {
+            error: function (data) {
                 alert(data.responseText);
             }
         });

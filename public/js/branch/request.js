@@ -193,7 +193,7 @@ var y = 1;
                 table.draw();
                 $("#requestModal .close").click();
             },
-            error: function (data,error, errorThrown) {
+            error: function (data) {
                 alert(data.responseText);
             }
         });
@@ -227,11 +227,11 @@ var y = 1;
                     status: status,
                     sched: sched
                 },
-                success: function(data){
+                success: function(){
                     table.draw();
                     $("#requestModal .close").click();
                 },
-                error: function (data,error, errorThrown) {
+                error: function (data) {
                     alert(data.responseText);
                 }
             });
@@ -294,8 +294,7 @@ var y = 1;
         }
     });
 
-    $(document).on('click', '.send_sub_Btn', function(e){
-            e.preventDefault();
+    $(document).on('click', '.send_sub_Btn', function(){
             var cat = "";
             var item = "";
             var desc = "";
@@ -343,7 +342,7 @@ var y = 1;
                         success: function(){
                             window.location.href = 'request';
                         },
-                        error: function (data,error, errorThrown) {
+                        error: function (data) {
                             alert(data.responseText);
                         }
                     });
@@ -371,28 +370,26 @@ var y = 1;
         var count = $(this).attr('row_count');
         var id = $(this).val();
         $('#stock' + count).val('Stock');
-        selectItem(item1);
+        $.ajax({
+            type:'get',
+            url:'itemcode',
+            data:{'id':id},
+            async: false,
+            success:function(data)
+            {
+                codeOp+='<option selected value="select" disabled>select item code</option>';
+                descOp+='<option selected value="select" disabled>select description</option>';
+                for(var i=0;i<data.length;i++){
+                    codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
+                    descOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
+                }
+                $("#item" + count).find('option').remove().end().append(codeOp);
+                $("#desc" + count).find('option').remove().end().append(descOp);
+            },
+        });
         $('#item' + count).val('select itemcode');
         $('#desc' + count).val('select description');
         $('#item' + count).css("border", "");
-        function selectItem(item1) {
-            $.ajax({
-                type:'get',
-                url:'itemcode',
-                data:{'id':id},
-                success:function(data)
-                {
-                    codeOp+='<option selected value="select" disabled>select item code</option>';
-                    descOp+='<option selected value="select" disabled>select description</option>';
-                    for(var i=0;i<data.length;i++){
-                        codeOp+='<option value="'+data[i].id+'">'+data[i].id+'</option>';
-                        descOp+='<option value="'+data[i].id+'">'+data[i].item.toUpperCase()+'</option>';
-                    }
-                    $("#item" + count).find('option').remove().end().append(codeOp);
-                    $("#desc" + count).find('option').remove().end().append(descOp);
-                },
-            });
-        }
     });
 
     $(document).on('click', '.close', function(){

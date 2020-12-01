@@ -12,7 +12,7 @@ $(document).ready(function()
             serverSide: true,
             ajax: {
                 url: 'activity',
-                error: function(data, error, errorThrown) {
+                error: function(data) {
                     if(data.status == 401) {
                         window.location.href = '/login';
                     }
@@ -30,7 +30,7 @@ $(document).ready(function()
             table.draw();
         }, 30000);
 
-        $('#search-ic').on("click", function (event) { 
+        $('#search-ic').on("click", function () { 
             for ( var i=2 ; i<=5 ; i++ ) {
                 
                 $('.fl-'+i).val('').change();

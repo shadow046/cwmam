@@ -13,7 +13,7 @@ var table;
                 },
             ajax: {
                 url: 'loanstable',
-                error: function(data, error, errorThrown) {
+                error: function(data) {
                     if(data.status == 401) {
                         window.location.href = '/login';
                     }
@@ -62,7 +62,7 @@ var table;
                     }
                     $("#loandesc1").find('option').remove().end().append(descop);
                 },
-                error: function (data,error, errorThrown) {
+                error: function (data) {
                     alert(data.responseText);
                 }
             });
@@ -95,7 +95,7 @@ var table;
                     {
                         $('#serial').val(data.serial);
                     },
-                    error: function (data,error, errorThrown) {
+                    error: function (data) {
                         alert(data.responseText);
                     }
                 });
@@ -126,7 +126,7 @@ var table;
                     item: item,
                     branch: branch
                 },
-                error: function (data,error, errorThrown) {
+                error: function (data) {
                     alert(data.responseText);
                 }
             });
@@ -149,7 +149,7 @@ var table;
                     $("#loansModal .close").click();
 
                 },
-                error: function (data,error, errorThrown) {
+                error: function (data) {
                     alert(data.responseText);
                 }
             });
@@ -173,7 +173,7 @@ var table;
                     id: id,
                     branch: branch
                 },
-                error: function (data,error, errorThrown) {
+                error: function (data) {
                     alert(data.responseText);
                 }
             });
@@ -195,7 +195,7 @@ var table;
                     table.draw();
                     $("#loansModal .close").click();
                 },
-                error: function (data,error, errorThrown) {
+                error: function (data) {
                     alert(data.responseText);
                 }
             });
@@ -205,7 +205,6 @@ var table;
 
     $(document).on("click", "#del_Btn", function () {
         var id = $('#myid').val();
-        var branch = $('#branch_id').val();
         var status = 'deleted';
         $.ajax({
             url: 'loandelete',
@@ -218,13 +217,13 @@ var table;
                 id: id,
                 status: status
             },
-            success:function(data)
+            success:function()
             {
                 
                 table.draw();
                 $("#loansModal .close").click();
             },
-            error: function (data,error, errorThrown) {
+            error: function (data) {
                 alert(data.responseText);
             }
         });
@@ -246,7 +245,7 @@ var table;
                     }
                     $("#loanserial1").find('option').remove().end().append(serialOp);
                 },
-                error: function (data,error, errorThrown) {
+                error: function (data) {
                     alert(data.responseText);
                 }
             });
@@ -273,7 +272,7 @@ var table;
                 $("#loanreqcategory1").find('option').remove().end().append(catOp);
                 $("#loanreqdesc1").find('option').remove().end().append(itemOp);
             },
-            error: function (data,error, errorThrown) {
+            error: function (data) {
                 alert(data.responseText);
             }
         });
@@ -299,7 +298,7 @@ var table;
                 }
                 $("#loanreqdesc1").find('option').remove().end().append(itemOp);
             },
-            error: function (data,error, errorThrown) {
+            error: function (data) {
                 alert(data.responseText);
             }
         });
@@ -322,11 +321,11 @@ var table;
                     branchid: branchid,
                     itemid: itemid
                 },
-                success:function(data)
+                success:function()
                 {
                     window.location.href = 'loans';
                 },
-                error: function (data,error, errorThrown) {
+                error: function (data) {
                     alert(data.responseText);
                 }
             });

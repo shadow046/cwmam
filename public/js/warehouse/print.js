@@ -16,7 +16,7 @@ $(document).ready(function()
             async: false,
             ajax: { 
                 url: "/getprint/"+reqno,
-                error: function(data, error, errorThrown) {
+                error: function(data) {
                     if(data.status == 401) {
                         window.location.href = '/login';
                     }

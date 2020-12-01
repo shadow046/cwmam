@@ -16,7 +16,7 @@ var customertable;
             ]
         });
 
-        $('#search-ic').on("click", function (event) { 
+        $('#search-ic').on("click", function () { 
             for ( var i=0 ; i<=6 ; i++ ) {
                 
                 $('.fl-'+i).val('').change();
@@ -72,7 +72,6 @@ var customertable;
         e.preventDefault();
         subBtn = $('#subBtn').val();
         if(subBtn == 'Update'){
-            var myid = $('#myid').val();
             $.ajax({
                 type: "PUT",
                 url: "customer_add",
@@ -88,7 +87,7 @@ var customertable;
                         alert("Customer already registered");
                     }
                 },
-                error: function (data,error, errorThrown) {
+                error: function (data) {
                     alert(data.responseText);
                 }
             });
@@ -110,7 +109,7 @@ var customertable;
                         alert("Customer already registered");
                     }
                 },
-                error: function (data,error, errorThrown) {
+                error: function (data) {
                     alert(data.responseText);
                 }
             });
