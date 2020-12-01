@@ -73,7 +73,7 @@
                 }
             }
         }else{
-            alert("Invalid Customer Name!!!!");
+            alert("Invalid Customer Name!");
             return false;
         }
         if (check > 1) {
@@ -375,7 +375,7 @@
         if ($('#replacementclient-id').val()) {
             var client = $('#replacementclient-id').val();
         }else{
-            alert("Incomplete Client Name!!!!");
+            alert("Incomplete Client Name!");
             return false;
         }
         selectCustomer(replacementcustomer);

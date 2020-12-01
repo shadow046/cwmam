@@ -286,7 +286,7 @@ var y = 1;
         if ($('#client-id').val()) {
             var client = $('#client-id').val();
         }else{
-            alert("Incomplete Client Name!!!!");
+            alert("Incomplete Client Name!");
             return false;
         }
         selectCustomer(customer);

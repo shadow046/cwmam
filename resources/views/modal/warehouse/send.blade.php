@@ -11,7 +11,6 @@
                 <form id="sendForm">
                     {{ csrf_field() }}
                     <div class="row no-margin">
-                        <input type="text" hidden id="reqbranch">
                         <div class="col-md-6 form-group row">
                             <label for="bname" style="color: black" class="col-md-5 col-form-label text-md-right">Date requested:</label>
                             <div class="col-md-7">
@@ -107,9 +106,8 @@
             </div>
             <hr>
             <div class="modal-footer">
-                <input type="button" class="btn btn-primary save_Btn mr-auto" id="save_Btn" class="button" value="Save">
-                <input type="button" class="btn btn-primary cancel" value="Cancel">
-                <input type="button" class="btn btn-primary sub_Btn" id="sub_Btn" class="button" value="Submit">
+                <input type="button" class="btn btn-primary save_Btn" id="save_Btn" class="button" value="Save Only">
+                <input type="button" class="btn btn-primary sub_Btn" id="sub_Btn" class="button" value="Submit Now">
             </div>
         </div>
     </div>

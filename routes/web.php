@@ -97,6 +97,7 @@ Route::get('read/{id}', 'StockRequestController@read')->name('stock.read');
 Route::delete('delete/{id}', 'StockRequestController@destroy')->name('stock.delete');
 Route::get('send/{id}', 'StockRequestController@getsendDetails')->name('stock.send');
 Route::get('requests/{id}', 'StockRequestController@getRequestDetails')->name('get.reqdetails');
+Route::get('prep/{id}', 'StockRequestController@prepitemdetails')->name('get.prepdetails');
 Route::get('requests', 'StockRequestController@getRequests')->name('get.requests');
 Route::get('request', 'StockRequestController@index')->name('stock.index');
 Route::get('view', 'StockRequestController@view')->name('stock.view');

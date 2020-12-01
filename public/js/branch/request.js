@@ -270,13 +270,13 @@ var y = 1;
                         $('#reqfield').append(additem);
                         $('#category'+ rowcount).find('option').clone().appendTo('#category'+y);
                     }else{
-                        alert("Please Select Item!!!");
+                        alert("Please Select Item!");
                     }
                 }else{
-                    alert("Please Select Purpose!!!");
+                    alert("Please Select Purpose!");
                 }
             }else{
-                alert("Invalid Quantity value!!!");
+                alert("Invalid Quantity value!");
             }
         }else{
             $('#category'+rowcount).val('select category');

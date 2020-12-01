@@ -196,7 +196,7 @@
                 $('#reqfield').append(additem);
                 $('#category'+ rowcount).find('option').clone().appendTo('#category'+y);
             }else{
-                alert("Invalid Quantity value!!!");
+                alert("Invalid Quantity value!");
             }
         }else{
             $('#category'+rowcount).val('select category');

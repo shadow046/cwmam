@@ -118,6 +118,18 @@ class StockRequestController extends Controller
         return StockRequest::where('request_no', $number)->exists();
     }
 
+    public function prepitemdetails(Request $request, $id)
+    {
+        return DataTables::of(PreparedItem::where('request_no', $id)->get())
+
+        ->addColumn('item_name', function ($PreparedItem){
+
+            return strtoupper($PreparedItem->items->item);
+        })
+
+        ->make(true);
+    }   
+
     public function getRequestDetails(Request $request, $id)
     {
         return DataTables::of(RequestedItem::where('request_no', $id)->get())
@@ -257,7 +269,7 @@ class StockRequestController extends Controller
 
     public function prepitem(Request $request)
     {
-        $preparedItem = PreparedItem::where('branch_id', auth()->user()->branch->id)
+        $preparedItem = PreparedItem::where('branch_id', $request->branchid)
             ->where('request_no', $request->reqno)
             ->first();
 
@@ -332,9 +344,10 @@ class StockRequestController extends Controller
                 ->where('request_no', $request->reqno)
                 ->first();
 
-            $branch = Branch::select('branch','email', 'head')->where('id', $reqbranch->branch_id)->first();
-            Mail::send('sched', ['prepitem' => $prepitem, 'sched'=>$request->datesched,'reqno' => $request->reqno,'branch' =>$branch],function( $message) use ($branch){ 
-                $message->to($branch->email, $branch->head)->subject 
+            $branch = Branch::where('id', $request->branchid)->first();
+            $email = $branch->email;
+            Mail::send('sched', ['prepitem' => $prepitem, 'sched'=>$request->datesched,'reqno' => $request->reqno,'branch' =>$branch],function( $message) use ($branch, $email){ 
+                $message->to($email, $branch->head)->subject 
                     (auth()->user()->branch->branch); 
                 $message->from('ideaservmailer@gmail.com', 'NO REPLY - Warehouse'); 
                 $message->cc(['emorej046@gmail.com', 'gerard.mallari@gmail.com']); 
@@ -354,13 +367,12 @@ class StockRequestController extends Controller
             }
             
         }else{
-            $reqbranch= StockRequest::where('request_no', $request->reqno)->where('branch_id', $request->branchid)->first();
             $item = Warehouse::where('status', 'in')
                 ->where('items_id', $request->item)
                 ->first();
             $item->status = 'sent';
             $item->request_no = $request->reqno;
-            $item->branch_id = $reqbranch->branch_id;
+            $item->branch_id = $request->branchid;
             $item->schedule = $request->datesched;
             $item->user_id = auth()->user()->id;
             $item->save();
@@ -371,7 +383,7 @@ class StockRequestController extends Controller
             $prep->items_id = $request->item;
             $prep->request_no = $request->reqno;
             $prep->serial = $request->serial;
-            $prep->branch_id = $reqbranch->branch_id;
+            $prep->branch_id = $request->branchid;
             $prep->save();
             sleep(1);
             $log = new UserLog;

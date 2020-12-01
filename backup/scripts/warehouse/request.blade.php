@@ -356,7 +356,7 @@
                 }
             }
         }else{
-            alert("Please select schedule date!!!");
+            alert("Please select schedule date!");
         }
     });
 

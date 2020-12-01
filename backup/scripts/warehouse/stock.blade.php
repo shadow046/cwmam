@@ -152,7 +152,7 @@
             }
         }
         if (check > 1) {
-            alert("Inventory updated!!!");
+            alert("Inventory updated!");
             window.location.href = 'stocks';
         }
     });
@@ -263,7 +263,7 @@
             }
         }
         if (check > 1) {
-            alert("Category added!!!");
+            alert("Category added!");
             window.location.href = 'stocks';
         }
     });
@@ -296,7 +296,7 @@
             }
         }
         if (check > 1) {
-            alert("Item added!!!");
+            alert("Item added!");
             window.location.href = 'stocks';
         }
     });
