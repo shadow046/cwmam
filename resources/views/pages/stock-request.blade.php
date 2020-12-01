@@ -6,6 +6,11 @@
     <table class="table requestTable" id="requestTable">
         <thead class="thead-dark">
             <tr>
+                @if(auth()->user()->hasAnyrole('Administrator', 'Encoder', 'Viewer'))
+                <th>
+                    ID
+                </th>
+                @endif
                 <th>
                     DATE
                 </th>

@@ -33,7 +33,12 @@ $(document).ready(function()
         "language": {
             "emptyTable": " "
         },
-        "order": [[ 5, "asc", ]],
+        "order": [[ 6, 'asc'], [ 0, 'desc']],
+        "columnDefs": [
+        {
+            "targets": [ 0 ],
+            "visible": false
+        }],
         processing: true,
         serverSide: true,
         ajax: {
@@ -45,6 +50,7 @@ $(document).ready(function()
             }
         },
         columns: [
+            { data: 'id', name:'id'},
             { data: 'created_at', name:'date', "width": "14%" },
             { data: 'request_no', name:'request_no', "width": "14%"},
             { data: 'reqBy', name:'reqBy', "width": "14%"},
