@@ -7,7 +7,7 @@ $(document).ready(function()
         "language": {
                 "emptyTable": " "
             },
-        "order": [[ 0, 'desc' ], [ 1, 'desc' ]],
+        "order": [ 0, 'asc' ],
         processing: true,
         serverSide: true,
         ajax: {
