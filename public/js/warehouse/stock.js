@@ -11,7 +11,7 @@ var r = 1;
                 "emptyTable": " "
             },
             "pageLength": 20,
-            "order": [[ 2, "asc" ]],
+            "order": [[ 2, "asc" ], [ 0, "asc" ]],
             processing: true,
             serverSide: true,
             ajax: 'show',
