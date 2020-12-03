@@ -23,7 +23,7 @@
                     <p>
                         <span style="color:black">
                             <ul>
-                                <li>{{ $reqitem }} - S/N: {{$serial}}</li>
+                                <li>{{ $reqitem }} - S/N: {{ $serial }}</li>
                             </ul>
                         </span>
                     </p>
