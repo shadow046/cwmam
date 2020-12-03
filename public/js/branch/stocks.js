@@ -14,7 +14,7 @@
             "language": {
                 "emptyTable": " "
             },
-            "pageLength": 20,
+            "pageLength": 15,
             "order": [[ 2, "asc" ]],
             processing: true,
             serverSide: true,
@@ -299,6 +299,46 @@
         });
     });
 
+    $('table.stockDetails').DataTable().on('select', function () {
+        var rowselected = stock.rows( { selected: true } ).data();
+        //console.log(rowselected[0]);
+        if(rowselected.length > 0){
+            $('#def_Btn').prop('disabled', false);
+        }
+    });
+
+    $('table.stockDetails').DataTable().on('deselect', function () {
+        var rowselected = stock.rows( { selected: true } ).data();
+        //console.log(rowselected[0]);
+        if(rowselected.length == 0){
+            $('#def_Btn').prop('disabled', true);
+        }
+    });
+
+    $(document).on("click", "#def_Btn", function () {
+        var data = stock.rows( { selected: true } ).data();
+        $.ajax({
+            url: 'def',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            type: 'DELETE',
+            data: {
+                id: data[0].id,
+                serial: data[0].serial,
+                items_id: data[0].items_id,
+                item: data[0].item
+            },
+            success: function(){
+                table.draw();
+                $("#stockModal .close").click();
+            },
+            error: function (data) {
+                alert(data.responseText);
+            }
+        });
+    });
 
     $(document).on("click", "#stockTable tr", function () {
         var trdata = table.row(this).data();
@@ -318,7 +358,10 @@
                 { data: 'updated_at', name:'updated_at'},
                 { data: 'item', name:'item'},
                 { data: 'serial', name:'serial'}
-            ]
+            ],
+            select: {
+                style: 'single'
+            }
         });
         $('#stockModal').modal();
     });

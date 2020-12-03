@@ -15,32 +15,32 @@
                     <div class="form-group row">
                         <label for="date" class="col-md-4 col-form-label text-md-right">{{ __('Date') }}</label>
                         <div class="col-md-6">
-                            <input id="date" type="text" class="form-control" name="date" disabled>
+                            <input id="date" style="color: black" type="text" class="form-control" name="date" readonly="read-only">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="branch" class="col-md-4 col-form-label text-md-right">{{ __('Branch') }}</label>
                         <div class="col-md-6">
-                            <input id="branch" type="text" class="form-control" name="branch" disabled>
+                            <input id="branch" style="color: black" type="text" class="form-control" name="branch" readonly="read-only">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Item Description') }}</label>
                         <div class="col-md-6">
-                            <input id="description" type="text" class="form-control" name="description" disabled>
+                            <input id="description" style="color: black" type="text" class="form-control" name="description" readonly="read-only">
                         </div>
                     </div>
                     <div class="form-group row" id="serials">
                         <label for="serial" class="col-md-4 col-form-label text-md-right">{{ __('Serial') }}</label>
                         <div class="col-md-6">
-                            <input id="serial" type="text" class="form-control" name="serial" disabled>
+                            <input id="serial" style="color: black" type="text" class="form-control" name="serial" readonly="read-only">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="status" class="col-md-4 col-form-label text-md-right">{{ __('Status') }}</label>
                         <div class="col-md-6">
-                            <input id="status" type="text" class="form-control" name="status" disabled>
+                            <input id="status" style="color: black" type="text" class="form-control" name="status" readonly="read-only">
                         </div>
                     </div>
                 </form>

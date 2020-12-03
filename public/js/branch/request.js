@@ -162,18 +162,12 @@ $(document).ready(function()
         var rowselected = schedtable.rows( { selected: true } ).data();
         if(rowselected.length > 0){
             $('#rec_Btn').prop('disabled', false);
-        }else{
-            $('#rec_Btn').prop('disabled', true);
-
         }
     });
     $('table.schedDetails').DataTable().on('deselect', function () {
         var rowselected = schedtable.rows( { selected: true } ).data();
-        if(rowselected.length > 0){
-            $('#rec_Btn').prop('disabled', false);
-        }else{
+        if(rowselected.length == 0){
             $('#rec_Btn').prop('disabled', true);
-
         }
     });
     

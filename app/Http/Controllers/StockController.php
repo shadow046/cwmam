@@ -161,12 +161,15 @@ class StockController extends Controller
         })
 
         ->addColumn('serial', function (Stock $request){
-            return $request->serial;
+            return strtoupper($request->serial);
         })
 
         ->addColumn('client', function (Stock $request){
-            $client = CustomerBranch::where('id', $request->customer_branches_id)->first();
-            return $client->customer_branch;
+            $client = CustomerBranch::select('customer_branch', 'customers.customer')
+                ->where('customer_branches.id', $request->customer_branches_id)
+                ->join('customers', 'customer_id', '=', 'customers.id')
+                ->first();
+            return ucwords(strtolower($client->customer.' - '.$client->customer_branch));
         })
 
         ->make(true);
@@ -339,6 +342,27 @@ class StockController extends Controller
         $pullout->serial = $request->serial;
         $pullout->status = 'pullout';
         $data = $pullout->save();
+        return response()->json($data);
+    }
+
+
+    public function def(Request $request)
+    {
+        $def = Stock::where('id', $request->id)->where('serial', $request->serial)->where('status', 'in')->first();
+        $defective = new Defective;
+        $defective->branch_id = auth()->user()->branch->id;
+        $defective->user_id = auth()->user()->branch->id;
+        $defective->category_id = $def->category_id;
+        $defective->items_id = $request->items_id;
+        $defective->serial = $request->serial;
+        $defective->status = 'For return';
+        $defective->save();
+        $log = new UserLog;
+        $log->activity = "Marked $request->item(S/N: $request->serial) as defective." ;
+        $log->user_id = auth()->user()->id;
+        $log->save();
+        $def->status = 'defective';
+        $data = $def->save();
         return response()->json($data);
     }
 
@@ -531,7 +555,7 @@ class StockController extends Controller
         $defective->status = 'For return';
         $defective->save();
         $log = new UserLog;
-        $log->activity = "Replaced $item->item($pullout->serial)." ;
+        $log->activity = "Replaced $item->item(S/N: $pullout->serial)." ;
         $log->user_id = auth()->user()->id;
         $log->save();
         $pullout->status = 'replaced';

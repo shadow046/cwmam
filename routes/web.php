@@ -81,6 +81,7 @@ Route::post('store', 'StockController@store')->name('stocks.store');
 Route::get('viewStock', 'StockController@viewStocks')->name('stocks.view');
 Route::get('show', 'StockController@show')->name('stocks.show');
 Route::get('stocks', 'StockController@index')->name('stocks.index');
+Route::delete('def', 'StockController@def')->name('stock.def');
 
 
 Route::POST('storerreceived', 'StockRequestController@received')->name('stock.received.request');

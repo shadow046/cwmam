@@ -16,6 +16,9 @@
                     </thead>
                 </table>
             </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-primary send_sub_Btn" id="def_Btn" class="button" value="Defective" disabled>
+            </div>
         </div>
     </div>
 </div>
