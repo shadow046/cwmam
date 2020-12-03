@@ -64,7 +64,7 @@
 </div>
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a>USER ACTIVITIES</a>
+        <p>USER ACTIVITIES</p>
     </li>
 </ul>
 @endif
