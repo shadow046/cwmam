@@ -1,6 +1,6 @@
 var replaceTable;
 var repdata;
-
+var outsub = 0;
 $(document).on('click', '.replacement', function(){
     $("#outOptionModal .close").click();
     $('#replacementModal').modal({backdrop: 'static', keyboard: false});
@@ -33,6 +33,9 @@ $(document).on('click', '.service-unit', function(){
 });
 
 $(document).on('click', '.out_sub_Btn', function(){
+    if (outsub > 0) {
+        return false;
+    }
     var cat = "";
     var item = "";
     var check = 1;
@@ -41,6 +44,7 @@ $(document).on('click', '.out_sub_Btn', function(){
             if ($('#outrow'+q).is(":visible")) {
                 if ($('.out_add_item[btn_id=\''+q+'\']').val() == 'Remove') {
                     check++;
+                    outsub++;
                     $('.out_sub_Btn').prop('disabled', true)
                     cat = $('#outcategory'+q).val();
                     item = $('#outdesc'+q).val();

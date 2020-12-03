@@ -316,7 +316,7 @@ class StockRequestController extends Controller
             $stock->status = 'in';
             $stock->save();
             $log = new UserLog;
-            $log->activity = "Received $items->item($preparedItems->serial) on $request->sched with Request no. $request->reqno ";
+            $log->activity = "Received $items->item(S/N: $preparedItems->serial) on $request->sched with Request no. $request->reqno ";
             $log->user_id = auth()->user()->id;
             $log->save();
             $prepared->delete();

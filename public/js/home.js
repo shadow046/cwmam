@@ -1,6 +1,5 @@
 $(document).ready(function()
 {
-    var interval = null;
     var table =
     $('table.activityTable').DataTable({ 
         "dom": 'lrtip',
@@ -33,9 +32,6 @@ $(document).ready(function()
         ]
     });
 
-    interval = setInterval(function(){
-        table.draw();
-    }, 30000);
 
     $('#search-ic').on("click", function () { 
         for ( var i=3 ; i<=5 ; i++ ) {

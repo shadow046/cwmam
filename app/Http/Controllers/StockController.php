@@ -389,7 +389,7 @@ class StockController extends Controller
         $stock->customer_branches_id = $request->customer;
         $stock->user_id = auth()->user()->id;
         $log = new UserLog;
-        $log->activity = "Service out $item->item to $customer->customer_branch." ;
+        $log->activity = "Service out $item->item(S/N: $request->serial) to $customer->customer_branch." ;
         $log->user_id = auth()->user()->id;
         $log->save();
         $data = $stock->save();
