@@ -326,7 +326,7 @@ class StockController extends Controller
         $item = Item::where('id', $request->item)->first();
         $customer = Customerbranch::where('id', $request->customer)->first();
         $log = new UserLog;
-        $log->activity = "Pull-out $item->item from $customer->customer_branch." ;
+        $log->activity = "Pull-out $item->item(S/N: $request->serial) from $customer->customer_branch." ;
         $log->user_id = auth()->user()->id;
         $log->save();
         $pullout = new Pullout;

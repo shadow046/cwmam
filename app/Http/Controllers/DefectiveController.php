@@ -113,7 +113,7 @@ class DefectiveController extends Controller
             $branch = Branch::where('id', auth()->user()->branch->id)->first();
             
             $log = new UserLog;
-            $log->activity = "Return defective $items->item($updates->serial) to warehouse." ;
+            $log->activity = "Return defective $items->item(S/N: $updates->serial) to warehouse." ;
             $log->user_id = auth()->user()->id;
             $log->save();
             

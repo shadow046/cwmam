@@ -397,7 +397,7 @@ class StockRequestController extends Controller
             $prep->save();
             sleep(1);
             $log = new UserLog;
-            $log->activity = "Schedule $scheditem->item on $sched->schedule with Request no. $request->reqno ";
+            $log->activity = "Schedule $scheditem->item(S/N: $request->serial) on $sched->schedule with Request no. $request->reqno ";
             $log->user_id = auth()->user()->id;
             $data = $log->save();
         }
