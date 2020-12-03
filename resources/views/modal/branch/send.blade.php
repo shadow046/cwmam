@@ -12,13 +12,13 @@
                     <div class="col-md-6 form-group row">
                         <label for="bname" class="col-md-5 col-form-label text-md-right">Date requested:</label>
                         <div class="col-md-7">
-                            <input type="text" class="form-control form-control-sm " name="date" id="sdate" disabled>
+                            <input type="text" style="color: black" class="form-control form-control-sm " name="date" id="sdate" disabled>
                         </div>
                     </div>
                     <div class="col-md-6 form-group row">
                         <label for="reqno" class="col-md-4 col-form-label text-md-right">Request no.:</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control form-control-sm " name="reqno" id="sreqno" placeholder="1-001" disabled>
+                            <input type="text" style="color: black" class="form-control form-control-sm " name="reqno" id="sreqno" placeholder="1-001" disabled>
                         </div>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                     <div class="col-md-6 form-group row">
                         <label for="name" class="col-md-5 col-form-label text-md-right">Requested by:</label>
                         <div class="col-md-7">
-                            <input type="text" class="form-control form-control-sm " name="name" id="sname" value="{{ auth()->user()->name }}" disabled>
+                            <input type="text" style="color: black" class="form-control form-control-sm " name="name" id="sname" value="{{ auth()->user()->name }}" disabled>
                         </div>
                     </div>
                 </div>
