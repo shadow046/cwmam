@@ -1,9 +1,10 @@
-var y = 1;
+    var y = 1;
     var r = 1;
     var b =1;
     var table;
     var branchid;
     var stock;
+    var sub = 0;
     $(document).ready(function()
     {
         branchid = $('#branchid').attr('branchid');
@@ -177,12 +178,16 @@ var y = 1;
     });
 
     $(document).on('click', '#sub_cat_Btn', function(){
+        if (sub > 0) {
+            return false;
+        }
         var cat = "";
         var check = 1;
         for(var q=1;q<=y;q++){
             if ($('#catrow'+q).is(":visible")) {
                 if ($('.add_cat[btn_id=\''+q+'\']').val() == 'Remove') {
                     check++;
+                    sub++;
                     $('#sub_cat_Btn').prop('disabled', true)
                     cat = $('#cat'+q).val();
                     $.ajax({
@@ -205,12 +210,16 @@ var y = 1;
     });
 
     $(document).on('click', '#sub_item_Btn', function(){
+        if (sub > 0) {
+            return false;
+        }
         var cat = "";
         var check = 1;
         for(var q=1;q<=y;q++){
             if ($('#itemrow'+q).is(":visible")) {
                 if ($('.add_item-desc[btn_id=\''+q+'\']').val() == 'Remove') {
                     check++;
+                    sub++;
                     $('#sub_item_Btn').prop('disabled', true);
                     cat = $('#itemcat'+q).val();
                     item = $('#item-desc'+q).val();

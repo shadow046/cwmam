@@ -1,5 +1,6 @@
 var table;
 var interval = null;
+var sub = 0;
 $(document).ready(function() {
     table =
         $('table.defectiveTable').DataTable({ 
@@ -97,10 +98,14 @@ $(document).on("click", "#defectiveTable tr", function() {
 });
 
 $(document).on('click', '#submit_Btn', function() {
+    if (sub > 0) {
+        return false;
+    }
     var branch = $('#branch_id').val();
     var id = $('#myid').val();
     var status = $('#submit_Btn').val();
     if ($('#submit_Btn').val() == 'Received') {
+        sub++;
         $.ajax({
             url: 'return-update',
             headers: {
@@ -126,6 +131,7 @@ $(document).on('click', '#submit_Btn', function() {
         });
     }
     if ($('#submit_Btn').val() == 'Repaired') {
+        sub++;
         $.ajax({
             url: 'return-update',
             headers: {
@@ -151,6 +157,7 @@ $(document).on('click', '#submit_Btn', function() {
         });
     }
     if ($('#submit_Btn').val() == 'Add to stock') {
+        sub++;
         status = 'warehouse';
         $.ajax({
             url: 'return-update',
@@ -186,9 +193,13 @@ $(document).on('click', '.close', function() {
 });
 
 $(document).on('click', '#unrepair_Btn', function() {
+    if (sub > 0) {
+        return false;
+    }
     var branch = $('#branch_id').val();
     var id = $('#myid').val();
     var status = 'unrepairable';
+    sub++;
     $.ajax({
         url: 'return-update',
         headers: {

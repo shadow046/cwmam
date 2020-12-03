@@ -3,6 +3,8 @@ var y = 1;
 var c = 1;
 var interval = null;
 var bID;
+var sub = 0;
+var save = 0;
 $(document).ready(function()
 {
     $("#datesched").datepicker({
@@ -463,8 +465,13 @@ $(document).on('click', '.sub_Btn', function(){
     branchid = bID;
     datesched = $('#datesched').val();
     if ($('#datesched').val()) {
+        if (sub > 0) {
+            return false;
+        }
         for(var q=1;q<=y;q++){
             if ($('#row'+q).is(":visible")) {
+                check++;
+                sub++;
                 if ($('.add_item[btn_id=\''+q+'\']').val() == 'Remove') {
                     check++;
                     cat = $('#category'+q).val();
@@ -531,12 +538,16 @@ $(document).on('click', '#save_Btn', function(){
         alert('Add Item/s');
         return false;
     }
+    if (save > 0) {
+        return false;
+    }
     var item = "";
     var reqno = $('#sreqno').val();
     var check = 1;
     var q;
     for(q=1;q<=y;q++){
         if ($('#row'+q).is(":visible")) {
+            save++;
             if ($('.add_item[btn_id=\''+q+'\']').val() == 'Remove') {
                 check++;
                 cat = $('#category'+q).val();

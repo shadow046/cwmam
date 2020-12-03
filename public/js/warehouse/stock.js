@@ -2,6 +2,7 @@
     var c = 1;
     var y = 1;
     var b = 1;
+    var sub = 0;
     $(document).ready(function()
     {
         var table =
@@ -124,6 +125,9 @@
     });
 
     $(document).on('click', '.sub_Btn', function(){
+        if (sub > 0) {
+            return false;
+        }
         var cat = "";
         var item = "";
         var check = 1;
@@ -131,6 +135,7 @@
             if ($('#row'+q).is(":visible")) {
                 if ($('.add_item[btn_id=\''+q+'\']').val() == 'Remove') {
                     check++;
+                    sub++;
                     $('.sub_Btn').prop('disabled', true)
                     cat = $('#category'+q).val();
                     item = $('#item'+q).val();
@@ -226,12 +231,16 @@
     });
 
     $(document).on('click', '#sub_cat_Btn', function(){
+        if (sub > 0) {
+            return false;
+        }
         var cat = "";
         var check = 1;
         for(var q=1;q<=y;q++){
             if ($('#catrow'+q).is(":visible")) {
                 if ($('.add_cat[btn_id=\''+q+'\']').val() == 'Remove') {
                     check++;
+                    sub++;
                     $('#sub_cat_Btn').prop('disabled', true)
                     cat = $('#cat'+q).val();
                     $.ajax({
@@ -255,12 +264,16 @@
     });
 
     $(document).on('click', '#sub_item_Btn', function(){
+        if (sub > 0) {
+            return false;
+        }
         var cat = "";
         var check = 1;
         for(var q=1;q<=y;q++){
             if ($('#itemrow'+q).is(":visible")) {
                 if ($('.add_item-desc[btn_id=\''+q+'\']').val() == 'Remove') {
                     check++;
+                    sub++;
                     $('#sub_item_Btn').prop('disabled', true);
                     cat = $('#itemcat'+q).val();
                     item = $('#item-desc'+q).val();

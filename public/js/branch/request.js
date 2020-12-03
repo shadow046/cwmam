@@ -3,6 +3,8 @@ var interval = null;
 var table;
 var schedtable;
 var dtdata;
+var sub = 0;
+var add = 0;
 $(document).ready(function()
 {
     var d = new Date();
@@ -260,6 +262,7 @@ $(document).on('click', '.add_item', function(){
             if($('#purpose'+rowcount).val()){
                 if($('#item'+rowcount).val()){
                     y++;
+                    add++;
                     var additem = '<div class="row no-margin" id="row'+y+'"><div class="col-md-2 form-group"><select id="category'+y+'" style="color: black;" class="form-control category" row_count="'+y+'"></select></div><div class="col-md-2 form-group"><select id="item'+y+'" style="color: black;" class="form-control item" row_count="'+y+'"><option selected disabled>select item code</option></select></div><div class="col-md-3 form-group"><select id="desc'+y+'" class="form-control desc" style="color: black;" row_count="'+y+'"><option selected disabled>select description</option></select></div><div class="col-md-2 form-group"><select id="purpose'+y+'" class="form-control purpose" style="color: black;" row_count="'+y+'"><option selected disabled>select purpose</option><option value="1">Service Unit</option><option value="2">Replacement</option><option value="3">Stock</option></select></div><div class="col-md-2 form-group"><input type="number" min="0" class="form-control" style="color: black; width: 6em" name="qty'+y+'" id="qty'+y+'" placeholder="0" disabled></div><div class="col-md-1 form-group"><input type="button" class="add_item btn btn-xs btn-primary" btn_id="'+y+'" value="Add Item"></div></div>'
                     $(this).val('Remove');
                     $('#category'+ rowcount).prop('disabled', true);
@@ -279,6 +282,7 @@ $(document).on('click', '.add_item', function(){
             alert("Invalid Quantity value!");
         }
     }else{
+        add--;
         $('#category'+rowcount).val('select category');
         $('#item'+rowcount).val('select item code');
         $('#desc'+rowcount).val('select description');
@@ -295,6 +299,10 @@ $(document).on('click', '.add_item', function(){
 });
 
 $(document).on('click', '.send_sub_Btn', function(){
+    if (add == 0 || sub > 0) {
+        alert('Please add item/s.');
+        return false;
+    }
     var cat = "";
     var item = "";
     var desc = "";
@@ -304,6 +312,7 @@ $(document).on('click', '.send_sub_Btn', function(){
     for(var q=1;q<=y;q++){
         if ($('#row'+q).is(":visible")) {
             if ($('.add_item[btn_id=\''+q+'\']').val() == 'Remove') {
+                sub++;
                 cat = $('#category'+q).val();
                 item = $('#item'+q).val();
                 desc = $('#desc'+q).val();

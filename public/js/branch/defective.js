@@ -1,6 +1,6 @@
 var table;
 var interval = null;
-
+var sub = 0;
 $(document).ready(function()
 {
     table =
@@ -78,11 +78,14 @@ $(document).on("click", "#defectiveTable tr", function () {
 });
 
 $(document).on('click', '#submit_Btn', function(){
+    if (sub > 0) {
+        return false;
+    }
     var branch = $('#branch_id').val();
     var id = $('#myid').val();
     var status = 'For receiving';
     var itemid = $('#return_id').val();
-
+    sub++;
     $.ajax({
         url: 'return-update',
         headers: {
