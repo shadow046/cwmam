@@ -124,9 +124,3 @@ Route::get('getprint/{id}', 'HomeController@getprint')->name('getprint');
 Route::get('initial/{id}', 'HomeController@initial');
 
 Route::get('convert', 'HomeController@convert');
-
-
-
-
-
-
