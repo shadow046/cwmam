@@ -219,13 +219,25 @@ class StockController extends Controller
 
     public function viewStocks(Request $request)
     {
-        $stock = Stock::select('categories.category', 'stocks.items_id as items_id', 'items.item as description', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as quantity'))
-            ->where('stocks.status', 'in')
-            ->where('branch_id', auth()->user()->branch->id)
-            ->join('categories', 'stocks.category_id', '=', 'categories.id')
-            ->join('items', 'stocks.items_id', '=', 'items.id')
-            ->groupBy('items_id')->get();
-        return DataTables::of($stock)->make(true);
+        if ($request->data != 0) {
+            $stock = Stock::select('category_id', 'category', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as quantity'))
+                ->where('stocks.status', 'in')
+                ->where('branch_id', auth()->user()->branch->id)
+                ->join('categories', 'category_id', '=', 'categories.id')
+                ->groupBy('category')
+                ->get();
+            return DataTables::of($stock)->make(true);
+
+        }else{
+            $stock = Stock::select('categories.category', 'stocks.items_id as items_id', 'items.item as description', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as quantity'))
+                ->where('stocks.status', 'in')
+                ->where('branch_id', auth()->user()->branch->id)
+                ->where('categories.id', $request->category)
+                ->join('categories', 'stocks.category_id', '=', 'categories.id')
+                ->join('items', 'stocks.items_id', '=', 'items.id')
+                ->groupBy('items_id')->get();
+            return DataTables::of($stock)->make(true);
+        }
     }
 
     public function addItem(Request $request)
@@ -509,32 +521,47 @@ class StockController extends Controller
         return redirect()->route('stocks.index');
     }
 
-    public function show()
+    public function show(Request $request)
     {
-        $stock = Warehouse::select('category_id','items_id', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
-            ->where('status', 'in')
-            ->groupBy('items_id')->get();
-        return DataTables::of($stock)
-        
-        ->addColumn('items_id', function (Warehouse $request){
-            return $request->items_id;
-        })
+        if ($request->data != 0) {
+            $stock = Warehouse::select('category_id', 'category', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as quantity'))
+                ->where('status', 'in')
+                ->join('categories', 'categories.id', '=', 'category_id')
+                ->groupBy('category')
+                ->get();
+            
+            return Datatables::of($stock)
+            
+            ->make(true);
 
-        ->addColumn('category', function (Warehouse $request){
-            $cat = Category::find($request->category_id);
-            return $cat->category;
-        })
+        }else{
 
-        ->addColumn('description', function (Warehouse $request){
-            $item = Item::where('id', $request->items_id)->first();
-            return $item->item;
-        })
+            $stock = Warehouse::select('category_id','items_id', \DB::raw('SUM(CASE WHEN status = \'in\' THEN 1 ELSE 0 END) as stock'))
+                ->where('status', 'in')
+                ->where('category_id', $request->category)
+                ->groupBy('items_id')->get();
+            return DataTables::of($stock)
+            
+            ->addColumn('items_id', function (Warehouse $request){
+                return $request->items_id;
+            })
 
-        ->addColumn('quantity', function (Warehouse $request){
-            return $request->stock;
-        })
+            ->addColumn('category', function (Warehouse $request){
+                $cat = Category::find($request->category_id);
+                return $cat->category;
+            })
 
-        ->make(true);
+            ->addColumn('description', function (Warehouse $request){
+                $item = Item::where('id', $request->items_id)->first();
+                return $item->item;
+            })
+
+            ->addColumn('quantity', function (Warehouse $request){
+                return $request->stock;
+            })
+
+            ->make(true);
+        }
     }
 
     public function update(Request $request)

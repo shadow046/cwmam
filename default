@@ -7,9 +7,9 @@ server {
 server {
     listen 443 ssl default_server;
     ssl on;
-    ssl_certificate /etc/nginx/ssl/certificate.crt;
-    ssl_certificate_key /etc/nginx/ssl/private.key;
-    server_name stockmonitoring.phillogix.com.ph 127.0.0.1;
+    ssl_certificate /etc/ssl/certs/certificate.crt;
+    ssl_certificate_key /etc/ssl/certs/private.key;
+    server_name stockmonitoring.phillogix.com.ph;
     root /var/www/html/stock/public;
 
     add_header X-Frame-Options "SAMEORIGIN";

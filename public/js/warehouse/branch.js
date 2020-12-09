@@ -54,7 +54,7 @@ $(document).ready(function()
             "language": {
                 "emptyTable": " "
             },
-            "pageLength": 15,
+            "pageLength": 5,
             "order": [[ 1, "asc" ]],
             processing: true,
             serverSide: true,
