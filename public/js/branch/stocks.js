@@ -4,24 +4,34 @@
     var table;
     var branchid;
     var stock;
+    var cattable;
     var sub = 0;
     $(document).ready(function()
     {
         branchid = $('#branchid').attr('branchid');
-        table =
-        $('table.stockTable').DataTable({ 
+        $('#catTable').show();
+        $('#itemsearch').hide();
+        cattable =
+        $('table.catTable').DataTable({ 
             "dom": 'lrtip',
             "language": {
                 "emptyTable": " "
             },
-            "pageLength": 15,
-            "order": [[ 2, "asc" ]],
+            "pageLength": 50,
             processing: true,
             serverSide: true,
-            ajax: 'viewStock',
+            ajax: {
+                "url": 'viewStock',
+                "data": {
+                    "data": 1
+                },
+                error: function (data) {
+                    alert(data.responseText);
+                }
+            },
+            
             columns: [
                 { data: 'category', name:'category'},
-                { data: 'description', name:'description'},
                 { data: 'quantity', name:'quantity'}
             ]
         });
@@ -43,6 +53,45 @@
                 .search( $(this).val())
                 .draw();
         });
+    });
+
+    $(document).on("click", "#catTable tr", function () {
+        var catdata = cattable.row(this).data();
+        $('table.stockTable').dataTable().fnDestroy();
+        $('#itemsearch').show();
+        $('#catname').text(catdata.category.replace(/&amp;/g, '&'));
+        $('#catname').show();
+        $('#head').text(catdata.category.replace(/&amp;/g, '&'));
+        $('#catTable').hide();
+        $('#ctable').hide();
+        $('#stockTable').show();
+
+        table =
+        $('table.stockTable').DataTable({ 
+            "dom": 'lrtip',
+            "language": {
+                "emptyTable": " "
+            },
+            "pageLength": 15,
+            "order": [[ 1, "asc" ]],
+            processing: true,
+            serverSide: true,
+            ajax: {
+                "url": 'viewStock',
+                "data": {
+                    "data": 0,
+                    "category": catdata.category_id 
+                },
+                error: function (data) {
+                    alert(data.responseText);
+                }
+            },
+            columns: [
+                { data: 'description', name:'description'},
+                { data: 'quantity', name:'quantity'}
+            ]
+        });
+
     });
     
     $(document).on('click', '#addStockBtn', function(){
@@ -344,7 +393,7 @@
         var trdata = table.row(this).data();
         var id = trdata.items_id;
         $('table.stockDetails').dataTable().fnDestroy();
-        $('#head').text(trdata.category);
+        $('#head').text(trdata.category.replace(/&amp;/g, '&'));
         stock = 
         $('table.stockDetails').DataTable({ 
             "dom": 'rt',

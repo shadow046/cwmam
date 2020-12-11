@@ -3,23 +3,33 @@
     var y = 1;
     var b = 1;
     var sub = 0;
+    var cattable;
+    var table;
     $(document).ready(function()
     {
-        var table =
-        $('table.stockTable').DataTable({ 
+        $('#catTable').show();
+        $('#itemsearch').hide();
+        cattable =
+        $('table.catTable').DataTable({ 
             "dom": 'lrtip',
             "language": {
                 "emptyTable": " "
             },
-            "pageLength": 20,
-            "order": [[ 2, "asc" ], [ 0, "asc" ]],
+            "pageLength": 50,
             processing: true,
             serverSide: true,
-            ajax: 'show',
+            ajax: {
+                "url": 'show',
+                "data": {
+                    "data": 1
+                },
+                error: function (data) {
+                    alert(data.responseText);
+                }
+            },
             
             columns: [
                 { data: 'category', name:'category'},
-                { data: 'description', name:'description'},
                 { data: 'quantity', name:'quantity'}
             ]
         });
@@ -40,6 +50,40 @@
             table.column( $(this).data('column'))
                 .search( $(this).val())
                 .draw();
+        });
+    });
+
+    $(document).on("click", "#catTable tr", function () {
+        var catdata = cattable.row(this).data();
+        $('table.stockTable').dataTable().fnDestroy();
+        $('#itemsearch').show();
+        $('#catname').text(catdata.category.replace(/&amp;/g, '&'));
+        $('#catname').show();
+        $('#head').text(catdata.category.replace(/&amp;/g, '&'));
+        $('#catTable').hide();
+        $('#ctable').hide();
+        $('#stockTable').show();
+        table =
+        $('table.stockTable').DataTable({ 
+            "dom": 'rti',
+            "language": {
+                "emptyTable": " "
+            },
+            "pageLength": 30,
+            "order": [[ 1, "asc" ], [ 0, "asc" ]],
+            processing: true,
+            serverSide: true,
+            ajax: {
+                "url": 'show',
+                "data": {
+                    "data": 0,
+                    "category": catdata.category_id 
+                }
+            },
+            columns: [
+                { data: 'description', name:'description'},
+                { data: 'quantity', name:'quantity'}
+            ]
         });
     });
 

@@ -144,7 +144,7 @@
 
             @if(Request::is('stocks'))
                 @if(auth()->user()->hasAnyrole('Administrator', 'Encoder'))
-                    <script src="{{asset('min/?f=js/warehouse/stock.js')}}"></script>
+                    <script src="{{asset('js/warehouse/stock.js')}}"></script>
                 @else
                     <script src="{{asset('min/?f=js/branch/stocks.js')}}"></script>
                     <script src="{{asset('min/?f=js/branch/service-in.js')}}"></script>
