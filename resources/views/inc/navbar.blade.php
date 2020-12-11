@@ -51,16 +51,16 @@
                         <a class="nav-link {{ Request::is('loans') ? 'active' : '' }}" href="{{ route('loans') }}">Loans</a>
                     </li>
                 @endif
+                @hasanyrole('Administrator|Head|Viewer')
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('user') ? 'active' : '' }}" href="{{ url('user') }}">Users</a>
+                    </li>
+                @endhasanyrole
             @endif
         </ul>
         <ul class="nav">
-            @hasanyrole('Administrator|Head|Viewer')
-            <li class="nav-item mr-1">
-                <a class="nav-link {{ Request::is('user') ? 'active' : '' }}" href="{{ url('user') }}">Users</a>
-            </li>
-            @endhasanyrole
-            <li class="nav-item">
-                <a href="{{route('logout')}}" class="nav-link">logout</a>
+             <li class="nav-item">
+                <a href="{{route('logout')}}" class="nav-link"><b>Logout</b>&nbsp;&nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i></a>
             </li>
         </ul>
         @endauth

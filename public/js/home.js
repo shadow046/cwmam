@@ -34,7 +34,7 @@ $(document).ready(function()
 
 
     $('#search-ic').on("click", function () { 
-        for ( var i=3 ; i<=5 ; i++ ) {
+        for ( var i=0 ; i<=5 ; i++ ) {
             
             $('.fl-'+i).val('').change();
             table
