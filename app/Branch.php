@@ -7,7 +7,6 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Branch extends Model
 {
-    use LogsActivity;
     protected $guarded = [];
 
     public function users()

@@ -159,11 +159,14 @@ $(document).ready(function()
                 data: $('#branchForm').serialize(),
                 success: function(data){
                     if($.isEmptyObject(data.error)){
-                        $('#branchModal .close').click();
+                        $('#branchModal').modal('hide');
                         table.draw();
                     }else{
                         alert(data.error);
                     }
+                },
+                error: function (data) {
+                    alert(data.responseText);
                 } 
             });
         }
@@ -177,11 +180,14 @@ $(document).ready(function()
                 data: $('#branchForm').serialize(),
                 success: function(data){
                     if($.isEmptyObject(data.error)){
-                        $('#branchModal .close').click();
+                        $('#branchModal').modal('hide');
                         table.draw();
                     }else{
                         alert(data.error);
                     }
+                },
+                error: function (data) {
+                    alert(data.responseText);
                 }
             });
         }
