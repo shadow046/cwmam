@@ -286,6 +286,43 @@ $(document).on('click', '#branchDetails tr', function(){
     
 });
 
+$(document).on('click', '#catBtn', function(){
+    $('#catBtn').hide();
+    $('table.branchDetails').dataTable().fnDestroy();
+    $('table.catbranchDetails').dataTable().fnDestroy();
+    $('#table').hide();
+    $('#branchDetails').hide();
+    catstockTable =
+    $('table.catbranchDetails').DataTable({ 
+        "dom": 'rtip',
+        "language": {
+            "emptyTable": " "
+        },
+        "pageLength": 10,
+        "order": [[ 1, "asc" ]],
+        processing: true,
+        serverSide: true,
+        ajax: {
+            "async": false,
+            "url": "/stocks/"+Brid,
+            "data": {
+                "data": 0
+            },
+            error: function (data) {
+                alert(data.responseText);
+            }
+        },
+        columns: [
+            { data: 'category', name:'category'},
+            { data: 'available', name:'available'},
+            { data: 'stock_out', name:'stock_out'}
+        ]
+    });
+    $('#cattable').show();
+    $('#catbranchDetails').show();
+
+});
+
 $(document).on('click', '#updateBtn', function(){
     var itemid = $('#iniitemid').val();
     var branchid = $('#inibranchid').val();

@@ -35,7 +35,7 @@ $(document).ready(function()
         "language": {
             "emptyTable": " "
         },
-        "order": [[ 6, 'asc'], [ 0, 'desc']],
+        "order": [[ 5, 'asc'], [ 0, 'desc']],
         "columnDefs": [
         {
             "targets": [ 0 ],

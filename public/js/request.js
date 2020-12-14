@@ -13,14 +13,21 @@ var r = 1;
         var table =
         $('table.requestTable').DataTable({ 
             "dom": 'lrtip',
+            "pageLength": 50,
             "language": {
                 "emptyTable": " "
             },
-            "order": [[ 5, "desc", ]],
+            "order": [[ 6, 'asc'], [ 0, 'desc']],
+            "columnDefs": [
+            {
+                "targets": [ 0 ],
+                "visible": false
+            }],
             processing: true,
             serverSide: true,
             ajax: 'requests',
             columns: [
+                { data: 'id', name:'id'},
                 { data: 'created_at', name:'date', "width": "14%" },
                 { data: 'request_no', name:'request_no', "width": "14%"},
                 { data: 'reqBy', name:'reqBy', "width": "14%"},
