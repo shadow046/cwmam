@@ -2,10 +2,8 @@
 
 @section('content')
 <div class="table-responsive">
-    <div class="container">
-        <div style="display: flex; justify-content: flex-end" class="pt-3">
-            <a href="#" id="search-ic"><i class="fa fa-lg fa-search" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
+    <div style="float: right;" class="pt-3">
+        <b>SEARCH&nbsp;&nbsp;</b><a href="#" id="search-ic"><i class="fa fa-lg fa-search" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </div>
     <table class="table unrepairTable" id="unrepairTable">
         <thead class="thead-dark">

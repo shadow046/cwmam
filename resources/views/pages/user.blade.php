@@ -2,11 +2,9 @@
 
 @section('content')
 <div>
-    <div class="container">
-        <div style="display: flex; justify-content: flex-end" class="pt-3">
-            <a href="#" id="search-ic"><i class="fa fa-lg fa-search" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="#" id="filter" data-placement="bottom" data-toggle="popover" data-content='@include("inc.userfilter")'><i class="fa fa-lg fa-filter" aria-hidden="true"></i></a>
-        </div>
+    <div style="float: right;" class="pt-3">
+        <b>SEARCH&nbsp;&nbsp;</b><a href="#" id="search-ic"><i class="fa fa-lg fa-search" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <b>FILTER&nbsp;&nbsp;</b><a href="#" id="filter" data-placement="bottom" data-toggle="popover" data-content='@include("inc.userfilter")'><i class="fa fa-lg fa-filter" aria-hidden="true"></i></a>
     </div>
     <table class="table" id="userTable">
         <thead class="thead-dark">
