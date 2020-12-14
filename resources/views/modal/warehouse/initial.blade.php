@@ -3,13 +3,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title w-100 text-center" id="head4"></h6>
-                <button class="close closes" data-dismiss="modal" aria-label="Close">
+                <button class="close modalclose" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <input type="text" hidden id="iniitemid">
-                <input type="text" hidden id="inibranchid">
                 <br><br>
                 <div class="row no-margin">
                     <div class="col-md-4">

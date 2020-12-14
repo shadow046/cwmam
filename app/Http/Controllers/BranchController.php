@@ -10,6 +10,7 @@ use App\Area;
 use App\Stock;
 use App\Initial;
 use App\Item;
+use App\Category;
 use App\Warehouse;
 use Auth;
 use DB;
@@ -44,6 +45,7 @@ class BranchController extends Controller
 
     public function getStocks(Request $request, $id)
     {
+
         $details = DB::table('items')
             ->select(
                 'stocks.id',
@@ -73,46 +75,93 @@ class BranchController extends Controller
             ->groupBy('stocks.items_id')
             ->get();
             
-        
-        return DataTables::of(Item::select('items.id as items_id', 'item', 'qty', 'initials.branch_id')->join('initials', 'initials.items_id', '=', 'items.id')->where('branch_id', $id))
-
-            ->addColumn('initial', function (Item $item){
-                return $item->qty;
-            })
-
-            ->addColumn('stock_out', function (Item $item){
-                
-                if (auth()->user()->branch->id == 1 && $item->branch_id == 1) {
+        if ($request->data != 1) {
+            
+            
+            return DataTables::of(Category::all())
+            ->addColumn('stock_out', function ($category) use ($id){
+                    
+                if (auth()->user()->branch->id == 1 && $id == 1) {
                     $stock_out = 0;
                 }else{
                     $stock_out = Stock::where('status', 'service unit')
-                        ->where('branch_id', $item->branch_id)
-                        ->where('items_id', $item->items_id)
+                        ->where('branch_id', $id)
+                        ->where('category_id', $category->id)
                         ->count();
                 }
                 return $stock_out;
+
             })
 
-            ->addColumn('available', function (Item $item){
-                
-                if (auth()->user()->branch->id == 1 && $item->branch_id == 1) {
-                    $avail = Warehouse::select('status')
-                        ->where('status', 'in')
-                        ->where('items_id', $item->items_id)
+            ->addColumn('available', function ($category) use ($id){
+                    
+                if (auth()->user()->branch->id == 1 && $id == 1) {
+                    $avail = Warehouse::where('status', 'in')
+                        ->where('category_id', $category->id)
                         ->count();
                 }else{
-                    $avail = Stock::select('status')
-                        ->where('status', 'in')
-                        ->where('branch_id', $item->branch_id)
-                        ->where('items_id', $item->items_id)
+                    $avail = Stock::where('status', 'in')
+                        ->where('branch_id', $id)
+                        ->where('category_id', $category->id)
                         ->count();
                 }
                 
                 return $avail;
             })
 
-        ->make(true);
+            
+            ->make(true);
+
+        }else{ 
+        
+            $stock = Item::where('category_id', $request->category)->get();
+
+
+            return DataTables::of($stock)
+                ->addColumn('available', function ($item) use ($id){
+                        
+                    if (auth()->user()->branch->id == 1 && $id == 1) {
+                        $avail = Warehouse::where('status', 'in')
+                            ->where('items_id', $item->id)
+                            ->count();
+                    }else{
+                        $avail = Stock::where('status', 'in')
+                            ->where('branch_id', $id)
+                            ->where('items_id', $item->id)
+                            ->count();
+                    }
+                    
+                    return $avail;
+                })
+
+                ->addColumn('stock_out', function ($item) use ($id){
+                    
+                    if (auth()->user()->branch->id == 1 && $id == 1) {
+                        $stock_out = 0;
+                    }else{
+                        $stock_out = Stock::where('status', 'service unit')
+                            ->where('branch_id', $id)
+                            ->where('items_id', $item->id)
+                            ->count();
+                    }
+                    return $stock_out;
+    
+                })
+
+                ->addColumn('initial', function ($item) use ($id){
+
+                    $ini = Initial::select('qty')
+                        ->where('items_id', $item->id)
+                        ->where('branch_id', $id)
+                        ->first();
+                    return $ini->qty;
+                })
+                
+                    
+                ->make(true);
+        }
     }
+
     public function getBranches()
     {
         if (auth()->user()->hasrole('Administrator')) {

@@ -1,48 +1,3 @@
-<<<<<<< HEAD
-    var r = 1;
-    var c = 1;
-    var y = 1;
-    var b = 1;
-    var sub = 0;
-    var cattable;
-    var table;
-    $(document).ready(function()
-    {
-        $('#catTable').show();
-        $('#itemsearch').hide();
-        cattable =
-        $('table.catTable').DataTable({ 
-            "dom": 'lrtip',
-            "language": {
-                "emptyTable": " "
-            },
-            "pageLength": 50,
-            processing: true,
-            serverSide: true,
-            ajax: {
-                "url": 'show',
-                "data": {
-                    "data": 1
-                },
-                error: function (data) {
-                    alert(data.responseText);
-                }
-            },
-            
-            columns: [
-                { data: 'category', name:'category'},
-                { data: 'quantity', name:'quantity'}
-            ]
-        });
-
-        $('#search-ic').on("click", function (event) { 
-            for ( var i=0 ; i<=6 ; i++ ) {
-                
-                $('.fl-'+i).val('').change();
-                table
-                .columns(i).search( '' )
-                .draw();
-=======
 var r = 1;
 var c = 1;
 var y = 1;
@@ -70,7 +25,6 @@ $(document).ready(function()
             },
             error: function (data) {
                 alert(data.responseText);
->>>>>>> 3cc1c39d6e65c936066604d8acf20ce6009fb473
             }
         },
         
@@ -80,46 +34,6 @@ $(document).ready(function()
         ]
     });
 
-<<<<<<< HEAD
-    $(document).on("click", "#catTable tr", function () {
-        var catdata = cattable.row(this).data();
-        $('table.stockTable').dataTable().fnDestroy();
-        $('#itemsearch').show();
-        $('#catname').text(catdata.category.replace(/&amp;/g, '&'));
-        $('#catname').show();
-        $('#head').text(catdata.category.replace(/&amp;/g, '&'));
-        $('#catTable').hide();
-        $('#ctable').hide();
-        $('#stockTable').show();
-        table =
-        $('table.stockTable').DataTable({ 
-            "dom": 'rti',
-            "language": {
-                "emptyTable": " "
-            },
-            "pageLength": 30,
-            "order": [[ 1, "asc" ], [ 0, "asc" ]],
-            processing: true,
-            serverSide: true,
-            ajax: {
-                "url": 'show',
-                "data": {
-                    "data": 0,
-                    "category": catdata.category_id 
-                }
-            },
-            columns: [
-                { data: 'description', name:'description'},
-                { data: 'quantity', name:'quantity'}
-            ]
-        });
-    });
-
-    
-    $(document).on('click', '#addStockBtn', function(){
-        $('#addModal').modal({backdrop: 'static', keyboard: false});
-
-=======
     $('#search-ic').on("click", function (event) { 
         for ( var i=0 ; i<=6 ; i++ ) {
             
@@ -130,7 +44,6 @@ $(document).ready(function()
         }
         $('.tbsearch').toggle();
         
->>>>>>> 3cc1c39d6e65c936066604d8acf20ce6009fb473
     });
 
     $('.filter-input').keyup(function() { 

@@ -45,7 +45,9 @@
                             </select>
                         </div>
                     </div>
+                    <br>
                     <div id="table">
+                        <center><h5 id="catname"></h5></center>
                         <table class="table branchDetails" id="branchDetails" style="width: 100%">
                             <thead class="thead-dark">
                                 <tr class="tbsearchm">
@@ -55,8 +57,23 @@
                                 <tr>
                                     <th>DESCRIPTION</th>
                                     @if (auth()->user()->hasanyrole('Viewer', 'Administrator', 'Encoder'))
-                                    <th>INITIAL STOCK</th>
+                                        <th>INITIAL STOCK</th>
                                     @endif
+                                    <th>AVAILABLE</th>
+                                    <th>OUT</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div id="cattable">
+                        <table class="table catbranchDetails" id="catbranchDetails" style="width: 100%">
+                            <thead class="thead-dark">
+                                <tr class="tbsearchm">
+                                    <td>
+                                        <input type="text" class="form-control cfilter-input fl-c" data-column="0" />
+                                    </td>
+                                <tr>
+                                    <th>Category</th>
                                     <th>AVAILABLE</th>
                                     <th>OUT</th>
                                 </tr>
@@ -71,6 +88,9 @@
                     </div>
                     @endrole
                 </form>
+            </div>
+            <div class="modal-footer">
+                <input type="button" id="catBtn" class="btn btn-xs btn-primary" value="Back to Category">
             </div>
         </div>
     </div>

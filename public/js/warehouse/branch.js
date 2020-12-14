@@ -1,5 +1,12 @@
 var stockTable;
+var catstockTable;
 var table;
+var Brid;
+var iteminiid;
+var categid;
+var typingTimer;                
+var doneTypingInterval = 1000;
+var aa = 0;
 $(document).on('click', function (e) 
 {
     $('[data-toggle="popover"]').each(function () {
@@ -14,7 +21,7 @@ $(document).on('click', function (e)
 $(document).ready(function()
 {
     $('#saveBtn').hide();
-
+    
     table =
     $('table.branchTable').DataTable({ 
         "dom": 'lrtip',
@@ -46,27 +53,40 @@ $(document).ready(function()
         var dtdata = $('#branchTable tbody tr:eq(0)').data();
         var trdata = table.row(this).data();
         var id = trdata.id;
+        Brid = trdata.id;
+        $('#catBtn').hide();
         $('table.branchDetails').dataTable().fnDestroy();
-        $('#table').show();
-        stockTable =
-        $('table.branchDetails').DataTable({ 
-            "dom": 'lrtip',
+        $('table.catbranchDetails').dataTable().fnDestroy();
+        $('#table').hide();
+        $('#branchDetails').hide();
+        catstockTable =
+        $('table.catbranchDetails').DataTable({ 
+            "dom": 'rtip',
             "language": {
                 "emptyTable": " "
             },
-            "pageLength": 5,
+            "pageLength": 15,
             "order": [[ 1, "asc" ]],
             processing: true,
             serverSide: true,
-            ajax: "/stocks/"+id,
-            
+            ajax: {
+                "async": false,
+                "url": "/stocks/"+id,
+                "data": {
+                    "data": 0
+                },
+                error: function (data) {
+                    alert(data.responseText);
+                }
+            },
             columns: [
-                { data: 'item', name:'item', "width": "17%"},
-                { data: 'initial', name:'initial', "width": "17%"},
-                { data: 'available', name:'available', "width": "14%"},
-                { data: 'stock_out', name:'stock_out', "width": "14%"}
+                { data: 'category', name:'category'},
+                { data: 'available', name:'available'},
+                { data: 'stock_out', name:'stock_out'}
             ]
         });
+        $('#cattable').show();
+        $('#catbranchDetails').show();
         $('#branch_name').prop('disabled', true);
         $('#address').prop('disabled', true);
         $('#area').prop('disabled', true);
@@ -76,7 +96,7 @@ $(document).ready(function()
         $('#status').prop('disabled', true);
         $('#myid').val(trdata.id);
         $('#branch_name').val(trdata.branch);
-        $('#address').val(trdata.address);
+        $('#address').val(trdata.address.replace(/&amp;/g, '&'));
         $('#area').val(trdata.area_id);
         $('#contact_person').val(trdata.head);
         $('#mobile').val(trdata.phone);
@@ -219,24 +239,101 @@ $(document).ready(function()
             .draw();
     });
 
+    $('.cfilter-input').on('keyup', function() { 
+        catstockTable.column($(this).data('column'))
+            .search($(this).val())
+            .draw();
+        
+    });
 });
 
+$(document).on('click', '#catbranchDetails tr', function(){
+    var trdata = catstockTable.row(this).data();
+    categid = trdata.id;
+    $('table.branchDetails').dataTable().fnDestroy();
+    $('#cattable').hide();
+    $('#catbranchDetails').hide();
+    $('#table').show();
+    $('#catname').text(trdata.category.replace(/&amp;/g, '&'));
+    stockTable =
+        $('table.branchDetails').DataTable({ 
+            "dom": 'rtip',
+            "language": {
+                "emptyTable": " "
+            },
+            "pageLength": 5,
+            "order": [[ 1, "asc" ]],
+            processing: true,
+            serverSide: true,
+            ajax: {
+                "async": false,
+                "url": "/stocks/"+Brid,
+                "data": {
+                    "data": 1,
+                    "category": categid 
+                }
+            },
+            columns: [
+                { data: 'item', name:'item', "width": "17%"},
+                { data: 'initial', name:'initial', "width": "17%"},
+                { data: 'available', name:'available', "width": "14%"},
+                { data: 'stock_out', name:'stock_out', "width": "14%"}
+            ]
+        });
+        $('#branchDetails').show();
+        $('#catBtn').show();
+});
 
 $(document).on('click', '#branchDetails tr', function(){
     var trdata = stockTable.row(this).data();
     var tritem =  trdata.item;
+    iteminiid = trdata.id;
     $('#head4').text(tritem.replace(/&quot;/g, '\"'));
     $('#item-qty').val(trdata.initial);
-    $('#iniitemid').val(trdata.items_id);
-    $('#inibranchid').val(trdata.branch_id);
-    $('#updateModal').modal({backdrop: 'static', keyboard: false});
-    
+    $('#updateModal').modal('show');
+});
+
+
+
+$(document).on('click', '#catBtn', function(){
+    $('#catBtn').hide();
+    $('table.branchDetails').dataTable().fnDestroy();
+    $('table.catbranchDetails').dataTable().fnDestroy();
+    $('#table').hide();
+    $('#branchDetails').hide();
+    catstockTable =
+    $('table.catbranchDetails').DataTable({ 
+        "dom": 'rtip',
+        "language": {
+            "emptyTable": " "
+        },
+        "pageLength": 10,
+        "order": [[ 1, "asc" ]],
+        processing: true,
+        serverSide: true,
+        ajax: {
+            "async": false,
+            "url": "/stocks/"+Brid,
+            "data": {
+                "data": 0
+            },
+            error: function (data) {
+                alert(data.responseText);
+            }
+        },
+        columns: [
+            { data: 'category', name:'category'},
+            { data: 'available', name:'available'},
+            { data: 'stock_out', name:'stock_out'}
+        ]
+    });
+    $('#cattable').show();
+    $('#catbranchDetails').show();
+
 });
 
 $(document).on('click', '#updateBtn', function(){
-    var itemid = $('#iniitemid').val();
-    var branchid = $('#inibranchid').val();
-    var qty = $('#item-qty').val();
+    
     $.ajax({
         url: 'branch_ini',
         headers: {
@@ -245,31 +342,42 @@ $(document).on('click', '#updateBtn', function(){
         dataType: 'json',
         type: 'PUT',
         data: {
-            itemid: itemid,
-            branchid: branchid,
-            qty: qty
+            itemid: iteminiid,
+            branchid: Brid,
+            qty: $('#item-qty').val()
         },
         success:function()
         {
             $('table.branchDetails').dataTable().fnDestroy();
             stockTable =
             $('table.branchDetails').DataTable({ 
-                "dom": 'lrtip',
+                "dom": 'rtip',
                 "language": {
                     "emptyTable": " ",
                     "processing": "Updating. Please wait.."
                 },
+                "pageLength": 5,
+                "order": [[ 1, "asc" ]],
                 processing: true,
                 serverSide: true,
-                ajax: "/stocks/"+branchid,
+                ajax: {
+                    "url": "/stocks/"+Brid,
+                    "data": {
+                        "data": 1,
+                        "category": categid 
+                    }
+                },
                 columns: [
                     { data: 'item', name:'item', "width": "17%"},
                     { data: 'initial', name:'initial', "width": "17%"},
                     { data: 'available', name:'available', "width": "14%"},
                     { data: 'stock_out', name:'stock_out', "width": "14%"}
                 ]
-            });
-            $("#updateModal .close").click();
+            }); 
+            $('#updateModal').modal('toggle');
+        },
+        error: function (data) {
+            alert(data.responseText);
         }
     });
 });
