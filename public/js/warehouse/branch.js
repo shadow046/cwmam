@@ -70,7 +70,6 @@ $(document).ready(function()
             processing: true,
             serverSide: true,
             ajax: {
-                "async": false,
                 "url": "/stocks/"+id,
                 "data": {
                     "data": 0
@@ -272,7 +271,6 @@ $(document).on('click', '#catbranchDetails tr', function(){
             processing: true,
             serverSide: true,
             ajax: {
-                "async": false,
                 "url": "/stocks/"+Brid,
                 "data": {
                     "data": 1,
@@ -318,7 +316,6 @@ $(document).on('click', '#catBtn', function(){
         processing: true,
         serverSide: true,
         ajax: {
-            "async": false,
             "url": "/stocks/"+Brid,
             "data": {
                 "data": 0
