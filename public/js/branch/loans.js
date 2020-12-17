@@ -27,9 +27,6 @@ $(document).ready(function()
             { data: 'status', name:'status'}
         ]
     });
-
-    
-
 });
 
 $(document).on("click", "#loanTable tr", function () {

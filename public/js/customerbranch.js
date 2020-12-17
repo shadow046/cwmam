@@ -22,7 +22,7 @@ $(document).ready(function()
         ]
     });
 
-    $('#search-ic').on("click", function (event) { 
+    $('#search-ic').on("click", function () { 
         for ( var i=0 ; i<=3 ; i++ ) {
             
             $('.fl-'+i).val('').change();

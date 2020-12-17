@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+
+</div>
 <div id="itemsearch">
     <input type="hidden" id="check" value="{{ $customers }}" />
     <div style="float: right;" class="pt-3">
