@@ -14,20 +14,20 @@
             <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
             <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="Stylesheet" type="text/css" />
+            <link rel="icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
+            <link rel="shortcut icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
+            <script src='https://kit.fontawesome.com/a076d05399.js'></script>
             @auth
                 <title>{{$title}}</title>
             @else
-                <title>Login</title>
+                <title>IDEASERV</title>
             @endauth
-            <link rel="icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
-            <link rel="shortcut icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
-            
         </head>
         
         <body>
             @include('inc.header')
-            @include('inc.navbar')
             @if(!Auth::guest())
+            @include('inc.navbar')
                 <input type="text" hidden id="level" value={{ auth()->user()->roles->first()->name }}>
             @endif
             <div class="py-2">
@@ -53,18 +53,6 @@
                 @if(!auth()->user()->hasAnyrole('Administrator', 'Encoder', 'Viewer'))
                     @include('modal.branch.request')
                     @include('modal.branch.send')
-                @endif
-            @endif
-
-            @if(Request::is('customer'))
-                @if(auth()->user()->hasrole('Viewer'))
-                    @include('modal.customer')
-                @endif
-            @endif
-
-            @if(Request::is('customer/*'))
-                @if(auth()->user()->hasrole('Viewer'))
-                    @include('modal.customerbranch')
                 @endif
             @endif
 
@@ -102,9 +90,6 @@
                 @include('modal.branch.return')
             @endif
 
-            @if (Request::is('/') && auth()->user()->hasrole('Repair'))
-                @include('modal.branch.return')
-            @endif
             
             <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
@@ -181,19 +166,13 @@
                 @endif
             @endif
             
-            @if(Request::is('customer'))
-                <script src="{{asset('min/?f=js/customer.js')}}"></script>
+            @if(Request::is('Customers'))
+                <script src="{{asset('min/?f=js/customers.js')}}"></script>
             @endif
             @if(Request::is('customer/*'))
                 <script src="{{asset('min/?f=js/customerbranch.js')}}"></script>
             @endif
 
-            @if(Request::is('/') && !auth()->user()->hasrole('Repair'))
-                <script src="{{asset('min/?f=js/home.js')}}"></script>
-            @endif
-            @if (Request::is('/') && auth()->user()->hasrole('Repair'))
-                <script src="{{asset('min/?f=js/warehouse/defective.js')}}"></script>
-            @endif
             @if(Request::is('log') && auth()->user()->hasrole('Repair'))
                 <script src="{{asset('min/?f=js/home.js')}}"></script>
             @endif
@@ -201,6 +180,10 @@
                 <script src="{{asset('min/?f=js/unrepair.js')}}"></script>
             @endif
 
+            @if(Request::is('/'))
+                <script src="{{asset('min/?f=js/search.js')}}"></script>
+            @endif
+            
         </body>
     </html>
 

@@ -12,8 +12,12 @@
 */
 
 Auth::routes();
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+Route::get('search', 'HomeController@search')->name('search.index');
+Route::get('/', 'HomeController@index')->name('home.index');
+Route::get('/Customers', 'CustomerController@index')->name('Customers.index');
 
-Route::get('change-password', 'ChangePasswordController@index');
+/*Route::get('change-password', 'ChangePasswordController@index');
 Route::post('change-password', 'ChangePasswordController@store')->name('change.password');
 
 
@@ -117,10 +121,10 @@ Route::post('branch_add', 'BranchController@store')->name('branch.add');
 Route::put('branch_ini', 'BranchController@initial')->name('branch.ini');
 Route::put('branch_update/{id}', 'BranchController@update')->name('branch.update');
 
-Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
 
 Route::get('print/{id}', 'HomeController@print')->name('branch.print');
 Route::get('getprint/{id}', 'HomeController@getprint')->name('getprint');
 Route::get('initial/{id}', 'HomeController@initial');
 
-Route::get('convert', 'HomeController@convert');
+Route::get('convert', 'HomeController@convert');*/

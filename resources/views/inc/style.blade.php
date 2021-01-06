@@ -29,34 +29,29 @@
         margin: 0;
     }
     .mybg{background:#0d1a80;}
-    .table th, td {
-        text-align: left;
-    } 
-    .table-responsive{
-        overflow:scroll;
-    }
     
-    .table td{
-        color:#000000;
+
+    .table .thead-dark > th{
+        background: red;
     }
 
-    thead tr:nth-child(2) th{
-        background: white;
-        position: sticky;
-        top: 0;
-        z-index: 10;
+    table#customerTable td {
+        width: 50% ;
+        border: 1px black solid ;
+        padding: 10px ;
     }
+
 
     button[type=button].col-md-2{
         height: 35px;
-        background-color: #0d1a80;
+        background-color: gray;
         color: white;
         cursor: pointer;
         width: 60px;
     }
 
     button[type=button], button[type=submit], button[type=reset], input[type=button], input[type=submit], input[type=reset] {
-        background-color: #0d1a80;
+        background-color: black;
     }
     .bg-card {
         background-color: #0d1a80;
@@ -94,9 +89,9 @@
     }
 
     .modal-full {
-    min-width: 100vw;
-    margin-left: 80;
-}
+        min-width: 100vw;
+        margin-left: 80;
+    }
 
     .modal-full .modal-content {
         min-height: 100vh;

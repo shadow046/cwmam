@@ -28,33 +28,17 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
+    public function search()
+    {
+        $title = 'IDEASERV';
+        return view('pages.search', compact('title'));
+    }
+
+
     public function index()
     {
-        
-        $title = 'Dashboard';
-
-        if (auth()->user()->status == '0') {
-            return redirect('logout');
-        }
-
-        if (auth()->user()->branch->branch != "Warehouse" && !auth()->user()->hasrole('Repair')) {
-            $units = Stock::where('status', 'in')->where('branch_id', auth()->user()->branch->id)->count();
-            $returns = Defective::wherein('status', ['For return', 'For receiving'])->where('branch_id', auth()->user()->branch->id)->count();
-            $stockreq = StockRequest::where('branch_id', auth()->user()->branch->id)
-                ->wherein('status', ['0', '1'])
-                ->count();
-            $sunits = Stock::where('status', 'service unit')->where('branch_id', auth()->user()->branch->id)->count();
-            $loans = Loan::where('status', 'pending')->where('to_branch_id', auth()->user()->branch->id)->count();
-            return view('pages.home', compact('stockreq', 'units', 'returns', 'sunits', 'title', 'loans'));
-        }else if (auth()->user()->hasrole('Repair')){
-            return view('pages.warehouse.return', compact('title'));
-        }else{
-            $stockreq = StockRequest::wherein('status', ['0', '1', '4', '5'])->count();
-            $units = Warehouse::where('status', 'in')->count();
-            $returns = Defective::where('status', 'For receiving')->count();
-            return view('pages.home', compact('stockreq', 'units', 'returns', 'title'));
-        }
-
+        $title = 'IDEASERV';
+        return view('pages.dashboard', compact('title'));
     }
 
     public function log()
