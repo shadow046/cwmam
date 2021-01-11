@@ -16,53 +16,53 @@
 </div>
 <div class="container pt-5">
     <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-2">
-                    <a href="#lccTable">
-                        <div class="card bg-card text-center" style="min-height: 30px">
-                            <div id="LCC" class="card-header" style="color: white;font-family:arial;font-size:80%;font-weight: bold;">
-                                LCC
-                            </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <a href="#lccTable">
+                    <div class="card bg-card text-center" style="min-height: 30px">
+                        <div id="LCC" class="card-header" style="color: white;font-family:arial;font-size:80%;font-weight: bold;">
+                            LCC
                         </div>
-                    </a>
-                </div>
-                <div class="col-sm-2">
-                    <a href="#MSPG">
-                        <div class="card bg-card text-center" style="min-height: 30px">
-                            <div id="MSPG" class="card-header" style="color: white;font-family:arial;font-size:80%;font-weight: bold">
-                                MSPG
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-sm-2">
-                    <a href="#PUREGOLD">
-                        <div class="card bg-card text-center" style="min-height: 30px">
-                            <div id="PUREGOLD" class="card-header" style="color: white;font-family:arial;font-size:80%;font-weight: bold">
-                                PUREGOLD
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-sm-2">
-                    <a href="#SHOEMART">
-                        <div class="card bg-card text-center" style="min-height: 30px">
-                            <div id="SHOEMART" class="card-header" style="color: white;font-family:arial;font-size:80%;font-weight: bold">
-                                SHOEMART
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-sm-2">
-                    <a href="#SMMA">
-                        <div class="card bg-card text-center" style="min-height: 30px">
-                            <div id="SMMA" class="card-header" style="color: white;font-family:arial;font-size:80%;font-weight: bold">
-                                SM MA
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                    </div>
+                </a>
             </div>
+            <div class="col-sm-2">
+                <a href="#mspgTable">
+                    <div class="card bg-card text-center" style="min-height: 30px">
+                        <div id="MSPG" class="card-header" style="color: white;font-family:arial;font-size:80%;font-weight: bold">
+                            MSPG
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-2">
+                <a href="#puregoldTable">
+                    <div class="card bg-card text-center" style="min-height: 30px">
+                        <div id="PUREGOLD" class="card-header" style="color: white;font-family:arial;font-size:80%;font-weight: bold">
+                            PUREGOLD
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-2">
+                <a href="#shoemartTable">
+                    <div class="card bg-card text-center" style="min-height: 30px">
+                        <div id="SHOEMART" class="card-header" style="color: white;font-family:arial;font-size:80%;font-weight: bold">
+                            SHOEMART
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-2">
+                <a href="#smmaTable">
+                    <div class="card bg-card text-center" style="min-height: 30px">
+                        <div id="SMMA" class="card-header" style="color: white;font-family:arial;font-size:80%;font-weight: bold">
+                            SM MA
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 

@@ -4,13 +4,15 @@ var puregold;
 var shoemart;
 var tables;
 var select = 'lcc';
+var search;
 $(document).ready(function(){
 
     lcc =
         $('table.lccTable').DataTable({ 
             "dom": 'lrtip',
             "language": {
-                "emptyTable": " "
+                "emptyTable": " ",
+                "processing": "Searching"
             },
             processing: true,
             serverSide: true,
@@ -50,10 +52,12 @@ $('#searchBtn').on('click', function(){
         success: function(data){
             console.log(data)
             console.log(data.type)
+            search = $('#search').val();
             if (data.type == 'lcc') {
                 if (select != data.type) {
                     $('#LCC').click();
                 }
+                $('#search').val(search);
                 lcc.column(2)
                     .search($('#search').val())
                     .draw();
@@ -73,6 +77,7 @@ $('#searchBtn').on('click', function(){
                 if (select != data.type) {
                     $('#MSPG').click();
                 }
+                $('#search').val(search);
                 mspg.column(4)
                     .search($('#search').val())
                     .draw();
@@ -92,6 +97,7 @@ $('#searchBtn').on('click', function(){
                 if (select != data.type) {
                     $('#PUREGOLD').click();
                 }
+                $('#search').val(search);
                 puregold.column(2)
                     .search($('#search').val())
                     .draw();
@@ -111,6 +117,7 @@ $('#searchBtn').on('click', function(){
                 if (select != data.type) {
                     $('#SHOEMART').click();
                 }
+                $('#search').val(search);
                 shoemart.column(2)
                     .search($('#search').val())
                     .draw();
@@ -130,6 +137,7 @@ $('#searchBtn').on('click', function(){
                 if (select != data.type) {
                     $('#SMMA').click();
                 }
+                $('#search').val(search);
                 smma.column(2)
                     .search($('#search').val())
                     .draw();
@@ -151,22 +159,21 @@ $('#searchBtn').on('click', function(){
 });
 
 $('#clearBtn').on('click', function() {
-    smma.column(2)
-        .search('')
-        .draw();
-    mspg
-        .columns(4).search( '' )
-        .draw();
-    puregold
-        .columns(2).search( '' )
-        .draw();
-    shoemart
-        .columns(2).search( '' )
-        .draw();
-    lcc
-        .columns(2).search( '' )
-        .draw();
-    lcc.draw();
+    if (select == 'lcc') {
+        $('#LCC').click();
+        $('#LCC').click();
+    }else if (select == 'mspg') {
+        $('#MSPG').click();
+        $('#MSPG').click();
+    }else if (select == 'pg') {
+        $('#PUREGOLD').click();
+        $('#PUREGOLD').click();
+    }else if (select == 'sm') {
+        $('#SHOEMART').click();
+    }else if (select == 'smma') {
+        $('#SMMA').click();
+        $('#SMMA').click();
+    }
     $('#search').val('');
 });
 
@@ -180,14 +187,17 @@ $('#LCC').on('click', function () {
     $("#lccTable").toggle();
     $("#mspgTable").hide();
     $("#shoemartTable").hide();
+    $("#puregoldTable").hide();
     $("#smmaTable").hide();
+    $('#search').val('');
     $('table.lccTable').dataTable().fnDestroy();
     select = 'lcc';
     lcc =
         $('table.lccTable').DataTable({ 
             "dom": 'lrtip',
             "language": {
-                "emptyTable": " "
+                "emptyTable": " ",
+                "processing": "Searching"
             },
             processing: true,
             serverSide: true,
@@ -220,13 +230,15 @@ $('#MSPG').on('click', function () {
     $("#shoemartTable").hide();
     $("#smmaTable").hide();
     $("#mspgTable").toggle();
+    $('#search').val('');
     $('table.mspgTable').dataTable().fnDestroy();
     select = 'mspg';
     mspg =
         $('table.mspgTable').DataTable({ 
             "dom": 'lrtip',
             "language": {
-                "emptyTable": " "
+                "emptyTable": " ",
+                "processing": "Searching"
             },
             processing: true,
             serverSide: true,
@@ -261,12 +273,14 @@ $('#PUREGOLD').on('click', function () {
     $("#smmaTable").hide();
     select = 'pg';
     $("#mspgTable").hide();
+    $('#search').val('');
     $('table.puregoldTable').dataTable().fnDestroy();
     puregold =
         $('table.puregoldTable').DataTable({ 
             "dom": 'lrtip',
             "language": {
-                "emptyTable": " "
+                "emptyTable": " ",
+                "processing": "Searching"
             },
             processing: true,
             serverSide: true,
@@ -299,13 +313,15 @@ $('#SHOEMART').on('click', function () {
     $("#shoemartTable").toggle();
     $("#mspgTable").hide();
     select = 'sm';
+    $('#search').val('');
     $('table.shoemartTable').dataTable().fnDestroy();
     $("#smmaTable").hide();
     shoemart =
         $('table.shoemartTable').DataTable({ 
             "dom": 'lrtip',
             "language": {
-                "emptyTable": " "
+                "emptyTable": " ",
+                "processing": "Searching"
             },
             processing: true,
             serverSide: true,
@@ -345,7 +361,8 @@ $('#SMMA').on('click', function () {
         $('table.smmaTable').DataTable({ 
             "dom": 'lrtip',
             "language": {
-                "emptyTable": " "
+                "emptyTable": " ",
+                "processing": "Searching"
             },
             processing: true,
             serverSide: true,
