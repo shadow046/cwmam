@@ -17,7 +17,6 @@ class CreateSmmasTable extends Migration
             $table->bigIncrements('id');
             $table->string('Company')->nullable();
             $table->string('Location')->nullable();
-            $table->string('Handling_branch')->nullable();
             $table->string('Model')->nullable();
             $table->string('Serial')->nullable();
             $table->string('Start')->nullable();

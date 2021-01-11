@@ -1,6 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
+
+<div class="container">
+    <div class="row justify-content-center">
+    <center>
+        <p style="color: gray">Please enter valid serial number to start search</p>
+        <div>
+           SEARCH :  <input type="text" id="search" size="50" value="">
+            <button type="button" id="searchBtn"><i class="fa fa-search" style="color:white;font-size:15px"></i></button>
+            <button type="button" id="clearBtn" style="color:white;font-size:13px"><b>Clear</b></button>
+        </div>
+    </center>
+    </div>
+</div>
 <div class="container pt-5">
     <div class="container-fluid">
             <div class="row">
@@ -14,7 +27,7 @@
                     </a>
                 </div>
                 <div class="col-sm-2">
-                    <a href="#">
+                    <a href="#MSPG">
                         <div class="card bg-card text-center" style="min-height: 30px">
                             <div id="MSPG" class="card-header" style="color: white;font-family:arial;font-size:80%;font-weight: bold">
                                 MSPG
@@ -23,7 +36,7 @@
                     </a>
                 </div>
                 <div class="col-sm-2">
-                    <a href="#">
+                    <a href="#PUREGOLD">
                         <div class="card bg-card text-center" style="min-height: 30px">
                             <div id="PUREGOLD" class="card-header" style="color: white;font-family:arial;font-size:80%;font-weight: bold">
                                 PUREGOLD
@@ -32,7 +45,7 @@
                     </a>
                 </div>
                 <div class="col-sm-2">
-                    <a href="#">
+                    <a href="#SHOEMART">
                         <div class="card bg-card text-center" style="min-height: 30px">
                             <div id="SHOEMART" class="card-header" style="color: white;font-family:arial;font-size:80%;font-weight: bold">
                                 SHOEMART
@@ -41,7 +54,7 @@
                     </a>
                 </div>
                 <div class="col-sm-2">
-                    <a href="#">
+                    <a href="#SMMA">
                         <div class="card bg-card text-center" style="min-height: 30px">
                             <div id="SMMA" class="card-header" style="color: white;font-family:arial;font-size:80%;font-weight: bold">
                                 SM MA
@@ -52,39 +65,14 @@
             </div>
     </div>
 </div>
-<div style="float: right;" class="pt-3">
-    <b>SEARCH&nbsp;&nbsp;</b><a href="#" id="search-ic"><i class="fa fa-lg fa-search" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</div>
-<div class="table-responsive" id="lccTable" style="display: none">
-    <table class="table table-sm">
-        <caption>LCC Invertory Warranty</caption>
-        <thead class="bg-info">
-            <tr>
-                <th>
-                    COMPANY NAME
-                </th>
-                <th>
-                    ITEM DESCRIPTION
-                </th>
-                <th>
-                    SERIAL
-                </th>
-                <th>
-                    START
-                </th>
-                <th>
-                    END
-                </th>
-                <th>
-                    SPECIFICATIONS
-                </th>
-                <th>
-                    STATUS
-                </th>
-            </tr>
-        </thead>
-    </table>
-</div>
+
+@include('pages.lcc')
+@include('pages.mspg')
+@include('pages.puregold')
+@include('pages.shoemart')
+@include('pages.smma')
+
+
 @role('Viewer')
 <input type="button" id="customerBtn" class="btn btn-primary" value="New Customer">
 <input type="button" id="editBtn" class="btn btn-primary" value="Edit Customer Details">

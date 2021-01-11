@@ -16,7 +16,7 @@ Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('search', 'HomeController@search')->name('search.index');
 Route::get('/', 'HomeController@index')->name('home.index');
 Route::get('/Customers', 'CustomerController@index')->name('Customers.index');
-
+Route::get('lcc', 'HomeController@getLCC')->name('gets.LCC');
 /*Route::get('change-password', 'ChangePasswordController@index');
 Route::post('change-password', 'ChangePasswordController@store')->name('change.password');
 

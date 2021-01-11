@@ -17,4 +17,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('search', 'SearchController@show')->name('search.show');
+
+Route::get('global', 'SearchController@global')->middleware('ajax');
+Route::get('search', 'SearchController@show')->middleware('ajax');
+Route::get('lcc', 'SearchController@getLCC')->middleware('ajax');
+Route::get('mspg', 'SearchController@getMSPG')->middleware('ajax');
+Route::get('puregold', 'SearchController@getPUREGOLD')->middleware('ajax');
+Route::get('shoemart', 'SearchController@getSHOEMART')->middleware('ajax');
+Route::get('smma', 'SearchController@getSMMA')->middleware('ajax');
+
+
+

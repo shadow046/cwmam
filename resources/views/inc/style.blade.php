@@ -41,7 +41,7 @@
         padding: 10px ;
     }
 
-
+    
     button[type=button].col-md-2{
         height: 35px;
         background-color: gray;

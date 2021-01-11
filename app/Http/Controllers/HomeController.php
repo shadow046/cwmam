@@ -7,7 +7,7 @@ use Spatie\Activitylog\Models\Activity;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
 use App\User;
-use App\Branch;
+use App\Lcc;
 use App\Item;
 use App\Loan;
 use App\Initial;
@@ -39,6 +39,14 @@ class HomeController extends Controller
     {
         $title = 'IDEASERV';
         return view('pages.dashboard', compact('title'));
+    }
+
+    public function getLCC()
+    {
+
+    return DataTables::of(Lcc::where('Serial', '!=', '')->get())
+        
+        ->make(true);
     }
 
     public function log()
