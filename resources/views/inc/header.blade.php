@@ -11,7 +11,6 @@
             <div class="p-2 ml-auto align-self-end d-flex">
                 <a href="#">
                     <div class="p-2 ml-auto" style="text-align: right;">
-                            <p>&nbsp;</p>
                             <p style="color: #0d1a80">{{auth()->user()->firstname}}{{auth()->user()->lastname}}</p>
                             <p style="color: #0d1a80">{{Carbon\Carbon::now()->toDayDateTimeString()}}</p>
                     </div>

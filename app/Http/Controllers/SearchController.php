@@ -101,12 +101,11 @@ class SearchController extends Controller
 
     public function getLCC()
     {
-
-    return DataTables::of(Lcc::where('Serial', '!=', '')->get())
-        ->addColumn('Status', function (){
-            return 'Under Warranty';
-        })
-        ->make(true);
+        $lcc = Lcc::where('Serial', '!=', '')
+            ->join('lcc_customers', 'lcc_customers.id', '=', 'lcc_customer_id')
+            ->get();
+        return DataTables::of($lcc)
+            ->make(true);
     }
 
     public function getMSPG()

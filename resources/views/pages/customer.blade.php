@@ -1,7 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-
+@if (session('status'))
+    <div class="alert alert-success" role="alert">
+            {{ session('status') }}
+    </div>
+@endif
+@if ($errors->any())
+    <div class="alert alert-danger" role="alert">
+            @foreach ( $errors->all() as $error )
+                - {{$error}} Not found. Import data failed<br>
+            @endforeach
+    </div>
+@endif
 <div class="container">
     <div class="row justify-content-center">
     <center>
@@ -73,8 +84,7 @@
 @include('pages.smma')
 
 
-@role('Viewer')
-<input type="button" id="customerBtn" class="btn btn-primary" value="New Customer">
-<input type="button" id="editBtn" class="btn btn-primary" value="Edit Customer Details">
+@role('Administrator')
+<input type="button" id="importBtn" class="btn btn-primary" value="Import">
 @endrole
 @endsection

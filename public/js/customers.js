@@ -23,7 +23,7 @@ $(document).ready(function(){
                 }
             },
             columns: [
-                { data: 'Customer_name', name:'Customer_name'},
+                { data: 'customer_name', name:'customer_name'},
                 { data: 'Item_description', name:'Item_description', "width": "14%"},
                 { data: 'Serial', name:'Serial', "width": "14%"},
                 { data: 'Receiving_date', name:'Receiving_date', "width": "14%"},
@@ -36,6 +36,12 @@ $(document).ready(function(){
     $("#lccTable").toggle();
 });
 
+$('#importBtn').on('click', function(){
+    $('#importModal').modal({backdrop: 'static', keyboard: false});
+    if (select != '') {
+        $('#lccForm').attr('action', select);
+    }
+});
 
 $('#searchBtn').on('click', function(){
 
@@ -170,6 +176,7 @@ $('#clearBtn').on('click', function() {
         $('#PUREGOLD').click();
     }else if (select == 'sm') {
         $('#SHOEMART').click();
+        $('#SHOEMART').click();
     }else if (select == 'smma') {
         $('#SMMA').click();
         $('#SMMA').click();
@@ -208,7 +215,7 @@ $('#LCC').on('click', function () {
                 }
             },
             columns: [
-                { data: 'Customer_name', name:'Customer_name'},
+                { data: 'customer_name', name:'customer_name'},
                 { data: 'Item_description', name:'Item_description', "width": "14%"},
                 { data: 'Serial', name:'Serial', "width": "14%"},
                 { data: 'Receiving_date', name:'Receiving_date', "width": "14%"},

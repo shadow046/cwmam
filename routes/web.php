@@ -17,6 +17,9 @@ Route::get('search', 'HomeController@search')->name('search.index');
 Route::get('/', 'HomeController@index')->name('home.index');
 Route::get('/Customers', 'CustomerController@index')->name('Customers.index');
 Route::get('lcc', 'HomeController@getLCC')->name('gets.LCC');
+Route::post('lcc', 'ImportController@lcc');
+Route::post('mspg', 'ImportController@mspg');
+Route::post('pg', 'ImportController@pg');
 /*Route::get('change-password', 'ChangePasswordController@index');
 Route::post('change-password', 'ChangePasswordController@store')->name('change.password');
 

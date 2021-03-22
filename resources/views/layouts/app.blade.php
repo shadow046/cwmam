@@ -34,11 +34,8 @@
             @yield('content')
             </div>
 
-            @if(Request::is('branch'))
-                @include('modal.warehouse.branch')
-                @if(auth()->user()->hasrole('Administrator'))
-                    @include('modal.warehouse.initial')
-                @endif
+            @if(Request::is('Customers'))
+                @include('modal.import')
             @endif
 
             @if(Request::is('request'))
