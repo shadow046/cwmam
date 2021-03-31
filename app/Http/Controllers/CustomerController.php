@@ -7,6 +7,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 use App\CustomerBranch;
 use App\Customer;
+use Auth;
 class CustomerController extends Controller
 {
 
@@ -15,14 +16,15 @@ class CustomerController extends Controller
         $this->middleware('auth');
     }
     
-    public function index()
+    public function index(Request $request)
     {
         if (auth()->user()->hasanyrole('Repair')) {
             return redirect('/');
         }
-
         $title = 'Customers';
-        return view('pages.customer', compact('title'));
+        Auth::user()->tokens()->delete();
+        $token = Auth::user()->createToken('customer')->plainTextToken;
+        return view('pages.customer', compact('title', 'token'));
     }
 
     public function customertable()

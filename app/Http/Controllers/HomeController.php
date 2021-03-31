@@ -17,6 +17,7 @@ use App\PreparedItem;
 use App\Stock;
 use App\Defective;
 use App\UserLog;
+use Session;
 
 use Auth;
 
@@ -35,10 +36,24 @@ class HomeController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
+        /*$token = Auth::user()->tokens()->first();
+        //dd($token);
+        if (!$token) {
+            $token = Auth::user()->createToken('token')->plainTextToken;
+        }else{
+            //dd($request->session()->all());
+            dd($token);
+        }
+        dd($token.'dd2');*/
         $title = 'IDEASERV';
-        return view('pages.dashboard', compact('title'));
+        Auth::user()->tokens()->delete();
+        $token = Auth::user()->createToken('home')->plainTextToken;
+        if (auth()->user()->hasRole('User')) {
+            return view('pages.search', compact('title', 'token'));
+        }
+        return view('pages.dashboard', compact('title', 'token'));
     }
 
     public function getLCC()

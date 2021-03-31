@@ -1,4 +1,5 @@
 $(document).on('click', '#searchBtn', function(){
+    var search = $('#search').val();
     $.ajax({
         url: 'api/search',
         dataType: 'json',
@@ -6,8 +7,10 @@ $(document).on('click', '#searchBtn', function(){
         data: {
             serial: $('#search').val()
         },
+        beforeSend: function(xhrObj){
+            xhrObj.setRequestHeader("Authorization","Bearer "+$('meta[name="tok"]').attr('content'));
+        },
         success: function(data){
-            console.log(data);
             if (data != 0){
                 $('#warranty').show();
                 $('#info').show();
@@ -18,6 +21,9 @@ $(document).on('click', '#searchBtn', function(){
                     $('#mspg-Store_name').val(data.data.Store_name);
                     $('#mspg-Handling_Branch').val(data.data.Handling_branch);
                     $('#mspg-Brand').val(data.data.Brand);
+                    $('#mspg-Status').val(data.data.Status)
+                    $('#mspg-Start').val(data.data.Start);
+                    $('#mspg-End').val(data.data.End);
                     $('#mspg-warranty').show();
                     $('#mspg-customer').show();
                     $('#sm-customer').hide();
@@ -27,6 +33,9 @@ $(document).on('click', '#searchBtn', function(){
                     $('#pg-Customer_Name').val(data.data.Customer_name);
                     $('#pg-Item_Description').val(data.data.Item_description);
                     $('#pg-Specifications').val(data.data.Specifications);
+                    $('#mspg-Status').val(data.data.Status)
+                    $('#mspg-Start').val(data.data.Receiving_date);
+                    $('#mspg-End').val(data.data.End_warranty);
                     $('#mspg-warranty').show();
                     $('#mspg-customer').hide();
                     $('#sm-customer').hide();
@@ -37,6 +46,9 @@ $(document).on('click', '#searchBtn', function(){
                     $('#sm-Item_Description').val(data.data.Item_description);
                     $('#sm-Keyboard_touchscreen').val(data.data.Keyboard_touchscreen);
                     $('#sm-Specifications').val(data.data.Specifications);
+                    $('#mspg-Status').val(data.data.Status)
+                    $('#mspg-Start').val(data.data.Receiving_date);
+                    $('#mspg-End').val(data.data.End_warranty);
                     $('#mspg-warranty').show();
                     $('#mspg-customer').hide();
                     $('#pg-customer').hide();
@@ -46,6 +58,9 @@ $(document).on('click', '#searchBtn', function(){
                     $('#pg-Customer_Name').val(data.data.Customer_name);
                     $('#pg-Item_Description').val(data.data.Item_description);
                     $('#pg-Specifications').val(data.data.Specifications);
+                    $('#mspg-Status').val(data.data.Status)
+                    $('#mspg-Start').val(data.data.Receiving_date);
+                    $('#mspg-End').val(data.data.End_warranty);
                     $('#mspg-warranty').show();
                     $('#mspg-customer').hide();
                     $('#sm-customer').hide();
@@ -56,12 +71,19 @@ $(document).on('click', '#searchBtn', function(){
                     $('#smma-Location').val(data.data.Location);
                     $('#smma-Handling_Branch').val(data.data.Handling_branch);
                     $('#smma-Model').val(data.data.Model);
+                    $('#mspg-Status').val(data.data.Status)
+                    $('#mspg-Start').val(data.data.Start);
+                    $('#mspg-End').val(data.data.End);
                     $('#mspg-warranty').show();
                     $('#mspg-customer').hide();
                     $('#pg-customer').hide();
                     $('#sm-customer').hide();
                     $('#smma-customer').show();
                 }
+            }else if (data == 0) {
+                $(':input').not(':button, :submit, :reset, :hidden').val('');
+                alert('No data found!');
+                $('#search').val(search);
             }
         },
         error: function (data) {
@@ -70,14 +92,19 @@ $(document).on('click', '#searchBtn', function(){
     });
 });
 
-$(document).on('keyup', '#search', function(e){
-    if (e.keyCode == 13) {
+
+$("#search").keypress(function(e){
+    var key = e.which;
+    if (key == 13) {
         $.ajax({
             url: 'api/search',
             dataType: 'json',
             type: 'GET',
             data: {
                 serial: $('#search').val()
+            },
+            beforeSend: function(xhrObj){
+                xhrObj.setRequestHeader("Authorization","Bearer "+$('meta[name="tok"]').attr('content'));
             },
             success: function(data){
                 console.log(data);

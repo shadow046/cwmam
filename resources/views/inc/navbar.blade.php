@@ -13,6 +13,9 @@
             <li class="nav-item">
                 <a class="nav-link {{ Request::is('Settings') ? 'active' : '' }}" href="{{ url('Settings') }}">SETTINGS</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('Settings') ? 'active' : '' }} import" href="#">IMPORT</a>
+            </li>
         </ul>
         <ul class="nav">
              <li class="nav-item">

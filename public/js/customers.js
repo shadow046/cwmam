@@ -20,10 +20,13 @@ $(document).ready(function(){
                 url: 'api/lcc',
                 error: function(data) {
                     console.log(data);
-                }
+                },
+                beforeSend: function(xhrObj){
+                    xhrObj.setRequestHeader("Authorization","Bearer "+$('meta[name="tok"]').attr('content'));
+                },
             },
             columns: [
-                { data: 'customer_name', name:'customer_name'},
+                { data: 'Customer_name', name:'Customer_name'},
                 { data: 'Item_description', name:'Item_description', "width": "14%"},
                 { data: 'Serial', name:'Serial', "width": "14%"},
                 { data: 'Receiving_date', name:'Receiving_date', "width": "14%"},
@@ -36,15 +39,26 @@ $(document).ready(function(){
     $("#lccTable").toggle();
 });
 
-$('#importBtn').on('click', function(){
+$('.import').on('click', function(){
     $('#importModal').modal({backdrop: 'static', keyboard: false});
     if (select != '') {
         $('#lccForm').attr('action', select);
+        $('#h6').text('Import '+select+' data');
     }
 });
 
-$('#searchBtn').on('click', function(){
+$('.submit').on('click', function(e){
+    if (!$('#upload').val()) {
+        e.preventDefault();
+        alert('Please Upload File');
+    }
+});
 
+$('.cancel').on('click', function(){
+    window.location.href = 'Customers';
+});
+
+$('#searchBtn').on('click', function(){
     $.ajax({
         url: 'api/global',
         dataType: 'json',
@@ -54,6 +68,9 @@ $('#searchBtn').on('click', function(){
         },
         error: function (data) {
             alert(data.responseText);
+        },
+        beforeSend: function(xhrObj){
+            xhrObj.setRequestHeader("Authorization","Bearer "+$('meta[name="tok"]').attr('content'));
         },
         success: function(data){
             console.log(data)
@@ -144,7 +161,7 @@ $('#searchBtn').on('click', function(){
                     $('#SMMA').click();
                 }
                 $('#search').val(search);
-                smma.column(2)
+                smma.column(3)
                     .search($('#search').val())
                     .draw();
                 mspg
@@ -159,8 +176,10 @@ $('#searchBtn').on('click', function(){
                 lcc
                     .columns(2).search( '' )
                     .draw();
+            }else if (data.type =='none') {
+                alert('Serial not found!');
             }
-        },
+        }
     });
 });
 
@@ -211,11 +230,14 @@ $('#LCC').on('click', function () {
             ajax: {
                 url: 'api/lcc',
                 error: function(data) {
-                    console.log(data);
-                }
+                    alert(data.responseText);
+                },
+                beforeSend: function(xhrObj){
+                    xhrObj.setRequestHeader("Authorization","Bearer "+$('meta[name="tok"]').attr('content'));
+                },
             },
             columns: [
-                { data: 'customer_name', name:'customer_name'},
+                { data: 'Customer_name', name:'Customer_name'},
                 { data: 'Item_description', name:'Item_description', "width": "14%"},
                 { data: 'Serial', name:'Serial', "width": "14%"},
                 { data: 'Receiving_date', name:'Receiving_date', "width": "14%"},
@@ -252,8 +274,11 @@ $('#MSPG').on('click', function () {
             ajax: {
                 url: 'api/mspg',
                 error: function(data) {
-                    console.log(data);
-                }
+                    alert(data.responseText);
+                },
+                beforeSend: function(xhrObj){
+                    xhrObj.setRequestHeader("Authorization","Bearer "+$('meta[name="tok"]').attr('content'));
+                },
             },
             columns: [
                 { data: 'Company'},
@@ -294,8 +319,11 @@ $('#PUREGOLD').on('click', function () {
             ajax: {
                 url: 'api/puregold',
                 error: function(data) {
-                    console.log(data);
-                }
+                    alert(data.responseText);
+                },
+                beforeSend: function(xhrObj){
+                    xhrObj.setRequestHeader("Authorization","Bearer "+$('meta[name="tok"]').attr('content'));
+                },
             },
             columns: [
                 { data: 'Customer_name', name:'Customer_name'},
@@ -335,8 +363,11 @@ $('#SHOEMART').on('click', function () {
             ajax: {
                 url: 'api/shoemart',
                 error: function(data) {
-                    console.log(data);
-                }
+                    alert(data.responseText);
+                },
+                beforeSend: function(xhrObj){
+                    xhrObj.setRequestHeader("Authorization","Bearer "+$('meta[name="tok"]').attr('content'));
+                },
             },
             columns: [
                 { data: 'Customer_name', name:'Customer_name'},
@@ -376,8 +407,11 @@ $('#SMMA').on('click', function () {
             ajax: {
                 url: 'api/smma',
                 error: function(data) {
-                    console.log(data);
-                }
+                    alert(data.responseText);
+                },
+                beforeSend: function(xhrObj){
+                    xhrObj.setRequestHeader("Authorization","Bearer "+$('meta[name="tok"]').attr('content'));
+                },
             },
             columns: [
                 { data: 'Company', name:'Company'},
@@ -391,3 +425,9 @@ $('#SMMA').on('click', function () {
         });
 });
 
+$("#search").keypress(function(e){
+    var key = e.which;
+    if (key == 13) {
+        $('#searchBtn').click();
+    }
+});

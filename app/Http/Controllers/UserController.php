@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
 use App\User;
+use Illuminate\Support\Facades\Hash;
 use App\Area;
 use App\Branch;
 use App\UserLog;

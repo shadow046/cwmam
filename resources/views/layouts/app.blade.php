@@ -6,8 +6,10 @@
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
             @auth
-            <meta name="csrf-token" content="{{ csrf_token() }}">
+            <meta name="ctok" content="{{ csrf_token() }}">
+            <meta name="tok" content="{{$token}}">
             @endauth
+            
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
             <link rel="stylesheet" type="text/css" href="{{ url('/css/style.css') }}" />
             <link rel="stylesheet" type="text/css" href="{{ url('/css/styles.css') }}" />
@@ -16,18 +18,25 @@
             <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="Stylesheet" type="text/css" />
             <link rel="icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
             <link rel="shortcut icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
-            <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+            <!--script src='https://kit.fontawesome.com/a076d05399.js'></script-->
             @auth
                 <title>{{$title}}</title>
             @else
                 <title>IDEASERV</title>
             @endauth
+            <style type="text/css">
+            .fa_custom {
+                color:  white
+            }
+            </style>
         </head>
         
         <body>
             @include('inc.header')
             @if(!Auth::guest())
-            @include('inc.navbar')
+                @if(!auth()->user()->hasRole('User'))
+                    @include('inc.navbar')
+                @endif
                 <input type="text" hidden id="level" value={{ auth()->user()->roles->first()->name }}>
             @endif
             <div class="py-2">
@@ -96,6 +105,8 @@
             <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
             <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
             <script type="text/javascript" src="{{asset('js/moment.min.js')}}"></script>
+            <script type="text/javascript" src="{{asset('js/fontawesome.js')}}"></script>
+
             
             @if(Request::is('user'))
                 <script src="{{asset('min/?f=js/warehouse/user.js')}}"></script>
@@ -177,10 +188,16 @@
                 <script src="{{asset('min/?f=js/unrepair.js')}}"></script>
             @endif
 
-            @if(Request::is('/'))
+            @if(Request::is('/search'))
                 <script src="{{asset('min/?f=js/search.js')}}"></script>
             @endif
-            
+            @auth
+            @if(auth()->user()->hasRole('User'))
+                @if(Request::is('/'))
+                    <script src="{{asset('min/?f=js/search.js')}}"></script>
+                @endif
+            @endif
+            @endauth
         </body>
     </html>
 

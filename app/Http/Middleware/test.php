@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Middleware;
-use Auth;
-use Closure;
 
-class AjaxRequestOnly
+use Closure;
+use Auth;
+class test
 {
     /**
      * Handle an incoming request.
@@ -12,13 +12,15 @@ class AjaxRequestOnly
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
      * @return mixed
-     */
+     */   
     public function handle($request, Closure $next)
     {
-        if($request->ajax()) {
-            //dd(Auth::user()->id);
+        //$token = $request->header('APP_KEY');
+        if (Auth::guest()) {
+            dd(Auth::user());
+        }else{
             return $next($request);
         }
-        abort(403, 'Unauthorized Access!');
+        
     }
 }

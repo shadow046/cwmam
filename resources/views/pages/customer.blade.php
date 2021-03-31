@@ -9,7 +9,7 @@
 @if ($errors->any())
     <div class="alert alert-danger" role="alert">
             @foreach ( $errors->all() as $error )
-                - {{$error}} Not found. Import data failed<br>
+                - {{$error}} has duplicate. Import data failed<br>
             @endforeach
     </div>
 @endif
@@ -84,7 +84,7 @@
 @include('pages.smma')
 
 
-@role('Administrator')
+@role('Administator')
 <input type="button" id="importBtn" class="btn btn-primary" value="Import">
 @endrole
 @endsection

@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Middleware;
-use Auth;
+
 use Closure;
 
-class AjaxRequestOnly
+class ForceJsonResponse
 {
     /**
      * Handle an incoming request.
@@ -15,10 +15,7 @@ class AjaxRequestOnly
      */
     public function handle($request, Closure $next)
     {
-        if($request->ajax()) {
-            //dd(Auth::user()->id);
-            return $next($request);
-        }
-        abort(403, 'Unauthorized Access!');
+        $request->headers->set('Accept', 'application/json');
+        return $next($request);
     }
 }

@@ -9,16 +9,20 @@ use App\Puregold;
 use App\ShoeMart;
 use App\Lcc;
 use App\smma;
+use Auth;
 
 
 class SearchController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         //
@@ -95,17 +99,15 @@ class SearchController extends Controller
             return response()->json(['data' => $smma, 'type' => 'smma']);
         }else{
             $search = '0';
-            return response()->json($search);
+            return response()->json(['data' => '0', 'type' => 'none']);
         }
     }
 
     public function getLCC()
     {
-        $lcc = Lcc::where('Serial', '!=', '')
-            ->join('lcc_customers', 'lcc_customers.id', '=', 'lcc_customer_id')
-            ->get();
-        return DataTables::of($lcc)
-            ->make(true);
+            $lcc = Lcc::where('Serial', '!=', '')->get();
+            return DataTables::of($lcc)
+                ->make(true);
     }
 
     public function getMSPG()

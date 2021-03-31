@@ -8,12 +8,105 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Lcc;
 use App\LccCustomer;
 use App\Mspg;
-use App\CustomerBranch;
-use App\Warehouse;
-use App\Stock;
+use App\Puregold;
+use App\ShoeMart;
+use App\smma;
 
 class ImportController extends Controller
 {
+    public function smma(Request $request)
+    {
+        function generateRandomString($length = 25) 
+        {
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $randomString = '';
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            }
+            $check = LccCustomer::where('id', $randomString)->first();
+            if ($check) {
+                generateRandomString(25);
+            }else{
+                return $randomString;
+            }
+        }
+        $file = $request->file('upload');
+        $import = new LccImport;
+        $data = Excel::toArray($import, $file);
+        $error = 0;
+        $itemswitherror = [];
+        foreach ($data[0] as $key => $value) {
+            $checkdup = smma::where('Serial', $value[3])->first();
+            if (!$checkdup) {
+                $add = new smma;
+                $add->Company = $value[0];
+                $add->Location = $value[1];
+                $add->Model = $value[2];
+                $add->Serial = $value[3];
+                $add->Start = $value[4];
+                $add->End = $value[5];
+                $add->Status = 'Under Warranty';
+                $add->save();
+            }else{
+                $error = 1;
+                array_push($itemswitherror, $value[3]);
+            }
+        }
+        if ($error == 1) {
+            return back()->withErrors([$itemswitherror]);
+        }else{
+            return back()->withStatus('Excel File Imported Successfully');
+        }
+    }
+    
+    public function sm(Request $request)
+    {
+        function generateRandomString($length = 25) 
+        {
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $randomString = '';
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            }
+            $check = LccCustomer::where('id', $randomString)->first();
+            if ($check) {
+                generateRandomString(25);
+            }else{
+                return $randomString;
+            }
+        }
+        $file = $request->file('upload');
+        $import = new LccImport;
+        $data = Excel::toArray($import, $file);
+        $error = 0;
+        $itemswitherror = [];
+        foreach ($data[0] as $key => $value) {
+            $checkdup = ShoeMart::where('Serial', $value[2])->first();
+            if (!$checkdup) {
+                $add = new ShoeMart;
+                $add->Customer_name = $value[0];
+                $add->Item_description = $value[1];
+                $add->Serial = $value[2];
+                $add->Receiving_date = $value[3];
+                $add->End_warranty = $value[4];
+                $add->Keyboard_touchscreen = $value[5];
+                $add->Specifications = $value[6];
+                $add->Status = 'Under Warranty';
+                $add->save();
+            }else{
+                $error = 1;
+                array_push($itemswitherror, $value[2]);
+            }
+        }
+        if ($error == 1) {
+            return back()->withErrors([$itemswitherror]);
+        }else{
+            return back()->withStatus('Excel File Imported Successfully');
+        }
+    }
+    
     public function pg(Request $request)
     {
         function generateRandomString($length = 25) 
@@ -37,17 +130,21 @@ class ImportController extends Controller
         $error = 0;
         $itemswitherror = [];
         foreach ($data[0] as $key => $value) {
-            $add = new Mspg;
-            $add->Company = $value[0];
-            $add->Branch = $value[1];
-            $add->Handling_branch = $value[2];
-            $add->Store_name = $value[3];
-            $add->Brand = $value[4];
-            $add->Serial = $value[5];
-            $add->Start = $value[6];
-            $add->End = $value[7];
-            $add->Status = 'Under Warranty';
-            $add->save();
+            $checkdup = Puregold::where('Serial', $value[2])->first();
+            if (!$checkdup) {
+                $add = new Puregold;
+                $add->Customer_name = $value[0];
+                $add->Item_description = $value[1];
+                $add->Serial = $value[2];
+                $add->Receiving_date = $value[3];
+                $add->End_warranty = $value[4];
+                $add->Specifications = $value[5];
+                $add->Status = 'Under Warranty';
+                $add->save();
+            }else{
+                $error = 1;
+                array_push($itemswitherror, $value[2]);
+            }
         }
         if ($error == 1) {
             return back()->withErrors([$itemswitherror]);
@@ -79,17 +176,27 @@ class ImportController extends Controller
         $error = 0;
         $itemswitherror = [];
         foreach ($data[0] as $key => $value) {
-            $add = new Mspg;
-            $add->Company = $value[0];
-            $add->Branch = $value[1];
-            $add->Handling_branch = $value[2];
-            $add->Store_name = $value[3];
-            $add->Brand = $value[4];
-            $add->Serial = $value[5];
-            $add->Start = $value[6];
-            $add->End = $value[7];
-            $add->Status = 'Under Warranty';
-            $add->save();
+            $checkdup = Mspg::where('Serial', $value[5])->first();
+            if (!$checkdup) {
+                $add = new Mspg;
+                $add->Company = $value[0];
+                $add->Branch = $value[1];
+                $add->Handling_branch = $value[2];
+                if ($value[3]) {
+                    $add->Store_name = $value[3];
+                }else{
+                    $add->Store_name = "";
+                }
+                $add->Brand = $value[4];
+                $add->Serial = $value[5];
+                $add->Start = $value[6];
+                $add->End = $value[7];
+                $add->Status = 'Under Warranty';
+                $add->save();
+            }else{
+                $error = 1;
+                array_push($itemswitherror, $value[5]);
+            }
         }
         if ($error == 1) {
             return back()->withErrors([$itemswitherror]);
@@ -121,29 +228,20 @@ class ImportController extends Controller
         $error = 0;
         $itemswitherror = [];
         foreach ($data[0] as $key => $value) {
-            $myRandomString = generateRandomString(25);
-            $lccid = LccCustomer::select('id as myid')->where('customer_name', $value[0])->first();
-
-            if ($lccid) {
-                $lcc = Lcc::where('id', $myRandomString)->first();
-                if (!$lcc) {
-                    $add = new Lcc;
-                    $add->id = $myRandomString;
-                    $add->lcc_customer_id = $lccid->myid;
-                    $add->Item_description = $value[1];
-                    $add->Serial = $value[2];
-                    $add->Receiving_date = $value[3];
-                    $add->End_warranty = $value[4];
-                    $add->Specifications = $value[5];
-                    $add->Status = 'Under Warranty';
-                    $add->save();
-                }elseif ($lcc) {
-                    $error = 1;
-                    array_push($itemswitherror, $value[0]);
-                }
+            $checkdup = Lcc::where('Serial', $value[2])->first();
+            if (!$checkdup) {
+                $add = new Lcc;
+                $add->Customer_name = $value[0];
+                $add->Item_description = $value[1];
+                $add->Serial = $value[2];
+                $add->Receiving_date = $value[3];
+                $add->End_warranty = $value[4];
+                $add->Specifications = $value[5];
+                $add->Status = 'Under Warranty';
+                $add->save();
             }else{
                 $error = 1;
-                array_push($itemswitherror, $value[0]);
+                array_push($itemswitherror, $value[5]);
             }
         }
         if ($error == 1) {
